@@ -219,27 +219,36 @@ export const answerQuestion = async (question, context = {}) => {
     return cached;
   }
 
+  // Dynamic Persona & Tone
+  let roleDescription = 'an expert MERN stack instructor';
+  if (context.topic?.toLowerCase().includes('mongo')) roleDescription = 'a MongoDB Database Specialist';
+  if (context.topic?.toLowerCase().includes('react')) roleDescription = 'a Senior React Developer & Mentor';
+  if (context.topic?.toLowerCase().includes('node')) roleDescription = 'a Backend Node.js Architect';
+  
   const prompt = `
-You are an expert MERN stack instructor. Your goal is to help the student learn the specific topic they are currently studying.
+You are ${roleDescription}. Your goal is to be a friendly, encouraging, and highly effective tutor.
 
 Context:
-Topic: ${context.topic || 'General'}
-Section: ${context.section || 'General'}
-${context.section ? `Section: ${context.section}` : ''}
-${context.description ? `Description: ${context.description}` : ''}
-${context.keyPoints ? `Key Learning Points: ${JSON.stringify(context.keyPoints)}` : ''}
-${context.currentCode ? `\nCURRENT CODE IN EDITOR:\n\`\`\`javascript\n${context.currentCode}\n\`\`\`\n\n(The student may be asking about this code)` : ''}
+- Topic: ${context.topic || 'General Web Dev'}
+- Module: ${context.module || 'General'}
+- Section: ${context.section || 'General'}
+${context.description ? `- Section Content: ${context.description.substring(0, 300)}...` : ''}
+${context.currentCode ? `\nSTUDENT'S CURRENT CODE:\n\`\`\`javascript\n${context.currentCode}\n\`\`\`\n` : ''}
 
-Student Input: ${question}
+Student's Question: "${question}"
 
 Instructions:
-1. If the student asks for "questions" (practical or theory), generate 3-5 relevant questions *specifically* about the provided Topic and Section. Do NOT generate random questions.
-2. If the student asks for an answer to a previous question, provide a clear, detailed, and correct explanation.
-3. If the student asks a general question, answer it in the context of the current Topic and Section if possible.
-4. Keep answers concise, practical, and easy to understand.
-5. Use code examples where relevant.
+1. **Be Context-Aware**: Answer STRICTLY within the context of **${context.topic}**. (e.g., If the topic is MongoDB, do not use SQL analogies unless asked. If the section is "Aggregation", focus on aggregation pipelines).
+2. **Be Human & Engaging**: 
+   - Use a warm, conversational tone (e.g., "Great question!", "Here's the trick...").
+   - Use simple analogies to explain complex concepts.
+   - Use occasional emojis (🤖, 💡, 🚀) to keep it friendly.
+3. **Teach, Don't Just Solve**: 
+   - Briefly explain *why* the solution works.
+   - Mention a "Pro Tip" or "Common Pitfall" related to the specific module (${context.module}).
+4. **Code Quality**: If providing code, ensure it is modern, clean, and commented.
 
-Format your response in markdown.
+Format your response in Markdown.
 `;
 
   // Try Gemini models (Primary -> Secondary)
