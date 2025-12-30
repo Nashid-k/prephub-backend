@@ -7,10 +7,11 @@ const elevenlabs = new ElevenLabsClient({
     apiKey: ELEVENLABS_API_KEY
 });
 
-// Voice IDs for different languages
+// Premium Voice IDs (Updated for better quality)
+// You can find more at: https://elevenlabs.io/voices
 const VOICE_IDS = {
-    'en-US': 'EXAVITQu4vr4xnSDxMaL', // Rachel - Natural conversational
-    'hi-IN': 'pNInz6obpgDQGcFmaJgB', // Adam (multilingual)
+    'en-US': 'cgSgspJ2msm6clMCkdW9', // Samara - Expressive storytelling
+    'hi-IN': 'pNInz6obpgDQGcFmaJgB', // Adam - Multilingual
     'ta-IN': 'pNInz6obpgDQGcFmaJgB', // Adam
     'ml-IN': 'pNInz6obpgDQGcFmaJgB'  // Adam
 };
@@ -29,15 +30,17 @@ export const generateSpeech = async (req, res) => {
 
         const voiceId = VOICE_IDS[language] || VOICE_IDS['en-US'];
 
-        // Generate speech using ElevenLabs SDK
+        console.log(`🎙️ Generating speech with ${language} voice...`);
+
+        // Generate speech using ElevenLabs v3 (supports audio tags!)
         const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
-            text,
-            model_id: 'eleven_multilingual_v2',
+            text, // Can include [whispers], [giggles], [sarcastically], etc.
+            model_id: 'eleven_turbo_v2_5', // Fast & high-quality
             output_format: 'mp3_44100_128',
             voice_settings: {
-                stability: 0.5,
-                similarity_boost: 0.75,
-                style: 0.5,
+                stability: 0.5,        // 0-1: Lower = more expressive
+                similarity_boost: 0.8, // 0-1: Higher = more similar to original voice
+                style: 0.5,           // 0-1: Exaggeration of style
                 use_speaker_boost: true
             }
         });
@@ -49,12 +52,14 @@ export const generateSpeech = async (req, res) => {
         }
         const audioBuffer = Buffer.concat(chunks);
 
+        console.log(`✅ Generated ${audioBuffer.length} bytes of audio`);
+
         // Return audio as base64
         const audioBase64 = audioBuffer.toString('base64');
         res.json({ audio: audioBase64 });
 
     } catch (error) {
-        console.error('ElevenLabs TTS Error:', error.message);
+        console.error('❌ ElevenLabs TTS Error:', error.message);
         res.status(500).json({ 
             error: 'Failed to generate speech',
             details: error.message
