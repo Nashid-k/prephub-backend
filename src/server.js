@@ -109,6 +109,26 @@ const startServer = async () => {
       console.log(`\n🚀 PrepHub API Server running on port ${PORT}`);
       console.log(`📚 API URL: http://localhost:${PORT}/api`);
       console.log(`🏥 Health Check: http://localhost:${PORT}/api/health\n`);
+
+      // Self-ping to keep server awake on Render Free Tier
+      const SECOND = 1000;
+      const MINUTE = 60 * SECOND;
+      const INTERVAL = 14 * MINUTE;
+
+      setInterval(() => {
+        const url = process.env.BACKEND_URL || `http://localhost:${PORT}`;
+        import('https').then(({ get }) => {
+          if (url.startsWith('https')) {
+            get(`${url}/api/health`, (res) => {
+              console.log(`Self-ping successful: ${res.statusCode}`);
+            }).on('error', (err) => {
+              console.error(`Self-ping failed: ${err.message}`);
+            });
+          }
+        }).catch(() => {
+          // Fallback or ignore for local
+        });
+      }, INTERVAL);
     });
   } catch (error) {
     console.error('Failed to start server:', error);

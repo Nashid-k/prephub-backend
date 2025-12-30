@@ -13,7 +13,8 @@
     "seed-express": "node src/seed-express-hierarchy.js",
     "seed-nodejs": "node src/seed-nodejs-hierarchy.js",
     "seed-react": "node src/seed-react-hierarchy.js",
-    "seed-javascript": "node src/seed-javascript-hierarchy.js"
+    "seed-javascript": "node src/seed-javascript-hierarchy.js",
+    "seed:all": "node src/seed-all.js"
   },
   "keywords": [
     "mern",
