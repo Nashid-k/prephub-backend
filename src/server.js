@@ -13,6 +13,7 @@ import testCaseRoutes from './routes/test-case.routes.js';
 import searchRoutes from './routes/search.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import bookmarkRoutes from './routes/bookmark.routes.js';
+import { scheduleWeeklyEmails } from './jobs/emailScheduler.js';
 
 import { helmetConfig, corsOptions, apiLimiter } from './middleware/security.js';
 
@@ -104,10 +105,18 @@ app.use((err, req, res, next) => {
 const startServer = async () => {
   try {
     await connectDB();
-    
+
     app.listen(PORT, () => {
-      console.log(`\n🚀 PrepHub API Server running on port ${PORT}`);
-      console.log(`📚 API URL: http://localhost:${PORT}/api`);
+      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
+      
+      // Start email scheduler
+      if (process.env.EMAIL_USERNAME && process.env.EMAIL_PASSWORD) {
+        scheduleWeeklyEmails();
+        console.log('📧 Email scheduler enabled');
+      } else {
+        console.log('⚠️  Email scheduler disabled (no credentials)');
+      }
       console.log(`🏥 Health Check: http://localhost:${PORT}/api/health\n`);
 
       // Self-ping to keep server awake on Render Free Tier

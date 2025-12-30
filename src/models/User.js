@@ -25,6 +25,19 @@ const userSchema = new mongoose.Schema({
   lastLogin: {
     type: Date,
     default: Date.now
+  },
+  emailPreferences: {
+    weeklySummary: {
+      type: Boolean,
+      default: true
+    },
+    lastEmailSent: {
+      type: Date
+    },
+    unsubscribeToken: {
+      type: String,
+      default: () => require('crypto').randomBytes(32).toString('hex')
+    }
   }
 });
 

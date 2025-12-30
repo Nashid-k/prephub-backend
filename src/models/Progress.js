@@ -26,6 +26,28 @@ const progressSchema = new mongoose.Schema({
   timeSpent: {
     type: Number, // in minutes
     default: 0
+  },
+  reviewData: {
+    nextReview: {
+      type: Date,
+      default: function() {
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        return tomorrow;
+      }
+    },
+    interval: {
+      type: Number, // days until next review
+      default: 1
+    },
+    easeFactor: {
+      type: Number, // SM-2 ease factor (minimum 1.3)
+      default: 2.5
+    },
+    reviewCount: {
+      type: Number,
+      default: 0
+    }
   }
 }, {
   timestamps: true

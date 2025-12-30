@@ -334,3 +334,182 @@ export const getAllTopicsProgress = async (req, res) => {
     res.status(500).json({ message: 'Server error fetching global progress' });
   }
 };
+
+export const updateTimeSpent = async (req, res) => {
+  try {
+    const { topicSlug, sectionSlug, minutes } = req.body;
+    
+    // Get user ID
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
+
+    // Find the section
+    const section = await Section.findOne({ slug: sectionSlug });
+    if (!section) {
+      return res.status(404).json({ message: 'Section not found' });
+    }
+
+    // Find or create progress
+    let progress = await Progress.findOne({ userId, sectionId: section._id });
+
+    if (!progress) {
+      progress = new Progress({
+        userId,
+        sectionId: section._id,
+        timeSpent: minutes
+      });
+    } else {
+      // Increment time spent
+      progress.timeSpent = (progress.timeSpent || 0) + minutes;
+      progress.lastAccessed = Date.now();
+    }
+
+    await progress.save();
+
+    res.json({ 
+      success: true, 
+      timeSpent: progress.timeSpent 
+    });
+
+  } catch (error) {
+    console.error('Error updating time:', error);
+    res.status(500).json({ message: 'Server error updating time' });
+  }
+};
+
+export const getDueReviews = async (req, res) => {
+  try {
+    // Get user ID
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
+
+    // Find all completed progress with review data
+    const progressRecords = await Progress.find({
+      userId,
+      completed: true,
+      'reviewData.nextReview': { $lte: new Date() } // Due for review
+    }).populate('sectionId');
+
+    // Enrich with topic and category info
+    const enrichedReviews = [];
+    for (const progress of progressRecords) {
+      if (!progress.sectionId) continue;
+
+      const section = progress.sectionId;
+      const category = await Category.findById(section.categoryId);
+      const topic = await Topic.findById(category?.topicId);
+
+      enrichedReviews.push({
+        _id: progress._id,
+        sectionId: section._id,
+        sectionName: section.name,
+        sectionSlug: section.slug,
+        categoryName: category?.name,
+        categorySlug: category?.slug,
+        topicName: topic?.name,
+        topicSlug: topic?.slug,
+        reviewData: progress.reviewData
+      });
+    }
+
+    // Sort by next review date (earliest first)
+    enrichedReviews.sort((a, b) => 
+      new Date(a.reviewData.nextReview) - new Date(b.reviewData.nextReview)
+    );
+
+    res.json({ reviews: enrichedReviews });
+  } catch (error) {
+    console.error('Error fetching due reviews:', error);
+    res.status(500).json({ message: 'Server error fetching reviews' });
+  }
+};
+
+export const updateReview = async (req, res) => {
+  try {
+    const { topicSlug, sectionSlug, quality } = req.body;
+    
+    // Validate quality (1-5)
+    if (quality < 1 || quality > 5) {
+      return res.status(400).json({ message: 'Quality must be between 1 and 5' });
+    }
+
+    // Get user ID
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
+
+    // Find the section
+    const section = await Section.findOne({ slug: sectionSlug });
+    if (!section) {
+      return res.status(404).json({ message: 'Section not found' });
+    }
+
+    // Find progress
+    const progress = await Progress.findOne({ userId, sectionId: section._id });
+    if (!progress) {
+      return res.status(404).json({ message: 'Progress not found' });
+    }
+
+    // Calculate next review using SM-2 algorithm
+    const currentEF = progress.reviewData?.easeFactor || 2.5;
+    const currentInterval = progress.reviewData?.interval || 1;
+    const currentReviewCount = progress.reviewData?.reviewCount || 0;
+
+    // SM-2 algorithm
+    let newEF = currentEF + (0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+    newEF = Math.max(1.3, newEF);
+
+    let newInterval;
+    let newReviewCount = currentReviewCount + 1;
+
+    if (quality < 3) {
+      // Poor recall - reset
+      newInterval = 1;
+      newReviewCount = 0;
+    } else {
+      // Good recall - increase interval
+      if (currentReviewCount === 0) {
+        newInterval = 1;
+      } else if (currentReviewCount === 1) {
+        newInterval = 6;
+      } else {
+        newInterval = Math.round(currentInterval * newEF);
+      }
+    }
+
+    // Calculate next review date
+    const nextReview = new Date();
+    nextReview.setDate(nextReview.getDate() + newInterval);
+
+    // Update progress
+    progress.reviewData = {
+      nextReview,
+      interval: newInterval,
+      easeFactor: newEF,
+      reviewCount: newReviewCount
+    };
+    progress.lastAccessed = Date.now();
+
+    await progress.save();
+
+    res.json({ 
+      success: true,
+      reviewData: progress.reviewData
+    });
+
+  } catch (error) {
+    console.error('Error updating review:', error);
+    res.status(500).json({ message: 'Server error updating review' });
+  }
+};

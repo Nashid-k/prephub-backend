@@ -28,7 +28,7 @@ export const googleLogin = async (req, res) => {
     const { email, name, picture, sub: googleId } = ticket.getPayload();
 
     // Check if user exists
-    let user = await User.findOne({ email });
+    let isNewUser = false;
 
     if (user) {
       // Update existing user
@@ -45,6 +45,7 @@ export const googleLogin = async (req, res) => {
         picture,
         googleId,
       });
+      isNewUser = true;
     }
 
     res.json({
@@ -53,6 +54,7 @@ export const googleLogin = async (req, res) => {
       email: user.email,
       picture: user.picture,
       token: generateToken(user._id),
+      isNew: isNewUser,
     });
   } catch (error) {
     console.error('Google Auth Error:', error);

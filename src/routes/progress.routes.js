@@ -1,11 +1,18 @@
 import express from 'express';
-import { toggleSectionCompletion, getSectionProgress, getCategoryProgress, getTopicProgress, getAllTopicsProgress } from '../controllers/progress.controller.js';
+import { toggleSectionCompletion, getSectionProgress, getCategoryProgress, getTopicProgress, getAllTopicsProgress, updateTimeSpent, getDueReviews, updateReview } from '../controllers/progress.controller.js';
 import { optionalProtect } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Toggle completetion status
 router.post('/toggle', optionalProtect, toggleSectionCompletion);
+
+// Update time spent on section
+router.post('/time', optionalProtect, updateTimeSpent);
+
+// Spaced repetition routes
+router.get('/reviews/due', optionalProtect, getDueReviews);
+router.post('/reviews/update', optionalProtect, updateReview);
 
 // Get global progress for all topics
 router.get('/all', optionalProtect, getAllTopicsProgress);
