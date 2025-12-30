@@ -27,6 +27,11 @@ const progressSchema = new mongoose.Schema({
     type: Number, // in minutes
     default: 0
   },
+  lastStudiedAt: {
+    type: Date,
+    default: Date.now
+  },
+  sessionStart: Date,  // Temporary field for tracking active study sessions
   reviewData: {
     nextReview: {
       type: Date,
