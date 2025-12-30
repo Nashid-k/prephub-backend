@@ -113,13 +113,11 @@ const startServer = async () => {
       console.log(`🚀 Server is running on port ${PORT}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
       
-      // Start email scheduler
-      if (process.env.EMAIL_USERNAME && process.env.EMAIL_PASSWORD) {
-        scheduleWeeklyEmails();
-        console.log('📧 Email scheduler enabled');
-      } else {
-        console.log('⚠️  Email scheduler disabled (no credentials)');
-      }
+      // Email scheduler disabled - uncomment when domain is verified on Resend
+      // if (process.env.RESEND_API_KEY) {
+      //   scheduleWeeklyEmails();
+      //   console.log('📧 Email scheduler enabled');
+      // }
       console.log(`🏥 Health Check: http://localhost:${PORT}/api/health\n`);
 
       // Self-ping to keep server awake on Render Free Tier
