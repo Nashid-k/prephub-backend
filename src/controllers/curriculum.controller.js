@@ -1,7 +1,6 @@
 import Topic from '../models/Topic.js';
 import Section from '../models/Section.js';
 import Category from '../models/Category.js';
-import Question from '../models/Question.js';
 import Progress from '../models/Progress.js';
 
 /**
@@ -255,11 +254,10 @@ export const getSectionAggregate = async (req, res) => {
     const section = await Section.findOne({ topicId: topic._id, slug: sectionSlug });
     if (!section) return res.status(404).json({ error: 'Section not found' });
 
-    const [category, allTopicSections, progress, questions] = await Promise.all([
+    const [category, allTopicSections, progress] = await Promise.all([
       section.categoryId ? Category.findById(section.categoryId) : Promise.resolve(null),
       Section.find({ topicId: topic._id }).sort({ order: 1 }),
-      Progress.findOne({ userId, sectionId: section._id }),
-      Question.find({ sectionId: section._id }).limit(5)
+      Progress.findOne({ userId, sectionId: section._id })
     ]);
 
     res.json({
@@ -268,8 +266,7 @@ export const getSectionAggregate = async (req, res) => {
       category,
       section,
       allTopicSections, // Used for navigation/sidebar
-      isCompleted: progress ? progress.completed : false,
-      questions
+      isCompleted: progress ? progress.completed : false
     });
   } catch (error) {
     console.error('Get Section Aggregate Error:', error);
@@ -303,14 +300,9 @@ export const getSectionBySlug = async (req, res) => {
       });
     }
 
-    const questions = await Question.find({ 
-      sectionId: section._id 
-    }).limit(5);
-
     res.json({
       success: true,
-      section,
-      questions
+      section
     });
   } catch (error) {
     console.error('Get Section Error:', error);
@@ -397,14 +389,12 @@ export const getSectionStatic = async (req, res) => {
 
     const category = await Category.findById(section.categoryId).lean();
     const siblingSections = await Section.find({ categoryId: section.categoryId }).lean();
-    const questions = await Question.find({ sectionId: section._id }).lean();
 
     const data = {
       section,
       topic,
       category,
-      siblingSections,
-      questions
+      siblingSections
     };
 
     // HTTP Cache headers

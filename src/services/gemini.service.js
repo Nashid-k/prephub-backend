@@ -296,97 +296,6 @@ This appears to be a question about **${context.topic || 'coding'}**. Since I'm 
 /**
  * Generate follow-up questions based on a topic with fallback
  */
-export const generateFollowUpQuestions = async (topic, section, difficulty = 'medium') => {
-  const cacheKey = `followup_${topic}_${section}_${difficulty}`;
-  const cached = await getCacheValue(cacheKey);
-  if (cached) {
-    console.log('📦 Returning cached follow-up questions');
-    return cached;
-  }
-
-  const prompt = `
-Generate 5 follow-up practice questions for students learning:
-
-Topic: ${topic}
-Section: ${section}
-Difficulty: ${difficulty}
-
-For each question, provide:
-1. The question
-2. A detailed answer with explanation
-3. Code example if applicable
-
-Format as JSON array with structure:
-[
-  {
-    "question": "...",
-    "answer": "...",
-    "codeExample": "..."
-  }
-]
-
-Make questions practical and interview-relevant.
-`;
-
-  const parseOrFallback = async (responseText) => {
-      const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
-                       responseText.match(/```\n([\s\S]*?)\n```/);
-      const jsonText = jsonMatch ? jsonMatch[1] : responseText;
-      try {
-        const parsed = JSON.parse(jsonText);
-        await setCacheValue(cacheKey, parsed);
-        return parsed;
-      } catch (e) {
-         return [{
-          question: 'Failed to parse response. Please try again.',
-          answer: 'Error occurred',
-          codeExample: ''
-        }];
-      }
-  };
-
-  // Try Gemini models (Primary -> Secondary)
-  for (const client of geminiModels) {
-    try {
-      console.log(`🤖 Trying Gemini AI via ${client.id} (${client.modelName})...`);
-      const result = await client.instance.generateContent(prompt);
-      const responseText = result.response.text();
-      console.log(`✅ Gemini AI succeeded (${client.id})`);
-      return await parseOrFallback(responseText);
-    } catch (geminiError) {
-       console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
-    }
-  }
-
-  // Try Groq clients (Primary -> Secondary)
-  for (const [index, client] of groqClients.entries()) {
-    try {
-      console.log(`⚠️ TRIGGERING GROQ FALLBACK (Key ${index + 1})...`);
-      const responseText = await tryGroqFallback(prompt, client);
-      return await parseOrFallback(responseText);
-    } catch (groqError) {
-       console.error(`❌ Groq AI failed (Key ${index + 1}):`, groqError.message);
-    }
-  }
-
-  // Try Hugging Face fallback
-  try {
-     const responseText = await tryHuggingFaceFallback(prompt);
-     return await parseOrFallback(responseText);
-  } catch (hfError) {
-    console.error('❌ All AI providers failed. Returning mock questions.');
-    return [{
-      question: '(Offline Mode) What is the main purpose of this concept?',
-      answer: 'We are currently offline. Please check your internet or API keys. The main purpose is to solve X problem efficiently.',
-      codeExample: '// Check documentation for examples'
-    },
-    {
-      question: '(Offline Mode) How do you implement this in code?',
-      answer: 'Since AI services are unavailable, please refer to the official documentation or your course notes.',
-      codeExample: 'const offline = true;'
-    }];
-  }
-};
 
 /**
  * Generate interview questions (theory + practical) with fallback
@@ -597,12 +506,17 @@ export const generateTestCases = async (prompt) => {
 /**
  * Generate a dynamic 5-question multiple choice quiz
  */
-export const generateQuiz = async (topic, section) => {
+export const generateQuiz = async (topic, section, regenerate = false) => {
   const cacheKey = `quiz_${topic}_${section}`;
-  const cached = await getCacheValue(cacheKey);
-  if (cached) {
-    console.log('📦 Returning cached quiz');
-    return cached;
+  
+  if (!regenerate) {
+    const cached = await getCacheValue(cacheKey);
+    if (cached) {
+      console.log('📦 Returning cached quiz');
+      return cached;
+    }
+  } else {
+    console.log('🔄 Regenerating quiz (cache bypassed)');
   }
 
   const prompt = `
@@ -694,7 +608,6 @@ Format strictly as a JSON array:
 export default {
   generateExplanation,
   answerQuestion,
-  generateFollowUpQuestions,
   generateTestCases,
   generateQuiz
 };
