@@ -22,6 +22,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Trust proxy for rate limiting on cloud platforms (Render, Heroku, etc.)
+app.set('trust proxy', 1);
+
 // Security Middleware
 app.use(helmetConfig);
 app.use(cors(corsOptions));
