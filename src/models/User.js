@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import crypto from 'crypto';
 
 const userSchema = new mongoose.Schema({
   googleId: {
@@ -36,7 +37,7 @@ const userSchema = new mongoose.Schema({
     },
     unsubscribeToken: {
       type: String,
-      default: () => require('crypto').randomBytes(32).toString('hex')
+      default: () => crypto.randomBytes(32).toString('hex')
     }
   }
 });
