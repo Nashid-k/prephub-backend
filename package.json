@@ -1,0 +1,44 @@
+{
+  "name": "prephub-backend",
+  "version": "1.0.0",
+  "description": "Backend API for PrepHub - MERN Preparation Platform",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "seed": "node src/seed.js",
+    "seed-mongodb-ai": "node src/seed-mongodb-ai.js",
+    "seed-hierarchy": "node src/seed-mongodb-hierarchy.js",
+    "seed-express": "node src/seed-express-hierarchy.js",
+    "seed-nodejs": "node src/seed-nodejs-hierarchy.js",
+    "seed-react": "node src/seed-react-hierarchy.js",
+    "seed-javascript": "node src/seed-javascript-hierarchy.js"
+  },
+  "keywords": [
+    "mern",
+    "education",
+    "ai",
+    "compiler"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-rate-limit": "^8.2.1",
+    "express-validator": "^7.3.1",
+    "google-auth-library": "^10.5.0",
+    "groq-sdk": "^0.8.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^8.9.3",
+    "node-cache": "^5.1.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
