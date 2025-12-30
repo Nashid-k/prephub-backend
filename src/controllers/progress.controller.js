@@ -205,10 +205,15 @@ export const getTopicProgress = async (req, res) => {
 
 export const getAllTopicsProgress = async (req, res) => {
   try {
-    const userId = req.user ? req.user.id || req.user._id : null;
-    if (!userId) {
-      return res.json({ topics: [] });
+    let userId;
+    if (req.user) {
+      userId = req.user.id || req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
     }
+    
+    // Ensure userId is string for comparison since Progress stores it as String
+    userId = userId.toString();
 
     const progressData = await Topic.aggregate([
       {
@@ -228,7 +233,7 @@ export const getAllTopicsProgress = async (req, res) => {
               $match: {
                 $expr: {
                   $and: [
-                    { $eq: ['$userId', new mongoose.Types.ObjectId(userId)] },
+                    { $eq: ['$userId', userId] },
                     { $eq: ['$completed', true] }
                   ]
                 }
@@ -277,9 +282,6 @@ export const getAllTopicsProgress = async (req, res) => {
           },
           color: { $ifNull: ['$color', '#4ade80'] },
           icon: { $ifNull: ['$icon', '📚'] },
-          // We still need the first incomplete section for the continueLink
-          // We can't easily find it in aggregation without more logic, 
-          // but we can pass back all incomplete sections or just the first one if we sort
           incompleteSections: {
             $filter: {
               input: '$allSections',
@@ -299,7 +301,6 @@ export const getAllTopicsProgress = async (req, res) => {
     ]);
 
     // Post-process to add continueLink and handle slug lookup
-    // To get the category slug for the continueLink, we need categories too
     const categories = await Category.find({});
     const categoryMap = {};
     categories.forEach(c => categoryMap[c._id.toString()] = c.slug);
@@ -504,12 +505,121 @@ export const updateReview = async (req, res) => {
     await progress.save();
 
     res.json({ 
-      success: true,
+      success: true, 
       reviewData: progress.reviewData
     });
 
   } catch (error) {
     console.error('Error updating review:', error);
     res.status(500).json({ message: 'Server error updating review' });
+  }
+};
+
+export const toggleCategoryCompletion = async (req, res) => {
+  try {
+    const { topicSlug, categorySlug, completed } = req.body;
+    
+    // Get user ID
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
+
+    // 1. Find Topic and Category
+    const topic = await Topic.findOne({ slug: topicSlug });
+    if (!topic) return res.status(404).json({ message: 'Topic not found' });
+
+    const category = await Category.findOne({ slug: categorySlug, topicId: topic._id });
+    if (!category) return res.status(404).json({ message: 'Category not found' });
+
+    // 2. Find all sections
+    const sections = await Section.find({ categoryId: category._id });
+    if (sections.length === 0) {
+        return res.json({ success: true, message: 'No sections to update' });
+    }
+
+    // 3. Update Progress for all sections
+    const operations = sections.map(section => ({
+        updateOne: {
+            filter: { userId, sectionId: section._id },
+            update: { 
+                $set: { 
+                    completed: completed,
+                    lastAccessed: Date.now()
+                } 
+            },
+            upsert: true
+        }
+    }));
+
+    if (operations.length > 0) {
+        await Progress.bulkWrite(operations);
+    }
+
+    res.json({ success: true, completed });
+
+  } catch (error) {
+    console.error('Error toggling category progress:', error);
+    res.status(500).json({ message: 'Server error updating category progress' });
+  }
+};
+
+export const toggleTopicCompletion = async (req, res) => {
+  try {
+    const { topicSlug, completed } = req.body;
+
+    // Get user ID
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
+
+    // 1. Find Topic
+    const topic = await Topic.findOne({ slug: topicSlug });
+    if (!topic) return res.status(404).json({ message: 'Topic not found' });
+
+    // 2. Find all categories and sections
+    const categories = await Category.find({ topicId: topic._id });
+    const categoryIds = categories.map(c => c._id);
+    
+    // Sections belonging to these categories OR directly to the topic (if any)
+    const sections = await Section.find({ 
+        $or: [
+            { categoryId: { $in: categoryIds } },
+            { topicId: topic._id }
+        ]
+    });
+
+    if (sections.length === 0) {
+        return res.json({ success: true, message: 'No sections to update' });
+    }
+
+    // 3. Update Progress
+    const operations = sections.map(section => ({
+        updateOne: {
+            filter: { userId, sectionId: section._id },
+            update: { 
+                $set: { 
+                    completed: completed,
+                    lastAccessed: Date.now()
+                } 
+            },
+            upsert: true
+        }
+    }));
+
+    if (operations.length > 0) {
+        await Progress.bulkWrite(operations);
+    }
+
+    res.json({ success: true, completed });
+
+  } catch (error) {
+    console.error('Error toggling topic progress:', error);
+    res.status(500).json({ message: 'Server error updating topic progress' });
   }
 };

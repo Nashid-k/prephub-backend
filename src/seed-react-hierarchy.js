@@ -627,7 +627,7 @@ const seedHierarchy = async () => {
 
         await Section.create({
           title: secTitle,
-          slug: slugify(secTitle, { lower: true, strict: true }),
+          slug: slugify(`${catName}-${secTitle}`, { lower: true, strict: true }),
           categoryId: category._id,
           topicId: topic._id,
           order: sectionOrder++,

@@ -2,7 +2,7 @@ import { sendEmail } from '../config/email.js';
 import { weeklySummaryTemplate, welcomeTemplate } from '../templates/emailTemplates.js';
 import User from '../models/User.js';
 import Progress from '../models/Progress.js';
-import { getStreakData } from '../utils/streakHelper.js';
+
 
 /**
  * Calculate user's weekly statistics

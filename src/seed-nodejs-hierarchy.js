@@ -429,7 +429,7 @@ const nodejsCurriculum = {
       "Log Rotation",
       "Winston/Bunyan Libraries"
     ],
-    "monitoring": [
+    "system_monitoring": [
       "Health Checks",
       "Metrics Collection",
       "Alerting Configuration"
@@ -687,10 +687,11 @@ const seedHierarchy = async () => {
 
         await Section.create({
           title: secTitle,
-          slug: slugify(secTitle, { lower: true, strict: true }),
+          slug: slugify(`${catName}-${secTitle}`, { lower: true, strict: true }),
           categoryId: category._id,
           topicId: topic._id,
           order: sectionOrder++,
+          description: description,
           content: `## ${secTitle}\n\n${description}\n\n### Key Concepts:\n${keyPoints.map(kp => `- ${kp}`).join('\n')}`,
           difficulty: difficulty,
           estimatedTime: 15 + (keyPoints.length * 2), // Rough estimate

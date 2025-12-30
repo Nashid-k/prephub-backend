@@ -1,11 +1,13 @@
 import express from 'express';
-import { toggleSectionCompletion, getSectionProgress, getCategoryProgress, getTopicProgress, getAllTopicsProgress, updateTimeSpent, getDueReviews, updateReview } from '../controllers/progress.controller.js';
+import { toggleSectionCompletion, getSectionProgress, getCategoryProgress, getTopicProgress, getAllTopicsProgress, updateTimeSpent, getDueReviews, updateReview, toggleCategoryCompletion, toggleTopicCompletion } from '../controllers/progress.controller.js';
 import { optionalProtect } from '../middleware/auth.js';
 
 const router = express.Router();
 
 // Toggle completetion status
 router.post('/toggle', optionalProtect, toggleSectionCompletion);
+router.post('/toggle/category', optionalProtect, toggleCategoryCompletion);
+router.post('/toggle/topic', optionalProtect, toggleTopicCompletion);
 
 // Update time spent on section
 router.post('/time', optionalProtect, updateTimeSpent);
