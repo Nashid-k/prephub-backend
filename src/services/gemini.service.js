@@ -594,9 +594,107 @@ export const generateTestCases = async (prompt) => {
   };
 };
 
+/**
+ * Generate a dynamic 5-question multiple choice quiz
+ */
+export const generateQuiz = async (topic, section) => {
+  const cacheKey = `quiz_${topic}_${section}`;
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached quiz');
+    return cached;
+  }
+
+  const prompt = `
+Generate a 5-question Multiple Choice Quiz for:
+Topic: ${topic}
+Section: ${section}
+
+For each question:
+1. Provide a clear, practical question.
+2. Provide 4 distinct options.
+3. Indicate the correct option index (0-3).
+4. Provide a brief explanation for why the correct answer is correct.
+
+Format strictly as a JSON array:
+[
+  {
+    "question": "What is...",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "correctIndex": 0,
+    "explanation": "Because..."
+  }
+]
+`;
+
+  const parseAndCache = async (responseText) => {
+      const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
+                       responseText.match(/```\n([\s\S]*?)\n```/);
+      const jsonText = jsonMatch ? jsonMatch[1] : responseText;
+      try {
+        const parsed = JSON.parse(jsonText);
+        // Validate structure briefly
+        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].options) {
+            await setCacheValue(cacheKey, parsed);
+            return parsed;
+        }
+        throw new Error('Invalid quiz structure');
+      } catch (e) {
+         console.error('JSON Parse Error:', e);
+         return null;
+      }
+  };
+
+  // Try Gemini models
+  for (const client of geminiModels) {
+    try {
+      console.log(`🤖 Generating Quiz via ${client.id}...`);
+      const result = await client.instance.generateContent(prompt);
+      const parsed = await parseAndCache(result.response.text());
+      if (parsed) return parsed;
+    } catch (geminiError) {
+      console.error(`❌ Gemini failed (${client.id}):`, geminiError.message);
+    }
+  }
+
+  // Try Groq fallback
+  for (const client of groqClients) {
+    try {
+      console.log('⚠️ Trying Groq fallback for quiz...');
+      const responseText = await tryGroqFallback(prompt, client);
+      const parsed = await parseAndCache(responseText);
+      if (parsed) return parsed;
+    } catch (groqError) {
+      console.error('❌ Groq failed for quiz:', groqError.message);
+    }
+  }
+
+  // Try Hugging Face fallback
+  try {
+    console.log('⚠️ Trying HF fallback for quiz...');
+    const responseText = await tryHuggingFaceFallback(prompt);
+    const parsed = await parseAndCache(responseText);
+    if (parsed) return parsed;
+  } catch (hfError) {
+    console.error('❌ HF failed for quiz:', hfError.message);
+  }
+
+  console.error('❌ All AI providers failed for quiz generation');
+  // Fallback Mock Quiz
+  return [
+    {
+      question: "(Offline) Which of the following is true about " + section + "?",
+      options: ["It is a key concept", "It is irrelevant", "It triggers errors", "None of the above"],
+      correctIndex: 0,
+      explanation: "This is a placeholder question because AI services are offline."
+    }
+  ];
+};
+
 export default {
   generateExplanation,
   answerQuestion,
   generateFollowUpQuestions,
-  generateTestCases
+  generateTestCases,
+  generateQuiz
 };
