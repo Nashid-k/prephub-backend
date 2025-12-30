@@ -40,6 +40,12 @@ const sectionSchema = new mongoose.Schema({
     type: String,
     enum: ['beginner', 'intermediate', 'advanced'],
     default: 'beginner'
+  },
+  estimatedMinutes: {
+    type: Number,
+    default: 15,
+    min: 5,
+    max: 180
   }
 }, {
   timestamps: true
