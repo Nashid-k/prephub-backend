@@ -58,8 +58,15 @@ export const askQuestion = async (req, res) => {
  * Generate follow-up questions
  */
 export const generateQuestions = async (req, res) => {
+  // ... (existing code)
+};
+
+/**
+ * Generate a dynamic quiz
+ */
+export const generateQuiz = async (req, res) => {
   try {
-    const { topic, section, difficulty } = req.body;
+    const { topic, section } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -67,20 +74,16 @@ export const generateQuestions = async (req, res) => {
       });
     }
 
-    const questions = await geminiService.generateFollowUpQuestions(
-      topic, 
-      section, 
-      difficulty || 'medium'
-    );
+    const quiz = await geminiService.generateQuiz(topic, section);
 
     res.json({
       success: true,
-      questions
+      quiz
     });
   } catch (error) {
-    console.error('Generate Questions Error:', error);
+    console.error('Generate Quiz Error:', error);
     res.status(500).json({ 
-      error: error.message || 'Failed to generate questions' 
+      error: error.message || 'Failed to generate quiz' 
     });
   }
 };
@@ -88,5 +91,6 @@ export const generateQuestions = async (req, res) => {
 export default {
   explainTopic,
   askQuestion,
-  generateQuestions
+  generateQuestions,
+  generateQuiz
 };
