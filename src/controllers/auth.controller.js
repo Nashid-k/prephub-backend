@@ -1,6 +1,7 @@
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import { sendWelcomeEmail } from '../services/emailService.js';
 
 // Initialize Google Client
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -47,6 +48,14 @@ export const googleLogin = async (req, res) => {
         googleId,
       });
       isNewUser = true;
+      
+      // Send welcome email to new users
+      try {
+        await sendWelcomeEmail(user);
+      } catch (emailError) {
+        console.error('Failed to send welcome email:', emailError);
+        // Don't fail the registration if email fails
+      }
     }
 
     res.json({
