@@ -149,7 +149,7 @@ export const getTopicBySlug = async (req, res) => {
 export const getTopicAggregate = async (req, res) => {
   try {
     const { slug } = req.params;
-    const userId = req.user ? req.user._id : 'default-user';
+    const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
     const topic = await Topic.findOne({ slug });
     if (!topic) {
@@ -206,7 +206,7 @@ export const getTopicAggregate = async (req, res) => {
 export const getCategoryAggregate = async (req, res) => {
   try {
     const { topicSlug, categorySlug } = req.params;
-    const userId = req.user ? req.user._id : 'default-user';
+    const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
     const topic = await Topic.findOne({ slug: topicSlug });
     if (!topic) return res.status(404).json({ error: 'Topic not found' });
@@ -247,7 +247,7 @@ export const getCategoryAggregate = async (req, res) => {
 export const getSectionAggregate = async (req, res) => {
   try {
     const { topicSlug, sectionSlug } = req.params;
-    const userId = req.user ? req.user._id : 'default-user';
+    const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
     const topic = await Topic.findOne({ slug: topicSlug });
     if (!topic) return res.status(404).json({ error: 'Topic not found' });
@@ -320,11 +320,115 @@ export const getSectionBySlug = async (req, res) => {
   }
 };
 
+/**
+ * Get Topic Static (No User Progress) - Globally Cacheable
+ * Free-tier optimized with .lean() and minimal queries
+ */
+export const getTopicStatic = async (req, res) => {
+  try {
+    const { slug } = req.params;
+
+    // Single query with .lean() for faster, lighter response
+    const topic = await Topic.findOne({ slug }).lean();
+    if (!topic) return res.status(404).json({ error: 'Topic not found' });
+
+    const categories = await Category.find({ topicId: topic._id }).lean();
+
+    const data = { topic, categories };
+
+    // HTTP Cache headers for browser/CDN caching (24 hours)
+    res.set({
+      'Cache-Control': 'public, max-age=86400',
+      'Vary': 'Accept-Encoding'
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.error('Get Topic Static Error:', error);
+    res.status(500).json({ error: 'Failed to fetch topic' });
+  }
+};
+
+/**
+ * Get Category Static (No User Progress) - Globally Cacheable
+ */
+export const getCategoryStatic = async (req, res) => {
+  try {
+    const { topicSlug, categorySlug } = req.params;
+
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
+    if (!topic) return res.status(404).json({ error: 'Topic not found' });
+
+    const category = await Category.findOne({ 
+      topicId: topic._id, 
+      slug: categorySlug 
+    }).lean();
+    if (!category) return res.status(404).json({ error: 'Category not found' });
+
+    const sections = await Section.find({ categoryId: category._id }).lean();
+
+    const data = { topic, category, sections };
+
+    // HTTP Cache headers
+    res.set({
+      'Cache-Control': 'public, max-age=86400',
+      'Vary': 'Accept-Encoding'
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.error('Get Category Static Error:', error);
+    res.status(500).json({ error: 'Failed to fetch category' });
+  }
+};
+
+/**
+ * Get Section Static (No User Progress) - Globally Cacheable
+ */
+export const getSectionStatic = async (req, res) => {
+  try {
+    const { topicSlug, sectionSlug } = req.params;
+
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
+    if (!topic) return res.status(404).json({ error: 'Topic not found' });
+
+    const section = await Section.findOne({ slug: sectionSlug }).lean();
+    if (!section) return res.status(404).json({ error: 'Section not found' });
+
+    const category = await Category.findById(section.categoryId).lean();
+    const siblingSections = await Section.find({ categoryId: section.categoryId }).lean();
+    const questions = await Question.find({ sectionId: section._id }).lean();
+
+    const data = {
+      section,
+      topic,
+      category,
+      siblingSections,
+      questions
+    };
+
+    // HTTP Cache headers
+    res.set({
+      'Cache-Control': 'public, max-age=86400',
+      'Vary': 'Accept-Encoding'
+    });
+
+    res.json(data);
+  } catch (error) {
+    console.error('Get Section Static Error:', error);
+    res.status(500).json({ error: 'Failed to fetch section' });
+  }
+};
+
 export default {
   getAllTopics,
   getTopicBySlug,
   getTopicAggregate,
   getCategoryAggregate,
   getSectionAggregate,
-  getSectionBySlug
+  getSectionBySlug,
+  // New static endpoints
+  getTopicStatic,
+  getCategoryStatic,
+  getSectionStatic
 };

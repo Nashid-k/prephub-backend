@@ -6,7 +6,15 @@ import Category from '../models/Category.js';
 export const toggleSectionCompletion = async (req, res) => {
   try {
     const { topicSlug, sectionSlug, completed } = req.body;
-    const userId = req.user ? req.user._id : 'default-user';
+    
+    // Generate unique user ID for anonymous users
+    let userId;
+    if (req.user) {
+      userId = req.user._id;
+    } else {
+      // For anonymous users, use a session ID from headers or generate one
+      userId = req.headers['x-session-id'] || 'default-user';
+    }
 
     // Find the section first
     const section = await Section.findOne({ slug: sectionSlug });
