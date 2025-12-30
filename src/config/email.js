@@ -1,33 +1,19 @@
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 /**
- * Email configuration using Gmail with App Password
- * Credentials from environment variables
+ * Email configuration using Resend
+ * Uses HTTP API instead of SMTP to bypass cloud platform port restrictions
  */
 
-// Create transporter with Gmail using explicit SMTP configuration
-export const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465, // SSL port (more likely to work on cloud platforms)
-    secure: true, // Use SSL
-    auth: {
-        user: process.env.EMAIL_USERNAME,
-        pass: process.env.EMAIL_PASSWORD
-    },
-    // Additional options for better reliability
-    connectionTimeout: 10000,
-    greetingTimeout: 10000,
-    socketTimeout: 10000,
-});
+// Initialize Resend client
+const resend = new Resend(process.env.RESEND_API_KEY);
 
-// Verify connection on startup
-transporter.verify((error, success) => {
-    if (error) {
-        console.error('❌ Email configuration error:', error);
-    } else {
-        console.log('✅ Email server ready to send messages');
-    }
-});
+// Verify configuration on startup
+if (!process.env.RESEND_API_KEY) {
+    console.warn('⚠️  RESEND_API_KEY not set - emails will not be sent');
+} else {
+    console.log('✅ Resend email service initialized');
+}
 
 /**
  * Send email helper function
@@ -38,14 +24,24 @@ transporter.verify((error, success) => {
  */
 export const sendEmail = async (to, subject, htmlContent) => {
     try {
-        const info = await transporter.sendMail({
-            from: `PrepHub <${process.env.EMAIL_FROM || process.env.EMAIL_USERNAME}>`,
-            to,
+        if (!process.env.RESEND_API_KEY) {
+            console.warn('⚠️  Email not sent (no RESEND_API_KEY)');
+            return false;
+        }
+
+        const { data, error } = await resend.emails.send({
+            from: process.env.EMAIL_FROM || 'PrepHub <onboarding@resend.dev>',
+            to: [to],
             subject,
-            html: htmlContent
+            html: htmlContent,
         });
 
-        console.log(`✅ Email sent to ${to}: ${info.messageId}`);
+        if (error) {
+            console.error(`❌ Error sending email to ${to}:`, error);
+            return false;
+        }
+
+        console.log(`✅ Email sent to ${to}: ${data.id}`);
         return true;
     } catch (error) {
         console.error(`❌ Error sending email to ${to}:`, error);
@@ -58,8 +54,10 @@ export const sendEmail = async (to, subject, htmlContent) => {
  */
 export const testEmailConfig = async () => {
     try {
+        const testEmail = process.env.EMAIL_USERNAME || 'test@example.com';
+        
         await sendEmail(
-            process.env.EMAIL_USERNAME,
+            testEmail,
             '✅ PrepHub Email Test',
             '<h1>Email configuration is working!</h1><p>Your weekly summaries will be sent successfully.</p>'
         );
@@ -69,4 +67,4 @@ export const testEmailConfig = async () => {
     }
 };
 
-export default { transporter, sendEmail, testEmailConfig };
+export default { sendEmail, testEmailConfig };
