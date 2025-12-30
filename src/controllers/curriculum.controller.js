@@ -256,7 +256,32 @@ export const getSectionAggregate = async (req, res) => {
 
     const [category, allTopicSections, progress] = await Promise.all([
       section.categoryId ? Category.findById(section.categoryId) : Promise.resolve(null),
-      Section.find({ topicId: topic._id }).sort({ order: 1 }),
+
+      // Fetch all sections sorted by Category Order then Section Order
+      Section.aggregate([
+        { $match: { topicId: topic._id } },
+        {
+          $lookup: {
+            from: 'categories',
+            localField: 'categoryId',
+            foreignField: '_id',
+            as: 'category'
+          }
+        },
+        { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
+        { $sort: { 'category.order': 1, 'order': 1 } },
+        {
+          $project: {
+            _id: 1,
+            title: 1,
+            slug: 1,
+            categoryId: 1,
+            topicId: 1,
+            difficulty: 1,
+            order: 1
+          }
+        }
+      ]),
       Progress.findOne({ userId, sectionId: section._id })
     ]);
 
