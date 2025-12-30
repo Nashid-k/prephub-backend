@@ -197,85 +197,132 @@ export const getTopicProgress = async (req, res) => {
 
 export const getAllTopicsProgress = async (req, res) => {
   try {
-    const userId = req.user ? req.user._id : null;
+    const userId = req.user ? req.user.id || req.user._id : null;
+    if (!userId) {
+      return res.json({ topics: [] });
+    }
 
-    // 1. Get all topics
-    const topics = await Topic.find({});
-
-    // 2. Calculate progress for each topic
-    const progressData = await Promise.all(topics.map(async (topic) => {
-        // Find categories for this topic - sorted by order
-        const categories = await Category.find({ topicId: topic._id }).sort({ order: 1 });
-        const categoryIds = categories.map(c => c._id);
-        const categoryMap = {}; // Id -> Slug
-        categories.forEach(c => categoryMap[c._id.toString()] = c.slug);
-
-        // Find sections for these categories - sorted by order
-        const sections = await Section.find({ categoryId: { $in: categoryIds } }).sort({ order: 1 });
-        const sectionIds = sections.map(s => s._id);
-        
-        const totalSections = sections.length;
-
-        // If no user or no sections, return 0 progress
-        if (!userId || totalSections === 0) {
-            return {
-                topicName: topic.name,
-                topicSlug: topic.slug,
-                totalSections: totalSections || 0,
-                completedSections: 0,
-                percentage: 0,
-                color: topic.color || '#4ade80',
-                icon: topic.icon || '📚',
-                continueLink: `/topic/${topic.slug}`
-            };
+    const progressData = await Topic.aggregate([
+      {
+        $lookup: {
+          from: 'sections',
+          localField: '_id',
+          foreignField: 'topicId',
+          as: 'allSections'
         }
-
-        // Find ALL progress records for this user & topic
-        const progressRecords = await Progress.find({
-            userId,
-            sectionId: { $in: sectionIds }
-        });
-
-        // Calculate stats
-        const completedRecords = progressRecords.filter(p => p.completed);
-        const completedCount = completedRecords.length;
-        const percentage = Math.round((completedCount / totalSections) * 100);
-
-        // Determine "Next Step"
-        // Find the first section (by order) that is NOT completed
-        let nextSectionLink = `/topic/${topic.slug}`; // Default fallback
-        
-        // Create a set of completed section IDs for fast lookup
-        const completedSectionIds = new Set(completedRecords.map(p => p.sectionId.toString()));
-
-        // Iterate through sections in order
-        for (const section of sections) {
-            if (!completedSectionIds.has(section._id.toString())) {
-                // Found the first uncompleted section!
-                const catSlug = categoryMap[section.categoryId.toString()];
-                if (catSlug) {
-                    nextSectionLink = `/topic/${topic.slug}/category/${catSlug}/section/${section.slug}`;
-                    break;
+      },
+      {
+        $lookup: {
+          from: 'progresses',
+          let: { topicId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$userId', new mongoose.Types.ObjectId(userId)] },
+                    { $eq: ['$completed', true] }
+                  ]
                 }
+              }
+            },
+            {
+              $lookup: {
+                from: 'sections',
+                localField: 'sectionId',
+                foreignField: '_id',
+                as: 'section'
+              }
+            },
+            { $unwind: '$section' },
+            {
+              $match: {
+                $expr: { $eq: ['$section.topicId', '$$topicId'] }
+              }
             }
+          ],
+          as: 'completedSectionsList'
         }
+      },
+      {
+        $project: {
+          topicName: '$name',
+          topicSlug: '$slug',
+          totalSections: { $size: '$allSections' },
+          completedSections: { $size: '$completedSectionsList' },
+          percentage: {
+            $cond: {
+              if: { $gt: [{ $size: '$allSections' }, 0] },
+              then: {
+                $round: [
+                  {
+                    $multiply: [
+                      { $divide: [{ $size: '$completedSectionsList' }, { $size: '$allSections' }] },
+                      100
+                    ]
+                  },
+                  0
+                ]
+              },
+              else: 0
+            }
+          },
+          color: { $ifNull: ['$color', '#4ade80'] },
+          icon: { $ifNull: ['$icon', '📚'] },
+          // We still need the first incomplete section for the continueLink
+          // We can't easily find it in aggregation without more logic, 
+          // but we can pass back all incomplete sections or just the first one if we sort
+          incompleteSections: {
+            $filter: {
+              input: '$allSections',
+              as: 'section',
+              cond: {
+                $not: {
+                  $in: ['$$section._id', '$completedSectionsList.sectionId']
+                }
+              }
+            }
+          }
+        }
+      },
+      {
+        $sort: { order: 1 }
+      }
+    ]);
 
-        return {
-            topicName: topic.name,
-            topicSlug: topic.slug,
-            totalSections,
-            completedSections: completedCount,
-            percentage,
-            color: topic.color || '#4ade80',
-            icon: topic.icon || '📚',
-            continueLink: nextSectionLink
-        };
-    }));
+    // Post-process to add continueLink and handle slug lookup
+    // To get the category slug for the continueLink, we need categories too
+    const categories = await Category.find({});
+    const categoryMap = {};
+    categories.forEach(c => categoryMap[c._id.toString()] = c.slug);
 
-    res.json({ topics: progressData });
+    const result = progressData.map(topic => {
+      let nextSectionLink = `/topic/${topic.topicSlug}`;
+      if (topic.incompleteSections && topic.incompleteSections.length > 0) {
+        // Sort by order to find the ACTUAL first incomplete section
+        const sortedIncomplete = topic.incompleteSections.sort((a, b) => (a.order || 0) - (b.order || 0));
+        const firstIncomplete = sortedIncomplete[0];
+        const catSlug = categoryMap[firstIncomplete.categoryId?.toString()];
+        if (catSlug) {
+          nextSectionLink = `/topic/${topic.topicSlug}/category/${catSlug}/section/${firstIncomplete.slug}`;
+        }
+      }
 
+      return {
+        topicName: topic.topicName,
+        topicSlug: topic.topicSlug,
+        totalSections: topic.totalSections,
+        completedSections: topic.completedSections,
+        percentage: topic.percentage,
+        color: topic.color,
+        icon: topic.icon,
+        continueLink: nextSectionLink
+      };
+    });
+
+    res.json({ topics: result });
   } catch (error) {
-    console.error('Error fetching all topics progress:', error);
+    console.error('Error fetching global progress:', error);
     res.status(500).json({ message: 'Server error fetching global progress' });
   }
 };
