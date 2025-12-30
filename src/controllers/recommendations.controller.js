@@ -18,6 +18,7 @@ export const getRecommendations = async (req, res) => {
         // Calculate progress per topic
         const topicProgress = {};
         userProgress.forEach(prog => {
+            if (!prog.topicId) return;
             const topicId = prog.topicId.toString();
             if (!topicProgress[topicId]) {
                 topicProgress[topicId] = { completed: 0, total: 0 };
