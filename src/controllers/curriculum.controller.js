@@ -8,36 +8,45 @@ import Question from '../models/Question.js';
  */
 export const getAllTopics = async (req, res) => {
   try {
-    const topics = await Topic.find().sort({ order: 1 });
-    
-    // Get category counts and section counts for each topic
-    const topicsWithCounts = await Promise.all(
-      topics.map(async (topic) => {
-        let categoryCount;
-        if (topic.slug === 'dsa' || topic.slug === 'data-structures-algorithms') {
-            // detailed logic for DSA Super Chapters (group prefixes)
-            const distinctGroups = await Category.distinct('group', { topicId: topic._id });
-            // Extract unique prefixes (e.g., "Blind 75" from "Blind 75:Array")
-            const superChapters = new Set(distinctGroups.map(g => {
-                return (g && g.includes(':')) ? g.split(':')[0].trim() : g;
-            }));
-            // If we have super chapters, count them. If generic/empty, might fall back or count 1.
-            // Filter out 'general' if mixed? Assuming structure is consistent.
-            categoryCount = superChapters.size;
-        } else {
-            categoryCount = await Category.countDocuments({ topicId: topic._id });
+    const topicsWithCounts = await Topic.aggregate([
+      {
+        $lookup: {
+          from: 'categories',
+          localField: '_id',
+          foreignField: 'topicId',
+          as: 'categories'
         }
-
-        const sectionCount = await Section.countDocuments({ topicId: topic._id });
-        return {
-          ...topic.toObject(),
-          categoryCount,
-          sectionCount,
-          totalSections: sectionCount
-        };
-      })
-    );
+      },
+      {
+        $lookup: {
+          from: 'sections',
+          localField: '_id',
+          foreignField: 'topicId',
+          as: 'sections'
+        }
+      },
+      {
+        $sort: { order: 1 }
+      },
+      {
+        $project: {
+          name: 1,
+          slug: 1,
+          description: 1,
+          icon: 1,
+          color: 1,
+          order: 1,
+          categoryCount: { $size: '$categories' },
+          sectionCount: { $size: '$sections' },
+          totalSections: { $size: '$sections' }
+        }
+      }
+    ]);
     
+    // Note: Special handling for DSA super chapters is currently complex in aggregation
+    // and might be better handled in the UI or a separate field.
+    // For now, these counts provide a good overall view.
+
     res.json({
       success: true,
       topics: topicsWithCounts

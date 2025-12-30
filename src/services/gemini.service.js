@@ -1,9 +1,52 @@
 import { geminiModels, groqClients, hfApiKey } from '../config/ai-clients.js';
 import NodeCache from 'node-cache';
 import axios from 'axios';
+import Cache from '../models/Cache.js';
 
-// Cache for AI responses (TTL: 1 hour)
-const cache = new NodeCache({ stdTTL: 3600 });
+// Memory Cache for AI responses (TTL: 1 hour) - Fast but non-persistent
+const memoryCache = new NodeCache({ stdTTL: 3600 });
+
+/**
+ * Get data from cache (Memory first, then MongoDB)
+ */
+const getCacheValue = async (key) => {
+  // Check memory cache first
+  const cachedMemory = memoryCache.get(key);
+  if (cachedMemory) return cachedMemory;
+
+  // Check MongoDB cache
+  try {
+    const cachedDb = await Cache.findOne({ key });
+    if (cachedDb && cachedDb.expiresAt > new Date()) {
+      // Backfill memory cache
+      memoryCache.set(key, cachedDb.value);
+      return cachedDb.value;
+    }
+  } catch (err) {
+    console.error('Cache Retrieval Error:', err);
+  }
+  return null;
+};
+
+/**
+ * Set data in cache (Both Memory and MongoDB)
+ */
+const setCacheValue = async (key, value, ttlSeconds = 3600 * 24 * 7) => { // Default persistent cache for 7 days
+  // Set in memory cache
+  memoryCache.set(key, value);
+
+  // Set in MongoDB cache
+  try {
+    const expiresAt = new Date(Date.now() + ttlSeconds * 1000);
+    await Cache.findOneAndUpdate(
+      { key },
+      { value, expiresAt },
+      { upsert: true, new: true }
+    );
+  } catch (err) {
+    console.error('Cache Storage Error:', err);
+  }
+};
 
 /**
  * Try Groq AI as fallback
@@ -72,7 +115,7 @@ export const generateExplanation = async (topic, section, context = '') => {
   const cacheKey = `explain_${topic}_${section}_${contextHash}`;
   
   // Check cache first
-  const cached = cache.get(cacheKey);
+  const cached = await getCacheValue(cacheKey);
   if (cached) {
     console.log('📦 Returning cached response');
     return cached;
@@ -103,7 +146,7 @@ Format your response in markdown. Make code examples practical and production-re
       const response = result.response.text();
       
       console.log(`✅ Gemini AI succeeded (${client.id})`);
-      cache.set(cacheKey, response);
+      await setCacheValue(cacheKey, response);
       return response;
     } catch (geminiError) {
       console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
@@ -124,7 +167,7 @@ Format your response in markdown. Make code examples practical and production-re
       
       console.log(`✅ Groq AI succeeded (Key ${index + 1})`);
       const response = completion.choices[0]?.message?.content || 'No response generated';
-      cache.set(cacheKey, response);
+      await setCacheValue(cacheKey, response);
       return response;
     } catch (groqError) {
       console.error(`❌ Groq AI failed (Key ${index + 1}):`, groqError.message);
@@ -134,7 +177,7 @@ Format your response in markdown. Make code examples practical and production-re
   // Try Hugging Face fallback (Tertiary)
   try {
     const response = await tryHuggingFaceFallback(prompt);
-    cache.set(cacheKey, response);
+    await setCacheValue(cacheKey, response);
     return response;
   } catch (hfError) {
      console.error('❌ All AI providers failed. Returning mock response.');
@@ -167,6 +210,15 @@ console.log(example);
  * Answer a specific question with context and fallback
  */
 export const answerQuestion = async (question, context = {}) => {
+  const contextId = context.topic + context.section + (context.currentCode ? Buffer.from(context.currentCode).toString('base64').substring(0, 20) : '');
+  const cacheKey = `answer_${Buffer.from(question).toString('base64').substring(0, 30)}_${contextId}`;
+
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached answer');
+    return cached;
+  }
+
   const prompt = `
 You are an expert MERN stack instructor. Your goal is to help the student learn the specific topic they are currently studying.
 
@@ -195,8 +247,10 @@ Format your response in markdown.
     try {
       console.log(`🤖 Trying Gemini AI via ${client.id} (${client.modelName})...`);
       const result = await client.instance.generateContent(prompt);
+      const response = result.response.text();
       console.log(`✅ Gemini AI succeeded (${client.id})`);
-      return result.response.text();
+      await setCacheValue(cacheKey, response);
+      return response;
     } catch (geminiError) {
       console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
     }
@@ -206,7 +260,9 @@ Format your response in markdown.
   for (const [index, client] of groqClients.entries()) {
     try {
       console.log(`⚠️ TRIGGERING GROQ FALLBACK (Key ${index + 1})...`);
-      return await tryGroqFallback(prompt, client);
+      const response = await tryGroqFallback(prompt, client);
+      await setCacheValue(cacheKey, response);
+      return response;
     } catch (groqError) {
       console.error(`❌ Groq AI failed (Key ${index + 1}):`, groqError.message);
     }
@@ -214,7 +270,9 @@ Format your response in markdown.
 
   // Try Hugging Face fallback
   try {
-    return await tryHuggingFaceFallback(prompt);
+    const response = await tryHuggingFaceFallback(prompt);
+    await setCacheValue(cacheKey, response);
+    return response;
   } catch (hfError) {
      console.error('❌ All AI providers failed. Returning mock response.');
      return `
@@ -239,6 +297,13 @@ This appears to be a question about **${context.topic || 'coding'}**. Since I'm 
  * Generate follow-up questions based on a topic with fallback
  */
 export const generateFollowUpQuestions = async (topic, section, difficulty = 'medium') => {
+  const cacheKey = `followup_${topic}_${section}_${difficulty}`;
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached follow-up questions');
+    return cached;
+  }
+
   const prompt = `
 Generate 5 follow-up practice questions for students learning:
 
@@ -268,7 +333,9 @@ Make questions practical and interview-relevant.
                        responseText.match(/```\n([\s\S]*?)\n```/);
       const jsonText = jsonMatch ? jsonMatch[1] : responseText;
       try {
-        return JSON.parse(jsonText);
+        const parsed = JSON.parse(jsonText);
+        await setCacheValue(cacheKey, parsed);
+        return parsed;
       } catch (e) {
          return [{
           question: 'Failed to parse response. Please try again.',
@@ -325,6 +392,13 @@ Make questions practical and interview-relevant.
  * Generate interview questions (theory + practical) with fallback
  */
 export const generateInterviewQuestions = async (topic, type = 'both', difficulty = 'medium', count = 30) => {
+  const cacheKey = `interview_${topic}_${type}_${difficulty}_${count}`;
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached interview questions');
+    return cached;
+  }
+
   const typeFilter = type === 'theory' ? 'theoretical' : 
                      type === 'practical' ? 'practical coding' : 'both theoretical and practical';
   
@@ -340,6 +414,10 @@ export const generateInterviewQuestions = async (topic, type = 'both', difficult
 
   // Helper to generate a batch of questions
   const generateBatch = async (batchCount, batchIndex) => {
+    const batchCacheKey = `${cacheKey}_batch_${batchIndex}`;
+    const cachedBatch = await getCacheValue(batchCacheKey);
+    if (cachedBatch) return cachedBatch;
+
     const prompt = `
 Generate ${batchCount} unique ${typeFilter} interview questions for:
 
@@ -371,12 +449,16 @@ Format strictly as a JSON array:
 Make questions realistic to actual technical interviews. Ensure you provide exactly ${batchCount} questions.
 `;
 
-    const parseOrFallback = async (responseText) => {
+    const parseAndCache = async (responseText) => {
         const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
                          responseText.match(/```\n([\s\S]*?)\n```/);
         const jsonText = jsonMatch ? jsonMatch[1] : responseText;
         try {
-          return JSON.parse(jsonText);
+          const parsed = JSON.parse(jsonText);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            await setCacheValue(batchCacheKey, parsed);
+          }
+          return parsed;
         } catch (e) {
            console.error('JSON Parse Error in batch:', e);
            return [];
@@ -388,31 +470,33 @@ Make questions realistic to actual technical interviews. Ensure you provide exac
       try {
         console.log(`🤖 Batch ${batchIndex+1}: Trying Gemini (${client.modelName})...`);
         const result = await client.instance.generateContent(prompt);
-        const responseText = result.response.text();
-        return await parseOrFallback(responseText);
+        return await parseAndCache(result.response.text());
       } catch (geminiError) {
         console.error(`❌ Batch ${batchIndex+1} Gemini failed:`, geminiError.message);
       }
     }
 
     // Try Groq fallback
-    for (const [index, client] of groqClients.entries()) {
+    for (const client of groqClients) {
       try {
         console.log(`⚠️ Batch ${batchIndex+1}: Triggering Groq Fallback...`);
-        const completion = await client.chat.completions.create({
-            messages: [{ role: 'user', content: prompt }],
-            model: 'llama-3.1-8b-instant',
-            temperature: 0.7,
-            max_tokens: 8000 // Increased token limit
-        });
-        const responseText = completion.choices[0]?.message?.content;
-        return await parseOrFallback(responseText);
+        const responseText = await tryGroqFallback(prompt, client);
+        return await parseAndCache(responseText);
       } catch (groqError) {
         console.error(`❌ Batch ${batchIndex+1} Groq failed:`, groqError.message);
       }
     }
 
-    return []; // Return empty if all fail
+    // Try Hugging Face fallback
+    try {
+      console.log(`⚠️ Batch ${batchIndex+1}: Triggering HF Fallback...`);
+      const responseText = await tryHuggingFaceFallback(prompt);
+      return await parseAndCache(responseText);
+    } catch (hfError) {
+      console.error(`❌ Batch ${batchIndex+1} HF failed:`, hfError.message);
+    }
+
+    return [];
   };
 
   // Split into batches of 10
@@ -425,17 +509,15 @@ Make questions realistic to actual technical interviews. Ensure you provide exac
     promises.push(generateBatch(currentBatchCount, i));
   }
 
-  // Execute all batches in parallel
   console.log(`🚀 Starting generation of ${count} questions in ${batches} batches...`);
   const results = await Promise.all(promises);
-  
-  // Flatten results
   const allQuestions = results.flat();
   
   if (allQuestions.length === 0) {
       throw new Error('Failed to generate any questions after all attempts.');
   }
 
+  await setCacheValue(cacheKey, allQuestions);
   console.log(`✅ Successfully generated ${allQuestions.length} questions total.`);
   return allQuestions;
 };
@@ -444,23 +526,24 @@ Make questions realistic to actual technical interviews. Ensure you provide exac
  * Generate test cases for LeetCode problems with fallback
  */
 export const generateTestCases = async (prompt) => {
-  const parseOrFallback = (responseText) => {
+  const cacheKey = `testcases_${Buffer.from(prompt).toString('base64').substring(0, 30)}`;
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached test cases');
+    return cached;
+  }
+
+  const parseAndCache = async (responseText) => {
     const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
                      responseText.match(/```\n([\s\S]*?)\n```/);
     const jsonText = jsonMatch ? jsonMatch[1] : responseText;
     try {
-      return JSON.parse(jsonText);
+      const parsed = JSON.parse(jsonText);
+      await setCacheValue(cacheKey, parsed);
+      return parsed;
     } catch (e) {
       console.error('JSON Parse Error:', e);
-      // Return fallback test cases
-      return {
-        sampleCases: [
-          { input: { nums: [1,2,3] }, expected: [1,2], description: "Sample case" }
-        ],
-        hiddenCases: [
-          { input: { nums: [4,5,6] }, expected: [4,5] }
-        ]
-      };
+      return null;
     }
   };
 
@@ -469,30 +552,33 @@ export const generateTestCases = async (prompt) => {
     try {
       console.log(`🤖 Generating test cases via ${client.id}...`);
       const result = await client.instance.generateContent(prompt);
-      const responseText = result.response.text();
-      console.log(`✅ Test cases generated (${client.id})`);
-      return parseOrFallback(responseText);
+      const parsed = await parseAndCache(result.response.text());
+      if (parsed) return parsed;
     } catch (geminiError) {
       console.error(`❌ Gemini failed (${client.id}):`, geminiError.message);
     }
   }
 
   // Try Groq fallback
-  for (const [index, client] of groqClients.entries()) {
+  for (const client of groqClients) {
     try {
-      console.log(`⚠️ Trying Groq fallback (Key ${index + 1})...`);
-      const completion = await client.chat.completions.create({
-        messages: [{ role: 'user', content: prompt }],
-        model: 'llama-3.1-8b-instant',
-        temperature: 0.7,
-        max_tokens: 4000
-      });
-      const responseText = completion.choices[0]?.message?.content;
-      console.log(`✅ Groq succeeded (Key ${index + 1})`);
-      return parseOrFallback(responseText);
+      console.log('⚠️ Trying Groq fallback for test cases...');
+      const responseText = await tryGroqFallback(prompt, client);
+      const parsed = await parseAndCache(responseText);
+      if (parsed) return parsed;
     } catch (groqError) {
-      console.error(`❌ Groq failed (Key ${index + 1}):`, groqError.message);
+      console.error('❌ Groq failed for test cases:', groqError.message);
     }
+  }
+
+  // Try Hugging Face fallback
+  try {
+    console.log('⚠️ Trying HF fallback for test cases...');
+    const responseText = await tryHuggingFaceFallback(prompt);
+    const parsed = await parseAndCache(responseText);
+    if (parsed) return parsed;
+  } catch (hfError) {
+    console.error('❌ HF failed for test cases:', hfError.message);
   }
 
   // Return fallback if all fail
