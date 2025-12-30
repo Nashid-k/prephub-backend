@@ -28,6 +28,7 @@ export const googleLogin = async (req, res) => {
     const { email, name, picture, sub: googleId } = ticket.getPayload();
 
     // Check if user exists
+    let user = await User.findOne({ email });
     let isNewUser = false;
 
     if (user) {
