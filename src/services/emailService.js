@@ -7,7 +7,7 @@ import { getStreakData } from '../utils/streakHelper.js';
 /**
  * Calculate user's weekly statistics
  */
-const getUserWeekly Stats = async (userId) => {
+const getUserWeeklyStats = async (userId) => {
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
 
