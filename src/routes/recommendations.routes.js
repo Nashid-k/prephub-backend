@@ -3,7 +3,9 @@ import { getRecommendations } from '../controllers/recommendations.controller.js
 
 const router = express.Router();
 
+import { optionalProtect } from '../middleware/auth.js';
+
 // GET /api/recommendations
-router.get('/', getRecommendations);
+router.get('/', optionalProtect, getRecommendations);
 
 export default router;

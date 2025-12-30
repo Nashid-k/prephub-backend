@@ -7,7 +7,7 @@ import Progress from '../models/Progress.js';
  */
 export const getRecommendations = async (req, res) => {
     try {
-        const userId = req.user?.id || req.sessionId;
+        const userId = req.user ? req.user.id : (req.headers['x-session-id'] || 'default-user');
 
         // Get all topics
         const allTopics = await Topic.find({}).select('slug name description icon').lean();
