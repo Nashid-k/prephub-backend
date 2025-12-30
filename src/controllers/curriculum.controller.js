@@ -39,7 +39,7 @@ export const getAllTopics = async (req, res) => {
                 $match: {
                   $expr: {
                     $and: [
-                      { $eq: ['$userId', new mongoose.Types.ObjectId(userId)] },
+                      { $eq: ['$userId', userId] },
                       { $eq: ['$completed', true] }
                     ]
                   }
