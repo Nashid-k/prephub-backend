@@ -53,7 +53,8 @@ export const googleLogin = async (req, res) => {
       try {
         await sendWelcomeEmail(user);
       } catch (emailError) {
-        console.error('Failed to send welcome email:', emailError);
+        console.warn('⚠️  Welcome email not sent:', emailError.message || emailError);
+        console.warn('ℹ️  Note: Resend free tier only sends to verified emails. User registration still successful.');
         // Don't fail the registration if email fails
       }
     }
