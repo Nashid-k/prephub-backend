@@ -1,7 +1,6 @@
 import { OAuth2Client } from 'google-auth-library';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
-import { sendWelcomeEmail } from '../services/emailService.js';
 
 // Initialize Google Client
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
@@ -48,15 +47,6 @@ export const googleLogin = async (req, res) => {
         googleId,
       });
       isNewUser = true;
-      
-      // Send welcome email to new users
-      try {
-        await sendWelcomeEmail(user);
-      } catch (emailError) {
-        console.warn('⚠️  Welcome email not sent:', emailError.message || emailError);
-        console.warn('ℹ️  Note: Resend free tier only sends to verified emails. User registration still successful.');
-        // Don't fail the registration if email fails
-      }
     }
 
     res.json({
