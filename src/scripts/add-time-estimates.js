@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
+import dotenv from 'dotenv';
 import Section from '../models/Section.js';
 import Topic from '../models/Topic.js';
+
+dotenv.config();
 
 /**
  * Migration script to calculate and add estimated minutes to all sections
