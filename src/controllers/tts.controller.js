@@ -7,18 +7,12 @@ const elevenlabs = new ElevenLabsClient({
     apiKey: ELEVENLABS_API_KEY
 });
 
-// Premium Voice IDs (Updated for better quality)
-// You can find more at: https://elevenlabs.io/voices
-const VOICE_IDS = {
-    'en-US': 'cgSgspJ2msm6clMCkdW9', // Samara - Expressive storytelling
-    'hi-IN': 'pNInz6obpgDQGcFmaJgB', // Adam - Multilingual
-    'ta-IN': 'pNInz6obpgDQGcFmaJgB', // Adam
-    'ml-IN': 'pNInz6obpgDQGcFmaJgB'  // Adam
-};
+// Samara voice - Expressive storytelling (English)
+const VOICE_ID = 'cgSgspJ2msm6clMCkdW9';
 
 export const generateSpeech = async (req, res) => {
     try {
-        const { text, language = 'en-US' } = req.body;
+        const { text } = req.body;
 
         if (!text) {
             return res.status(400).json({ error: 'Text is required' });
@@ -28,21 +22,13 @@ export const generateSpeech = async (req, res) => {
             return res.status(500).json({ error: 'ElevenLabs API key not configured' });
         }
 
-        const voiceId = VOICE_IDS[language] || VOICE_IDS['en-US'];
+        console.log(`🎙️ Generating speech for: "${text.substring(0, 50)}..."`);
 
-        console.log(`🎙️ Generating speech with ${language} voice...`);
-
-        // Generate speech using ElevenLabs v3 (supports audio tags!)
-        const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
-            text, // Can include [whispers], [giggles], [sarcastically], etc.
-            model_id: 'eleven_turbo_v2_5', // Fast & high-quality
-            output_format: 'mp3_44100_128',
-            voice_settings: {
-                stability: 0.5,        // 0-1: Lower = more expressive
-                similarity_boost: 0.8, // 0-1: Higher = more similar to original voice
-                style: 0.5,           // 0-1: Exaggeration of style
-                use_speaker_boost: true
-            }
+        // Generate speech using ElevenLabs
+        const audioStream = await elevenlabs.textToSpeech.convert(VOICE_ID, {
+            text,
+            model_id: 'eleven_turbo_v2_5',
+            output_format: 'mp3_44100_128'
         });
 
         // Convert stream to buffer
@@ -52,16 +38,15 @@ export const generateSpeech = async (req, res) => {
         }
         const audioBuffer = Buffer.concat(chunks);
 
-        console.log(`✅ Generated ${audioBuffer.length} bytes of audio`);
+        console.log(`✅ Generated ${audioBuffer.length} bytes`);
 
         // Return audio as base64
-        const audioBase64 = audioBuffer.toString('base64');
-        res.json({ audio: audioBase64 });
+        res.json({ audio: audioBuffer.toString('base64') });
 
     } catch (error) {
-        console.error('❌ ElevenLabs TTS Error:', error.message);
+        console.error('❌ ElevenLabs Error:', error);
         res.status(500).json({ 
-            error: 'Failed to generate speech',
+            error: 'TTS failed',
             details: error.message
         });
     }
