@@ -519,17 +519,24 @@ export const generateQuiz = async (topic, section, regenerate = false) => {
     console.log('🔄 Regenerating quiz (cache bypassed)');
   }
 
+  // Add randomness to prompt to ensure variety on regeneration
+  const seeds = ['focus on edge cases', 'focus on core concepts', 'focus on practical implementation', 'focus on common pitfalls', 'focus on performance'];
+  const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
+  const timestamp = new Date().getTime();
+
   const prompt = `
 Generate a 5-question Multiple Choice Quiz for:
 Topic: ${topic}
 Section: ${section}
+Context Variation: ${randomSeed} (Random ID: ${timestamp})
 
 For each question:
-1. Provide a clear, practical question.
+1. Provide a clear, practical question relevant to the specific section content.
 2. Provide 4 distinct options.
 3. Indicate the correct option index (0-3).
 4. Provide a brief explanation for why the correct answer is correct.
 
+IMPORTANT: Ensure questions are NOT repetitive if generated multiple times.
 Format strictly as a JSON array:
 [
   {
@@ -549,7 +556,10 @@ Format strictly as a JSON array:
         const parsed = JSON.parse(jsonText);
         // Validate structure briefly
         if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].options) {
-            await setCacheValue(cacheKey, parsed);
+            // Only cache if NOT regenerating (or cache with a short TTL if we wanted to support "back" button, but for now just skip cache on regenerate)
+            if (!regenerate) {
+                await setCacheValue(cacheKey, parsed);
+            }
             return parsed;
         }
         throw new Error('Invalid quiz structure');
@@ -600,7 +610,7 @@ Format strictly as a JSON array:
       question: "(Offline) Which of the following is true about " + section + "?",
       options: ["It is a key concept", "It is irrelevant", "It triggers errors", "None of the above"],
       correctIndex: 0,
-      explanation: "This is a placeholder question because AI services are offline."
+      explanation: "This is a placeholder question because AI services are offline. Please check server logs."
     }
   ];
 };
