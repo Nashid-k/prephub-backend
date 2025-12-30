@@ -28,11 +28,12 @@ export const getRecommendations = async (req, res) => {
 
         // Define learning paths (prerequisites)
         const learningPaths = {
-            'mongodb': { difficulty: 1, prereqs: [] },
-            'express': { difficulty: 2, prereqs: ['mongodb'] },
-            'react': { difficulty: 2, prereqs: [] },
-            'node': { difficulty: 2, prereqs: [] },
-            'dsa': { difficulty: 3, prereqs: [] },
+            'javascript': { difficulty: 1, prereqs: [] },
+            'mongodb': { difficulty: 2, prereqs: ['javascript'] },
+            'express': { difficulty: 2, prereqs: ['mongodb', 'javascript'] },
+            'react': { difficulty: 2, prereqs: ['javascript'] },
+            'node': { difficulty: 2, prereqs: ['javascript'] },
+            'dsa': { difficulty: 3, prereqs: ['javascript'] },
             'os': { difficulty: 2, prereqs: [] },
             'networking': { difficulty: 2, prereqs: [] },
             'system-design': { difficulty: 4, prereqs: ['mongodb', 'express', 'react', 'node'] }
