@@ -1,12 +1,16 @@
-import axios from 'axios';
+import { ElevenLabsClient } from '@elevenlabs/elevenlabs-js';
 
 const ELEVENLABS_API_KEY = process.env.ELEVENLABS_API_KEY;
-const ELEVENLABS_API_URL = 'https://api.elevenlabs.io/v1';
 
-// Voice IDs (you can change these to different voices)
+// Initialize ElevenLabs client
+const elevenlabs = new ElevenLabsClient({
+    apiKey: ELEVENLABS_API_KEY
+});
+
+// Voice IDs for different languages
 const VOICE_IDS = {
     'en-US': 'EXAVITQu4vr4xnSDxMaL', // Rachel - Natural conversational
-    'hi-IN': 'pNInz6obpgDQGcFmaJgB', // Adam (works well for Hindi)
+    'hi-IN': 'pNInz6obpgDQGcFmaJgB', // Adam (multilingual)
     'ta-IN': 'pNInz6obpgDQGcFmaJgB', // Adam
     'ml-IN': 'pNInz6obpgDQGcFmaJgB'  // Adam
 };
@@ -25,38 +29,35 @@ export const generateSpeech = async (req, res) => {
 
         const voiceId = VOICE_IDS[language] || VOICE_IDS['en-US'];
 
-        // Call ElevenLabs API
-        const response = await axios.post(
-            `${ELEVENLABS_API_URL}/text-to-speech/${voiceId}`,
-            {
-                text,
-                model_id: 'eleven_multilingual_v2',
-                voice_settings: {
-                    stability: 0.5,
-                    similarity_boost: 0.75,
-                    style: 0.5,
-                    use_speaker_boost: true
-                }
-            },
-            {
-                headers: {
-                    'Accept': 'audio/mpeg',
-                    'xi-api-key': ELEVENLABS_API_KEY,
-                    'Content-Type': 'application/json'
-                },
-                responseType: 'arraybuffer'
+        // Generate speech using ElevenLabs SDK
+        const audioStream = await elevenlabs.textToSpeech.convert(voiceId, {
+            text,
+            model_id: 'eleven_multilingual_v2',
+            output_format: 'mp3_44100_128',
+            voice_settings: {
+                stability: 0.5,
+                similarity_boost: 0.75,
+                style: 0.5,
+                use_speaker_boost: true
             }
-        );
+        });
+
+        // Convert stream to buffer
+        const chunks = [];
+        for await (const chunk of audioStream) {
+            chunks.push(chunk);
+        }
+        const audioBuffer = Buffer.concat(chunks);
 
         // Return audio as base64
-        const audioBase64 = Buffer.from(response.data).toString('base64');
+        const audioBase64 = audioBuffer.toString('base64');
         res.json({ audio: audioBase64 });
 
     } catch (error) {
-        console.error('ElevenLabs TTS Error:', error.response?.data || error.message);
+        console.error('ElevenLabs TTS Error:', error.message);
         res.status(500).json({ 
             error: 'Failed to generate speech',
-            details: error.response?.data?.detail || error.message
+            details: error.message
         });
     }
 };
