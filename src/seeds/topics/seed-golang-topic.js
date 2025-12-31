@@ -1,0 +1,515 @@
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import Topic from '../../models/Topic.js';
+import Category from '../../models/Category.js';
+import Section from '../../models/Section.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '../../../.env') });
+
+const golangData = {
+  "Go_Fundamentals": {
+    "01_introduction": {
+      "core_concepts": [
+        "What is Go - Statically Typed, Compiled Language",
+        "Go Design Philosophy (Simplicity, Concurrency)",
+        "Key Features and Use Cases",
+        "Go vs Other Languages"
+      ],
+      "setup_environment": [
+        "Go Installation",
+        "GOROOT and GOPATH",
+        "Go Modules (go.mod)",
+        "Development Environment Setup"
+      ]
+    },
+
+    "02_basic_syntax": {
+      "variables_constants": [
+        "Variable Declaration (var, :=)",
+        "Zero Values",
+        "Constants and iota",
+        "Type Inference"
+      ],
+      "data_types": [
+        "Basic Types (int, float64, bool, string)",
+        "Byte and Rune",
+        "String Type and UTF-8",
+        "Type Conversion"
+      ]
+    }
+  },
+
+  "Control_Flow": {
+    "conditionals": [
+      "if-else Statements",
+      "switch Statements",
+      "Type Switches",
+      "Conditional Expressions"
+    ],
+
+    "loops": [
+      "for Loop (Only Loop Construct)",
+      "Range-based Loops (for range)",
+      "break and continue",
+      "Infinite Loops"
+    ]
+  },
+
+  "Functions": {
+    "function_basics": [
+      "Function Declaration",
+      "Multiple Return Values",
+      "Named Return Values",
+      "Variadic Functions"
+    ],
+
+    "advanced_functions": [
+      "Anonymous Functions",
+      "Closures",
+      "Higher-Order Functions",
+      "Function Composition"
+    ],
+
+    "error_handling": [
+      "Error Interface",
+      "Returning and Checking Errors",
+      "Custom Error Types",
+      "Error Wrapping"
+    ],
+
+    "panic_recover": [
+      "panic and recover",
+      "defer Statement",
+      "Defer Stack Order",
+      "Resource Cleanup Patterns"
+    ]
+  },
+
+  "Data_Structures": {
+    "arrays_slices": {
+      "arrays": [
+        "Array Declaration",
+        "Fixed Size Arrays",
+        "Array Operations"
+      ],
+      "slices": [
+        "Slice Creation (make, literal)",
+        "Slice Operations (append, copy)",
+        "Length vs Capacity",
+        "Slice Internals"
+      ]
+    },
+
+    "maps": [
+      "Map Declaration and Initialization",
+      "Map Operations (add, delete, update)",
+      "Checking Key Existence",
+      "Map Iteration"
+    ],
+
+    "strings": [
+      "String Operations",
+      "strings Package",
+      "strconv Package",
+      "String Manipulation"
+    ]
+  },
+
+  "Structs_Methods": {
+    "structs": [
+      "Struct Definition",
+      "Creating and Using Structs",
+      "Struct Embedding (Composition)",
+      "Struct Tags"
+    ],
+
+    "methods": [
+      "Method Declaration",
+      "Value Receivers vs Pointer Receivers",
+      "Method Sets",
+      "Pointer Semantics"
+    ]
+  },
+
+  "Interfaces": {
+    "interface_basics": [
+      "Interface Definition",
+      "Interface Implementation",
+      "Empty Interface (interface{})",
+      "Interface as Contracts"
+    ],
+
+    "interface_usage": [
+      "Polymorphism with Interfaces",
+      "Type Assertion",
+      "Type Switches",
+      "Interface Best Practices"
+    ]
+  },
+
+  "Concurrency": {
+    "01_goroutines": [
+      "Goroutine Creation (go keyword)",
+      "Goroutine Scheduling",
+      "Goroutine Lifecycle",
+      "Concurrency Patterns"
+    ],
+
+    "02_channels": {
+      "channel_basics": [
+        "Channel Creation",
+        "Unbuffered vs Buffered Channels",
+        "Channel Operations",
+        "Channel Synchronization"
+      ],
+      "advanced_channels": [
+        "Closing Channels",
+        "Range over Channels",
+        "Select Statement",
+        "Channel Patterns"
+      ]
+    },
+
+    "03_synchronization": [
+      "sync Package",
+      "WaitGroup for Coordination",
+      "Mutex and RWMutex",
+      "sync.Once for Initialization"
+    ],
+
+    "04_concurrency_patterns": [
+      "Worker Pool Pattern",
+      "Fan-out Fan-in",
+      "Pipeline Pattern",
+      "Context Package for Cancellation"
+    ]
+  },
+
+  "Pointers_Memory": {
+    "pointers": [
+      "Pointer Basics (& and *)",
+      "Pointer to Structs",
+      "Pointer Arithmetic (Not Available)",
+      "Pointer Usage Patterns"
+    ],
+
+    "memory_management": [
+      "Stack vs Heap Allocation",
+      "Garbage Collection",
+      "Escape Analysis",
+      "Memory Optimization"
+    ]
+  },
+
+  "Standard_Library": {
+    "essential_packages": {
+      "fmt": ["Printing and Formatting"],
+      "os": ["Operating System Interaction"],
+      "io": ["Input/Output Operations"],
+      "time": ["Time and Date Operations"],
+      "strconv": ["String Conversion"],
+      "strings": ["String Manipulation"]
+    },
+
+    "file_handling": [
+      "Reading and Writing Files",
+      "File Operations",
+      "Temporary Files",
+      "File Path Operations"
+    ],
+
+    "encoding": [
+      "JSON Encoding/Decoding",
+      "XML Processing",
+      "Base64 Encoding",
+      "CSV Processing"
+    ]
+  },
+
+  "Testing": {
+    "testing_basics": [
+      "testing Package",
+      "Writing Unit Tests",
+      "Table-driven Tests",
+      "Test Coverage"
+    ],
+
+    "advanced_testing": [
+      "Benchmark Tests",
+      "Example Tests",
+      "Test Helpers",
+      "Mocking Dependencies"
+    ]
+  },
+
+  "Web_Development": {
+    "http_server": [
+      "net/http Package",
+      "HTTP Server Creation",
+      "Handler Functions",
+      "Middleware Implementation"
+    ],
+
+    "web_frameworks": [
+      "Gin Framework",
+      "Echo Framework",
+      "Chi Router",
+      "Framework Selection"
+    ],
+
+    "api_development": [
+      "REST API Implementation",
+      "JSON Request/Response",
+      "Error Handling in APIs",
+      "API Documentation"
+    ]
+  },
+
+  "Database": {
+    "database_basics": [
+      "database/sql Package",
+      "Database Connections",
+      "Query Execution",
+      "Prepared Statements"
+    ],
+
+    "orms": [
+      "GORM (Object Relational Mapper)",
+      "SQLx",
+      "Database Migrations",
+      "Transaction Management"
+    ]
+  },
+
+  "CLI_Development": {
+    "cli_basics": [
+      "flag Package",
+      "Command-line Arguments",
+      "Subcommands",
+      "CLI Application Structure"
+    ],
+
+    "advanced_cli": [
+      "Cobra Library",
+      "Environment Variables",
+      "Configuration Management",
+      "Logging in CLI Apps"
+    ]
+  },
+
+  "Generics": {
+    "generics_basics": [
+      "Generic Functions",
+      "Generic Types",
+      "Type Constraints",
+      "When to Use Generics"
+    ]
+  },
+
+  "Best_Practices": {
+    "code_organization": [
+      "Project Structure",
+      "Package Design",
+      "Error Handling Patterns",
+      "Logging Strategies"
+    ],
+
+    "performance": [
+      "Memory Optimization",
+      "CPU Optimization",
+      "Concurrency Best Practices",
+      "Profile-guided Optimization"
+    ],
+
+    "development_workflow": [
+      "Go Modules Management",
+      "Vendor Directory",
+      "Continuous Integration",
+      "Code Review Guidelines"
+    ]
+  },
+
+  "Deployment_DevOps": {
+    "containerization": [
+      "Dockerizing Go Applications",
+      "Multi-stage Builds",
+      "Minimal Container Images",
+      "Docker Best Practices"
+    ],
+
+    "cloud_deployment": [
+      "Deployment to AWS/Google Cloud/Azure",
+      "Serverless Functions",
+      "Environment Configuration",
+      "Secrets Management"
+    ],
+
+    "monitoring": [
+      "Application Metrics",
+      "Log Aggregation",
+      "Performance Monitoring",
+      "Error Tracking"
+    ]
+  },
+
+  "Essential_Projects": {
+    "learning_projects": [
+      "CLI Tool (File Processor, Data Converter)",
+      "REST API Service (Todo App, Bookstore)",
+      "Web Scraper",
+      "Chat Application (WebSocket)"
+    ],
+
+    "must_implement_features": [
+      "Concurrent File Processor",
+      "Rate-limited API Client",
+      "Database-backed Service",
+      "CLI with Subcommands"
+    ]
+  },
+
+  "Common_Patterns_Problems": {
+    "concurrency_problems": [
+      "Worker Pool Implementation",
+      "Rate Limiter",
+      "Concurrent Map Access",
+      "Graceful Shutdown"
+    ],
+
+    "data_processing": [
+      "CSV/JSON Processor",
+      "Data Transformation Pipeline",
+      "Batch Processing",
+      "Stream Processing"
+    ],
+
+    "error_patterns": [
+      "Error Wrapping and Unwrapping",
+      "Retry Logic",
+      "Circuit Breaker Pattern",
+      "Fallback Mechanisms"
+    ]
+  },
+
+  "Interview_Preparation": {
+    "core_concepts": [
+      "Goroutines and Channels",
+      "Interface Implementation",
+      "Error Handling",
+      "Concurrency Patterns",
+      "Memory Management"
+    ],
+
+    "practical_skills": [
+      "Write Concurrent Programs",
+      "Implement REST APIs",
+      "Optimize Go Code",
+      "Debug Performance Issues",
+      "Design Go Packages"
+    ]
+  }
+};
+
+const formatName = (str) => {
+    return str
+        .replace(/^\\d+_/, '')
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
+const seedGolang = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log('Connected to MongoDB');
+
+        let topic = await Topic.findOne({ slug: 'golang' });
+        if (!topic) {
+            console.log('Creating Golang topic...');
+            topic = await Topic.create({
+                name: 'Golang',
+                slug: 'golang',
+                description: 'Master Go programming for concurrent and scalable systems',
+                icon: '🐹',
+                order: 7,
+                color: '#00ADD8'
+            });
+        }
+
+        const categoriesToDelete = await Category.find({ topicId: topic._id });
+        const categoryIds = categoriesToDelete.map(c => c._id);
+        if (categoryIds.length > 0) {
+            await Section.deleteMany({ categoryId: { $in: categoryIds } });
+            await Category.deleteMany({ _id: { $in: categoryIds } });
+            console.log('Cleared existing Golang data');
+        }
+
+        const seenSlugs = new Set();
+        const generateUniqueSlug = (title) => {
+            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            let slug = baseSlug;
+            let counter = 1;
+            while (seenSlugs.has(slug)) {
+                counter++;
+                slug = `${baseSlug}-${counter}`;
+            }
+            seenSlugs.add(slug);
+            return slug;
+        };
+
+        let order = 1;
+        for (const [mainKey, mainValue] of Object.entries(golangData)) {
+            for (const [key, value] of Object.entries(mainValue)) {
+                const categoryName = formatName(key);
+                const categorySlug = generateUniqueSlug(categoryName);
+
+                const category = await Category.create({
+                    name: categoryName,
+                    slug: categorySlug,
+                    description: `Learn about ${categoryName}`,
+                    topicId: topic._id,
+                    group: formatName(mainKey),
+                    order: order++
+                });
+
+                let sections = [];
+                if (Array.isArray(value)) {
+                    sections = value;
+                } else {
+                    for (const [subKey, subItems] of Object.entries(value)) {
+                        sections = [...sections, ...subItems];
+                    }
+                }
+
+                const sectionDocs = sections.map((sectionTitle, index) => ({
+                    title: sectionTitle,
+                    slug: generateUniqueSlug(sectionTitle),
+                    description: `Detailed explanation of ${sectionTitle}`,
+                    content: 'Coming soon...',
+                    categoryId: category._id,
+                    topicId: topic._id,
+                    order: index + 1,
+                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Concurrency') ? 'advanced' : 
+                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') ? 'beginner' : 'intermediate',
+                    estimatedTime: 15
+                }));
+
+                await Section.insertMany(sectionDocs);
+                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
+            }
+        }
+
+        console.log('✅ Golang seeding complete!');
+        process.exit(0);
+    } catch (error) {
+        console.error('Error seeding data:', error);
+        process.exit(1);
+    }
+};
+
+seedGolang();

@@ -1,0 +1,582 @@
+import mongoose from 'mongoose';
+import dotenv from 'dotenv';
+import Topic from '../../models/Topic.js';
+import Category from '../../models/Category.js';
+import Section from '../../models/Section.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+dotenv.config({ path: path.join(__dirname, '../../../.env') });
+
+const nodejsData = {
+  "Nodejs_Fundamentals": {
+    "01_introduction": {
+      "core_concepts": [
+        "Node.js - JavaScript Runtime Environment",
+        "V8 Engine and Libuv",
+        "Event-Driven Architecture",
+        "Node.js vs Browser JavaScript"
+      ],
+      "development_environment": [
+        "Node.js Installation",
+        "NPM (Node Package Manager)",
+        "NVM (Node Version Manager)",
+        "Project Initialization (npm init)"
+      ]
+    },
+
+    "02_project_structure": {
+      "configuration_files": [
+        "package.json - Dependencies and Scripts",
+        "package-lock.json - Dependency Locking",
+        ".env - Environment Variables",
+        ".gitignore - Version Control Exclusion"
+      ],
+      "dependencies": [
+        "Dependencies vs DevDependencies",
+        "npm install vs npm ci",
+        "Semantic Versioning",
+        "Package Management Best Practices"
+      ]
+    },
+
+    "03_repl_basics": [
+      "REPL (Read-Eval-Print Loop)",
+      "Interactive Node.js Shell",
+      "REPL Commands and Features",
+      "Using REPL for Testing"
+    ]
+  },
+
+  "Core_Modules": {
+    "01_fs_module": [
+      "File System Operations",
+      "Reading Files (readFile, readFileSync)",
+      "Writing Files (writeFile, writeFileSync)",
+      "File and Directory Management",
+      "File Statistics (fs.stat)"
+    ],
+
+    "02_path_module": [
+      "Path Manipulation",
+      "path.join() for Cross-platform Paths",
+      "path.resolve() for Absolute Paths",
+      "Path Parsing Methods",
+      "Working with File Extensions"
+    ],
+
+    "03_http_module": {
+      "server_basics": [
+        "http.createServer()",
+        "Request and Response Objects",
+        "Creating Basic HTTP Server",
+        "Handling Different HTTP Methods"
+      ],
+      "request_response": [
+        "HTTP Request Structure",
+        "HTTP Response Methods",
+        "Status Codes (200, 201, 404, 500)",
+        "Headers Management"
+      ]
+    },
+
+    "04_other_core_modules": [
+      "os Module - System Information",
+      "url Module - URL Parsing and Formatting",
+      "util Module - Utility Functions",
+      "events Module - EventEmitter"
+    ]
+  },
+
+  "Express_Framework": {
+    "01_express_basics": [
+      "Express vs Native HTTP",
+      "Express Application Setup",
+      "Basic Routing (app.get, app.post)",
+      "Middleware Concept"
+    ],
+
+    "02_middleware": {
+      "middleware_types": [
+        "Application-level Middleware",
+        "Router-level Middleware",
+        "Error-handling Middleware",
+        "Built-in Middleware (express.json, express.urlencoded)"
+      ],
+      "custom_middleware": [
+        "Middleware Function Structure",
+        "next() Function and Error Handling",
+        "Request/Response Modification",
+        "Middleware Order Matters"
+      ]
+    },
+
+    "03_routing": [
+      "Route Parameters (:id)",
+      "Query Parameters (?search=)",
+      "Route Chaining",
+      "Router Module for Modular Routes"
+    ],
+
+    "04_request_handling": [
+      "req.params vs req.query vs req.body",
+      "Request Body Parsing",
+      "File Uploads (Multer)",
+      "Request Validation"
+    ],
+
+    "05_response_handling": [
+      "Response Methods (send, json, render)",
+      "Status Codes and Headers",
+      "Redirects and Downloads",
+      "Response Formatting"
+    ]
+  },
+
+  "HTTP_Protocol": {
+    "01_http_basics": [
+      "HTTP Methods (GET, POST, PUT, DELETE, PATCH)",
+      "Status Code Categories (2xx, 3xx, 4xx, 5xx)",
+      "Headers and Their Purpose",
+      "Stateless Nature of HTTP"
+    ],
+
+    "02_advanced_http": [
+      "PUT vs PATCH Differences",
+      "OPTIONS Method and CORS",
+      "Idempotent Methods",
+      "Safe Methods"
+    ],
+
+    "03_url_structure": [
+      "URL Components (Protocol, Domain, Path, Query)",
+      "URL Encoding/Decoding",
+      "Relative vs Absolute URLs",
+      "URL Best Practices"
+    ]
+  },
+
+  "Asynchronous_Programming": {
+    "01_callbacks": [
+      "Callback Pattern",
+      "Error-first Callbacks",
+      "Callback Hell and Solutions",
+      "Async Control Flow"
+    ],
+
+    "02_promises": [
+      "Promise Creation and Usage",
+      "Promise Chaining (then, catch, finally)",
+      "Promise.all() and Promise.race()",
+      "Async/Await Syntax"
+    ],
+
+    "03_event_loop": [
+      "Node.js Event Loop Phases",
+      "Microtask Queue vs Macrotask Queue",
+      "process.nextTick()",
+      "setImmediate()"
+    ]
+  },
+
+  "Concurrency_Performance": {
+    "01_concurrency_basics": [
+      "Single-threaded Event Loop",
+      "Non-blocking I/O Operations",
+      "Concurrency vs Parallelism",
+      "Node.js Concurrency Model"
+    ],
+
+    "02_scaling": [
+      "Cluster Module for Multiple Processes",
+      "Worker Threads for CPU-bound Tasks",
+      "Load Balancing Strategies",
+      "Performance Monitoring"
+    ],
+
+    "03_timers": [
+      "setTimeout and clearTimeout",
+      "setInterval and clearInterval",
+      "Timer Best Practices",
+      "Memory Leak Prevention"
+    ]
+  },
+
+  "Security": {
+    "01_authentication": [
+      "Authentication vs Authorization",
+      "JWT (JSON Web Tokens)",
+      "Session-based Authentication",
+      "OAuth Basics"
+    ],
+
+    "02_security_headers": [
+      "CORS (Cross-Origin Resource Sharing)",
+      "Helmet.js for Security Headers",
+      "CSRF Protection",
+      "Rate Limiting"
+    ],
+
+    "03_input_validation": [
+      "Request Validation",
+      "SQL Injection Prevention",
+      "XSS (Cross-site Scripting) Protection",
+      "Input Sanitization"
+    ]
+  },
+
+  "Database_Integration": {
+    "01_database_basics": [
+      "Database Connection Pooling",
+      "Connection Management",
+      "Query Building",
+      "Error Handling with Databases"
+    ],
+
+    "02_orms_odms": [
+      "ODM (Object-Document Mapper) Concepts",
+      "Mongoose for MongoDB",
+      "Sequelize for SQL Databases",
+      "Data Modeling"
+    ]
+  },
+
+  "Streams_Buffers": {
+    "01_streams": [
+      "Stream Types (Readable, Writable, Duplex, Transform)",
+      "Stream Events and Methods",
+      "Piping Streams",
+      "Stream Error Handling"
+    ],
+
+    "02_buffers": [
+      "Buffer Creation and Manipulation",
+      "Encoding Types (UTF-8, Base64)",
+      "Buffer to String Conversion",
+      "Working with Binary Data"
+    ]
+  },
+
+  "File_Operations": {
+    "file_handling": [
+      "File Reading and Writing",
+      "File Streaming for Large Files",
+      "File Permissions and Stats",
+      "Directory Operations"
+    ],
+
+    "file_uploads": [
+      "Multer Configuration",
+      "File Validation (Type, Size)",
+      "File Storage Strategies",
+      "File Serving"
+    ]
+  },
+
+  "Session_Management": {
+    "01_cookies": [
+      "Cookie Creation and Properties",
+      "Cookie Flags (HttpOnly, Secure, SameSite)",
+      "Session Cookies vs Persistent Cookies",
+      "Cookie Security"
+    ],
+
+    "02_sessions": [
+      "express-session Middleware",
+      "Session Storage (Memory, Redis)",
+      "Session Management",
+      "Session Security"
+    ],
+
+    "03_storage_options": [
+      "LocalStorage vs SessionStorage",
+      "Cookie-based Sessions",
+      "Token-based Authentication",
+      "Storage Security Considerations"
+    ]
+  },
+
+  "Error_Handling": {
+    "01_error_patterns": [
+      "Try-Catch in Async Code",
+      "Error Middleware",
+      "Custom Error Classes",
+      "Error Logging"
+    ],
+
+    "02_graceful_shutdown": [
+      "Process Signal Handling",
+      "Resource Cleanup",
+      "Connection Draining",
+      "Zero-downtime Deployment"
+    ]
+  },
+
+  "Testing": {
+    "01_testing_basics": [
+      "Unit Testing with Jest/Mocha",
+      "API Testing (Supertest)",
+      "Mocking Dependencies",
+      "Test Coverage"
+    ],
+
+    "02_integration_testing": [
+      "Database Testing",
+      "External API Testing",
+      "End-to-End Testing",
+      "Testing Best Practices"
+    ]
+  },
+
+  "Deployment": {
+    "01_production_prep": [
+      "Environment Configuration",
+      "Logging Strategy",
+      "Monitoring Setup",
+      "Performance Optimization"
+    ],
+
+    "02_deployment_strategies": [
+      "Process Management (PM2)",
+      "Containerization (Docker)",
+      "Cloud Deployment",
+      "CI/CD Pipeline"
+    ]
+  },
+
+  "WebSockets_RealTime": {
+    "01_websocket_basics": [
+      "WebSocket Protocol",
+      "Socket.io Library",
+      "Real-time Communication",
+      "Connection Management"
+    ],
+
+    "02_websocket_patterns": [
+      "Room-based Communication",
+      "Broadcast vs Direct Messages",
+      "Connection State Management",
+      "Error Handling and Reconnection"
+    ]
+  },
+
+  "REST_API_Design": {
+    "01_api_design": [
+      "REST Principles",
+      "Resource Naming Conventions",
+      "HTTP Method Usage",
+      "API Versioning"
+    ],
+
+    "02_api_best_practices": [
+      "Response Formatting",
+      "Error Response Standards",
+      "Pagination and Filtering",
+      "API Documentation"
+    ]
+  },
+
+  "Advanced_Topics": {
+    "01_architecture": [
+      "MVC Pattern in Node.js",
+      "Service Layer Pattern",
+      "Repository Pattern",
+      "Clean Architecture Basics"
+    ],
+
+    "02_performance": [
+      "Memory Management",
+      "CPU Profiling",
+      "Request/Response Optimization",
+      "Caching Strategies"
+    ],
+
+    "03_tools": [
+      "Debugging Tools",
+      "Performance Monitoring",
+      "Log Aggregation",
+      "Application Metrics"
+    ]
+  },
+
+  "Essential_Projects": {
+    "beginner_projects": [
+      "REST API for Todo Management",
+      "File Upload Service",
+      "Basic Chat Application",
+      "Weather API Proxy"
+    ],
+
+    "intermediate_projects": [
+      "Authentication Service",
+      "Real-time Notification System",
+      "API Gateway",
+      "Microservices Communication"
+    ],
+
+    "advanced_projects": [
+      "WebSocket Game Server",
+      "Streaming Service",
+      "Microservices Architecture",
+      "High-traffic API"
+    ]
+  },
+
+  "Best_Practices": {
+    "01_code_organization": [
+      "Project Structure Patterns",
+      "Module Organization",
+      "Code Reusability",
+      "Configuration Management"
+    ],
+
+    "02_performance": [
+      "Database Query Optimization",
+      "Memory Usage Monitoring",
+      "Connection Pooling",
+      "Caching Implementation"
+    ],
+
+    "03_security": [
+      "Input Validation",
+      "Authentication Best Practices",
+      "Secure Headers",
+      "Dependency Security"
+    ],
+
+    "04_maintainability": [
+      "Error Handling Strategy",
+      "Logging Standards",
+      "Testing Strategy",
+      "Documentation Practices"
+    ]
+  },
+
+  "Interview_Preparation": {
+    "core_concepts": [
+      "Event Loop and Async Programming",
+      "Express Middleware System",
+      "REST API Design",
+      "Authentication and Authorization",
+      "Error Handling Strategies"
+    ],
+
+    "common_questions": [
+      "Node.js Architecture (V8, Libuv)",
+      "Middleware Execution Order",
+      "Cluster vs Worker Threads",
+      "Streams vs Buffers",
+      "WebSockets vs HTTP"
+    ],
+
+    "practical_skills": [
+      "Build REST API from Scratch",
+      "Implement Authentication System",
+      "Handle File Uploads",
+      "Create Real-time Features",
+      "Debug Performance Issues"
+    ]
+  }
+};
+
+const formatName = (str) => {
+    return str
+        .replace(/^\\d+_/, '')
+        .split('_')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
+const seedNode = async () => {
+    try {
+        await mongoose.connect(process.env.MONGODB_URI);
+        console.log('Connected to MongoDB');
+
+        let topic = await Topic.findOne({ slug: 'nodejs' });
+        if (!topic) {
+            console.log('Creating Node.js topic...');
+            topic = await Topic.create({
+                name: 'Node.js',
+                slug: 'nodejs',
+                description: 'Build scalable backend applications with Node.js',
+                icon: '🟢',
+                order: 3,
+                color: '#339933'
+            });
+        }
+
+        const categoriesToDelete = await Category.find({ topicId: topic._id });
+        const categoryIds = categoriesToDelete.map(c => c._id);
+        if (categoryIds.length > 0) {
+            await Section.deleteMany({ categoryId: { $in: categoryIds } });
+            await Category.deleteMany({ _id: { $in: categoryIds } });
+            console.log('Cleared existing Node.js data');
+        }
+
+        const seenSlugs = new Set();
+        const generateUniqueSlug = (title) => {
+            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            let slug = baseSlug;
+            let counter = 1;
+            while (seenSlugs.has(slug)) {
+                counter++;
+                slug = `${baseSlug}-${counter}`;
+            }
+            seenSlugs.add(slug);
+            return slug;
+        };
+
+        let order = 1;
+        for (const [mainKey, mainValue] of Object.entries(nodejsData)) {
+            for (const [key, value] of Object.entries(mainValue)) {
+                const categoryName = formatName(key);
+                const categorySlug = generateUniqueSlug(categoryName);
+
+                const category = await Category.create({
+                    name: categoryName,
+                    slug: categorySlug,
+                    description: `Learn about ${categoryName}`,
+                    topicId: topic._id,
+                    group: formatName(mainKey),
+                    order: order++
+                });
+
+                let sections = [];
+                if (Array.isArray(value)) {
+                    sections = value;
+                } else {
+                    for (const [subKey, subItems] of Object.entries(value)) {
+                        sections = [...sections, ...subItems];
+                    }
+                }
+
+                const sectionDocs = sections.map((sectionTitle, index) => ({
+                    title: sectionTitle,
+                    slug: generateUniqueSlug(sectionTitle),
+                    description: `Detailed explanation of ${sectionTitle}`,
+                    content: 'Coming soon...',
+                    categoryId: category._id,
+                    topicId: topic._id,
+                    order: index + 1,
+                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Performance') || categoryName.includes('Architecture') ? 'advanced' : 
+                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Basics') ? 'beginner' : 'intermediate',
+                    estimatedTime: 15
+                }));
+
+                await Section.insertMany(sectionDocs);
+                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
+            }
+        }
+
+        console.log('✅ Node.js seeding complete!');
+        process.exit(0);
+    } catch (error) {
+        console.error('Error seeding data:', error);
+        process.exit(1);
+    }
+};
+
+seedNode();
