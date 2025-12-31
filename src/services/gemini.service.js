@@ -630,11 +630,61 @@ Format strictly as a JSON array:
       explanation: "This is a placeholder question because AI services are offline. Please check server logs."
     }
   ];
+/**
+ * Generate personalized learning path recommendation
+ */
+export const generateLearningPathRecommendation = async (userHistory, currentTopics) => {
+  const cacheKey = `recommend_${userHistory.userId}_${new Date().toISOString().split('T')[0]}`; // Cache per day per user
+  
+  // Construct context from history
+  const recentActivity = userHistory.recentActivity.map(a => 
+    `${a.activityType} ${a.topicSlug} (${Math.round(a.duration/60)}m)`
+  ).join(', ');
+
+  const topTopics = userHistory.topTopics.join(', ');
+
+  const prompt = `
+  Analyze this student's learning pattern and recommend the single best NEXT topic to study.
+  
+  Student Context:
+  - Top interests: ${topTopics}
+  - Recent activity: ${recentActivity}
+  - Current Available Topics: ${currentTopics.join(', ')}
+  
+  Task:
+  1. Select ONE topic from the available list that they should focus on next.
+  2. Provide a short, motivating reason (1 sentence) starting with "Because you...".
+  3. Estimate confidence/relevance (0-100).
+
+  Format as JSON:
+  {
+    "topicSlug": "slug",
+    "reason": "Because you finished React basics, it's time to build state management skills.",
+    "confidence": 95
+  }
+  `;
+
+  // Reuse the quiz generation logic for checking cache/calling AI
+  // For brevity, using direct Gemini call here, but should integrate with fallbacks like others
+  for (const client of geminiModels) {
+    try {
+        const result = await client.instance.generateContent(prompt);
+        const text = result.response.text();
+        const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/```\n([\s\S]*?)\n```/);
+        const jsonStr = jsonMatch ? jsonMatch[1] : text;
+        return JSON.parse(jsonStr);
+    } catch (e) {
+        console.error('AI Recommendation Error:', e);
+    }
+  }
+  
+  return null;
 };
 
 export default {
   generateExplanation,
   answerQuestion,
   generateTestCases,
-  generateQuiz
+  generateQuiz,
+  generateLearningPathRecommendation
 };

@@ -23,6 +23,16 @@ const topicRankingSchema = new mongoose.Schema({
     }
 }, { _id: false });
 
+const aiSuggestionSchema = new mongoose.Schema({
+    topicSlug: String,
+    reason: String,
+    confidence: Number,
+    generatedAt: {
+        type: Date,
+        default: Date.now
+    }
+}, { _id: false });
+
 const userPreferencesSchema = new mongoose.Schema({
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -32,6 +42,7 @@ const userPreferencesSchema = new mongoose.Schema({
         index: true
     },
     topicRankings: [topicRankingSchema],
+    aiSuggestion: aiSuggestionSchema,
     interests: [String], // Tags like 'frontend', 'mobile', 'backend', 'dsa'
     learningPath: {
         type: String,

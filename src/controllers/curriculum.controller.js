@@ -240,12 +240,13 @@ export const getPersonalizedTopics = async (req, res) => {
       return a.name.localeCompare(b.name);
     });
 
-    res.json({
-      success: true,
-      topics: topicsWithCounts,
-      personalized: true,
-      learningPath: preferences.learningPath
-    });
+      res.json({
+        success: true,
+        topics: topicsWithCounts,
+        personalized: true,
+        learningPath: preferences.learningPath,
+        aiSuggestion: preferences.aiSuggestion || null
+      });
   } catch (error) {
     console.error('Get Personalized Topics Error:', error);
     // Fallback to default on error

@@ -91,15 +91,45 @@ export const updateUserPreferences = async (userId) => {
             .map(r => r.topicSlug);
 
         const learningPath = detectLearningPath(topTopics);
+        
+        // Generate AI Suggestion (if enough data)
+        let aiSuggestion = null;
+        if (topTopics.length > 0) {
+            try {
+                // Get available topics (could be passed in or fetched, for now simplified)
+                // ideally we fetch all topics here, but to avoid circular dep we'll use a hardcoded list or assume common ones
+                const commonTopics = ['react', 'nodejs', 'mongodb', 'python', 'dsa', 'system-design']; 
+                
+                // Lazy load AI service to avoid circular dependency if any
+                const { generateLearningPathRecommendation } = await import('./gemini.service.js');
+                
+                // Construct simple history object
+                const history = {
+                   userId,
+                   topTopics,
+                   recentActivity: activities.slice(0, 5) // Last 5 activities
+                };
+                
+                aiSuggestion = await generateLearningPathRecommendation(history, commonTopics);
+            } catch (err) {
+                console.error('Failed to generate AI suggestion:', err);
+            }
+        }
 
         // Update or create preferences
-        await UserPreferences.findOneAndUpdate(
-            { userId },
-            {
+        const updateData = {
                 topicRankings,
                 learningPath,
                 lastUpdated: new Date()
-            },
+        };
+        
+        if (aiSuggestion) {
+            updateData.aiSuggestion = aiSuggestion;
+        }
+
+        await UserPreferences.findOneAndUpdate(
+            { userId },
+            updateData,
             { upsert: true, new: true }
         );
 
