@@ -228,7 +228,15 @@ export const getPersonalizedTopics = async (req, res) => {
         return scoreB - scoreA; // Higher score first
       }
       
-      // Fallback to alphabetical if scores are equal
+      // Fallback to last accessed if scores are equal
+      const lastAccessedA = preferences.topicRankings.find(r => r.topicSlug === a.slug)?.lastAccessed || 0;
+      const lastAccessedB = preferences.topicRankings.find(r => r.topicSlug === b.slug)?.lastAccessed || 0;
+      
+      if (lastAccessedB !== lastAccessedA) {
+        return new Date(lastAccessedB) - new Date(lastAccessedA);
+      }
+
+      // Fallback to alphabetical
       return a.name.localeCompare(b.name);
     });
 

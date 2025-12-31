@@ -26,10 +26,8 @@ export const trackActivity = async (req, res) => {
         });
 
         // Update user preferences asynchronously (don't wait)
-        // Only update every 5 activities or on completion
-        if (activityType === 'complete' || Math.random() < 0.2) {
-            setImmediate(() => updateUserPreferences(userId));
-        }
+        // Ensure immediate feedback for all meaningful interactions
+        setImmediate(() => updateUserPreferences(userId));
 
         res.json({ success: true });
     } catch (error) {
