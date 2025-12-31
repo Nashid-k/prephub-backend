@@ -544,14 +544,14 @@ export const generateQuiz = async (topic, section, regenerate = false, language 
   const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
   const timestamp = new Date().getTime();
 
-  const contentContext = content ? `\nReference Content (Base questions on this):\n"${content.substring(0, 5000)}..."\n` : '';
+  // Truncate context to avoid token limits (3000 chars ~ 750 tokens)
+  const contentContext = content ? `\nReference Content (Base questions on this):\n"${content.substring(0, 3000)}..."\n` : '';
 
   const prompt = `
 Generate a 5-question Multiple Choice Quiz for:
 Topic: ${topic}
 Section: ${section}
 ${contentContext}
-Context Variation: ${randomSeed} (Random ID: ${timestamp})
 Context Variation: ${randomSeed} (Random ID: ${timestamp})
 
 For each question:
@@ -561,34 +561,52 @@ For each question:
 4. Provide a brief explanation for why the correct answer is correct.
 
 IMPORTANT: Ensure questions are NOT repetitive if generated multiple times.
-Format strictly as a JSON array:
+CRITICAL: Output ONLY a valid JSON array. No markdown formatting, no code blocks, no intro/outro text.
+Example format:
 [
   {
-    "question": "What is...",
-    "options": ["Option A", "Option B", "Option C", "Option D"],
+    "question": "Question text...",
+    "options": ["A", "B", "C", "D"],
     "correctIndex": 0,
-    "explanation": "Because..."
+    "explanation": "Explanation..."
   }
 ]
 `;
 
   const parseAndCache = async (responseText) => {
-      const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
-                       responseText.match(/```\n([\s\S]*?)\n```/);
-      const jsonText = jsonMatch ? jsonMatch[1] : responseText;
+      // Clean up response text to ensure it's valid JSON
+      let jsonText = responseText.trim();
+      
+      // Remove markdown code blocks if present
+      const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/) || 
+                       jsonText.match(/```\n([\s\S]*?)\n```/);
+      if (jsonMatch) {
+          jsonText = jsonMatch[1];
+      }
+
+      // Remove any non-JSON prefix/suffix
+      const firstBracket = jsonText.indexOf('[');
+      const lastBracket = jsonText.lastIndexOf(']');
+      
+      if (firstBracket !== -1 && lastBracket !== -1) {
+          jsonText = jsonText.substring(firstBracket, lastBracket + 1);
+      }
+
       try {
         const parsed = JSON.parse(jsonText);
         // Validate structure briefly
         if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].options) {
-            // Only cache if NOT regenerating (or cache with a short TTL if we wanted to support "back" button, but for now just skip cache on regenerate)
+            // Only cache if NOT regenerating
             if (!regenerate) {
                 await setCacheValue(cacheKey, parsed);
             }
             return parsed;
         }
-        throw new Error('Invalid quiz structure');
+        console.error('Invalid quiz structure:', parsed);
+        throw new Error('Invalid quiz structure: Expected array');
       } catch (e) {
          console.error('JSON Parse Error:', e);
+         console.error('Raw Response:', responseText);
          return null;
       }
   };
