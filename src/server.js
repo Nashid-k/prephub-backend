@@ -17,6 +17,7 @@ import recommendationsRoutes from './routes/recommendations.routes.js';
 import { scheduleWeeklyEmails } from './jobs/emailScheduler.js';
 
 import { helmetConfig, corsOptions, apiLimiter } from './middleware/security.js';
+import { compressionMiddleware } from './middleware/performance.js';
 
 dotenv.config();
 
@@ -25,6 +26,9 @@ const PORT = process.env.PORT || 5000;
 
 // Trust proxy for rate limiting on cloud platforms (Render, Heroku, etc.)
 app.set('trust proxy', 1);
+
+// Performance Middleware (should be early in the chain)
+app.use(compressionMiddleware);
 
 // Security Middleware
 app.use(helmetConfig);
