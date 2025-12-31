@@ -25,7 +25,8 @@ export const geminiModels = geminiKeys.map((key, index) => {
 const groqKeys = [
   process.env.GROQ_API_KEY,
   process.env.GROQ_API_KEY_2,
-  process.env.GROQ_API_KEY_3
+  process.env.GROQ_API_KEY_3,
+  process.env.GROQ_API_KEY_4
 ].filter(Boolean);
 
 export const groqClients = groqKeys.map(key => new Groq({ apiKey: key }));
