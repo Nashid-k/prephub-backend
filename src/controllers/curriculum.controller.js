@@ -578,5 +578,7 @@ export default {
   // New static endpoints
   getTopicStatic,
   getCategoryStatic,
-  getSectionStatic
+  getSectionStatic,
+  // Personalized endpoints
+  getPersonalizedTopics
 };
