@@ -14,6 +14,7 @@ import searchRoutes from './routes/search.routes.js';
 import authRoutes from './routes/auth.routes.js';
 import bookmarkRoutes from './routes/bookmark.routes.js';
 import recommendationsRoutes from './routes/recommendations.routes.js';
+import activityRoutes from './routes/activity.routes.js';
 import { scheduleWeeklyEmails } from './jobs/emailScheduler.js';
 
 import { helmetConfig, corsOptions, apiLimiter } from './middleware/security.js';
@@ -59,6 +60,7 @@ app.use('/api', searchRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/recommendations', recommendationsRoutes);
+app.use('/api/activity', activityRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

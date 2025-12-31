@@ -5,6 +5,9 @@ import { cacheMiddleware } from '../middleware/performance.js';
 
 const router = express.Router();
 
+// Personalized routes (must come before regular routes to avoid conflicts)
+router.get('/topics/personalized', optionalProtect, curriculumController.getPersonalizedTopics);
+
 // Curriculum endpoints
 router.get('/topics', optionalProtect, curriculumController.getAllTopics);
 router.get('/topics/:slug', curriculumController.getTopicBySlug);

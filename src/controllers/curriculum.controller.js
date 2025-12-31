@@ -2,6 +2,7 @@ import Topic from '../models/Topic.js';
 import Section from '../models/Section.js';
 import Category from '../models/Category.js';
 import Progress from '../models/Progress.js';
+import UserPreferences from '../models/userPreferences.model.js';
 
 /**
  * Get all topics with category counts and section counts
@@ -109,6 +110,138 @@ export const getAllTopics = async (req, res) => {
     res.status(500).json({ 
       error: error.message || 'Failed to fetch topics' 
     });
+  }
+};
+
+/**
+ * Get personalized topics based on user activity
+ */
+export const getPersonalizedTopics = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+
+    // If no user or no preferences, fall back to default order
+    if (!userId) {
+      return getAllTopics(req, res);
+    }
+
+    // Get user preferences
+    const preferences = await UserPreferences.findOne({ userId }).lean();
+
+    if (!preferences || !preferences.topicRankings || preferences.topicRankings.length === 0) {
+      // New user - return default order
+      return getAllTopics(req, res);
+    }
+
+    // Get all topics with progress
+    const topicsWithCounts = await Topic.aggregate([
+      {
+        $lookup: {
+          from: 'categories',
+          localField: '_id',
+          foreignField: 'topicId',
+          as: 'categories'
+        }
+      },
+      {
+        $lookup: {
+          from: 'sections',
+          localField: '_id',
+          foreignField: 'topicId',
+          as: 'sections'
+        }
+      },
+      {
+        $lookup: {
+          from: 'progresses',
+          let: { topicId: '$_id' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$userId', userId] },
+                    { $eq: ['$completed', true] }
+                  ]
+                }
+              }
+            },
+            {
+              $lookup: {
+                from: 'sections',
+                localField: 'sectionId',
+                foreignField: '_id',
+                as: 'section'
+              }
+            },
+            {
+              $unwind: '$section'
+            },
+            {
+              $match: {
+                $expr: { $eq: ['$section.topicId', '$$topicId'] }
+              }
+            }
+          ],
+          as: 'userProgress'
+        }
+      },
+      {
+        $addFields: {
+          categoryCount: { $size: '$categories' },
+          sectionCount: { $size: '$sections' },
+          completedCount: { $size: '$userProgress' },
+          completionPercentage: {
+            $cond: {
+              if: { $gt: [{ $size: '$sections' }, 0] },
+              then: {
+                $multiply: [
+                  { $divide: [{ $size: '$userProgress' }, { $size: '$sections' }] },
+                  100
+                ]
+              },
+              else: 0
+            }
+          }
+        }
+      },
+      {
+        $project: {
+          categories: 0,
+          sections: 0,
+          userProgress: 0
+        }
+      }
+    ]);
+
+    // Create ranking map
+    const rankingMap = new Map(
+      preferences.topicRankings.map(r => [r.topicSlug, r.score])
+    );
+
+    // Sort by personalized rankings
+    topicsWithCounts.sort((a, b) => {
+      const scoreA = rankingMap.get(a.slug) || 0;
+      const scoreB = rankingMap.get(b.slug) || 0;
+      
+      if (scoreB !== scoreA) {
+        return scoreB - scoreA; // Higher score first
+      }
+      
+      // Fallback to alphabetical if scores are equal
+      return a.name.localeCompare(b.name);
+    });
+
+    res.json({
+      success: true,
+      topics: topicsWithCounts,
+      personalized: true,
+      learningPath: preferences.learningPath
+    });
+  } catch (error) {
+    console.error('Get Personalized Topics Error:', error);
+    // Fallback to default on error
+    return getAllTopics(req, res);
   }
 };
 
