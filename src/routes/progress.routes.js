@@ -1,6 +1,5 @@
 import express from 'express';
 import { toggleSectionCompletion, getSectionProgress, getCategoryProgress, getTopicProgress, getAllTopicsProgress, updateTimeSpent, getDueReviews, updateReview, toggleCategoryCompletion, toggleTopicCompletion } from '../controllers/progress.controller.js';
-import { startStudySession, endStudySession, getStudyTimeByTopic } from '../controllers/time-tracking.controller.js';
 import { optionalProtect } from '../middleware/auth.js';
 
 const router = express.Router();
@@ -28,10 +27,5 @@ router.get('/topic/:topicSlug', optionalProtect, getTopicProgress);
 
 // Get progress for a specific section (Generic catch-all last)
 router.get('/:topicSlug/:sectionSlug', optionalProtect, getSectionProgress);
-
-// Time tracking routes
-router.post('/session/start', optionalProtect, startStudySession);
-router.post('/session/end', optionalProtect, endStudySession);
-router.get('/study-time', optionalProtect, getStudyTimeByTopic);
 
 export default router;
