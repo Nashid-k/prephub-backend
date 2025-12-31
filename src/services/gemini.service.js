@@ -124,12 +124,15 @@ export const generateExplanation = async (topic, section, context = '', language
   const languageNote = language !== 'javascript' ? 
     `\n\nCRITICAL: All code examples MUST be written in ${language.toUpperCase()}. Use ${language} syntax, not JavaScript.` : '';
 
+  const mongoNote = (topic.toLowerCase().includes('mongodb') || topic.toLowerCase().includes('mongoose')) ?
+    `\n\nCRITICAL: For MongoDB/Mongoose, strictly use JavaScript/Node.js syntax (e.g., const user = await User.find();). Do NOT use generic shell syntax unless explicitly asked.` : '';
+
   const prompt = `
 You are an expert MERN stack instructor. Explain the following topic in a clear, structured way:
 
 Topic: ${topic}
 Section: ${section}
-${context ? `Context: ${context}` : ''}${languageNote}
+${context ? `Context: ${context}` : ''}${languageNote}${mongoNote}
 
 Provide:
 1. A brief overview (2-3 sentences)
@@ -523,8 +526,8 @@ export const generateTestCases = async (prompt) => {
 /**
  * Generate a dynamic 5-question multiple choice quiz
  */
-export const generateQuiz = async (topic, section, regenerate = false, language = 'javascript') => {
-  const cacheKey = `quiz_${topic}_${section}_${language}`;
+export const generateQuiz = async (topic, section, regenerate = false, language = 'javascript', content = '') => {
+  const cacheKey = `quiz_${topic}_${section}_${language}_${content ? 'context' : 'no_context'}`;
   
   if (!regenerate) {
     const cached = await getCacheValue(cacheKey);
@@ -541,10 +544,14 @@ export const generateQuiz = async (topic, section, regenerate = false, language 
   const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
   const timestamp = new Date().getTime();
 
+  const contentContext = content ? `\nReference Content (Base questions on this):\n"${content.substring(0, 5000)}..."\n` : '';
+
   const prompt = `
 Generate a 5-question Multiple Choice Quiz for:
 Topic: ${topic}
 Section: ${section}
+${contentContext}
+Context Variation: ${randomSeed} (Random ID: ${timestamp})
 Context Variation: ${randomSeed} (Random ID: ${timestamp})
 
 For each question:

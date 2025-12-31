@@ -59,7 +59,7 @@ export const askQuestion = async (req, res) => {
  */
 export const generateQuiz = async (req, res) => {
   try {
-    const { topic, section, regenerate, language = 'javascript' } = req.body;
+    const { topic, section, regenerate, language = 'javascript', content = '' } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -67,7 +67,7 @@ export const generateQuiz = async (req, res) => {
       });
     }
 
-    const quiz = await geminiService.generateQuiz(topic, section, regenerate, language);
+    const quiz = await geminiService.generateQuiz(topic, section, regenerate, language, content);
 
     res.json({
       success: true,
