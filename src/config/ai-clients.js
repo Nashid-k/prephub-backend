@@ -24,7 +24,8 @@ export const geminiModels = geminiKeys.map((key, index) => {
 // Initialize Groq AI (Multi-Key Support)
 const groqKeys = [
   process.env.GROQ_API_KEY,
-  process.env.GROQ_API_KEY_2
+  process.env.GROQ_API_KEY_2,
+  process.env.GROQ_API_KEY_3
 ].filter(Boolean);
 
 export const groqClients = groqKeys.map(key => new Groq({ apiKey: key }));
