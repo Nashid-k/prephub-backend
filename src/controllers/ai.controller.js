@@ -81,8 +81,70 @@ export const generateQuiz = async (req, res) => {
   }
 };
 
+/**
+ * Structure curriculum path
+ */
+export const structurePath = async (req, res) => {
+  try {
+    const { topics, pathName } = req.body;
+    if (!topics || !Array.isArray(topics) || !pathName) {
+        return res.status(400).json({ error: 'Topics array and pathName are required' });
+    }
+
+    const structure = await geminiService.structureLearningPath(topics, pathName);
+    
+    res.json({
+        success: true,
+        structure
+    });
+  } catch (error) {
+    console.error('Structure Path Error:', error);
+    res.status(500).json({ error: error.message || 'Failed to structure path' });
+  }
+};
+
+/**
+ * Translate code blocks from one language to another
+ */
+export const translateCode = async (req, res) => {
+  try {
+    const { codeBlocks, sourceLanguage, targetLanguage } = req.body;
+
+    if (!codeBlocks || !Array.isArray(codeBlocks)) {
+      return res.status(400).json({ 
+        error: 'codeBlocks array is required' 
+      });
+    }
+
+    if (!sourceLanguage || !targetLanguage) {
+      return res.status(400).json({ 
+        error: 'sourceLanguage and targetLanguage are required' 
+      });
+    }
+
+    // Translate all code blocks in parallel
+    const translated = await Promise.all(
+      codeBlocks.map(code => 
+        geminiService.translateCodeBlock(code, sourceLanguage, targetLanguage)
+      )
+    );
+
+    res.json({
+      success: true,
+      translated
+    });
+  } catch (error) {
+    console.error('Translate Code Error:', error);
+    res.status(500).json({ 
+      error: error.message || 'Failed to translate code' 
+    });
+  }
+};
+
 export default {
   explainTopic,
   askQuestion,
-  generateQuiz
+  generateQuiz,
+  structurePath,
+  translateCode
 };

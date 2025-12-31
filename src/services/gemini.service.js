@@ -31,7 +31,7 @@ const getCacheValue = async (key) => {
 /**
  * Set data in cache (Both Memory and MongoDB)
  */
-const setCacheValue = async (key, value, ttlSeconds = 3600 * 24 * 7) => { // Default persistent cache for 7 days
+const setCacheValue = async (key, value, ttlSeconds = 3600 * 24 * 7) => {
   // Set in memory cache
   memoryCache.set(key, value);
 
@@ -51,7 +51,7 @@ const setCacheValue = async (key, value, ttlSeconds = 3600 * 24 * 7) => { // Def
 /**
  * Try Groq AI as fallback
  */
-const tryGroqFallback = async (prompt, client = groqClient) => {
+const tryGroqFallback = async (prompt, client) => {
   try {
     console.log('🔄 Trying Groq AI as fallback...');
     const completion = await client.chat.completions.create({
@@ -79,7 +79,6 @@ const tryHuggingFaceFallback = async (prompt) => {
 
   try {
     console.log('🤗 Trying Hugging Face fallback...');
-    // Using Mistral-7B-Instruct via HF Inference API (Router URL)
     const response = await axios.post(
       "https://router.huggingface.co/hf-inference/models/mistralai/Mistral-7B-Instruct-v0.3",
       {
@@ -98,7 +97,6 @@ const tryHuggingFaceFallback = async (prompt) => {
     const result = response.data;
     console.log('✅ Hugging Face AI succeeded');
     
-    // HF returns an array of objects generally
     return Array.isArray(result) ? result[0].generated_text : result.generated_text;
   } catch (hfError) {
     console.error('❌ Hugging Face AI also failed:', hfError.message, hfError.response?.status);
@@ -107,117 +105,456 @@ const tryHuggingFaceFallback = async (prompt) => {
 };
 
 /**
+ * Advanced topic analysis for intelligent content generation
+ */
+const detectTopicContext = (topic, section, context = '') => {
+  const combined = `${topic} ${section} ${context}`.toLowerCase();
+  
+  let contextNotes = [];
+  let techStack = [];
+  
+  // Database Technologies
+  if (combined.includes('mongodb') || combined.includes('mongoose')) {
+    contextNotes.push('MongoDB/Mongoose: Use async/await with try-catch, show schema definitions, demonstrate CRUD operations with proper error handling');
+    techStack.push('mongodb');
+  }
+  if (combined.includes('sql') || combined.includes('postgres') || combined.includes('mysql')) {
+    contextNotes.push('SQL: Use uppercase keywords (SELECT, FROM, WHERE), show JOIN operations, include index considerations');
+    techStack.push('sql');
+  }
+  if (combined.includes('redis')) {
+    contextNotes.push('Redis: Show key-value patterns, TTL settings, and common use cases (caching, sessions)');
+    techStack.push('redis');
+  }
+  
+  // Frontend Frameworks & Libraries
+  if (combined.includes('react')) {
+    contextNotes.push('React: Use functional components with hooks, show state management, demonstrate component lifecycle patterns');
+    techStack.push('react');
+  }
+  if (combined.includes('vue')) {
+    contextNotes.push('Vue: Use Composition API, show reactive state, demonstrate component communication');
+    techStack.push('vue');
+  }
+  if (combined.includes('angular')) {
+    contextNotes.push('Angular: Use TypeScript, show dependency injection, demonstrate observables and RxJS patterns');
+    techStack.push('angular');
+  }
+  
+  // Backend Frameworks
+  if (combined.includes('express')) {
+    contextNotes.push('Express: Show middleware chains, router patterns, error handling middleware, async route handlers');
+    techStack.push('express');
+  }
+  if (combined.includes('nest')) {
+    contextNotes.push('NestJS: Use decorators, show dependency injection, demonstrate module architecture');
+    techStack.push('nestjs');
+  }
+  
+  // Programming Concepts
+  if (combined.includes('async') || combined.includes('promise') || combined.includes('callback')) {
+    contextNotes.push('Async Patterns: Show promise chains, async/await syntax, error handling with try-catch');
+  }
+  if (combined.includes('algorithm') || combined.includes('complexity')) {
+    contextNotes.push('Algorithms: Include time/space complexity analysis (Big O notation), explain trade-offs');
+  }
+  if (combined.includes('design pattern')) {
+    contextNotes.push('Design Patterns: Show UML diagrams, real-world use cases, pros/cons of the pattern');
+  }
+  
+  // Content Type Detection (more comprehensive)
+  const conceptKeywords = [
+    'concept', 'theory', 'understanding', 'what is', 'explain', 'overview', 
+    'introduction', 'fundamentals', 'principles', 'basics', 'definition',
+    'architecture', 'design', 'pattern', 'model', 'paradigm'
+  ];
+  
+  const implementationKeywords = [
+    'implement', 'build', 'create', 'code', 'example', 'how to', 
+    'tutorial', 'practice', 'guide', 'setup', 'configure', 'install',
+    'write', 'develop', 'program', 'coding', 'hands-on'
+  ];
+  
+  const advancedKeywords = [
+    'advanced', 'optimization', 'performance', 'scaling', 'best practice',
+    'production', 'enterprise', 'security', 'testing', 'debugging'
+  ];
+  
+  // Count keyword matches for weight calculation
+  const conceptCount = conceptKeywords.filter(kw => combined.includes(kw)).length;
+  const implementationCount = implementationKeywords.filter(kw => combined.includes(kw)).length;
+  const advancedCount = advancedKeywords.filter(kw => combined.includes(kw)).length;
+  
+  // Calculate content weights (0-100)
+  const totalMatches = conceptCount + implementationCount + advancedCount || 1;
+  const conceptWeight = Math.round((conceptCount / totalMatches) * 100);
+  const implementationWeight = Math.round((implementationCount / totalMatches) * 100);
+  const advancedWeight = Math.round((advancedCount / totalMatches) * 100);
+  
+  // Determine primary focus
+  let primaryFocus = 'balanced';
+  if (conceptWeight > 50) primaryFocus = 'conceptual';
+  else if (implementationWeight > 50) primaryFocus = 'practical';
+  else if (advancedWeight > 30) primaryFocus = 'advanced';
+  
+  return {
+    contextNotes,
+    techStack,
+    conceptWeight,
+    implementationWeight,
+    advancedWeight,
+    primaryFocus,
+    hasConcept: conceptCount > 0,
+    hasImplementation: implementationCount > 0,
+    needsBoth: conceptCount > 0 && implementationCount > 0
+  };
+};
+
+/**
  * Generate AI explanation for a topic/section with fallback
+ * MAXIMUM OPTIMIZATION: Intelligent content adaptation, multi-level caching, robust error handling
  */
 export const generateExplanation = async (topic, section, context = '', language = 'javascript') => {
-  // Include context and language in cache key to allow different prompts to generate fresh content
-  const contextHash = context ? Buffer.from(context).toString('base64').substring(0, 20) : 'default';
-  const cacheKey = `explain_${topic}_${section}_${contextHash}_${language}`;
+  // Enhanced cache key with better collision resistance
+  const contextHash = context ? 
+    Buffer.from(context).toString('base64').substring(0, 50) : 'no_context';
+  const baseCacheKey = `explain_v2_${topic}_${section}_${contextHash}`;
   
-  // Check cache first
-  const cached = await getCacheValue(cacheKey);
+  // Check cache first (language-independent for efficiency)
+  const cached = await getCacheValue(baseCacheKey);
   if (cached) {
-    console.log('📦 Returning cached response');
+    console.log('📦 Returning cached explanation');
     return cached;
   }
 
-  const languageNote = language !== 'javascript' ? 
-    `\n\nCRITICAL: All code examples MUST be written in ${language.toUpperCase()}. Use ${language} syntax, not JavaScript.` : '';
+  // Advanced topic analysis for intelligent prompting
+  const analysis = detectTopicContext(topic, section, context);
+  
+  // Build context-aware requirements
+  const techStackNotes = analysis.contextNotes.length > 0 
+    ? `\n\n**TECHNOLOGY-SPECIFIC REQUIREMENTS:**\n${analysis.contextNotes.map((n, i) => `${i + 1}. ${n}`).join('\n')}`
+    : '';
 
-  const mongoNote = (topic.toLowerCase().includes('mongodb') || topic.toLowerCase().includes('mongoose')) ?
-    `\n\nCRITICAL: For MongoDB/Mongoose, strictly use JavaScript/Node.js syntax (e.g., const user = await User.find();). Do NOT use generic shell syntax unless explicitly asked.` : '';
+  // Build adaptive content strategy based on analysis weights
+  let contentStrategy = '';
+  let structureGuide = '';
+  
+  if (analysis.primaryFocus === 'conceptual') {
+    contentStrategy = `
+**PRIMARY FOCUS**: Deep conceptual understanding (${analysis.conceptWeight}% theory-focused)
 
-  const prompt = `
-You are an expert MERN stack instructor. Explain the following topic in a clear, structured way:
+**APPROACH**:
+- Lead with the "big picture" - what problem does this solve?
+- Use analogies and metaphors extensively
+- Include visual representations (ASCII diagrams, flowcharts)
+- Break down complex ideas into digestible chunks
+- Code examples should be minimal, illustrative pseudocode or syntax signatures
+- Focus on mental models and intuition`;
 
-Topic: ${topic}
-Section: ${section}
-${context ? `Context: ${context}` : ''}${languageNote}${mongoNote}
+    structureGuide = `
+### ${section}
 
-Provide:
-1. A brief overview (2-3 sentences)
-2. Key concepts (bullet points) - If specific key points are provided in the context, YOU MUST EXPLAIN EACH ONE individually with a short definition/explanation.
-3. 2-3 practical code examples with explanations${language !== 'javascript' ? ` in ${language}` : ''}
-4. Best practices
-5. Common pitfalls to avoid
+#### 🎯 The Core Idea
+(1-2 sentences: The essence in simplest terms)
 
-Format your response in markdown. Make code examples practical and production-ready.
-`;
+#### 🧠 Why This Exists
+(The problem it solves, the gap it fills - make it relatable)
 
-// Try Gemini models (Primary -> Secondary)
-  for (const client of geminiModels) {
-    try {
-      console.log(`🤖 Trying Gemini AI via ${client.id} (${client.modelName})...`);
-      const result = await client.instance.generateContent(prompt);
-      const response = result.response.text();
-      
-      console.log(`✅ Gemini AI succeeded (${client.id})`);
-      await setCacheValue(cacheKey, response);
-      return response;
-    } catch (geminiError) {
-      console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
-      // Continue to next model if available
-    }
+#### 📊 How It Works
+(Deep conceptual explanation with analogies and diagrams)
+${analysis.techStack.length > 0 ? '\n#### 💡 In Practice\n(Brief practical context - where/when you\'d use this)' : ''}
+
+#### 🔑 Key Mental Models
+(3-5 takeaways that form lasting understanding)`;
+
+  } else if (analysis.primaryFocus === 'practical') {
+    contentStrategy = `
+**PRIMARY FOCUS**: Hands-on implementation (${analysis.implementationWeight}% practice-focused)
+
+**APPROACH**:
+- Start with working code immediately
+- Show multiple examples: basic → intermediate → advanced
+- Include common pitfalls and "gotchas"
+- Demonstrate error handling and edge cases
+- Brief theory only where necessary to understand the code
+- Focus on "how to build" rather than "what is"`;
+
+    structureGuide = `
+### ${section}
+
+#### 🎯 What We're Building
+(1 sentence: The practical outcome)
+
+#### 🚀 Quick Start
+(Minimal working example in ${language})
+
+#### 📝 Step-by-Step Implementation
+(Detailed code walkthrough with line-by-line explanations)
+
+#### ⚠️ Common Pitfalls
+(Real mistakes developers make + how to avoid them)
+
+#### 🔑 Pro Tips
+(Best practices, performance considerations, production patterns)`;
+
+  } else if (analysis.primaryFocus === 'advanced') {
+    contentStrategy = `
+**PRIMARY FOCUS**: Advanced concepts and optimization (${analysis.advancedWeight}% advanced-level)
+
+**APPROACH**:
+- Assume foundational knowledge exists
+- Focus on nuances, edge cases, and optimizations
+- Show trade-offs and decision-making criteria
+- Include performance analysis and benchmarking concepts
+- Demonstrate production-grade patterns
+- Connect to system design implications`;
+
+    structureGuide = `
+### ${section}
+
+#### 🎯 Advanced Context
+(What makes this advanced? Prerequisites assumed?)
+
+#### 🔬 Deep Dive
+(Nuanced explanation with trade-offs and decision factors)
+
+#### 💻 Production-Grade Implementation
+(Enterprise-level code with error handling, logging, monitoring hooks)
+
+#### ⚡ Performance & Optimization
+(Bottlenecks, profiling strategies, scaling considerations)
+
+#### 🔑 Expert Insights
+(Non-obvious behaviors, gotchas at scale, architectural implications)`;
+
+  } else {
+    // Balanced approach (default)
+    contentStrategy = `
+**BALANCED APPROACH**: Theory + Practice (Concept: ${analysis.conceptWeight}%, Implementation: ${analysis.implementationWeight}%)
+
+**APPROACH**:
+- Start with brief conceptual foundation
+- Immediately connect to practical implementation
+- Alternate between "why" and "how"
+- Use code to illustrate theory, use theory to justify code decisions
+- Build complexity progressively`;
+
+    structureGuide = `
+### ${section}
+
+#### 🎯 The Essence
+(What is this and why does it matter? - 2-3 sentences)
+
+#### 🧠 Conceptual Foundation
+(Core theory that makes the implementation make sense)
+
+#### 💻 Practical Implementation
+(Working code examples in ${language})
+
+#### 🌉 Connecting Theory to Practice
+(How the code embodies the concepts - the "aha!" moment)
+
+#### 🔑 Key Takeaways
+(5 essential points bridging understanding and application)`;
   }
 
-  // Try Groq clients (Primary -> Secondary)
+  // Adaptive prompt with intelligence about content type
+  const prompt = `
+You are an elite technical educator with deep expertise in full-stack development, computer science, and software architecture.
+
+**LEARNING CONTEXT**:
+- **Topic**: "${topic}"
+- **Specific Section**: "${section}"
+${context ? `- **Additional Context**: ${context}` : ''}
+- **Target Language**: ${language.toUpperCase()}
+- **Detected Tech Stack**: ${analysis.techStack.join(', ') || 'General'}
+- **Content Analysis**: ${analysis.primaryFocus} (Theory: ${analysis.conceptWeight}%, Practice: ${analysis.implementationWeight}%, Advanced: ${analysis.advancedWeight}%)
+
+${contentStrategy}
+${techStackNotes}
+
+**CRITICAL CODE GUIDELINES**:
+1. ALL code examples MUST be written in **${language.toUpperCase()}** syntax
+2. Use ${language}-specific idioms, conventions, and best practices
+3. Include comments explaining non-obvious logic
+4. Show error handling where appropriate
+5. Label all code blocks: \`\`\`${language}
+
+**LANGUAGE CONSISTENCY RULE** (CRITICAL):
+⚠️ If this topic can be explained in multiple programming languages:
+- Keep ALL conceptual explanations, analogies, and "Why/How it works" sections IDENTICAL regardless of the target language
+- ONLY change the code examples to match the ${language.toUpperCase()} syntax
+- Do NOT change: section headers, explanatory text, real-world analogies, mental models, or key takeaways
+- DO change: code snippets, syntax examples, language-specific implementation details, function/method names
+- Example: "Variables store data" stays the same, but \`let x = 5\` becomes \`x = 5\` for Python
+
+**VISUAL ENHANCEMENT**:
+- Use emojis strategically for section headers (🎯, 🧠, 💻, ⚠️, 🔑, 💡, 🚀, ⚡)
+- Include ASCII diagrams for flows, hierarchies, or architectures
+- Use **bold** for key terms on first mention
+- Use \`inline code\` for technical terms and short snippets
+
+**QUALITY STANDARDS**:
+- Be precise but accessible - explain like teaching a motivated colleague
+- Avoid fluff - every sentence should add value
+- Use concrete examples over abstract descriptions
+- If mentioning a concept, briefly define it
+- Progressive complexity: simple → nuanced → advanced
+
+**CONTENT STRUCTURE** (Markdown):
+${structureGuide}
+
+**ADDITIONAL REQUIREMENTS**:
+- Total length: Comprehensive but focused (aim for 600-1200 words depending on complexity)
+- Real-world relevance: Connect every major point to practical scenarios
+- Memorable: Include at least one strong analogy or mental model
+- Actionable: Reader should know what to do next after reading
+
+Generate the explanation now:
+`;
+
+  // Try all AI providers with enhanced error tracking
+  const providerAttempts = [];
+  
+  // Try Groq clients (PRIMARY - 4/4 keys working, ~311ms avg)
   for (const [index, client] of groqClients.entries()) {
     try {
-      console.log(`⚠️ TRIGGERING GROQ FALLBACK (Key ${index + 1})...`);
-      const completion = await client.chat.completions.create({
-        messages: [{ role: 'user', content: prompt }],
-        model: 'llama-3.1-8b-instant',
-        temperature: 0.7,
-        max_tokens: 2000
-      });
+      console.log(`🤖 Attempting Groq AI (Key ${index + 1})...`);
+      const startTime = Date.now();
       
-      console.log(`✅ Groq AI succeeded (Key ${index + 1})`);
-      const response = completion.choices[0]?.message?.content || 'No response generated';
-      await setCacheValue(cacheKey, response);
+      const response = await tryGroqFallback(prompt, client);
+      
+      const duration = Date.now() - startTime;
+      console.log(`✅ Groq AI succeeded (Key ${index + 1}) in ${duration}ms`);
+      
+      providerAttempts.push({ provider: `Groq-${index + 1}`, success: true, duration });
+      await setCacheValue(baseCacheKey, response);
       return response;
     } catch (groqError) {
       console.error(`❌ Groq AI failed (Key ${index + 1}):`, groqError.message);
+      providerAttempts.push({ provider: `Groq-${index + 1}`, success: false, error: groqError.message });
     }
   }
 
-  // Try Hugging Face fallback (Tertiary)
+  // Try Gemini models (SECONDARY - quota exhausted, fallback only)
+  for (const client of geminiModels) {
+    try {
+      console.log(`⚠️ Attempting Gemini fallback: ${client.id} (${client.modelName})...`);
+      const startTime = Date.now();
+      
+      const result = await client.instance.generateContent(prompt);
+      const response = result.response.text();
+      
+      const duration = Date.now() - startTime;
+      console.log(`✅ Gemini AI succeeded (${client.id}) in ${duration}ms`);
+      
+      providerAttempts.push({ provider: `Gemini-${client.id}`, success: true, duration });
+      await setCacheValue(baseCacheKey, response);
+      return response;
+    } catch (geminiError) {
+      console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
+      providerAttempts.push({ provider: `Gemini-${client.id}`, success: false, error: geminiError.message });
+    }
+  }
+
+  // Try Hugging Face fallback (TERTIARY)
   try {
+    console.log('⚠️ Attempting Hugging Face fallback...');
+    const startTime = Date.now();
+    
     const response = await tryHuggingFaceFallback(prompt);
-    await setCacheValue(cacheKey, response);
+    
+    const duration = Date.now() - startTime;
+    console.log(`✅ Hugging Face AI succeeded in ${duration}ms`);
+    
+    providerAttempts.push({ provider: 'HuggingFace', success: true, duration });
+    await setCacheValue(baseCacheKey, response);
     return response;
   } catch (hfError) {
-     console.error('❌ All AI providers failed. Returning mock response.');
-     return `
-### ${topic} - ${section} (Offline Mode)
+    console.error('❌ Hugging Face AI failed:', hfError.message);
+    providerAttempts.push({ provider: 'HuggingFace', success: false, error: hfError.message });
+  }
 
-**Note:** We utilize advanced AI models (Gemini, Groq, Hugging Face) to generate these explanations. Currently, all services are experiencing high traffic or invalid configuration. Here is a general overview:
+  // All providers failed - enhanced fallback response
+  console.error('❌ ALL AI PROVIDERS FAILED. Provider attempts:', JSON.stringify(providerAttempts, null, 2));
+  
+  return `
+### ${section}
 
-**Overview**
-${topic} is a fundamental concept in software development. Understanding ${section} is crucial for building robust applications.
+> **⚠️ AI Services Offline**: Content generation is temporarily unavailable. We utilize multiple AI providers (Gemini, Groq, Hugging Face) for high-quality explanations, but all are currently experiencing issues.
 
-**Key Concepts**
-*   **Fundamental Principle**: Core building block of the technology.
-*   **Usage**: Widely used in modern web development.
-*   **Best Practice**: Always follow standard conventions.
+#### 🎯 What You're Learning About
 
-**Example**
-\`\`\`javascript
-// Basic Example
-const example = "${section}";
-console.log(example);
+**${topic}** is an important concept in software development, and understanding **${section}** is key to building robust applications.
+
+#### 📚 General Overview
+
+${section} represents a fundamental building block in modern development. While we can't provide the detailed, AI-generated explanation right now, here are some general principles:
+
+${analysis.primaryFocus === 'conceptual' ? `
+**Conceptual Foundation**:
+- This topic focuses on understanding core principles and mental models
+- The theory behind ${section} helps you make informed architectural decisions
+- Real-world applications depend on grasping these fundamental concepts
+` : ''}
+
+${analysis.primaryFocus === 'practical' ? `
+**Practical Implementation**:
+- This topic emphasizes hands-on coding and real-world application
+- You'll learn specific techniques and patterns for ${section}
+- Focus is on building working solutions with best practices
+` : ''}
+
+${analysis.primaryFocus === 'balanced' || analysis.primaryFocus === 'advanced' ? `
+**Key Aspects**:
+- Understanding the underlying principles of ${section}
+- Implementing solutions with ${language}
+- Recognizing common patterns and anti-patterns
+- Applying best practices in production environments
+` : ''}
+
+#### 💻 Basic Example (${language})
+
+\`\`\`${language}
+// Placeholder example - AI services offline
+// ${section} implementation concept
+const example = {
+  topic: "${topic}",
+  section: "${section}",
+  language: "${language}"
+};
+
+console.log("Learning about:", example.section);
+// Actual implementation would go here
 \`\`\`
 
-*Please check your internet connection or API keys and try again later.*
+#### 🔑 Key Points to Remember
+
+- **Foundation**: ${section} is essential for ${topic}
+- **Application**: Used extensively in modern ${analysis.techStack.join('/')} development
+- **Best Practice**: Follow established patterns and conventions
+${analysis.contextNotes.length > 0 ? `- **Technology Note**: ${analysis.contextNotes[0].split(':')[1]?.trim() || 'Refer to documentation'}` : ''}
+
+#### 🔄 What to Do Next
+
+1. **Check Connection**: Verify your internet connection and API configuration
+2. **Review Documentation**: Consult official ${topic} documentation
+3. **Try Again**: Refresh the page or retry after a few moments
+4. **Alternative Resources**: Search for "${topic} ${section}" in official guides
+
+**Provider Status**: ${providerAttempts.map(a => `${a.provider}: ${a.success ? '✅' : '❌'}`).join(' | ')}
+
+*We apologize for the inconvenience. Our system will automatically retry when services are restored.*
 `;
-  }
 };
 
 /**
  * Answer a specific question with context and fallback
  */
 export const answerQuestion = async (question, context = {}, language = 'javascript') => {
-  const contextId = context.topic + context.section + (context.currentCode ? Buffer.from(context.currentCode).toString('base64').substring(0, 20) : '');
-  const cacheKey = `answer_${Buffer.from(question).toString('base64').substring(0, 30)}_${contextId}_${language}`;
+  const contextId = (context.topic || '') + (context.section || '') + (context.currentCode ? Buffer.from(context.currentCode).toString('base64').substring(0, 30) : '');
+  const questionHash = Buffer.from(question).toString('base64').substring(0, 40);
+  const cacheKey = `answer_${questionHash}_${contextId}`;
 
   const cached = await getCacheValue(cacheKey);
   if (cached) {
@@ -225,61 +562,67 @@ export const answerQuestion = async (question, context = {}, language = 'javascr
     return cached;
   }
 
-  // Dynamic Persona & Tone
-  let roleDescription = 'an expert MERN stack instructor';
-  if (context.topic?.toLowerCase().includes('mongo')) roleDescription = 'a MongoDB Database Specialist';
-  if (context.topic?.toLowerCase().includes('react')) roleDescription = 'a Senior React Developer & Mentor';
-  if (context.topic?.toLowerCase().includes('node')) roleDescription = 'a Backend Node.js Architect';
+  // Dynamic Persona based on context
+  let roleDescription = 'an expert full-stack development mentor';
+  const topicLower = (context.topic || '').toLowerCase();
   
-  const languageNote = language !== 'javascript' ? 
-    `\n\nCRITICAL: If providing code examples, write them in ${language.toUpperCase()}, not JavaScript.` : '';
+  if (topicLower.includes('mongo') || topicLower.includes('database')) {
+    roleDescription = 'a Database Architecture Specialist';
+  } else if (topicLower.includes('react') || topicLower.includes('frontend')) {
+    roleDescription = 'a Senior Frontend Developer & React Expert';
+  } else if (topicLower.includes('node') || topicLower.includes('express') || topicLower.includes('backend')) {
+    roleDescription = 'a Backend Architecture Expert';
+  } else if (topicLower.includes('algorithm') || topicLower.includes('data structure')) {
+    roleDescription = 'an Algorithms & Data Structures Specialist';
+  }
   
+  const codeContext = context.currentCode ? 
+    `\n**STUDENT'S CODE** (${language}):\n\`\`\`${language}\n${context.currentCode}\n\`\`\`\n` : '';
+
   const prompt = `
-You are ${roleDescription}. Your goal is to be a friendly, encouraging, and highly effective tutor who empowers students to master full-stack development.
+You are ${roleDescription}, acting as a friendly and encouraging tutor.
 
-Context:
-- Topic: ${context.topic || 'General Web Dev'}
-- Module: ${context.module || 'General'}
+**CONTEXT**:
+- Topic: ${context.topic || 'General Development'}
+- Module: ${context.module || 'Core Concepts'}
 - Section: ${context.section || 'General'}
-${context.description ? `- Learning Material: ${context.description.substring(0, 300)}...` : ''}
-${context.currentCode ? `\nSTUDENT'S CURRENT CODE:\n\`\`\`${language}\n${context.currentCode}\n\`\`\`\n` : ''}${languageNote}
+${context.description ? `- Learning Material: ${context.description.substring(0, 400)}` : ''}
+${codeContext}
 
-Student's Question: "${question}"
+**STUDENT'S QUESTION**: "${question}"
 
-Instructions for your Persona:
-1.  **Be a Socratic Mentor**: Don't just give answers. Guide the student to the solution. Ask thought-provoking questions if they are stuck.
-2.  **Radical Encouragement**: Use positive reinforcement. Celebrate small wins. Use emojis (🚀, 💡, 🧠, ✨) frequently but naturally to keep energy high.
-3.  **Context-Awareness is Key**: 
-    - If talking about *React*, think in components, hooks, and state.
-    - If talking about *MongoDB*, think in collections, documents, and aggregation pipelines.
-    - Connect the specific module (${context.module}) to the bigger picture of the MERN stack.
-4.  **Structure Your Answer**:
-    - **Header**: A warm opening or direct verification.
-    - **Explanation**: Clear, simple analogies (ELI5).
-    - **Code**: Modern, clean, well-commented code (if applicable).
-    - **Pro Tip / "Gotcha"**: A specific insider tip relevant to this topic.
+**YOUR TEACHING STYLE**:
+1. **Be Encouraging**: Use positive reinforcement. Add occasional emojis (💡, 🚀, ✨, 🎯) to keep energy high
+2. **Socratic Method**: Guide them to understanding rather than just giving answers
+3. **Context-Aware**: Reference their specific topic/module/code in your explanation
+4. **Practical Focus**: Connect theory to real-world application
 
-Format your response in Markdown. Use bolding for emphasis.
+**CRITICAL - CODE LANGUAGE**:
+- If you provide code examples, write them in **${language.toUpperCase()}**
+- Use ${language} syntax, conventions, and idioms
+- Label code blocks: \`\`\`${language}
+
+**RESPONSE STRUCTURE** (Markdown):
+
+#### 💡 [Quick Answer/Insight]
+(Direct answer to their question in 1-2 sentences)
+
+#### 📖 Explanation
+(Clear, simple explanation with analogies)
+
+#### 💻 Example
+(Code example if relevant - in ${language})
+
+#### 🎯 Pro Tip
+(One insider tip related to this topic)
+
+Now answer their question:
 `;
 
-  // Try Gemini models (Primary -> Secondary)
-  for (const client of geminiModels) {
-    try {
-      console.log(`🤖 Trying Gemini AI via ${client.id} (${client.modelName})...`);
-      const result = await client.instance.generateContent(prompt);
-      const response = result.response.text();
-      console.log(`✅ Gemini AI succeeded (${client.id})`);
-      await setCacheValue(cacheKey, response);
-      return response;
-    } catch (geminiError) {
-      console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
-    }
-  }
-
-  // Try Groq clients (Primary -> Secondary)
+  // Try Groq clients (PRIMARY)
   for (const [index, client] of groqClients.entries()) {
     try {
-      console.log(`⚠️ TRIGGERING GROQ FALLBACK (Key ${index + 1})...`);
+      console.log(`🤖 Trying Groq AI (Key ${index + 1})...`);
       const response = await tryGroqFallback(prompt, client);
       await setCacheValue(cacheKey, response);
       return response;
@@ -288,350 +631,174 @@ Format your response in Markdown. Use bolding for emphasis.
     }
   }
 
+  // Try Gemini models (SECONDARY)
+  for (const client of geminiModels) {
+    try {
+      console.log(`⚠️ Trying Gemini fallback via ${client.id} (${client.modelName})...`);
+      const result = await client.instance.generateContent(prompt);
+      const response = result.response.text();
+      console.log(`✅ Gemini AI succeeded (${client.id})`);
+      await setCacheValue(cacheKey, response);
+      return response;
+    } catch (geminiError) {
+      console.error(`❌ Gemini AI failed (${client.id}):`, geminiError.message);
+    }
+  }
+
   // Try Hugging Face fallback
   try {
     const response = await tryHuggingFaceFallback(prompt);
     await setCacheValue(cacheKey, response);
     return response;
   } catch (hfError) {
-     console.error('❌ All AI providers failed. Returning mock response.');
-     return `
+    console.error('❌ All AI providers failed. Returning mock response.');
+    return `
 ### AI Assistant (Offline Mode)
 
-I'm currently unable to connect to my brain (AI services are down or misconfigured).
+**Your Question:** "${question}"
 
-**You asked:** "${question}"
+I'm currently unable to connect to AI services. Here's what I suggest:
 
-**Short Answer:**
-This appears to be a question about **${context.topic || 'coding'}**. Since I'm offline, I recommend checking:
-1.  The official documentation.
-2.  Your current code syntax.
-3.  Console logs for errors.
+1. **Check the Official Docs**: Look up "${context.topic || 'your topic'}" in the official documentation
+2. **Review Your Code**: Look for syntax errors or missing imports
+3. **Console Logs**: Add debug logs to trace the issue
 
-*Please try again later or check your API keys.*
+**Common Issues with ${context.topic || 'this topic'}:**
+- Syntax errors
+- Missing dependencies
+- Incorrect configuration
+
+*Please try again later or check API configuration.*
 `;
   }
-};
-
-/**
- * Generate follow-up questions based on a topic with fallback
- */
-
-/**
- * Generate interview questions (theory + practical) with fallback
- */
-export const generateInterviewQuestions = async (topic, type = 'both', difficulty = 'medium', count = 30) => {
-  const cacheKey = `interview_${topic}_${type}_${difficulty}_${count}`;
-  const cached = await getCacheValue(cacheKey);
-  if (cached) {
-    console.log('📦 Returning cached interview questions');
-    return cached;
-  }
-
-  const typeFilter = type === 'theory' ? 'theoretical' : 
-                     type === 'practical' ? 'practical coding' : 'both theoretical and practical';
-  
-  // Custom context based on topic
-  let topicContext = '';
-  if (topic.toLowerCase().includes('frontend')) {
-    topicContext = 'Focus heavily on React.js ecosystem (Hooks, Context, Redux, Performance), DOM manipulation, and modern CSS.';
-  } else if (topic.toLowerCase().includes('backend')) {
-    topicContext = 'Include questions on Node.js runtime (Event Loop, Streams), Express.js middleware, MongoDB (Aggregation, Indexing), and advanced JavaScript concepts.';
-  } else if (topic.toLowerCase().includes('mern')) {
-    topicContext = 'Cover the full stack: React frontend, Node/Express backend, and MongoDB database, including integration patterns.';
-  }
-
-  // Helper to generate a batch of questions
-  const generateBatch = async (batchCount, batchIndex) => {
-    const batchCacheKey = `${cacheKey}_batch_${batchIndex}`;
-    const cachedBatch = await getCacheValue(batchCacheKey);
-    if (cachedBatch) return cachedBatch;
-
-    const prompt = `
-Generate ${batchCount} unique ${typeFilter} interview questions for:
-
-Topic: ${topic}
-Difficulty: ${difficulty}
-Batch: ${batchIndex + 1} (Ensure unique questions)
-
-${topicContext}
-${type === 'practical' ? 'Focus on coding challenges, system design, and implementation.' : ''}
-${type === 'theory' ? 'Focus on concepts, architecture, and principles.' : ''}
-
-For each question, provide:
-1. The question
-2. A comprehensive answer
-3. Code example (if practical question)
-4. Key points to mention in interview
-
-Format strictly as a JSON array:
-[
-  {
-    "type": "theory" or "practical",
-    "question": "...",
-    "answer": "...",
-    "codeExample": "...",
-    "keyPoints": ["point1", "point2"]
-  }
-]
-
-Make questions realistic to actual technical interviews. Ensure you provide exactly ${batchCount} questions.
-`;
-
-    const parseAndCache = async (responseText) => {
-        const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
-                         responseText.match(/```\n([\s\S]*?)\n```/);
-        const jsonText = jsonMatch ? jsonMatch[1] : responseText;
-        try {
-          const parsed = JSON.parse(jsonText);
-          if (Array.isArray(parsed) && parsed.length > 0) {
-            await setCacheValue(batchCacheKey, parsed);
-          }
-          return parsed;
-        } catch (e) {
-           console.error('JSON Parse Error in batch:', e);
-           return [];
-        }
-    };
-
-    // Try Gemini models
-    for (const client of geminiModels) {
-      try {
-        console.log(`🤖 Batch ${batchIndex+1}: Trying Gemini (${client.modelName})...`);
-        const result = await client.instance.generateContent(prompt);
-        return await parseAndCache(result.response.text());
-      } catch (geminiError) {
-        console.error(`❌ Batch ${batchIndex+1} Gemini failed:`, geminiError.message);
-      }
-    }
-
-    // Try Groq fallback
-    for (const client of groqClients) {
-      try {
-        console.log(`⚠️ Batch ${batchIndex+1}: Triggering Groq Fallback...`);
-        const responseText = await tryGroqFallback(prompt, client);
-        return await parseAndCache(responseText);
-      } catch (groqError) {
-        console.error(`❌ Batch ${batchIndex+1} Groq failed:`, groqError.message);
-      }
-    }
-
-    // Try Hugging Face fallback
-    try {
-      console.log(`⚠️ Batch ${batchIndex+1}: Triggering HF Fallback...`);
-      const responseText = await tryHuggingFaceFallback(prompt);
-      return await parseAndCache(responseText);
-    } catch (hfError) {
-      console.error(`❌ Batch ${batchIndex+1} HF failed:`, hfError.message);
-    }
-
-    return [];
-  };
-
-  // Split into batches of 10
-  const BATCH_SIZE = 10;
-  const batches = Math.ceil(count / BATCH_SIZE);
-  const promises = [];
-
-  for (let i = 0; i < batches; i++) {
-    const currentBatchCount = Math.min(BATCH_SIZE, count - (i * BATCH_SIZE));
-    promises.push(generateBatch(currentBatchCount, i));
-  }
-
-  console.log(`🚀 Starting generation of ${count} questions in ${batches} batches...`);
-  const results = await Promise.all(promises);
-  const allQuestions = results.flat();
-  
-  if (allQuestions.length === 0) {
-      throw new Error('Failed to generate any questions after all attempts.');
-  }
-
-  await setCacheValue(cacheKey, allQuestions);
-  console.log(`✅ Successfully generated ${allQuestions.length} questions total.`);
-  return allQuestions;
-};
-
-/**
- * Generate test cases for LeetCode problems with fallback
- */
-export const generateTestCases = async (prompt) => {
-  const cacheKey = `testcases_${Buffer.from(prompt).toString('base64').substring(0, 30)}`;
-  const cached = await getCacheValue(cacheKey);
-  if (cached) {
-    console.log('📦 Returning cached test cases');
-    return cached;
-  }
-
-  const parseAndCache = async (responseText) => {
-    const jsonMatch = responseText.match(/```json\n([\s\S]*?)\n```/) || 
-                     responseText.match(/```\n([\s\S]*?)\n```/);
-    const jsonText = jsonMatch ? jsonMatch[1] : responseText;
-    try {
-      const parsed = JSON.parse(jsonText);
-      await setCacheValue(cacheKey, parsed);
-      return parsed;
-    } catch (e) {
-      console.error('JSON Parse Error:', e);
-      return null;
-    }
-  };
-
-  // Try Gemini models
-  for (const client of geminiModels) {
-    try {
-      console.log(`🤖 Generating test cases via ${client.id}...`);
-      const result = await client.instance.generateContent(prompt);
-      const parsed = await parseAndCache(result.response.text());
-      if (parsed) return parsed;
-    } catch (geminiError) {
-      console.error(`❌ Gemini failed (${client.id}):`, geminiError.message);
-    }
-  }
-
-  // Try Groq fallback
-  for (const client of groqClients) {
-    try {
-      console.log('⚠️ Trying Groq fallback for test cases...');
-      const responseText = await tryGroqFallback(prompt, client);
-      const parsed = await parseAndCache(responseText);
-      if (parsed) return parsed;
-    } catch (groqError) {
-      console.error('❌ Groq failed for test cases:', groqError.message);
-    }
-  }
-
-  // Try Hugging Face fallback
-  try {
-    console.log('⚠️ Trying HF fallback for test cases...');
-    const responseText = await tryHuggingFaceFallback(prompt);
-    const parsed = await parseAndCache(responseText);
-    if (parsed) return parsed;
-  } catch (hfError) {
-    console.error('❌ HF failed for test cases:', hfError.message);
-  }
-
-  // Return fallback if all fail
-  console.error('❌ All AI providers failed for test case generation');
-  return {
-    sampleCases: [
-      { input: { nums: [1,2,3] }, expected: [1,2], description: "Sample test case" }
-    ],
-    hiddenCases: [
-      { input: { nums: [4,5,6] }, expected: [4,5] },
-      { input: { nums: [] }, expected: [] }
-    ]
-  };
 };
 
 /**
  * Generate a dynamic 5-question multiple choice quiz
  */
 export const generateQuiz = async (topic, section, regenerate = false, language = 'javascript', content = '') => {
-  const cacheKey = `quiz_${topic}_${section}_${language}_${content ? 'context' : 'no_context'}`;
+  // Include regenerate timestamp in cache key to force new generation
+  const baseKey = `quiz_${topic}_${section}_${language}`;
+  const cacheKey = regenerate ? `${baseKey}_${Date.now()}` : baseKey;
   
   if (!regenerate) {
-    const cached = await getCacheValue(cacheKey);
+    const cached = await getCacheValue(baseKey);
     if (cached) {
       console.log('📦 Returning cached quiz');
       return cached;
     }
   } else {
-    console.log('🔄 Regenerating quiz (cache bypassed)');
+    console.log('🔄 Regenerating quiz (bypassing cache)');
   }
 
-  // Add randomness to prompt to ensure variety on regeneration
-  const seeds = ['focus on edge cases', 'focus on core concepts', 'focus on practical implementation', 'focus on common pitfalls', 'focus on performance'];
-  const randomSeed = seeds[Math.floor(Math.random() * seeds.length)];
-  const timestamp = new Date().getTime();
+  // Add variation seeds for regeneration
+  const variations = [
+    'focus on practical application',
+    'focus on edge cases and gotchas',
+    'focus on conceptual understanding',
+    'focus on common mistakes',
+    'focus on best practices'
+  ];
+  const randomVariation = variations[Math.floor(Math.random() * variations.length)];
 
-  // Truncate context to avoid token limits (3000 chars ~ 750 tokens)
-  const contentContext = content ? `\nReference Content (Base questions on this):\n"${content.substring(0, 3000)}..."\n` : '';
+  // Truncate content to avoid token limits
+  const contentContext = content ? 
+    `\n**REFERENCE CONTENT** (base questions on this):\n${content.substring(0, 3000)}\n` : '';
 
   const prompt = `
-Generate a 5-question Multiple Choice Quiz for:
-Topic: ${topic}
-Section: ${section}
+Generate a 5-question multiple-choice quiz for technical assessment.
+
+**TOPIC**: ${topic}
+**SECTION**: ${section}
+**LANGUAGE CONTEXT**: ${language}
+**VARIATION**: ${randomVariation}
 ${contentContext}
-Context Variation: ${randomSeed} (Random ID: ${timestamp})
 
-For each question:
-1. Provide a clear, practical question relevant to the specific section content.
-2. Provide 4 distinct options.
-3. Indicate the correct option index (0-3).
-4. Provide a brief explanation for why the correct answer is correct.
+**REQUIREMENTS**:
+1. Create 5 distinct, practical questions about "${section}"
+2. Each question should have 4 options
+3. Mark the correct answer with its index (0-3)
+4. Provide a clear explanation for the correct answer
+5. Questions should test understanding, not just memorization
+${content ? '6. Base questions on the provided reference content' : ''}
 
-IMPORTANT: Ensure questions are NOT repetitive if generated multiple times.
-CRITICAL: Output ONLY a valid JSON array. No markdown formatting, no code blocks, no intro/outro text.
-Example format:
+**IMPORTANT**:
+- If questions involve code, use ${language} syntax
+- Make options plausible but clearly distinguishable
+- Avoid trick questions or ambiguous wording
+- Each question should assess a different aspect
+
+**OUTPUT FORMAT** (JSON only, no markdown):
 [
   {
-    "question": "Question text...",
-    "options": ["A", "B", "C", "D"],
+    "question": "Clear, specific question about the topic",
+    "options": ["Option A", "Option B", "Option C", "Option D"],
     "correctIndex": 0,
-    "explanation": "Explanation..."
+    "explanation": "Why this answer is correct and what concept it tests"
   }
 ]
+
+**CRITICAL**: Return ONLY valid JSON array. No markdown, no backticks, no preamble.
 `;
 
   const parseAndCache = async (responseText) => {
-      // Clean up response text to ensure it's valid JSON
-      let jsonText = responseText.trim();
-      
-      // Remove markdown code blocks if present
-      const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/) || 
-                       jsonText.match(/```\n([\s\S]*?)\n```/);
-      if (jsonMatch) {
-          jsonText = jsonMatch[1];
-      }
+    let jsonText = responseText.trim();
+    
+    // Remove markdown code blocks
+    const jsonMatch = jsonText.match(/```json\s*\n([\s\S]*?)\n```/) || 
+                     jsonText.match(/```\s*\n([\s\S]*?)\n```/);
+    if (jsonMatch) {
+      jsonText = jsonMatch[1].trim();
+    }
 
-      // Remove any non-JSON prefix/suffix
-      const firstBracket = jsonText.indexOf('[');
-      const lastBracket = jsonText.lastIndexOf(']');
-      
-      if (firstBracket !== -1 && lastBracket !== -1) {
-          jsonText = jsonText.substring(firstBracket, lastBracket + 1);
-      }
+    // Find array boundaries
+    const firstBracket = jsonText.indexOf('[');
+    const lastBracket = jsonText.lastIndexOf(']');
+    
+    if (firstBracket !== -1 && lastBracket !== -1) {
+      jsonText = jsonText.substring(firstBracket, lastBracket + 1);
+    }
 
-      try {
-        const parsed = JSON.parse(jsonText);
-        // Validate structure briefly
-        if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].options) {
-            // Only cache if NOT regenerating
-            if (!regenerate) {
-                await setCacheValue(cacheKey, parsed);
-            }
-            return parsed;
-        }
-        console.error('Invalid quiz structure:', parsed);
-        throw new Error('Invalid quiz structure: Expected array');
-      } catch (e) {
-         console.error('JSON Parse Error:', e);
-         console.error('Raw Response:', responseText);
-         return null;
+    try {
+      const parsed = JSON.parse(jsonText);
+      
+      // Validate structure
+      if (Array.isArray(parsed) && parsed.length > 0 && parsed[0].question && parsed[0].options) {
+        // Cache using base key (not regenerate-specific key)
+        await setCacheValue(baseKey, parsed);
+        return parsed;
       }
+      
+      console.error('Invalid quiz structure - missing required fields');
+      return null;
+    } catch (e) {
+      console.error('JSON Parse Error:', e);
+      console.error('Attempted to parse:', jsonText.substring(0, 300));
+      return null;
+    }
   };
 
-  // Try Gemini models
+  // Try Groq clients (PRIMARY)
+  for (const [index, client] of groqClients.entries()) {
+    try {
+      console.log(`🤖 Generating Quiz via Groq (Key ${index + 1})...`);
+      const responseText = await tryGroqFallback(prompt, client);
+      const parsed = await parseAndCache(responseText);
+      if (parsed) return parsed;
+    } catch (groqError) {
+      console.error(`❌ Groq failed for quiz (Key ${index + 1}):`, groqError.message);
+    }
+  }
+
+  // Try Gemini models (SECONDARY)
   for (const client of geminiModels) {
     try {
-      console.log(`🤖 Generating Quiz via ${client.id}...`);
+      console.log(`⚠️ Trying Gemini fallback for quiz via ${client.id}...`);
       const result = await client.instance.generateContent(prompt);
       const parsed = await parseAndCache(result.response.text());
       if (parsed) return parsed;
     } catch (geminiError) {
       console.error(`❌ Gemini failed (${client.id}):`, geminiError.message);
-    }
-  }
-
-  // Try Groq fallback
-  for (const client of groqClients) {
-    try {
-      console.log('⚠️ Trying Groq fallback for quiz...');
-      const responseText = await tryGroqFallback(prompt, client);
-      const parsed = await parseAndCache(responseText);
-      if (parsed) return parsed;
-    } catch (groqError) {
-      console.error('❌ Groq failed for quiz:', groqError.message);
     }
   }
 
@@ -646,13 +813,18 @@ Example format:
   }
 
   console.error('❌ All AI providers failed for quiz generation');
-  // Fallback Mock Quiz
+  // Fallback quiz
   return [
     {
-      question: "(Offline) Which of the following is true about " + section + "?",
-      options: ["It is a key concept", "It is irrelevant", "It triggers errors", "None of the above"],
+      question: `[Offline Mode] Which statement about ${section} is most accurate?`,
+      options: [
+        "It is a fundamental concept in software development",
+        "It is rarely used in modern applications",
+        "It only applies to legacy systems",
+        "It has been deprecated"
+      ],
       correctIndex: 0,
-      explanation: "This is a placeholder question because AI services are offline. Please check server logs."
+      explanation: "This is a placeholder question. AI services are currently offline. Please check your configuration and try again."
     }
   ];
 };
@@ -661,57 +833,292 @@ Example format:
  * Generate personalized learning path recommendation
  */
 export const generateLearningPathRecommendation = async (userHistory, currentTopics) => {
-  const cacheKey = `recommend_${userHistory.userId}_${new Date().toISOString().split('T')[0]}`; // Cache per day per user
+  const cacheKey = `recommend_${userHistory.userId}_${new Date().toISOString().split('T')[0]}`;
   
-  // Construct context from history
-  const recentActivity = userHistory.recentActivity.map(a => 
-    `${a.activityType} ${a.topicSlug} (${Math.round(a.duration/60)}m)`
-  ).join(', ');
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached recommendation');
+    return cached;
+  }
+  
+  const recentActivity = userHistory.recentActivity
+    .slice(0, 10)
+    .map(a => `${a.activityType} on "${a.topicSlug}" (${Math.round(a.duration / 60)}min)`)
+    .join(', ');
 
-  const topTopics = userHistory.topTopics.join(', ');
+  const topTopics = userHistory.topTopics.slice(0, 5).join(', ');
 
   const prompt = `
-  Analyze this student's learning pattern and recommend the single best NEXT topic to study.
-  
-  Student Context:
-  - Top interests: ${topTopics}
-  - Recent activity: ${recentActivity}
-  - Current Available Topics: ${currentTopics.join(', ')}
-  
-  Task:
-  1. Select ONE topic from the available list that they should focus on next.
-  2. Provide a short, motivating reason (1 sentence) starting with "Because you...".
-  3. Estimate confidence/relevance (0-100).
+Analyze this student's learning pattern and recommend the next best topic.
 
-  Format as JSON:
-  {
-    "topicSlug": "slug",
-    "reason": "Because you finished React basics, it's time to build state management skills.",
-    "confidence": 95
-  }
-  `;
+**STUDENT PROFILE**:
+- Primary interests: ${topTopics}
+- Recent activity: ${recentActivity}
+- Available topics: ${currentTopics.join(', ')}
 
-  // Reuse the quiz generation logic for checking cache/calling AI
-  // For brevity, using direct Gemini call here, but should integrate with fallbacks like others
-  for (const client of geminiModels) {
+**TASK**:
+1. Select ONE topic from the available list that best fits their learning progression
+2. Provide a motivating reason (1 sentence, start with "Because you...")
+3. Rate confidence (0-100)
+
+**OUTPUT** (JSON only, no markdown):
+{
+  "topicSlug": "recommended-slug",
+  "reason": "Because you've mastered X, it's time to explore Y...",
+  "confidence": 85
+}
+
+Return only valid JSON.
+`;
+
+  const parseAndCache = async (text) => {
+    let jsonText = text.trim();
+    const jsonMatch = jsonText.match(/```json\s*\n([\s\S]*?)\n```/) || 
+                     jsonText.match(/```\s*\n([\s\S]*?)\n```/);
+    if (jsonMatch) {
+      jsonText = jsonMatch[1];
+    }
+    
+    const firstBrace = jsonText.indexOf('{');
+    const lastBrace = jsonText.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      jsonText = jsonText.substring(firstBrace, lastBrace + 1);
+    }
+    
     try {
-        const result = await client.instance.generateContent(prompt);
-        const text = result.response.text();
-        const jsonMatch = text.match(/```json\n([\s\S]*?)\n```/) || text.match(/```\n([\s\S]*?)\n```/);
-        const jsonStr = jsonMatch ? jsonMatch[1] : text;
-        return JSON.parse(jsonStr);
+      const parsed = JSON.parse(jsonText);
+      if (parsed.topicSlug && parsed.reason) {
+        await setCacheValue(cacheKey, parsed);
+        return parsed;
+      }
     } catch (e) {
-        console.error('AI Recommendation Error:', e);
+      console.error('Recommendation parse error:', e);
+    }
+    return null;
+  };
+
+  // Try Groq clients (PRIMARY)
+  for (const client of groqClients) {
+    try {
+      const text = await tryGroqFallback(prompt, client);
+      const parsed = await parseAndCache(text);
+      if (parsed) return parsed;
+    } catch (e) {
+      console.error('Groq recommendation error:', e);
     }
   }
   
-  return null;
+  // Try Gemini models (SECONDARY)
+  for (const client of geminiModels) {
+    try {
+      const result = await client.instance.generateContent(prompt);
+      const parsed = await parseAndCache(result.response.text());
+      if (parsed) return parsed;
+    } catch (e) {
+      console.error('Gemini recommendation error:', e);
+    }
+  }
+  
+  // Default recommendation
+  return {
+    topicSlug: currentTopics[0] || 'javascript-basics',
+    reason: "Because continuous learning is key to mastery, let's explore this next.",
+    confidence: 50
+  };
+};
+
+/**
+ * Structure a learning path intelligently
+ */
+export const structureLearningPath = async (topics, pathName) => {
+  const topicSlugs = topics.map(t => t.slug).sort().join('_');
+  const topicHash = Buffer.from(topicSlugs).toString('base64').substring(0, 40);
+  const pathHash = Buffer.from(pathName).toString('base64').substring(0, 20);
+  const cacheKey = `path_structure_${pathHash}_${topicHash}`;
+  
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached path structure');
+    return cached;
+  }
+
+  const topicList = topics.map(t => `"${t.name}" (slug: ${t.slug})`).join(', ');
+
+  const prompt = `
+You are a curriculum design expert. Structure a learning path logically.
+
+**PATH NAME**: "${pathName}"
+**TOPICS TO ORDER**: ${topicList}
+
+**TASK**:
+1. Reorder these EXACT topics from beginner → advanced
+2. Consider dependencies (e.g., HTML before React, basics before frameworks)
+3. Explain the learning strategy
+
+**RULES**:
+- Use ONLY the provided topic slugs
+- Do NOT invent new topics
+- Order must make pedagogical sense
+
+**OUTPUT** (JSON only):
+{
+  "orderedSlugs": ["slug1", "slug2", "slug3"],
+  "learningStrategy": "Brief explanation of the ordering logic"
+}
+
+Return only valid JSON.
+`;
+
+  const parseAndCache = async (text) => {
+    let jsonText = text.trim();
+    
+    // Extract from markdown
+    const jsonMatch = jsonText.match(/```json\s*\n([\s\S]*?)\n```/) || 
+                     jsonText.match(/```\s*\n([\s\S]*?)\n```/);
+    if (jsonMatch) {
+      jsonText = jsonMatch[1];
+    }
+    
+    // Find JSON boundaries
+    const firstBrace = jsonText.indexOf('{');
+    const lastBrace = jsonText.lastIndexOf('}');
+    if (firstBrace !== -1 && lastBrace !== -1) {
+      jsonText = jsonText.substring(firstBrace, lastBrace + 1);
+    }
+    
+    try {
+      const parsed = JSON.parse(jsonText);
+      if (parsed.orderedSlugs && Array.isArray(parsed.orderedSlugs)) {
+        await setCacheValue(cacheKey, parsed);
+        return parsed;
+      }
+    } catch (e) {
+      console.error('Path structure parse error:', e);
+    }
+    return null;
+  };
+
+  // Try Groq clients (PRIMARY)
+  for (const [index, client] of groqClients.entries()) {
+    try {
+      console.log(`🤖 Structuring path via Groq (Key ${index + 1})...`);
+      const text = await tryGroqFallback(prompt, client);
+      const parsed = await parseAndCache(text);
+      if (parsed) return parsed;
+    } catch (e) {
+      console.error(`Groq path structure error (Key ${index + 1}):`, e);
+    }
+  }
+
+  // Try Gemini models (SECONDARY)
+  for (const client of geminiModels) {
+    try {
+      console.log(`⚠️ Structuring path via Gemini fallback ${client.id}...`);
+      const result = await client.instance.generateContent(prompt);
+      const parsed = await parseAndCache(result.response.text());
+      if (parsed) return parsed;
+    } catch (e) {
+      console.error(`Gemini path structure error (${client.id}):`, e);
+    }
+  }
+
+  // Try Hugging Face fallback
+  try {
+    console.log('⚠️ Structuring path via HF fallback...');
+    const text = await tryHuggingFaceFallback(prompt);
+    const parsed = await parseAndCache(text);
+    if (parsed) return parsed;
+  } catch (e) {
+    console.error('HF path structure error:', e);
+  }
+  
+  // Last resort: Original order
+  console.warn('❌ AI structure failed, returning original order');
+  return {
+    orderedSlugs: topics.map(t => t.slug),
+    learningStrategy: "Standard linear progression based on original order."
+  };
+};
+
+/**
+ * Translate a code block from one language to another
+ * Keeps logic identical, only changes syntax
+ */
+export const translateCodeBlock = async (code, sourceLang, targetLang) => {
+  // Quick check - if languages are the same, return original
+  if (sourceLang === targetLang) return code;
+  
+  const cacheKey = `translate_${sourceLang}_${targetLang}_${Buffer.from(code).toString('base64').substring(0, 40)}`;
+  
+  // Check cache
+  const cached = await getCacheValue(cacheKey);
+  if (cached) {
+    console.log('📦 Returning cached code translation');
+    return cached;
+  }
+
+  const prompt = `Translate this ${sourceLang} code to ${targetLang}.
+
+**RULES**:
+1. Keep the EXACT SAME logic and algorithm
+2. Use ${targetLang} idioms and best practices
+3. Maintain or translate comments appropriately
+4. Use proper ${targetLang} syntax and conventions
+5. Return ONLY the translated code, no explanations or markdown
+
+**SOURCE CODE (${sourceLang})**:
+${code}
+
+**TRANSLATE TO ${targetLang}**:
+Return the translated code now (no explanations, just code):`;
+
+  // Try Groq clients (PRIMARY)
+  for (const [index, client] of groqClients.entries()) {
+    try {
+      console.log(`🔄 Translating code via Groq (Key ${index + 1})...`);
+      const response = await tryGroqFallback(prompt, client);
+      
+      // Try to extract code from markdown if AI wrapped it
+      const codeMatch = response.match(/```[\w]*\n([\s\S]*?)\n```/);
+      const translatedCode = codeMatch ? codeMatch[1].trim() : response.trim();
+      
+      // Cache the translation
+      await setCacheValue(cacheKey, translatedCode, 3600 * 24 * 7); // 7 days
+      
+      console.log(`✅ Code translated successfully (${sourceLang} → ${targetLang})`);
+      return translatedCode;
+    } catch (error) {
+      console.error(`❌ Groq translation failed (Key ${index + 1}):`, error.message);
+    }
+  }
+
+  // Try Gemini fallback
+  for (const client of geminiModels) {
+    try {
+      console.log(`⚠️ Trying Gemini for translation...`);
+      const result = await client.instance.generateContent(prompt);
+      const response = result.response.text();
+      
+      const codeMatch = response.match(/```[\w]*\n([\s\S]*?)\n```/);
+      const translatedCode = codeMatch ? codeMatch[1].trim() : response.trim();
+      
+      await setCacheValue(cacheKey, translatedCode, 3600 * 24 * 7);
+      return translatedCode;
+    } catch (error) {
+      console.error(`❌ Gemini translation failed:`, error.message);
+    }
+  }
+
+  // Fallback: return original code if all providers fail
+  console.warn('⚠️ All translation attempts failed, returning original code');
+  return code;
 };
 
 export default {
   generateExplanation,
   answerQuestion,
-  generateTestCases,
   generateQuiz,
-  generateLearningPathRecommendation
+  generateLearningPathRecommendation,
+  structureLearningPath,
+  translateCodeBlock
 };

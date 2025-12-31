@@ -13,5 +13,7 @@ router.use(aiLimiter);
 router.post('/explain', validateAIRequest, aiController.explainTopic);
 router.post('/ask', validateAIRequest, aiController.askQuestion);
 router.post('/quiz', validateAIRequest, aiController.generateQuiz);
+router.post('/structure-path', validateAIRequest, aiController.structurePath);
+router.post('/translate-code', validateAIRequest, aiController.translateCode);
 
 export default router;
