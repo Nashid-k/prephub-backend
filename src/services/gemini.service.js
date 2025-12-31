@@ -109,10 +109,10 @@ const tryHuggingFaceFallback = async (prompt) => {
 /**
  * Generate AI explanation for a topic/section with fallback
  */
-export const generateExplanation = async (topic, section, context = '') => {
-  // Include context in cache key to allow different prompts to generate fresh content
+export const generateExplanation = async (topic, section, context = '', language = 'javascript') => {
+  // Include context and language in cache key to allow different prompts to generate fresh content
   const contextHash = context ? Buffer.from(context).toString('base64').substring(0, 20) : 'default';
-  const cacheKey = `explain_${topic}_${section}_${contextHash}`;
+  const cacheKey = `explain_${topic}_${section}_${contextHash}_${language}`;
   
   // Check cache first
   const cached = await getCacheValue(cacheKey);
@@ -121,17 +121,20 @@ export const generateExplanation = async (topic, section, context = '') => {
     return cached;
   }
 
+  const languageNote = language !== 'javascript' ? 
+    `\n\nCRITICAL: All code examples MUST be written in ${language.toUpperCase()}. Use ${language} syntax, not JavaScript.` : '';
+
   const prompt = `
 You are an expert MERN stack instructor. Explain the following topic in a clear, structured way:
 
 Topic: ${topic}
 Section: ${section}
-${context ? `Context: ${context}` : ''}
+${context ? `Context: ${context}` : ''}${languageNote}
 
 Provide:
 1. A brief overview (2-3 sentences)
 2. Key concepts (bullet points) - If specific key points are provided in the context, YOU MUST EXPLAIN EACH ONE individually with a short definition/explanation.
-3. 2-3 practical code examples with explanations
+3. 2-3 practical code examples with explanations${language !== 'javascript' ? ` in ${language}` : ''}
 4. Best practices
 5. Common pitfalls to avoid
 
@@ -209,9 +212,9 @@ console.log(example);
 /**
  * Answer a specific question with context and fallback
  */
-export const answerQuestion = async (question, context = {}) => {
+export const answerQuestion = async (question, context = {}, language = 'javascript') => {
   const contextId = context.topic + context.section + (context.currentCode ? Buffer.from(context.currentCode).toString('base64').substring(0, 20) : '');
-  const cacheKey = `answer_${Buffer.from(question).toString('base64').substring(0, 30)}_${contextId}`;
+  const cacheKey = `answer_${Buffer.from(question).toString('base64').substring(0, 30)}_${contextId}_${language}`;
 
   const cached = await getCacheValue(cacheKey);
   if (cached) {
@@ -225,6 +228,9 @@ export const answerQuestion = async (question, context = {}) => {
   if (context.topic?.toLowerCase().includes('react')) roleDescription = 'a Senior React Developer & Mentor';
   if (context.topic?.toLowerCase().includes('node')) roleDescription = 'a Backend Node.js Architect';
   
+  const languageNote = language !== 'javascript' ? 
+    `\n\nCRITICAL: If providing code examples, write them in ${language.toUpperCase()}, not JavaScript.` : '';
+  
   const prompt = `
 You are ${roleDescription}. Your goal is to be a friendly, encouraging, and highly effective tutor who empowers students to master full-stack development.
 
@@ -233,7 +239,7 @@ Context:
 - Module: ${context.module || 'General'}
 - Section: ${context.section || 'General'}
 ${context.description ? `- Learning Material: ${context.description.substring(0, 300)}...` : ''}
-${context.currentCode ? `\nSTUDENT'S CURRENT CODE:\n\`\`\`javascript\n${context.currentCode}\n\`\`\`\n` : ''}
+${context.currentCode ? `\nSTUDENT'S CURRENT CODE:\n\`\`\`${language}\n${context.currentCode}\n\`\`\`\n` : ''}${languageNote}
 
 Student's Question: "${question}"
 
@@ -517,8 +523,8 @@ export const generateTestCases = async (prompt) => {
 /**
  * Generate a dynamic 5-question multiple choice quiz
  */
-export const generateQuiz = async (topic, section, regenerate = false) => {
-  const cacheKey = `quiz_${topic}_${section}`;
+export const generateQuiz = async (topic, section, regenerate = false, language = 'javascript') => {
+  const cacheKey = `quiz_${topic}_${section}_${language}`;
   
   if (!regenerate) {
     const cached = await getCacheValue(cacheKey);

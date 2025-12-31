@@ -5,7 +5,7 @@ import geminiService from '../services/gemini.service.js';
  */
 export const explainTopic = async (req, res) => {
   try {
-    const { topic, section, context } = req.body;
+    const { topic, section, context, language = 'javascript' } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -13,7 +13,7 @@ export const explainTopic = async (req, res) => {
       });
     }
 
-    const explanation = await geminiService.generateExplanation(topic, section, context);
+    const explanation = await geminiService.generateExplanation(topic, section, context, language);
 
     res.json({
       success: true,
@@ -32,7 +32,7 @@ export const explainTopic = async (req, res) => {
  */
 export const askQuestion = async (req, res) => {
   try {
-    const { question, context } = req.body;
+    const { question, context, language = 'javascript' } = req.body;
 
     if (!question) {
       return res.status(400).json({ 
@@ -40,7 +40,7 @@ export const askQuestion = async (req, res) => {
       });
     }
 
-    const answer = await geminiService.answerQuestion(question, context);
+    const answer = await geminiService.answerQuestion(question, context, language);
 
     res.json({
       success: true,
@@ -59,7 +59,7 @@ export const askQuestion = async (req, res) => {
  */
 export const generateQuiz = async (req, res) => {
   try {
-    const { topic, section, regenerate } = req.body;
+    const { topic, section, regenerate, language = 'javascript' } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -67,7 +67,7 @@ export const generateQuiz = async (req, res) => {
       });
     }
 
-    const quiz = await geminiService.generateQuiz(topic, section, regenerate);
+    const quiz = await geminiService.generateQuiz(topic, section, regenerate, language);
 
     res.json({
       success: true,
