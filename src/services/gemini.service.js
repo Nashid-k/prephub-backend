@@ -630,6 +630,8 @@ Format strictly as a JSON array:
       explanation: "This is a placeholder question because AI services are offline. Please check server logs."
     }
   ];
+};
+
 /**
  * Generate personalized learning path recommendation
  */
