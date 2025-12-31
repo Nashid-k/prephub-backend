@@ -15,7 +15,7 @@ import authRoutes from './routes/auth.routes.js';
 import bookmarkRoutes from './routes/bookmark.routes.js';
 import recommendationsRoutes from './routes/recommendations.routes.js';
 import activityRoutes from './routes/activity.routes.js';
-import { scheduleWeeklyEmails } from './jobs/emailScheduler.js';
+
 
 import { helmetConfig, corsOptions, apiLimiter } from './middleware/security.js';
 import { compressionMiddleware } from './middleware/performance.js';
@@ -120,12 +120,6 @@ const startServer = async () => {
     app.listen(PORT, () => {
       console.log(`🚀 Server is running on port ${PORT}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
-      
-      // Email scheduler disabled - uncomment when domain is verified on Resend
-      // if (process.env.RESEND_API_KEY) {
-      //   scheduleWeeklyEmails();
-      //   console.log('📧 Email scheduler enabled');
-      // }
       console.log(`🏥 Health Check: http://localhost:${PORT}/api/health\n`);
 
       // Self-ping to keep server awake on Render Free Tier

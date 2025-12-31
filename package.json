@@ -41,7 +41,6 @@
     "node-cache": "^5.1.2",
     "node-cron": "^4.2.1",
     "nodemailer": "^7.0.12",
-    "resend": "^6.6.0",
     "slugify": "^1.6.6"
   },
   "devDependencies": {
