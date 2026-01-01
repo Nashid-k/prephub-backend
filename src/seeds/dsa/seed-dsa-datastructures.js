@@ -548,6 +548,16 @@ const seedHierarchy = async () => {
     let categoryOrder = 1;
     let totalSections = 0;
 
+    const getGroupForCategory = (catName) => {
+        const lower = catName.toLowerCase();
+        if (lower.includes('foundations') || lower.includes('complexity') || lower.includes('analysis') || lower.includes('memory')) return 'Fundamentals';
+        if (lower.includes('array') || lower.includes('string') || lower.includes('linked list') || lower.includes('stack') || lower.includes('queue')) return 'Linear Data Structures';
+        if (lower.includes('tree') || lower.includes('heap') || lower.includes('trie') || lower.includes('graph')) return 'Non-Linear Data Structures';
+        if (lower.includes('hash')) return 'Hashing';
+        if (lower.includes('advanced') || lower.includes('design') || lower.includes('implementation') || lower.includes('real world')) return 'Advanced Topics';
+        return 'General';
+    };
+
     for (const [catKey, sectionsObj] of Object.entries(dataStructuresCurriculum)) {
       // Format Category Name: "01_data_structure_foundations" -> "Data Structure Foundations"
       let catName = catKey.replace(/^\d+_/, '').split('_')
@@ -558,6 +568,7 @@ const seedHierarchy = async () => {
         name: catName,
         slug: slugify(catName, { lower: true, strict: true }),
         topicId: topic._id,
+        group: getGroupForCategory(catName),
         order: categoryOrder++,
         description: `Master ${catName}`
       });

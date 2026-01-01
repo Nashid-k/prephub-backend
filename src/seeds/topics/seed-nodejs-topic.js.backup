@@ -543,7 +543,7 @@ const seedNode = async () => {
                     slug: categorySlug,
                     description: `Learn about ${categoryName}`,
                     topicId: topic._id,
-                    group: groupName,
+                    group: groupName, // Direct from seed structure!
                     order: order++
                 });
 

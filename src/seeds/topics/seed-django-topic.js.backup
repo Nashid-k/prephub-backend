@@ -462,12 +462,8 @@ const seedDjango = async () => {
         }
 
         const seenSlugs = new Set();
-        const generateUniqueSlug = (title) =>{
-            if (!title || typeof title !== 'string') {
-                title = 'section';
-            }
+        const generateUniqueSlug = (title) => {
             let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!baseSlug) baseSlug = 'section'; // Fallback if slug is empty after cleaning
             let slug = baseSlug;
             let counter = 1;
             while (seenSlugs.has(slug)) {
@@ -483,19 +479,30 @@ const seedDjango = async () => {
         for (const [mainKey, mainValue] of Object.entries(djangoData)) {
             const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
             
-            // Handle if mainValue is an ARRAY (like Essential_Middleware, Signals)
-            if (Array.isArray(mainValue)) {
-                // Create a single category for this group
+            for (const [key, value] of Object.entries(mainValue)) {
+                const categoryName = formatName(key);
+                const categorySlug = generateUniqueSlug(categoryName);
+
                 const category = await Category.create({
-                    name: groupName,
-                    slug: generateUniqueSlug(groupName),
-                    description: `Learn about ${groupName}`,
+                    name: categoryName,
+                    slug: categorySlug,
+                    description: `Learn about ${categoryName}`,
                     topicId: topic._id,
-                    group: groupName,
+                    group: groupName, // Direct from seed structure!
                     order: order++
                 });
 
-                const sectionDocs = mainValue.map((sectionTitle, index) => ({
+                // Handle value being Array (direct sections) or Object (subgroups which we flatten)
+                let sections = [];
+                if (Array.isArray(value)) {
+                    sections = value;
+                } else {
+                    for (const [subKey, subItems] of Object.entries(value)) {
+                        sections = [...sections, ...subItems];
+                    }
+                }
+
+                const sectionDocs = sections.map((sectionTitle, index) => ({
                     title: sectionTitle,
                     slug: generateUniqueSlug(sectionTitle),
                     description: `Detailed explanation of ${sectionTitle}`,
@@ -503,53 +510,13 @@ const seedDjango = async () => {
                     categoryId: category._id,
                     topicId: topic._id,
                     order: index + 1,
-                    difficulty: 'intermediate',
+                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Security') ? 'advanced' : 
+                               categoryName.includes('Basics') || categoryName.includes('Framework') ? 'beginner' : 'intermediate',
                     estimatedTime: 15
                 }));
 
                 await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${groupName} (Group: ${groupName}) with ${sectionDocs.length} sections`);
-            } else {
-                // Handle Object mainValue (normal case)
-                for (const [key, value] of Object.entries(mainValue)) {
-                    const categoryName = formatName(key);
-                    const categorySlug = generateUniqueSlug(categoryName);
-
-                    const category = await Category.create({
-                        name: categoryName,
-                        slug: categorySlug,
-                        description: `Learn about ${categoryName}`,
-                        topicId: topic._id,
-                        group: groupName,
-                        order: order++
-                    });
-
-                    // Handle value being Array (direct sections) or Object (subgroups which we flatten)
-                    let sections = [];
-                    if (Array.isArray(value)) {
-                        sections = value;
-                    } else {
-                        for (const [subKey, subItems] of Object.entries(value)) {
-                            sections = [...sections, ...subItems];
-                        }
-                    }
-
-                    const sectionDocs = sections.map((sectionTitle, index) => ({
-                        title: sectionTitle,
-                        slug: generateUniqueSlug(sectionTitle),
-                        description: `Detailed explanation of ${sectionTitle}`,
-                        content: 'Coming soon...',
-                        categoryId: category._id,
-                        topicId: topic._id,
-                        order: index + 1,
-                        difficulty: categoryName.includes('Advanced') || categoryName.includes('Security') ? 'advanced' : 
-                                   categoryName.includes('Basics') || categoryName.includes('Framework') ? 'beginner' : 'intermediate',
-                        estimatedTime: 15
-                    }));
-
-                    await Section.insertMany(sectionDocs);
-                    console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-                }
+                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
             }
         }
 

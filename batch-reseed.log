@@ -1,0 +1,925 @@
+🚀 Starting batch re-seeding of all topics with AI categorization...
+==================================================
+
+[1/18] Running: seed-javascript-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating JavaScript topic...
+Cleared existing JavaScript data
+Created Category: 01 Introduction (Group: JavaScript Fundamentals) with 4 sections
+Created Category: 02 Data Types (Group: JavaScript Fundamentals) with 17 sections
+Created Category: 03 Variables Scopes (Group: JavaScript Fundamentals) with 12 sections
+Created Category: 01 Function Basics (Group: Functions) with 5 sections
+Created Category: 02 Function Types (Group: Functions) with 5 sections
+Created Category: 03 Function Features (Group: Functions) with 5 sections
+Created Category: 04 Advanced Concepts (Group: Functions) with 4 sections
+Created Category: 01 Object Basics (Group: Objects) with 4 sections
+Created Category: 02 Object Operations (Group: Objects) with 4 sections
+Created Category: 03 Object Patterns (Group: Objects) with 4 sections
+Created Category: 04 Advanced Objects (Group: Objects) with 4 sections
+Created Category: 01 Array Basics (Group: Arrays) with 4 sections
+Created Category: 02 Array Iteration (Group: Arrays) with 4 sections
+Created Category: 03 Array Methods (Group: Arrays) with 12 sections
+Created Category: 01 Callbacks (Group: Asynchronous JavaScript) with 4 sections
+Created Category: 02 Promises (Group: Asynchronous JavaScript) with 8 sections
+Created Category: 03 Async Await (Group: Asynchronous JavaScript) with 4 sections
+Created Category: 04 Timers Events (Group: Asynchronous JavaScript) with 4 sections
+Created Category: 01 Prototype Basics (Group: OOP Prototypes) with 4 sections
+Created Category: 02 Inheritance (Group: OOP Prototypes) with 4 sections
+Created Category: 03 Oop Concepts (Group: OOP Prototypes) with 4 sections
+Created Category: 04 Classes (Group: OOP Prototypes) with 5 sections
+Created Category: 01 Dom Basics (Group: DOM Manipulation) with 4 sections
+Created Category: 02 Dom Operations (Group: DOM Manipulation) with 4 sections
+Created Category: 03 Events (Group: DOM Manipulation) with 7 sections
+Created Category: 01 Storage (Group: Browser APIs) with 4 sections
+Created Category: 02 Web Apis (Group: Browser APIs) with 4 sections
+Created Category: 03 Browser Object (Group: Browser APIs) with 4 sections
+Created Category: 01 Es6 Features (Group: Modern JavaScript) with 5 sections
+Created Category: 02 Es7 Es8 (Group: Modern JavaScript) with 4 sections
+Created Category: 03 Es9 Es10 (Group: Modern JavaScript) with 4 sections
+Created Category: 04 Es2020 Plus (Group: Modern JavaScript) with 4 sections
+Created Category: Error Types (Group: Error Handling) with 4 sections
+Created Category: Handling Mechanisms (Group: Error Handling) with 4 sections
+Created Category: Memory Basics (Group: Memory Management) with 4 sections
+Created Category: Copy Mechanisms (Group: Memory Management) with 3 sections
+Created Category: Optimization (Group: Performance Patterns) with 4 sections
+Created Category: Best Practices (Group: Performance Patterns) with 4 sections
+Created Category: Module Systems (Group: Modules) with 4 sections
+Created Category: Must Know Problems (Group: Essential Practical Skills) with 16 sections
+Created Category: Async Problems (Group: Essential Practical Skills) with 4 sections
+Created Category: Dom Problems (Group: Essential Practical Skills) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 6 sections
+Created Category: Common Questions (Group: Interview Preparation) with 6 sections
+Created Category: Problem Solving (Group: Interview Preparation) with 5 sections
+Created Category: Debugging (Group: Development Tools) with 4 sections
+Created Category: Testing (Group: Development Tools) with 3 sections
+Created Category: Code Quality (Group: Development Tools) with 4 sections
+✅ JavaScript seeding complete!
+✅ seed-javascript-topic.js completed successfully
+
+[2/18] Running: seed-typescript-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating TypeScript topic...
+Error seeding data: ReferenceError: groupName is not defined
+    at seedTypescript (file:///home/nashid/Desktop/study/prephub/backend/src/seeds/topics/seed-typescript-topic.js:432:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+❌ seed-typescript-topic.js failed
+
+[3/18] Running: seed-python-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Python topic...
+Created Category: 01 Language Fundamentals (Group: Python Basics) with 8 sections
+Created Category: 02 Basic Syntax (Group: Python Basics) with 8 sections
+Created Category: 01 Basic Types (Group: Data Types And Structures) with 9 sections
+Created Category: 02 Collections (Group: Data Types And Structures) with 16 sections
+Created Category: 03 Memory Management (Group: Data Types And Structures) with 4 sections
+Created Category: 01 Conditionals (Group: Control Flow) with 4 sections
+Created Category: 02 Loops (Group: Control Flow) with 4 sections
+Created Category: 03 Comprehensions (Group: Control Flow) with 4 sections
+Created Category: 01 Function Basics (Group: Functions) with 4 sections
+Created Category: 02 Advanced Functions (Group: Functions) with 4 sections
+Created Category: 03 Functional Programming (Group: Functions) with 4 sections
+Created Category: 01 Oop Fundamentals (Group: Object Oriented Programming) with 4 sections
+Created Category: 02 Encapsulation (Group: Object Oriented Programming) with 4 sections
+Created Category: 03 Inheritance Polymorphism (Group: Object Oriented Programming) with 4 sections
+Created Category: 04 Special Methods (Group: Object Oriented Programming) with 4 sections
+Created Category: 05 Advanced Oop (Group: Object Oriented Programming) with 4 sections
+Created Category: Exception Handling (Group: Error Handling) with 4 sections
+Created Category: Custom Exceptions (Group: Error Handling) with 4 sections
+Created Category: File Handling (Group: File Operations) with 4 sections
+Created Category: File Formats (Group: File Operations) with 4 sections
+Created Category: String Manipulation (Group: String Operations) with 4 sections
+Created Category: String Algorithms (Group: String Operations) with 4 sections
+Created Category: Standard Library (Group: Useful Modules) with 6 sections
+Created Category: Data Processing (Group: Useful Modules) with 4 sections
+Created Category: Generators (Group: Advanced Features) with 4 sections
+Created Category: Iterators (Group: Advanced Features) with 3 sections
+Created Category: Context Managers (Group: Advanced Features) with 3 sections
+Created Category: Concurrency Basics (Group: Advanced Features) with 4 sections
+Created Category: 01 Common Patterns (Group: Practical Skills) with 8 sections
+Created Category: 02 Debugging Testing (Group: Practical Skills) with 4 sections
+Created Category: 03 Performance (Group: Practical Skills) with 4 sections
+Created Category: Must Solve Problems (Group: Essential Problems) with 20 sections
+Created Category: Code Quality (Group: Development Best Practices) with 4 sections
+Created Category: Maintainability (Group: Development Best Practices) with 4 sections
+Created Category: Project Structure (Group: Development Best Practices) with 4 sections
+Created Category: Common Topics (Group: Interview Preparation) with 8 sections
+Created Category: Practical Exercises (Group: Interview Preparation) with 4 sections
+✅ Python seeding complete!
+✅ seed-python-topic.js completed successfully
+
+[4/18] Running: seed-react-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating React topic...
+Created Category: 01 Introduction (Group: React Fundamentals) with 8 sections
+Created Category: 02 Jsx Basics (Group: React Fundamentals) with 5 sections
+Created Category: 03 Components (Group: React Fundamentals) with 8 sections
+Created Category: 01 State Basics (Group: State Management) with 4 sections
+Created Category: 02 State Operations (Group: State Management) with 4 sections
+Created Category: 03 State Patterns (Group: State Management) with 4 sections
+Created Category: Props Basics (Group: Props System) with 4 sections
+Created Category: Props Advanced (Group: Props System) with 4 sections
+Created Category: 01 Basic Hooks (Group: Hooks) with 12 sections
+Created Category: 02 Performance Hooks (Group: Hooks) with 4 sections
+Created Category: 03 Reference Hooks (Group: Hooks) with 4 sections
+Created Category: 04 Other Hooks (Group: Hooks) with 4 sections
+Created Category: Class Components (Group: Component Lifecycle) with 4 sections
+Created Category: Functional Components (Group: Component Lifecycle) with 4 sections
+Created Category: Event Basics (Group: Event Handling) with 4 sections
+Created Category: Event Patterns (Group: Event Handling) with 4 sections
+Created Category: Controlled Components (Group: Forms) with 4 sections
+Created Category: Uncontrolled Components (Group: Forms) with 4 sections
+Created Category: Methods (Group: Conditional Rendering) with 5 sections
+Created Category: List Rendering (Group: Lists Keys) with 4 sections
+Created Category: Key Management (Group: Lists Keys) with 4 sections
+Created Category: Routing Basics (Group: React Router) with 4 sections
+Created Category: Routing Features (Group: React Router) with 4 sections
+Created Category: Routing Advanced (Group: React Router) with 4 sections
+Created Category: 01 Memoization (Group: Performance Optimization) with 4 sections
+Created Category: 02 Code Splitting (Group: Performance Optimization) with 4 sections
+Created Category: 03 Rendering Optimization (Group: Performance Optimization) with 4 sections
+Created Category: 04 Other Optimizations (Group: Performance Optimization) with 4 sections
+Created Category: Error Boundaries (Group: Error Handling) with 4 sections
+Created Category: Error Patterns (Group: Error Handling) with 4 sections
+Created Category: 01 React Internals (Group: Advanced Concepts) with 4 sections
+Created Category: 02 Patterns (Group: Advanced Concepts) with 4 sections
+Created Category: 03 Apis (Group: Advanced Concepts) with 4 sections
+Created Category: 01 Context Api (Group: State Management Libraries) with 4 sections
+Created Category: 02 Redux Basics (Group: State Management Libraries) with 8 sections
+Created Category: 03 Redux Advanced (Group: State Management Libraries) with 4 sections
+Created Category: 04 Alternatives (Group: State Management Libraries) with 4 sections
+Created Category: Data Fetching (Group: API Integration) with 4 sections
+Created Category: Http Clients (Group: API Integration) with 4 sections
+Created Category: Authentication (Group: API Integration) with 4 sections
+Created Category: Testing Basics (Group: Testing) with 4 sections
+Created Category: Testing Patterns (Group: Testing) with 4 sections
+Created Category: Development Tools (Group: Build Tools) with 4 sections
+Created Category: Environment (Group: Build Tools) with 4 sections
+Created Category: React 18 Features (Group: Modern React) with 4 sections
+Created Category: React 19 Features (Group: Modern React) with 4 sections
+Created Category: Beginner Projects (Group: Essential Projects) with 4 sections
+Created Category: Intermediate Projects (Group: Essential Projects) with 4 sections
+Created Category: Advanced Projects (Group: Essential Projects) with 4 sections
+Created Category: 01 Code Organization (Group: Best Practices) with 4 sections
+Created Category: 02 Performance (Group: Best Practices) with 4 sections
+Created Category: 03 Security (Group: Best Practices) with 4 sections
+Created Category: 04 Maintainability (Group: Best Practices) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Common Questions (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ React seeding complete!
+✅ seed-react-topic.js completed successfully
+
+[5/18] Running: seed-nodejs-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Node.js topic...
+Created Category: 01 Introduction (Group: Nodejs Fundamentals) with 8 sections
+Created Category: 02 Project Structure (Group: Nodejs Fundamentals) with 8 sections
+Created Category: 03 Repl Basics (Group: Nodejs Fundamentals) with 4 sections
+Created Category: 01 Fs Module (Group: Core Modules) with 5 sections
+Created Category: 02 Path Module (Group: Core Modules) with 5 sections
+Created Category: 03 Http Module (Group: Core Modules) with 8 sections
+Created Category: 04 Other Core Modules (Group: Core Modules) with 4 sections
+Created Category: 01 Express Basics (Group: Express Framework) with 4 sections
+Created Category: 02 Middleware (Group: Express Framework) with 8 sections
+Created Category: 03 Routing (Group: Express Framework) with 4 sections
+Created Category: 04 Request Handling (Group: Express Framework) with 4 sections
+Created Category: 05 Response Handling (Group: Express Framework) with 4 sections
+Created Category: 01 Http Basics (Group: HTTP Protocol) with 4 sections
+Created Category: 02 Advanced Http (Group: HTTP Protocol) with 4 sections
+Created Category: 03 Url Structure (Group: HTTP Protocol) with 4 sections
+Created Category: 01 Callbacks (Group: Asynchronous Programming) with 4 sections
+Created Category: 02 Promises (Group: Asynchronous Programming) with 4 sections
+Created Category: 03 Event Loop (Group: Asynchronous Programming) with 4 sections
+Created Category: 01 Concurrency Basics (Group: Concurrency Performance) with 4 sections
+Created Category: 02 Scaling (Group: Concurrency Performance) with 4 sections
+Created Category: 03 Timers (Group: Concurrency Performance) with 4 sections
+Created Category: 01 Authentication (Group: Security) with 4 sections
+Created Category: 02 Security Headers (Group: Security) with 4 sections
+Created Category: 03 Input Validation (Group: Security) with 4 sections
+Created Category: 01 Database Basics (Group: Database Integration) with 4 sections
+Created Category: 02 Orms Odms (Group: Database Integration) with 4 sections
+Created Category: 01 Streams (Group: Streams Buffers) with 4 sections
+Created Category: 02 Buffers (Group: Streams Buffers) with 4 sections
+Created Category: File Handling (Group: File Operations) with 4 sections
+Created Category: File Uploads (Group: File Operations) with 4 sections
+Created Category: 01 Cookies (Group: Session Management) with 4 sections
+Created Category: 02 Sessions (Group: Session Management) with 4 sections
+Created Category: 03 Storage Options (Group: Session Management) with 4 sections
+Created Category: 01 Error Patterns (Group: Error Handling) with 4 sections
+Created Category: 02 Graceful Shutdown (Group: Error Handling) with 4 sections
+Created Category: 01 Testing Basics (Group: Testing) with 4 sections
+Created Category: 02 Integration Testing (Group: Testing) with 4 sections
+Created Category: 01 Production Prep (Group: Deployment) with 4 sections
+Created Category: 02 Deployment Strategies (Group: Deployment) with 4 sections
+Created Category: 01 Websocket Basics (Group: WebSockets RealTime) with 4 sections
+Created Category: 02 Websocket Patterns (Group: WebSockets RealTime) with 4 sections
+Created Category: 01 Api Design (Group: REST API Design) with 4 sections
+Created Category: 02 Api Best Practices (Group: REST API Design) with 4 sections
+Created Category: 01 Architecture (Group: Advanced Topics) with 4 sections
+Created Category: 02 Performance (Group: Advanced Topics) with 4 sections
+Created Category: 03 Tools (Group: Advanced Topics) with 4 sections
+Created Category: Beginner Projects (Group: Essential Projects) with 4 sections
+Created Category: Intermediate Projects (Group: Essential Projects) with 4 sections
+Created Category: Advanced Projects (Group: Essential Projects) with 4 sections
+Created Category: 01 Code Organization (Group: Best Practices) with 4 sections
+Created Category: 02 Performance (Group: Best Practices) with 4 sections
+Created Category: 03 Security (Group: Best Practices) with 4 sections
+Created Category: 04 Maintainability (Group: Best Practices) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Common Questions (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Node.js seeding complete!
+✅ seed-nodejs-topic.js completed successfully
+
+[6/18] Running: seed-express-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Express topic...
+Created Category: 01 Introduction (Group: Express.js Fundamentals) with 8 sections
+Created Category: 02 Basic Server (Group: Express.js Fundamentals) with 8 sections
+Created Category: 01 Middleware Basics (Group: Middleware) with 4 sections
+Created Category: 02 Built In Middleware (Group: Middleware) with 4 sections
+Created Category: 03 Custom Middleware (Group: Middleware) with 4 sections
+Created Category: 04 Third Party Middleware (Group: Middleware) with 4 sections
+Created Category: 01 Basic Routing (Group: Routing) with 4 sections
+Created Category: 02 Route Parameters (Group: Routing) with 4 sections
+Created Category: 03 Query Parameters (Group: Routing) with 4 sections
+Created Category: 04 Router Module (Group: Routing) with 4 sections
+Created Category: 01 Request Object (Group: Request Handling) with 4 sections
+Created Category: 02 Response Methods (Group: Request Handling) with 4 sections
+Created Category: 03 Response Status (Group: Request Handling) with 4 sections
+Created Category: 04 Request Validation (Group: Request Handling) with 4 sections
+Created Category: 01 Basic Error Handling (Group: Error Handling) with 4 sections
+Created Category: 02 Http Errors (Group: Error Handling) with 4 sections
+Created Category: 03 Async Error Handling (Group: Error Handling) with 4 sections
+Created Category: 01 Static Files (Group: Static Files Templates) with 4 sections
+Created Category: 02 Template Engines (Group: Static Files Templates) with 4 sections
+Created Category: 03 File Uploads (Group: Static Files Templates) with 4 sections
+Created Category: 01 Restful Apis (Group: API Development) with 4 sections
+Created Category: 02 Api Structure (Group: API Development) with 4 sections
+Created Category: 03 Api Documentation (Group: API Development) with 4 sections
+Created Category: 04 Api Security (Group: API Development) with 4 sections
+Created Category: 01 Authentication (Group: Authentication Authorization) with 4 sections
+Created Category: 02 Authorization (Group: Authentication Authorization) with 4 sections
+Created Category: 03 Security Middleware (Group: Authentication Authorization) with 4 sections
+Created Category: 01 Database Connection (Group: Database Integration) with 4 sections
+Created Category: 02 Crud Operations (Group: Database Integration) with 4 sections
+Created Category: 03 Data Validation (Group: Database Integration) with 4 sections
+Created Category: 01 Testing Setup (Group: Testing) with 4 sections
+Created Category: 02 Test Types (Group: Testing) with 4 sections
+Created Category: 03 Test Best Practices (Group: Testing) with 4 sections
+Created Category: 01 Configuration (Group: Production Ready) with 4 sections
+Created Category: 02 Performance (Group: Production Ready) with 4 sections
+Created Category: 03 Monitoring (Group: Production Ready) with 4 sections
+Created Category: 04 Security (Group: Production Ready) with 4 sections
+Created Category: 01 Code Organization (Group: Best Practices) with 4 sections
+Created Category: 02 Error Handling (Group: Best Practices) with 4 sections
+Created Category: 03 Performance (Group: Best Practices) with 4 sections
+Created Category: 04 Security (Group: Best Practices) with 4 sections
+Created Category: 01 Application Patterns (Group: Common Patterns) with 4 sections
+Created Category: 02 Routing Patterns (Group: Common Patterns) with 4 sections
+Created Category: 03 Middleware Patterns (Group: Common Patterns) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 6 sections
+Created Category: Development Workflow (Group: Development Tools) with 4 sections
+Created Category: Code Quality (Group: Development Tools) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 6 sections
+Created Category: Common Questions (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Express seeding complete!
+✅ seed-express-topic.js completed successfully
+
+[7/18] Running: seed-mongodb-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating MongoDB topic...
+Created Category: 01 Introduction (Group: MongoDB Fundamentals) with 8 sections
+Created Category: 02 Basic Operations (Group: MongoDB Fundamentals) with 16 sections
+Created Category: Data Structures (Group: Data Modeling) with 4 sections
+Created Category: Data Types (Group: Data Modeling) with 5 sections
+Created Category: Schema Design (Group: Data Modeling) with 4 sections
+Created Category: 01 Basic Queries (Group: Querying Data) with 4 sections
+Created Category: 02 Array Operations (Group: Querying Data) with 4 sections
+Created Category: 03 Advanced Queries (Group: Querying Data) with 4 sections
+Created Category: Update Operators (Group: Update Operations) with 5 sections
+Created Category: Update Patterns (Group: Update Operations) with 4 sections
+Created Category: 01 Aggregation Basics (Group: Aggregation Framework) with 4 sections
+Created Category: 02 Common Stages (Group: Aggregation Framework) with 4 sections
+Created Category: 03 Advanced Stages (Group: Aggregation Framework) with 4 sections
+Created Category: 04 Accumulators (Group: Aggregation Framework) with 4 sections
+Created Category: 01 Index Basics (Group: Indexing) with 4 sections
+Created Category: 02 Special Indexes (Group: Indexing) with 4 sections
+Created Category: 03 Index Management (Group: Indexing) with 4 sections
+Created Category: 04 Index Strategies (Group: Indexing) with 4 sections
+Created Category: Acid Properties (Group: Transactions) with 4 sections
+Created Category: Transaction Operations (Group: Transactions) with 4 sections
+Created Category: Replica Set Basics (Group: Replication) with 4 sections
+Created Category: Replication Operations (Group: Replication) with 4 sections
+Created Category: Sharding Concepts (Group: Sharding) with 4 sections
+Created Category: Sharding Operations (Group: Sharding) with 4 sections
+Created Category: Concepts (Group: CAP Theorem) with 4 sections
+Created Category: Capped Collections (Group: Special Collections) with 4 sections
+Created Category: Clustered Collections (Group: Special Collections) with 3 sections
+Created Category: Views (Group: Special Collections) with 4 sections
+Created Category: 01 Query Optimization (Group: Performance Optimization) with 4 sections
+Created Category: 02 Memory Management (Group: Performance Optimization) with 3 sections
+Created Category: Backup Methods (Group: Backup Recovery) with 4 sections
+Created Category: Recovery Operations (Group: Backup Recovery) with 3 sections
+Created Category: Monitoring Tools (Group: Monitoring Maintenance) with 4 sections
+Created Category: Maintenance Tasks (Group: Monitoring Maintenance) with 4 sections
+Created Category: Basics (Group: GridFS) with 4 sections
+Created Category: 01 Basic Queries (Group: Practical Queries) with 4 sections
+Created Category: 02 Update Queries (Group: Practical Queries) with 4 sections
+Created Category: 03 Aggregation Queries (Group: Practical Queries) with 4 sections
+Created Category: 04 Real World Scenarios (Group: Practical Queries) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 6 sections
+Created Category: Common Questions (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+Created Category: Mongodb Tools (Group: Development Tools) with 4 sections
+Created Category: Monitoring (Group: Development Tools) with 4 sections
+✅ MongoDB seeding complete!
+✅ seed-mongodb-topic.js completed successfully
+
+[8/18] Running: seed-nextjs-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Next.js topic...
+Created Category: 01 Introduction (Group: Next.js Fundamentals) with 8 sections
+Created Category: 02 Routing System (Group: Next.js Fundamentals) with 12 sections
+Created Category: 03 Rendering Strategies (Group: Next.js Fundamentals) with 8 sections
+Created Category: 01 Server Side (Group: Data Fetching) with 8 sections
+Created Category: 02 Static Generation (Group: Data Fetching) with 12 sections
+Created Category: 03 Client Side (Group: Data Fetching) with 4 sections
+Created Category: 04 Api Routes (Group: Data Fetching) with 4 sections
+Created Category: 01 Image Optimization (Group: Core Features) with 4 sections
+Created Category: 02 Font Optimization (Group: Core Features) with 4 sections
+Created Category: 03 Script Optimization (Group: Core Features) with 4 sections
+Created Category: 04 Code Splitting (Group: Core Features) with 4 sections
+Created Category: 01 Styling Options (Group: Styling) with 11 sections
+Created Category: 01 Configuration Files (Group: Configuration) with 12 sections
+Created Category: 02 Environment (Group: Configuration) with 4 sections
+Created Category: 03 Middleware (Group: Configuration) with 4 sections
+Created Category: 01 Client State (Group: State Management) with 4 sections
+Created Category: 02 Server State (Group: State Management) with 4 sections
+Created Category: 03 Global State (Group: State Management) with 4 sections
+Created Category: 01 Auth Methods (Group: Authentication) with 4 sections
+Created Category: 02 Protected Routes (Group: Authentication) with 4 sections
+Created Category: 03 User Management (Group: Authentication) with 4 sections
+Created Category: 01 Core Web Vitals (Group: Performance Optimization) with 4 sections
+Created Category: 02 Optimization Techniques (Group: Performance Optimization) with 4 sections
+Created Category: 03 Caching (Group: Performance Optimization) with 4 sections
+Created Category: 01 Build Process (Group: Deployment) with 4 sections
+Created Category: 02 Deployment Platforms (Group: Deployment) with 8 sections
+Created Category: 01 Testing Types (Group: Testing) with 4 sections
+Created Category: 02 Testing Setup (Group: Testing) with 4 sections
+Created Category: Seo Basics (Group: SEO Metadata) with 4 sections
+Created Category: Dynamic Seo (Group: SEO Metadata) with 4 sections
+Created Category: Error Pages (Group: Error Handling) with 4 sections
+Created Category: Error Monitoring (Group: Error Handling) with 4 sections
+Created Category: 01 Project Structure (Group: Best Practices) with 4 sections
+Created Category: 02 Code Organization (Group: Best Practices) with 4 sections
+Created Category: 03 Performance (Group: Best Practices) with 4 sections
+Created Category: 01 Project Types (Group: Practical Projects) with 8 sections
+Created Category: 02 Essential Features (Group: Practical Projects) with 6 sections
+Created Category: Common Topics (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Next.js seeding complete!
+✅ seed-nextjs-topic.js completed successfully
+
+[9/18] Running: seed-angular-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Angular topic...
+Created Category: 01 Introduction Setup (Group: Angular Fundamentals) with 8 sections
+Created Category: 02 Typescript Basics (Group: Angular Fundamentals) with 5 sections
+Created Category: 01 Component Basics (Group: Components Templates) with 4 sections
+Created Category: 02 Data Binding (Group: Components Templates) with 4 sections
+Created Category: 03 Template Syntax (Group: Components Templates) with 4 sections
+Created Category: 04 Component Communication (Group: Components Templates) with 4 sections
+Created Category: 01 Structural Directives (Group: Directives) with 4 sections
+Created Category: 02 Attribute Directives (Group: Directives) with 4 sections
+Created Category: 03 Custom Directives (Group: Directives) with 4 sections
+Created Category: 01 Services (Group: Services Dependency Injection) with 4 sections
+Created Category: 02 Dependency Injection (Group: Services Dependency Injection) with 4 sections
+Created Category: 03 Injection Tokens (Group: Services Dependency Injection) with 4 sections
+Created Category: 01 Module Basics (Group: Modules) with 4 sections
+Created Category: 02 Module Types (Group: Modules) with 4 sections
+Created Category: 03 Module Strategies (Group: Modules) with 4 sections
+Created Category: 01 Routing Basics (Group: Routing) with 4 sections
+Created Category: 02 Advanced Routing (Group: Routing) with 4 sections
+Created Category: 03 Navigation Features (Group: Routing) with 4 sections
+Created Category: 01 Template Driven Forms (Group: Forms) with 4 sections
+Created Category: 02 Reactive Forms (Group: Forms) with 4 sections
+Created Category: 03 Form Validation (Group: Forms) with 4 sections
+Created Category: 04 Form Operations (Group: Forms) with 4 sections
+Created Category: 01 Http Basics (Group: HTTP Client) with 4 sections
+Created Category: 02 Advanced Http (Group: HTTP Client) with 4 sections
+Created Category: 03 Api Integration (Group: HTTP Client) with 4 sections
+Created Category: 01 Observables Basics (Group: RxJS Reactive Programming) with 4 sections
+Created Category: 02 Rxjs Operators (Group: RxJS Reactive Programming) with 4 sections
+Created Category: 03 Subjects (Group: RxJS Reactive Programming) with 4 sections
+Created Category: 01 Component State (Group: State Management) with 4 sections
+Created Category: 02 Ngrx Basics (Group: State Management) with 4 sections
+Created Category: 03 Ngrx Advanced (Group: State Management) with 4 sections
+Created Category: 04 Authentication State (Group: State Management) with 4 sections
+Created Category: Built In Pipes (Group: Pipes) with 4 sections
+Created Category: Custom Pipes (Group: Pipes) with 4 sections
+Created Category: Component Lifecycle (Group: Lifecycle Hooks) with 4 sections
+Created Category: Lifecycle Usage (Group: Lifecycle Hooks) with 4 sections
+Created Category: 01 Change Detection (Group: Performance Optimization) with 4 sections
+Created Category: 02 Bundle Optimization (Group: Performance Optimization) with 4 sections
+Created Category: 03 Runtime Optimization (Group: Performance Optimization) with 4 sections
+Created Category: 01 Unit Testing (Group: Testing) with 4 sections
+Created Category: 02 Testing Utilities (Group: Testing) with 4 sections
+Created Category: 01 Angular Specific (Group: Advanced Features) with 4 sections
+Created Category: 02 Signals (Group: Advanced Features) with 4 sections
+Created Category: Security Basics (Group: Security) with 4 sections
+Created Category: 01 Build Process (Group: Deployment) with 4 sections
+Created Category: 02 Deployment Options (Group: Deployment) with 4 sections
+Created Category: 01 Project Structure (Group: Best Practices) with 4 sections
+Created Category: 02 Code Organization (Group: Best Practices) with 4 sections
+Created Category: 03 Development Workflow (Group: Best Practices) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 5 sections
+Created Category: Common Topics (Group: Interview Preparation) with 7 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Angular seeding complete!
+✅ seed-angular-topic.js completed successfully
+
+[10/18] Running: seed-c-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating C topic...
+Created Category: 01 Introduction (Group: C Programming Fundamentals) with 8 sections
+Created Category: 02 Basic Syntax (Group: C Programming Fundamentals) with 8 sections
+Created Category: Operators (Group: Operators Expressions) with 6 sections
+Created Category: Expressions (Group: Operators Expressions) with 3 sections
+Created Category: Standard Io (Group: Input Output) with 4 sections
+Created Category: Character Io (Group: Input Output) with 3 sections
+Created Category: Decision Making (Group: Control Flow) with 4 sections
+Created Category: Loops (Group: Control Flow) with 5 sections
+Created Category: One Dimensional (Group: Arrays) with 4 sections
+Created Category: Multi Dimensional (Group: Arrays) with 4 sections
+Created Category: Character Arrays (Group: Arrays) with 4 sections
+Created Category: 01 Pointer Basics (Group: Pointers) with 5 sections
+Created Category: 02 Pointers And Arrays (Group: Pointers) with 4 sections
+Created Category: 03 Advanced Pointers (Group: Pointers) with 4 sections
+Created Category: 01 Function Basics (Group: Functions) with 5 sections
+Created Category: 02 Parameter Passing (Group: Functions) with 4 sections
+Created Category: 03 Function Types (Group: Functions) with 5 sections
+Created Category: 04 Scope Storage (Group: Functions) with 4 sections
+Created Category: String Operations (Group: Strings) with 4 sections
+Created Category: Character Functions (Group: Strings) with 3 sections
+Created Category: Memory Functions (Group: Strings) with 4 sections
+Created Category: Structures (Group: Structures Unions) with 6 sections
+Created Category: Unions (Group: Structures Unions) with 4 sections
+Created Category: Type Definitions (Group: Structures Unions) with 3 sections
+Created Category: Memory Functions (Group: Dynamic Memory Allocation) with 4 sections
+Created Category: Memory Management (Group: Dynamic Memory Allocation) with 4 sections
+Created Category: 01 File Basics (Group: File Handling) with 4 sections
+Created Category: 02 File Operations (Group: File Handling) with 4 sections
+Created Category: 03 File Management (Group: File Handling) with 4 sections
+Created Category: Directives (Group: Preprocessor Directives) with 5 sections
+Created Category: Segments (Group: Memory Layout) with 6 sections
+Created Category: Basics (Group: Command Line Arguments) with 4 sections
+Created Category: Essential Headers (Group: Standard Library) with 6 sections
+Created Category: 01 Linked Lists (Group: Data Structures) with 4 sections
+Created Category: 02 Stacks Queues (Group: Data Structures) with 4 sections
+Created Category: 03 Trees (Group: Data Structures) with 3 sections
+Created Category: 04 Sorting Searching (Group: Data Structures) with 4 sections
+Created Category: Concepts (Group: Recursion) with 5 sections
+Created Category: Basics (Group: Bit Manipulation) with 4 sections
+Created Category: Techniques (Group: Error Handling) with 5 sections
+Created Category: Tools (Group: Debugging Tools) with 4 sections
+Created Category: 01 Code Quality (Group: Best Practices) with 4 sections
+Created Category: 02 Performance (Group: Best Practices) with 4 sections
+Created Category: 03 Security (Group: Best Practices) with 4 sections
+Created Category: Beginner Projects (Group: Essential Projects) with 4 sections
+Created Category: Intermediate Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 5 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 6 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+Created Category: Common Problems (Group: Interview Preparation) with 5 sections
+✅ C seeding complete!
+✅ seed-c-topic.js completed successfully
+
+[11/18] Running: seed-csharp-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating C# topic...
+Created Category: 01 Introduction (Group: C# Fundamentals) with 8 sections
+Created Category: 02 Basic Syntax (Group: C# Fundamentals) with 8 sections
+Created Category: Operators (Group: Operators Control Flow) with 6 sections
+Created Category: Control Flow (Group: Operators Control Flow) with 9 sections
+Created Category: Arrays (Group: Arrays Collections) with 4 sections
+Created Category: Collections (Group: Arrays Collections) with 8 sections
+Created Category: 01 Classes Objects (Group: Object Oriented Programming) with 4 sections
+Created Category: 02 Properties Methods (Group: Object Oriented Programming) with 8 sections
+Created Category: 03 Inheritance Polymorphism (Group: Object Oriented Programming) with 4 sections
+Created Category: 04 Static Members (Group: Object Oriented Programming) with 4 sections
+Created Category: 05 Interfaces (Group: Object Oriented Programming) with 4 sections
+Created Category: Exception Basics (Group: Exception Handling) with 4 sections
+Created Category: Exception Operations (Group: Exception Handling) with 4 sections
+Created Category: Delegates (Group: Delegates Events Lambdas) with 4 sections
+Created Category: Events (Group: Delegates Events Lambdas) with 4 sections
+Created Category: Lambda Expressions (Group: Delegates Events Lambdas) with 4 sections
+Created Category: Generics Basics (Group: Generics) with 4 sections
+Created Category: Advanced Generics (Group: Generics) with 4 sections
+Created Category: 01 Linq Basics (Group: LINQ) with 4 sections
+Created Category: 02 Linq Operations (Group: LINQ) with 5 sections
+Created Category: 03 Advanced Linq (Group: LINQ) with 4 sections
+Created Category: 01 Async Await (Group: Asynchronous Programming) with 4 sections
+Created Category: 02 Task Operations (Group: Asynchronous Programming) with 4 sections
+Created Category: 03 Async Patterns (Group: Asynchronous Programming) with 4 sections
+Error seeding data: Error: Section validation failed: slug: Path `slug` is required.
+    at ValidationError.inspect (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/error/validation.js:52:26)
+    at formatValue (node:internal/util/inspect:887:19)
+    at inspect (node:internal/util/inspect:409:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2579:40)
+    at formatWithOptions (node:internal/util/inspect:2441:10)
+    at console.value (node:internal/console/constructor:345:14)
+    at console.error (node:internal/console/constructor:412:61)
+    at seedCSharp (file:///home/nashid/Desktop/study/prephub/backend/src/seeds/topics/seed-csharp-topic.js:597:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  errors: {
+    slug: ValidatorError: Path `slug` is required.
+        at validate (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/schemaType.js:1443:13)
+        at SchemaType.doValidate (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/schemaType.js:1427:7)
+        at /home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/document.js:3124:18
+        at process.processTicksAndRejections (node:internal/process/task_queues:85:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'slug',
+      value: '',
+      reason: undefined,
+      [Symbol(mongoose#validatorError)]: true
+    }
+  },
+  _message: 'Section validation failed'
+}
+❌ seed-csharp-topic.js failed
+
+[12/18] Running: seed-java-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Java topic...
+Created Category: 01 Introduction (Group: Java Fundamentals) with 8 sections
+Created Category: 02 Basic Syntax (Group: Java Fundamentals) with 9 sections
+Created Category: Conditionals (Group: Control Flow) with 4 sections
+Created Category: Loops (Group: Control Flow) with 5 sections
+Created Category: Arrays (Group: Arrays Strings) with 4 sections
+Created Category: Strings (Group: Arrays Strings) with 4 sections
+Created Category: 01 Classes Objects (Group: Object Oriented Programming) with 4 sections
+Created Category: 02 Encapsulation (Group: Object Oriented Programming) with 4 sections
+Created Category: 03 Inheritance (Group: Object Oriented Programming) with 4 sections
+Created Category: 04 Polymorphism (Group: Object Oriented Programming) with 4 sections
+Created Category: 05 Abstraction (Group: Object Oriented Programming) with 4 sections
+Created Category: 06 Oop Principles (Group: Object Oriented Programming) with 4 sections
+Created Category: 0 (Group: Packages Import) with 19 sections
+Created Category: 1 (Group: Packages Import) with 17 sections
+Created Category: 2 (Group: Packages Import) with 40 sections
+Created Category: 3 (Group: Packages Import) with 23 sections
+Created Category: Exception Basics (Group: Exception Handling) with 4 sections
+Created Category: Exception Operations (Group: Exception Handling) with 4 sections
+Created Category: 01 Collection Interfaces (Group: Collections Framework) with 5 sections
+Created Category: 02 Implementations (Group: Collections Framework) with 11 sections
+Created Category: 03 Collection Operations (Group: Collections Framework) with 4 sections
+Created Category: Generics Basics (Group: Generics) with 4 sections
+Created Category: Advanced Generics (Group: Generics) with 4 sections
+Created Category: File Operations (Group: Input Output) with 4 sections
+Created Category: Serialization (Group: Input Output) with 4 sections
+Created Category: 01 Thread Basics (Group: Multithreading) with 4 sections
+Created Category: 02 Synchronization (Group: Multithreading) with 4 sections
+Created Category: 03 Concurrency Utilities (Group: Multithreading) with 4 sections
+Created Category: 04 Thread Coordination (Group: Multithreading) with 4 sections
+Created Category: 0 (Group: Memory Management) with 21 sections
+Created Category: 1 (Group: Memory Management) with 25 sections
+Created Category: 2 (Group: Memory Management) with 22 sections
+Created Category: 3 (Group: Memory Management) with 26 sections
+Created Category: Lambda Expressions (Group: Java 8 Features) with 4 sections
+Created Category: Stream Api (Group: Java 8 Features) with 4 sections
+Created Category: Other Features (Group: Java 8 Features) with 3 sections
+Created Category: Jdbc Basics (Group: Database Connectivity) with 4 sections
+Created Category: Advanced Jdbc (Group: Database Connectivity) with 4 sections
+Created Category: Junit Framework (Group: Unit Testing) with 4 sections
+Created Category: Testing Practices (Group: Unit Testing) with 4 sections
+Created Category: Maven (Group: Build Tools) with 4 sections
+Created Category: Gradle (Group: Build Tools) with 4 sections
+Created Category: 01 Spring Core (Group: Spring Framework) with 4 sections
+Created Category: 02 Spring Boot (Group: Spring Framework) with 4 sections
+Created Category: 03 Spring Data (Group: Spring Framework) with 4 sections
+Created Category: 04 Spring Security (Group: Spring Framework) with 4 sections
+Created Category: 05 Spring Web (Group: Spring Framework) with 4 sections
+Created Category: Creational (Group: Design Patterns) with 3 sections
+Created Category: Structural (Group: Design Patterns) with 3 sections
+Created Category: Behavioral (Group: Design Patterns) with 3 sections
+Created Category: 01 Code Quality (Group: Best Practices) with 4 sections
+Created Category: 02 Performance (Group: Best Practices) with 4 sections
+Created Category: 03 Security (Group: Best Practices) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 5 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Java seeding complete!
+✅ seed-java-topic.js completed successfully
+
+[13/18] Running: seed-golang-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Golang topic...
+Created Category: 01 Introduction (Group: Go Fundamentals) with 8 sections
+Created Category: 02 Basic Syntax (Group: Go Fundamentals) with 8 sections
+Created Category: Conditionals (Group: Control Flow) with 4 sections
+Created Category: Loops (Group: Control Flow) with 4 sections
+Created Category: Function Basics (Group: Functions) with 4 sections
+Created Category: Advanced Functions (Group: Functions) with 4 sections
+Created Category: Error Handling (Group: Functions) with 4 sections
+Created Category: Panic Recover (Group: Functions) with 4 sections
+Created Category: Arrays Slices (Group: Data Structures) with 7 sections
+Created Category: Maps (Group: Data Structures) with 4 sections
+Created Category: Strings (Group: Data Structures) with 4 sections
+Created Category: Structs (Group: Structs Methods) with 4 sections
+Created Category: Methods (Group: Structs Methods) with 4 sections
+Created Category: Interface Basics (Group: Interfaces) with 4 sections
+Created Category: Interface Usage (Group: Interfaces) with 4 sections
+Created Category: 01 Goroutines (Group: Concurrency) with 4 sections
+Created Category: 02 Channels (Group: Concurrency) with 8 sections
+Created Category: 03 Synchronization (Group: Concurrency) with 4 sections
+Created Category: 04 Concurrency Patterns (Group: Concurrency) with 4 sections
+Created Category: Pointers (Group: Pointers Memory) with 4 sections
+Created Category: Memory Management (Group: Pointers Memory) with 4 sections
+Created Category: Essential Packages (Group: Standard Library) with 6 sections
+Created Category: File Handling (Group: Standard Library) with 4 sections
+Created Category: Encoding (Group: Standard Library) with 4 sections
+Created Category: Testing Basics (Group: Testing) with 4 sections
+Created Category: Advanced Testing (Group: Testing) with 4 sections
+Created Category: Http Server (Group: Web Development) with 4 sections
+Created Category: Web Frameworks (Group: Web Development) with 4 sections
+Created Category: Api Development (Group: Web Development) with 4 sections
+Created Category: Database Basics (Group: Database) with 4 sections
+Created Category: Orms (Group: Database) with 4 sections
+Created Category: Cli Basics (Group: CLI Development) with 4 sections
+Created Category: Advanced Cli (Group: CLI Development) with 4 sections
+Created Category: Generics Basics (Group: Generics) with 4 sections
+Created Category: Code Organization (Group: Best Practices) with 4 sections
+Created Category: Performance (Group: Best Practices) with 4 sections
+Created Category: Development Workflow (Group: Best Practices) with 4 sections
+Created Category: Containerization (Group: Deployment DevOps) with 4 sections
+Created Category: Cloud Deployment (Group: Deployment DevOps) with 4 sections
+Created Category: Monitoring (Group: Deployment DevOps) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 4 sections
+Created Category: Concurrency Problems (Group: Common Patterns Problems) with 4 sections
+Created Category: Data Processing (Group: Common Patterns Problems) with 4 sections
+Created Category: Error Patterns (Group: Common Patterns Problems) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Golang seeding complete!
+✅ seed-golang-topic.js completed successfully
+
+[14/18] Running: seed-dart-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Dart topic...
+Created Category: 01 Introduction (Group: Dart Fundamentals) with 8 sections
+Created Category: 02 Basic Syntax (Group: Dart Fundamentals) with 4 sections
+Created Category: 01 Basic Types (Group: Variables Data Types) with 6 sections
+Created Category: 02 Type System (Group: Variables Data Types) with 5 sections
+Created Category: 03 Variable Declaration (Group: Variables Data Types) with 5 sections
+Created Category: Arithmetic (Group: Operators) with 4 sections
+Created Category: Comparison (Group: Operators) with 2 sections
+Created Category: Logical (Group: Operators) with 3 sections
+Created Category: Null Aware (Group: Operators) with 4 sections
+Created Category: Other Operators (Group: Operators) with 4 sections
+Created Category: Conditionals (Group: Control Flow) with 4 sections
+Created Category: Loops (Group: Control Flow) with 5 sections
+Created Category: 01 Function Basics (Group: Functions) with 4 sections
+Created Category: 02 Parameter Types (Group: Functions) with 5 sections
+Created Category: 03 Function Types (Group: Functions) with 5 sections
+Created Category: 01 Lists (Group: Collections) with 5 sections
+Created Category: 02 Sets (Group: Collections) with 4 sections
+Created Category: 03 Maps (Group: Collections) with 5 sections
+Created Category: 04 Collection Operators (Group: Collections) with 4 sections
+Created Category: 05 Collection Methods (Group: Collections) with 5 sections
+Created Category: String Basics (Group: Strings) with 4 sections
+Created Category: String Methods (Group: Strings) with 6 sections
+Created Category: 01 Classes Objects (Group: Object Oriented Programming) with 4 sections
+Created Category: 02 Constructors (Group: Object Oriented Programming) with 5 sections
+Created Category: 03 Inheritance (Group: Object Oriented Programming) with 4 sections
+Created Category: 04 Interfaces (Group: Object Oriented Programming) with 4 sections
+Created Category: 05 Abstract Classes (Group: Object Oriented Programming) with 3 sections
+Created Category: 06 Mixins (Group: Object Oriented Programming) with 4 sections
+Created Category: 07 Advanced Oop (Group: Object Oriented Programming) with 4 sections
+Created Category: Exception Basics (Group: Exception Handling) with 4 sections
+Created Category: Exception Operations (Group: Exception Handling) with 4 sections
+Created Category: 01 Futures (Group: Asynchronous Programming) with 4 sections
+Created Category: 02 Async Patterns (Group: Asynchronous Programming) with 4 sections
+Created Category: 03 Streams (Group: Asynchronous Programming) with 4 sections
+Created Category: 04 Generators (Group: Asynchronous Programming) with 4 sections
+Created Category: Generics Basics (Group: Generics) with 4 sections
+Created Category: Generic Collections (Group: Generics) with 4 sections
+Created Category: Null Safety Basics (Group: Null Safety) with 4 sections
+Created Category: Migration Patterns (Group: Null Safety) with 4 sections
+Created Category: Enum Basics (Group: Enums) with 4 sections
+Created Category: File Operations (Group: File IO) with 4 sections
+Created Category: Json Handling (Group: File IO) with 4 sections
+Created Category: 01 Common Patterns (Group: Practical Skills) with 4 sections
+Created Category: 02 Data Processing (Group: Practical Skills) with 4 sections
+Created Category: 03 Error Handling (Group: Practical Skills) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 5 sections
+Created Category: Must Implement Features (Group: Essential Projects) with 5 sections
+Created Category: 01 Code Quality (Group: Best Practices) with 4 sections
+Created Category: 02 Performance (Group: Best Practices) with 4 sections
+Created Category: 03 Testing (Group: Best Practices) with 4 sections
+Created Category: Core Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Dart seeding complete!
+✅ seed-dart-topic.js completed successfully
+
+[15/18] Running: seed-flutter-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Flutter topic...
+Created Category: 01 Flutter Basics (Group: Flutter Fundamentals) with 8 sections
+Created Category: 02 Project Structure (Group: Flutter Fundamentals) with 7 sections
+Created Category: 01 Basic Syntax (Group: Dart Essentials) with 4 sections
+Created Category: 02 Control Flow (Group: Dart Essentials) with 4 sections
+Created Category: 03 Functions (Group: Dart Essentials) with 4 sections
+Created Category: 04 Collections (Group: Dart Essentials) with 4 sections
+Created Category: 05 Oop Dart (Group: Dart Essentials) with 5 sections
+Created Category: 06 Async Programming (Group: Dart Essentials) with 4 sections
+Created Category: 01 Widget Basics (Group: Widgets UI) with 4 sections
+Created Category: 02 Layout Widgets (Group: Widgets UI) with 8 sections
+Created Category: 03 Basic Widgets (Group: Widgets UI) with 4 sections
+Created Category: 04 Input Widgets (Group: Widgets UI) with 4 sections
+Created Category: 05 Scrolling (Group: Widgets UI) with 4 sections
+Created Category: 06 Responsive Design (Group: Widgets UI) with 4 sections
+Created Category: 01 State Concepts (Group: State Management) with 4 sections
+Created Category: 02 Basic State Management (Group: State Management) with 4 sections
+Created Category: 03 Advanced State Management (Group: State Management) with 8 sections
+Created Category: 01 Basic Navigation (Group: Navigation Routing) with 4 sections
+Created Category: 02 Advanced Navigation (Group: Navigation Routing) with 4 sections
+Created Category: 03 Dialogs Snackbars (Group: Navigation Routing) with 4 sections
+Created Category: 01 Http Requests (Group: Networking API) with 4 sections
+Created Category: 02 Data Parsing (Group: Networking API) with 4 sections
+Created Category: 03 State Management Integration (Group: Networking API) with 4 sections
+Created Category: 01 Key Value Storage (Group: Local Storage) with 3 sections
+Created Category: 02 Database Storage (Group: Local Storage) with 4 sections
+Created Category: 03 File Storage (Group: Local Storage) with 4 sections
+Created Category: 01 Native Features (Group: Platform Integration) with 4 sections
+Created Category: 02 Packages Plugins (Group: Platform Integration) with 3 sections
+Created Category: 03 Platform Ui (Group: Platform Integration) with 3 sections
+Created Category: Form Handling (Group: Forms Validation) with 4 sections
+Created Category: Validation Patterns (Group: Forms Validation) with 4 sections
+Created Category: Basic Animations (Group: Animations) with 4 sections
+Created Category: Advanced Animations (Group: Animations) with 4 sections
+Created Category: Testing Types (Group: Testing) with 4 sections
+Created Category: Testing Tools (Group: Testing) with 4 sections
+Created Category: Performance Tips (Group: Performance Optimization) with 4 sections
+Created Category: Debugging Tools (Group: Performance Optimization) with 4 sections
+Created Category: 01 App Builds (Group: Deployment) with 4 sections
+Created Category: 02 App Store Deployment (Group: Deployment) with 4 sections
+Created Category: 03 Continuous Integration (Group: Deployment) with 4 sections
+Created Category: Common Patterns (Group: Project Architecture) with 4 sections
+Created Category: Best Practices (Group: Project Architecture) with 4 sections
+Created Category: Learning Projects (Group: Essential Projects) with 4 sections
+Created Category: Must Know Features (Group: Essential Projects) with 5 sections
+Created Category: Common Concepts (Group: Interview Preparation) with 5 sections
+Created Category: Practical Skills (Group: Interview Preparation) with 5 sections
+✅ Flutter seeding complete!
+✅ seed-flutter-topic.js completed successfully
+
+[16/18] Running: seed-django-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating Django topic...
+Created Category: 01 Framework Basics (Group: Django Fundamentals) with 8 sections
+Created Category: 02 Project Structure (Group: Django Fundamentals) with 9 sections
+Created Category: 03 Configuration (Group: Django Fundamentals) with 10 sections
+Created Category: 01 Orm Basics (Group: Database Models) with 4 sections
+Created Category: 02 Model Fields (Group: Database Models) with 8 sections
+Created Category: 03 Relationships (Group: Database Models) with 5 sections
+Created Category: 04 Model Operations (Group: Database Models) with 8 sections
+Created Category: 05 Advanced Models (Group: Database Models) with 4 sections
+Created Category: 01 View Types (Group: Views Templates) with 6 sections
+Created Category: 02 Template System (Group: Views Templates) with 4 sections
+Created Category: 03 Common Patterns (Group: Views Templates) with 4 sections
+Created Category: 01 Form Basics (Group: Forms Validation) with 4 sections
+Created Category: 02 Form Handling (Group: Forms Validation) with 4 sections
+Created Category: 03 Custom Validation (Group: Forms Validation) with 3 sections
+Created Category: Routing Basics (Group: URL Routing) with 4 sections
+Created Category: Reverse Urls (Group: URL Routing) with 4 sections
+Created Category: Admin Configuration (Group: Admin Interface) with 4 sections
+Created Category: User Management (Group: Admin Interface) with 4 sections
+Created Category: 01 User Authentication (Group: Authentication Authorization) with 4 sections
+Created Category: 02 Authorization (Group: Authentication Authorization) with 4 sections
+Created Category: 03 Advanced Auth (Group: Authentication Authorization) with 4 sections
+Created Category: 01 Drf Basics (Group: REST APIs) with 4 sections
+Created Category: 02 Api Features (Group: REST APIs) with 4 sections
+Created Category: 03 Api Design (Group: REST APIs) with 4 sections
+Created Category: Essential Security (Group: Security) with 4 sections
+Created Category: Authentication Security (Group: Security) with 4 sections
+Created Category: Input Validation (Group: Security) with 4 sections
+Created Category: Database Optimization (Group: Performance Optimization) with 4 sections
+Created Category: Application Optimization (Group: Performance Optimization) with 4 sections
+Created Category: Pre Deployment (Group: Deployment) with 4 sections
+Created Category: Deployment Stack (Group: Deployment) with 4 sections
+Created Category: Cloud Deployment (Group: Deployment) with 4 sections
+Error seeding data: Error: Section validation failed: slug: Path `slug` is required.
+    at ValidationError.inspect (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/error/validation.js:52:26)
+    at formatValue (node:internal/util/inspect:887:19)
+    at inspect (node:internal/util/inspect:409:10)
+    at formatWithOptionsInternal (node:internal/util/inspect:2579:40)
+    at formatWithOptions (node:internal/util/inspect:2441:10)
+    at console.value (node:internal/console/constructor:345:14)
+    at console.error (node:internal/console/constructor:412:61)
+    at seedDjango (file:///home/nashid/Desktop/study/prephub/backend/src/seeds/topics/seed-django-topic.js:526:17)
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5) {
+  errors: {
+    slug: ValidatorError: Path `slug` is required.
+        at validate (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/schemaType.js:1443:13)
+        at SchemaType.doValidate (/home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/schemaType.js:1427:7)
+        at /home/nashid/Desktop/study/prephub/backend/node_modules/mongoose/lib/document.js:3124:18
+        at process.processTicksAndRejections (node:internal/process/task_queues:85:11) {
+      properties: [Object],
+      kind: 'required',
+      path: 'slug',
+      value: '',
+      reason: undefined,
+      [Symbol(mongoose#validatorError)]: true
+    }
+  },
+  _message: 'Section validation failed'
+}
+❌ seed-django-topic.js failed
+
+[17/18] Running: seed-postgresql-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating PostgreSQL topic...
+Created Category: Foundations with 18 sections
+Created Category: Sql Language Types with 23 sections
+Created Category: Data Types Constraints with 28 sections
+Created Category: Table Operations with 15 sections
+Created Category: Data Integrity Normalization with 16 sections
+Created Category: Basic Queries with 17 sections
+Created Category: Aggregation Grouping with 12 sections
+Created Category: Joins with 12 sections
+Created Category: Advanced Queries with 14 sections
+Created Category: Functions with 13 sections
+Created Category: Set Operations with 7 sections
+Created Category: Views with 6 sections
+Created Category: Stored Procedures Functions with 6 sections
+Created Category: Triggers with 6 sections
+Created Category: Transactions Concurrency with 19 sections
+Created Category: Security with 8 sections
+Created Category: Performance Optimization with 26 sections
+Created Category: Advanced Features with 11 sections
+Created Category: Relationships Er Diagram with 7 sections
+Created Category: Practical Workouts with 41 sections
+Seeding complete!
+✅ seed-postgresql-topic.js completed successfully
+
+[18/18] Running: seed-dsa-topic.js
+---------------------------------------------------
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+Creating DSA topic...
+Clearing old DSA data...
+Seeding new DSA content...
+✅ DSA seeding complete!
+✅ seed-dsa-topic.js completed successfully
+
+==================================================
+🎉 Batch re-seeding complete!
+
+📊 Summary:
+   Total topics: 18
+   ✅ Successful: 15
+   ❌ Failed: 3
+
+⚠️  Some topics failed. Check logs above for details.

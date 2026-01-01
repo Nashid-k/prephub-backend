@@ -625,11 +625,21 @@ const seedHierarchy = async () => {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
       
+    const getGroupForCategory = (catName) => {
+        const lower = catName.toLowerCase();
+        if (lower.includes('foundations') || lower.includes('complexity') || lower.includes('mathematical') || lower.includes('bit manipulation')) return 'Fundamentals';
+        if (lower.includes('sorting') || lower.includes('searching') || lower.includes('recursion') || lower.includes('divide')) return 'Core Algorithms';
+        if (lower.includes('graph') || lower.includes('tree') || lower.includes('heap') || lower.includes('string') || lower.includes('array')) return 'Data Structure Algorithms';
+        if (lower.includes('dynamic') || lower.includes('backtracking') || lower.includes('greedy') || lower.includes('two pointer') || lower.includes('sliding window')) return 'Advanced Paradigms';
+        return 'Specialized Topics';
+    };
+
       const category = await Category.create({
         name: catName,
         slug: slugify(catName, { lower: true, strict: true }),
         topicId: topic._id,
         order: categoryOrder++,
+        group: getGroupForCategory(catName),
         description: `Master ${catName}`
       });
 

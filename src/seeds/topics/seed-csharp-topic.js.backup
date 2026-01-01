@@ -536,11 +536,7 @@ const seedCSharp = async () => {
 
         const seenSlugs = new Set();
         const generateUniqueSlug = (title) => {
-            if (!title || typeof title !== 'string') {
-                title = 'section';
-            }
             let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!baseSlug) baseSlug = 'section';
             let slug = baseSlug;
             let counter = 1;
             while (seenSlugs.has(slug)) {
@@ -564,7 +560,7 @@ const seedCSharp = async () => {
                     slug: categorySlug,
                     description: `Learn about ${categoryName}`,
                     topicId: topic._id,
-                    group: groupName,
+                    group: groupName, // Direct from seed structure!
                     order: order++
                 });
 

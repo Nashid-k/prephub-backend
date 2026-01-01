@@ -281,11 +281,22 @@ const seedHierarchy = async () => {
             .map(word => word.charAt(0).toUpperCase() + word.slice(1))
             .join(' ');
         
+        const getGroupForCategory = (catName) => {
+            const lower = catName.toLowerCase();
+            if (lower.includes('array') || lower.includes('string') || lower.includes('linked list')) return 'Linear Data Structures';
+            if (lower.includes('tree') || lower.includes('graph') || lower.includes('heap') || lower.includes('trie')) return 'Non-Linear Data Structures';
+            if (lower.includes('dynamic programming') || lower.includes('backtracking') || lower.includes('greedy') || lower.includes('interval')) return 'Algorithmic Patterns';
+            if (lower.includes('study') || lower.includes('resource')) return 'Study Guide';
+            if (lower.includes('warmup') || lower.includes('binary search') || lower.includes('miscellaneous') || lower.includes('design')) return 'Foundations & Misc';
+            return 'General';
+        };
+
         const category = await Category.create({
             name: catName,
             slug: slugify(catName, { lower: true, strict: true }),
             topicId: topic._id,
             order: categoryOrder++,
+            group: getGroupForCategory(catName),
             description: catData.category_description || `Master ${catName}`
         });
         console.log(`  📂 Created Category: ${category.name}`);

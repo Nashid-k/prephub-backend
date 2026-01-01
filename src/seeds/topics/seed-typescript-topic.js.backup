@@ -420,8 +420,6 @@ const seedTypescript = async () => {
 
         // 3. Process Data
         let order = 1;
-        const groupName = "TypeScript"; // All TypeScript categories use this group
-        
         for (const [key, value] of Object.entries(data)) {
             const categoryName = formatName(key);
             const categorySlug = categoryName.toLowerCase().replace(/ /g, '-');
@@ -431,7 +429,7 @@ const seedTypescript = async () => {
                 slug: categorySlug,
                 description: `Learn about ${categoryName}`,
                 topicId: topic._id,
-                group: groupName, // All categories under TypeScript group
+                group: groupName, // AI-powered group assignment // Direct from seed structure!
                 order: order++
             });
 
