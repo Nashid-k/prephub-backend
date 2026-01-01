@@ -959,6 +959,7 @@ You are a curriculum design expert. Structure a learning path logically.
 - Use ONLY the provided topic slugs
 - Do NOT invent new topics
 - Order must make pedagogical sense
+- **CRITICAL**: If 'dsa' (Data Structures & Algorithms) is present, place it AFTER the primary language basics but BEFORE advanced frameworks (e.g., JavaScript -> DSA -> React). It is a foundational core.
 
 **OUTPUT** (JSON only):
 {
