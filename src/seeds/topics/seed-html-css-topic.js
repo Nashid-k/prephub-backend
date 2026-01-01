@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
+import PathMap from '../../models/PathMap.js';
 import { assignGroup } from '../utils/categoryGrouping.js';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -238,6 +239,50 @@ const seedTopic = async () => {
          }
          console.log(`  - Added sections from sub-groups`);
       }
+    }
+
+    // --- PathMap Generation ---
+    console.log('Generating PathMaps for Experience Levels...');
+
+    const allCategories = await Category.find({ topicId: topic._id });
+    const categoriesByGroup = {};
+    allCategories.forEach(c => {
+        if (!categoriesByGroup[c.group]) categoriesByGroup[c.group] = [];
+        categoriesByGroup[c.group].push(c.slug);
+    });
+
+    const levels = {
+        '0-1_year': [
+            'HTML Fundamentals', 'CSS Core Concepts'
+        ],
+        '1-3_years': [
+            'HTML Fundamentals', 'CSS Core Concepts', 'Modern Layouts', 'Accessibility A11y'
+        ],
+        '3-5_years': [
+            'HTML Fundamentals', 'CSS Core Concepts', 'Modern Layouts', 'Accessibility A11y',
+            'Advanced CSS', 'Essential Projects', 'Interview Preparation'
+        ]
+    };
+
+    for (const [level, groups] of Object.entries(levels)) {
+        let visibleSlugs = [];
+        groups.forEach(g => {
+            const matchGroup = Object.keys(categoriesByGroup).find(k => k.toLowerCase().includes(g.toLowerCase()));
+            if (matchGroup && categoriesByGroup[matchGroup]) {
+                visibleSlugs = [...visibleSlugs, ...categoriesByGroup[matchGroup]];
+            }
+        });
+
+        await PathMap.findOneAndUpdate(
+            { topicId: topic._id, experienceLevel: level },
+            { 
+                topicId: topic._id,
+                experienceLevel: level,
+                visibleCategorySlugs: visibleSlugs 
+            },
+            { upsert: true, new: true }
+        );
+        console.log(`Created PathMap for ${level}: ${visibleSlugs.length} categories`);
     }
 
     console.log('✅ HTML & CSS seeding complete!');
