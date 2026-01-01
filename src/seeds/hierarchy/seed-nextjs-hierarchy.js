@@ -1,409 +1,406 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import Topic from '../../models/Topic.js';
-import Category from '../../models/Category.js';
-import Section from '../../models/Section.js';
 
-dotenv.config();
+const nextjsCurriculum = {
+  "Next.js_Fundamentals": {
+    "01_introduction": {
+      "core_concepts": [
+        "What is Next.js - React Framework",
+        "Key Features and Advantages",
+        "Next.js vs Create React App",
+        "When to Use Next.js"
+      ],
+      "project_setup": [
+        "create-next-app CLI Tool",
+        "Project Structure Overview",
+        "TypeScript Setup",
+        "Development Server"
+      ]
+    },
 
-const nextjsHierarchy = {
-  "Foundations & Core Concepts": {
-    "What is Next.js": [
-      "What is Next.js?",
-      "Advantages over Create React App",
-      "Features and Benefits",
-      "Built-in Optimization Features"
-    ],
-    "Setup & Installation": [
-      "Project Creation (create-next-app)",
-      "Folder Structure",
-      "package.json Dependencies",
-      "Development vs Production Builds"
-    ],
-    "Rendering Strategies": [
-      "Client-Side Rendering (CSR)",
-      "Server-Side Rendering (SSR)",
-      "Static Site Generation (SSG)",
-      "Incremental Static Regeneration (ISR)",
-      "When to Use Each Strategy",
-      "SSR vs SSG Use Cases"
-    ],
-    "File-Based Routing": [
-      "Pages Directory Structure",
-      "Dynamic Routes ([param])",
-      "Nested Routes",
-      "Catch-all Routes ([...slug])",
-      "Optional Catch-all Routes ([[...slug]])",
-      "API Routes Structure"
-    ]
+    "02_routing_system": {
+      "file_based_routing": [
+        "Pages Directory Structure",
+        "Basic Route Creation",
+        "Nested Routes and Folders",
+        "Index Routes (index.js)"
+      ],
+      "dynamic_routing": [
+        "Dynamic Routes [slug]",
+        "Catch-all Routes [...slug]",
+        "Optional Catch-all Routes [[...slug]]",
+        "Route Parameters Access"
+      ],
+      "navigation": [
+        "Link Component for Client Navigation",
+        "Programmatic Navigation (useRouter)",
+        "Prefetching Behavior",
+        "Active Link Styling"
+      ]
+    },
+
+    "03_rendering_strategies": {
+      "rendering_options": [
+        "Client-Side Rendering (CSR)",
+        "Server-Side Rendering (SSR)",
+        "Static Site Generation (SSG)",
+        "Incremental Static Regeneration (ISR)"
+      ],
+      "when_to_use": [
+        "CSR for Dynamic User Interfaces",
+        "SSR for SEO-Critical Pages",
+        "SSG for Blog/Content Sites",
+        "ISR for Frequently Updated Content"
+      ]
+    }
   },
-  "Data Fetching Methods": {
-    "Server-Side Props": [
-      "getServerSideProps Function",
-      "Context Parameter",
-      "Fetching Data at Request Time",
-      "Use Cases for SSR"
+
+  "Data_Fetching": {
+    "01_server_side": {
+      "getserversideprops": [
+        "Function Signature and Usage",
+        "Context Parameter Access",
+        "Fetching at Request Time",
+        "Authentication in SSR"
+      ],
+      "use_cases": [
+        "User-Specific Data",
+        "Real-time Data",
+        "Protected Routes",
+        "Dynamic Content"
+      ]
+    },
+
+    "02_static_generation": {
+      "getstaticprops": [
+        "Function Signature and Usage",
+        "Pre-rendering at Build Time",
+        "Data Fetching for Static Pages",
+        "Environment Variables"
+      ],
+      "getstaticpaths": [
+        "Dynamic Static Pages",
+        "fallback Options (false, true, blocking)",
+        "Predefined Paths",
+        "Incremental Builds"
+      ],
+      "incremental_regeneration": [
+        "revalidate Property",
+        "On-demand Revalidation",
+        "Stale-While-Revalidate",
+        "Content Updates"
+      ]
+    },
+
+    "03_client_side": [
+      "useEffect for Data Fetching",
+      "SWR Library for Caching",
+      "React Query (TanStack Query)",
+      "Loading and Error States"
     ],
-    "Static Generation": [
-      "getStaticProps Function",
-      "Pre-rendering at Build Time",
-      "getStaticPaths",
-      "fallback Property (false, true, 'blocking')"
-    ],
-    "Incremental Static": [
-      "Incremental Static Regeneration (ISR)",
-      "revalidate Property",
-      "On-demand Revalidation",
-      "Stale-While-Revalidate Pattern"
-    ],
-    "Client-Side Fetching": [
-      "useEffect Hook for Data Fetching",
-      "SWR Library",
-      "React Query",
-      "When to Use Client-Side Fetching"
-    ],
-    "Data Fetching Rules": [
-      "getStaticProps and getServerSideProps Restrictions",
-      "Page-Only Data Fetching Functions"
-    ]
-  },
-  "API Routes & Backend": {
-    "API Basics": [
-      "API Routes Structure",
+
+    "04_api_routes": [
       "Creating API Endpoints",
-      "Request/Response Handlers",
-      "HTTP Methods Support"
-    ],
-    "Middleware": [
-      "Custom Middleware Creation",
-      "Middleware Configuration",
-      "Request/Response Modification",
-      "Authentication Middleware"
-    ],
-    "Advanced API Features": [
-      "API Route Caching",
+      "Request/Response Handling",
       "Dynamic API Routes",
-      "Preview Mode",
-      "API Response Helpers"
+      "Middleware in API Routes"
     ]
   },
-  "Routing & Navigation": {
-    "Next Router": [
-      "useRouter Hook",
-      "Router Methods (push, replace, back)",
-      "push vs replace Difference",
-      "Singleton Router"
-    ],
-    "Link Component": [
-      "Link Component Basics",
-      "Prefetching Behavior",
-      "Shallow Routing",
-      "Scroll Restoration"
-    ],
-    "Programmatic Navigation": [
-      "Router.push()",
-      "Router.replace()",
-      "Router.back()",
-      "Router Events"
-    ],
-    "Redirects & Rewrites": [
-      "Redirect Configuration",
-      "Rewrites Configuration",
-      "Middleware Redirects",
-      "Permanent vs Temporary Redirects"
-    ]
-  },
-  "Optimization Features": {
-    "Image Optimization": [
+
+  "Core_Features": {
+    "01_image_optimization": [
       "next/image Component",
-      "Image Optimization",
-      "Layout Options",
-      "Priority Loading",
-      "Placeholder Images"
+      "Automatic Image Optimization",
+      "Layout Options (responsive, fill, intrinsic)",
+      "Priority Loading and Lazy Loading"
     ],
-    "Script Optimization": [
-      "next/script Component",
-      "Script Loading Strategies",
-      "Third-Party Scripts"
-    ],
-    "Font Optimization": [
+
+    "02_font_optimization": [
       "next/font Component",
-      "Google Fonts Optimization",
-      "Custom Fonts",
-      "Font Display Strategies"
+      "Google Fonts Integration",
+      "Font Display Strategies",
+      "Performance Benefits"
     ],
-    "Code Splitting": [
+
+    "03_script_optimization": [
+      "next/script Component",
+      "Loading Strategies",
+      "Third-Party Scripts",
+      "Performance Impact"
+    ],
+
+    "04_code_splitting": [
       "Automatic Code Splitting",
       "Dynamic Imports",
-      "Static vs Dynamic Imports",
-      "Route-Based Splitting"
+      "Route-Based Splitting",
+      "Bundle Size Optimization"
     ]
   },
-  "Styling Methods": {
-    "CSS Modules": [
-      "CSS Modules Support",
-      "Local Scoping",
-      "Module Import Syntax"
+
+  "Styling": {
+    "01_styling_options": {
+      "built_in": [
+        "CSS Modules (Component.module.css)",
+        "Global CSS (globals.css)",
+        "Styled JSX",
+        "Sass/SCSS Support"
+      ],
+      "css_in_js": [
+        "Styled Components",
+        "Emotion",
+        "Performance Considerations",
+        "Server-Side Rendering"
+      ],
+      "utility_frameworks": [
+        "Tailwind CSS Integration",
+        "Setup and Configuration",
+        "PurgeCSS Optimization"
+      ]
+    }
+  },
+
+  "Configuration": {
+    "01_configuration_files": {
+      "next_config": [
+        "next.config.js Basics",
+        "Environment Variables",
+        "Redirects and Rewrites",
+        "Headers Configuration"
+      ],
+      "custom_app": [
+        "_app.js Component",
+        "Global Layout Pattern",
+        "Persistent Layouts",
+        "Global State Providers"
+      ],
+      "custom_document": [
+        "_document.js Component",
+        "HTML Structure Customization",
+        "Server-Side Styles",
+        "Meta Tags Management"
+      ]
+    },
+
+    "02_environment": [
+      "Environment Variables (.env.local)",
+      "NEXT_PUBLIC_ Prefix",
+      "Build-time vs Runtime Variables",
+      "Multi-environment Setup"
     ],
-    "Global Styles": [
-      "Global CSS Files",
-      "styles/globals.css",
-      "CSS Reset/Normalize"
-    ],
-    "CSS-in-JS": [
-      "Styled Components",
-      "Emotion",
-      "Styled JSX"
-    ],
-    "Utility Frameworks": [
-      "Tailwind CSS Integration",
-      "Bootstrap with Next.js"
-    ],
-    "Sass Support": [
-      "Sass/SCSS Support",
-      "Sass Module Import"
+
+    "03_middleware": [
+      "Middleware Configuration",
+      "Request/Response Modification",
+      "Authentication Middleware",
+      "Path Matching"
     ]
   },
-  "Core Files & Config": {
-    "App Component": [
-      "_app.js/_app.tsx",
-      "Custom App Component",
-      "Global Layout Pattern",
-      "Persistent Layout"
-    ],
-    "Document File": [
-      "_document.js/_document.tsx",
-      "Custom Document",
-      "HTML Structure Modification",
-      "Server-Side Rendering of Styles"
-    ],
-    "Configuration": [
-      "next.config.js",
-      "Environment Variables (NEXT_PUBLIC_)",
-      "Build-Time Environment Variables",
-      "Runtime Configuration"
-    ],
-    "Custom Server": [
-      "Custom Server Setup",
-      "Express.js Integration",
-      "Custom Server Use Cases",
-      "server.js Configuration"
-    ]
-  },
-  "State Management": {
-    "Client State": [
+
+  "State_Management": {
+    "01_client_state": [
       "React Context API",
-      "useState Hook",
-      "useReducer Hook",
-      "Custom Hooks"
+      "useState and useReducer",
+      "Custom Hooks",
+      "Local Storage Integration"
     ],
-    "Server State": [
+
+    "02_server_state": [
+      "SWR for Data Fetching",
       "React Query (TanStack Query)",
-      "SWR Library",
-      "Data Synchronization"
+      "Cache Management",
+      "Mutation Handling"
     ],
-    "Global State": [
+
+    "03_global_state": [
       "Redux Toolkit",
-      "Zustand",
-      "Jotai",
-      "Recoil"
+      "Zustand (Lightweight)",
+      "Jotai (Atomic State)",
+      "State Persistence"
     ]
   },
-  "Authentication & Authorization": {
-    "Authentication Methods": [
-      "NextAuth.js",
+
+  "Authentication": {
+    "01_auth_methods": [
+      "NextAuth.js Setup",
       "JWT Authentication",
-      "OAuth Providers",
-      "Cookie-Based Auth"
+      "OAuth Providers (Google, GitHub)",
+      "Session Management"
     ],
-    "Protected Routes": [
+
+    "02_protected_routes": [
       "Middleware Protection",
-      "Higher-Order Components",
-      "Route Guards"
+      "getServerSideProps Auth Check",
+      "Client-Side Route Guards",
+      "Role-Based Access"
     ],
-    "Authorization": [
-      "Role-Based Access Control",
-      "Permission Checks",
-      "Server-Side Authorization"
+
+    "03_user_management": [
+      "User Registration",
+      "Login/Logout Flows",
+      "Profile Management",
+      "Password Reset"
     ]
   },
-  "Deployment & Build": {
-    "Build Process": [
-      "next build Command",
-      "Production Optimization",
-      "Bundle Analyzer"
+
+  "Performance_Optimization": {
+    "01_core_web_vitals": [
+      "LCP (Largest Contentful Paint)",
+      "FID (First Input Delay)",
+      "CLS (Cumulative Layout Shift)",
+      "Performance Monitoring"
     ],
-    "Deployment Options": [
-      "Vercel Deployment",
-      "Static Export (next export)",
-      "Docker Deployment",
-      "Node.js Server Deployment"
+
+    "02_optimization_techniques": [
+      "Image Optimization",
+      "Font Optimization",
+      "Code Splitting",
+      "Bundle Size Reduction"
     ],
-    "Environment Config": [
-      "Environment Variables",
-      "Multi-environment Setup",
-      "Secret Management"
-    ]
-  },
-  "Performance Optimization": {
-    "Caching Strategies": [
-      "Cache-Control Headers",
+
+    "03_caching": [
       "CDN Caching",
       "Browser Caching",
-      "API Caching"
-    ],
-    "Performance Metrics": [
-      "Core Web Vitals",
-      "Lighthouse Audits",
-      "Bundle Size Analysis"
-    ],
-    "Optimization Tools": [
-      "Webpack Configuration",
-      "Babel Configuration",
-      "Compression"
+      "API Response Caching",
+      "ISR for Dynamic Content"
     ]
   },
-  "Advanced Features": {
-    "AMP Support": [
-      "AMP in Next.js",
-      "AMP Components",
-      "AMP Validation"
+
+  "Deployment": {
+    "01_build_process": [
+      "next build Command",
+      "Production Optimization",
+      "Bundle Analyzer",
+      "Build Output Analysis"
     ],
-    "Internationalization": [
-      "Next.js i18n Routing",
-      "Locale Detection",
-      "Language Switching"
-    ],
-    "Type Safety": [
-      "TypeScript Support",
-      "Type Definitions",
-      "Type Checking Configuration"
-    ],
-    "Analytics": [
-      "Next.js Analytics",
-      "Custom Analytics",
-      "Performance Monitoring"
-    ]
+
+    "02_deployment_platforms": {
+      "vercel": [
+        "Automatic Deployments",
+        "Preview Deployments",
+        "Environment Variables",
+        "Custom Domains"
+      ],
+      "other_platforms": [
+        "Static Export (next export)",
+        "Node.js Server Deployment",
+        "Docker Containerization",
+        "CI/CD Pipeline Setup"
+      ]
+    }
   },
-  "Developer Experience": {
-    "Development Features": [
-      "Fast Refresh (Hot Reload)",
-      "Error Overlay",
-      "Development Server"
+
+  "Testing": {
+    "01_testing_types": [
+      "Unit Testing with Jest",
+      "Component Testing (React Testing Library)",
+      "E2E Testing (Cypress/Playwright)",
+      "API Route Testing"
     ],
-    "Testing": [
+
+    "02_testing_setup": [
       "Jest Configuration",
-      "React Testing Library",
-      "Cypress E2E Testing"
-    ],
-    "Debugging": [
-      "Source Maps",
-      "Error Tracking",
-      "Logging"
+      "Testing Utilities",
+      "Mocking API Calls",
+      "Snapshot Testing"
     ]
   },
-  "Practical Patterns": {
-    "Project Structure": [
-      "Feature-Based Organization",
-      "Component Organization",
-      "Utility Functions"
-    ],
-    "Error Handling": [
-      "Error Boundaries",
-      "404 Pages",
-      "500 Error Pages"
-    ],
-    "SEO Optimization": [
-      "Metadata Management",
+
+  "SEO_Metadata": {
+    "seo_basics": [
       "next/head Component",
-      "Structured Data"
+      "Meta Tags Management",
+      "Open Graph Tags",
+      "Structured Data (JSON-LD)"
     ],
-    "API Integration": [
-      "REST API Integration",
-      "GraphQL with Next.js",
-      "WebSocket Support"
+
+    "dynamic_seo": [
+      "Dynamic Meta Tags",
+      "Server-Side SEO",
+      "Sitemap Generation",
+      "robots.txt Configuration"
+    ]
+  },
+
+  "Error_Handling": {
+    "error_pages": [
+      "Custom 404 Page",
+      "Custom 500 Page",
+      "Error Boundary Implementation",
+      "Graceful Error Handling"
+    ],
+
+    "error_monitoring": [
+      "Error Tracking Setup",
+      "Logging Strategies",
+      "Production Error Handling",
+      "User Feedback"
+    ]
+  },
+
+  "Best_Practices": {
+    "01_project_structure": [
+      "Feature-Based Organization",
+      "Component Library Setup",
+      "Utility Functions Organization",
+      "TypeScript Best Practices"
+    ],
+
+    "02_code_organization": [
+      "Custom Hooks Creation",
+      "API Layer Abstraction",
+      "Middleware Organization",
+      "Environment Configuration"
+    ],
+
+    "03_performance": [
+      "Avoid Large Dependencies",
+      "Optimize Images",
+      "Implement Caching",
+      "Monitor Bundle Size"
+    ]
+  },
+
+  "Practical_Projects": {
+    "01_project_types": {
+      "content_sites": [
+        "Blog with Markdown/Contentful",
+        "Documentation Site",
+        "Portfolio Website",
+        "E-commerce Product Pages"
+      ],
+      "web_applications": [
+        "Dashboard with Authentication",
+        "Real-time Chat Application",
+        "Social Media Platform",
+        "Task Management App"
+      ]
+    },
+
+    "02_essential_features": [
+      "Authentication System",
+      "CRUD Operations",
+      "File Uploads",
+      "Real-time Updates",
+      "Search Functionality",
+      "Pagination"
+    ]
+  },
+
+  "Interview_Preparation": {
+    "common_topics": [
+      "Rendering Strategies Comparison",
+      "Data Fetching Methods",
+      "Performance Optimization",
+      "Authentication Implementation",
+      "Deployment Process"
+    ],
+
+    "practical_skills": [
+      "Build a Full-stack Application",
+      "Implement Authentication",
+      "Optimize for Performance",
+      "Handle SEO Requirements",
+      "Deploy to Production"
     ]
   }
 };
 
-const seedNextjsHierarchy = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('📦 Connected to MongoDB');
-
-    // Create Next.js topic
-    let nextjsTopic = await Topic.findOne({ slug: 'nextjs' });
-    if (!nextjsTopic) {
-      const topicCount = await Topic.countDocuments();
-      nextjsTopic = await Topic.create({
-        name: 'Next.js',
-        slug: 'nextjs',
-        description: 'Master Next.js - the React framework for production. From SSR/SSG to API routes, optimization, and deployment.',
-        icon: '⚡',
-        order: topicCount + 1,
-        estimatedHours: 45
-      });
-      console.log('✅ Created Next.js topic');
-    }
-
-    // Seed hierarchy
-    let categoryOrder = 1;
-    for (const [groupName, categories] of Object.entries(nextjsHierarchy)) {
-      for (const [categoryName, sections] of Object.entries(categories)) {
-        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '');
-        
-        let category = await Category.findOne({
-          topicId: nextjsTopic._id,
-          slug: categorySlug
-        });
-
-        if (!category) {
-          category = await Category.create({
-            topicId: nextjsTopic._id,
-            name: categoryName,
-            slug: categorySlug,
-            group: groupName,
-            order: categoryOrder++,
-            description: `Learn ${categoryName} in Next.js`
-          });
-          console.log(`✅ Created category: ${categoryName}`);
-        }
-
-        let sectionOrder = 1;
-        for (const sectionTitle of sections) {
-          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[().,&/]/g, '')
-            .replace(/:/g, '')
-            .replace(/'/g, '')}`;
-
-          const existingSection = await Section.findOne({
-            categoryId: category._id,
-            slug: sectionSlug
-          });
-
-          if (!existingSection) {
-            await Section.create({
-              categoryId: category._id,
-              topicId: nextjsTopic._id,
-              title: sectionTitle,
-              slug: sectionSlug,
-              order: sectionOrder++,
-              description: `Learn about ${sectionTitle}`,
-              difficulty: 'intermediate',
-              estimatedTime: 30
-            });
-          }
-        }
-      }
-    }
-
-    console.log('🎉 Next.js hierarchy seeded successfully!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Error seeding Next.js:', error);
-    process.exit(1);
-  }
-};
-
-seedNextjsHierarchy();
+export { nextjsCurriculum };

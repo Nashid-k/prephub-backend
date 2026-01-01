@@ -63,38 +63,73 @@ const algorithmsCurriculum = {
     ]
   },
   "03_sorting_algorithms": {
-    "comparison_based_sorting": [
-      "Bubble Sort Algorithm",
-      "Selection Sort Algorithm",
-      "Insertion Sort Algorithm",
-      "Merge Sort Algorithm",
-      "Quick Sort Algorithm",
+    "01_bubble_sort": [
+      "Bubble Sort Mechanism",
+      "Optimized Bubble Sort",
+      "Time and Space Complexity",
+      "Stable vs Unstable",
+      "When to use Bubble Sort"
+    ],
+    "02_selection_sort": [
+      "Selection Sort Mechanism",
+      "Time and Space Complexity",
+      "Stability Analysis",
+      "When to use Selection Sort"
+    ],
+    "03_insertion_sort": [
+      "Insertion Sort Mechanism",
+      "Adaptive Nature",
+      "Time and Space Complexity",
+      "Online Algorithm Property",
+      "When to use Insertion Sort"
+    ],
+    "04_merge_sort": [
+      "Divide and Conquer Strategy",
+      "Merge Step Logic",
+      "Recursive Implementation",
+      "Iterative Implementation",
+      "Analysis of Complexity",
+      "Stability of Merge Sort"
+    ],
+    "05_quick_sort": [
+      "Partitioning Logic (Lomuto vs Hoare)",
+      "Pivot Selection Strategies",
+      "Recursive Implementation",
+      "Worst Case Analysis",
+      "Randomized Quick Sort",
+      "Quick Sort vs Merge Sort"
+    ],
+    "06_heap_sort": [
+      "Binary Heap Data Structure",
+      "Heapify Operation",
       "Heap Sort Algorithm",
-      "Shell Sort Algorithm"
+      "Time and Space Complexity",
+      "Applications of Heap Sort"
     ],
-    "non_comparison_sorting": [
-      "Counting Sort Algorithm",
-      "Radix Sort Algorithm",
-      "Bucket Sort Algorithm"
+    "07_counting_sort": [
+      "Key-Indexed Counting",
+      "Non-Comparison Sorting",
+      "Complexity Analysis",
+      "Limitations and Constraints"
     ],
-    "sorting_properties": [
-      "Stable vs Unstable Sorting",
-      "In-place vs Out-of-place Sorting",
-      "Adaptive Sorting Algorithms",
-      "Online Sorting Algorithms"
+    "08_radix_sort": [
+      "LSD vs MSD Radix Sort",
+      "Digit-by-Digit Sorting",
+      "Complexity Analysis",
+      "Applications"
     ],
-    "sorting_analysis": [
-      "Time Complexity Comparison of Sorting Algorithms",
-      "Space Complexity Comparison of Sorting Algorithms",
-      "When to Use Which Sorting Algorithm",
-      "Worst-case Input for Quick Sort",
-      "Why Quick Sort is Not Stable"
+    "09_bucket_sort": [
+      "Scatter-Gather Approach",
+      "Bucket Distribution",
+      "Complexity Analysis",
+      "When to use Bucket Sort"
     ],
-    "sorting_variations": [
-      "Sort Nearly Sorted Array",
-      "Sort Partially Sorted Array",
-      "External Sorting Algorithms",
-      "Parallel Sorting Algorithms"
+     "10_sorting_concepts": [
+      "Stability in Sorting",
+      "In-place vs Out-of-place",
+      "Adaptive Algorithms",
+      "Lower Bound of Comparison Sorting",
+      "External Sorting"
     ]
   },
   "04_searching_algorithms": {

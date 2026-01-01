@@ -1,657 +1,622 @@
 
 const reactCurriculum = {
-  "01_react_foundations": {
-    "overview_introduction": [
-      "What is React",
-      "React Library vs Framework",
-      "Benefits and Advantages of React",
-      "Challenges and Limitations of React",
-      "React Ecosystem Overview",
-      "When to Use React vs Other Frameworks"
-    ],
-    "core_principles": [
-      "Component-Based Architecture",
-      "Concept of Reusability in React",
-      "Declarative Programming Paradigm",
-      "Unidirectional Data Flow",
-      "Virtual DOM Concept",
-      "Built-in React Components"
-    ],
-    "rendering_models": [
-      "Single Page Application (SPA)",
-      "Multi Page Application (MPA)",
-      "Client-Side Rendering (CSR)",
-      "Server-Side Rendering (SSR)",
-      "Static Site Generation (SSG)",
-      "Incremental Static Regeneration (ISR)",
-      "Disadvantages of Client-Side Rendering",
-      "Dynamic Rendering Strategies"
-    ]
-  },
-  "02_setup_environment": {
-    "installation": [
-      "Node.js and npm Setup",
-      "Create React App (CRA)",
-      "Vite React Setup",
-      "Manual Webpack Setup",
-      "Development Server Configuration"
-    ],
-    "project_structure": [
-      "Standard React Project Structure",
-      "Component Organization Patterns",
-      "File Naming Conventions",
-      "Import/Export Patterns"
-    ],
-    "development_tools": [
-      "React Developer Tools Extension",
-      "Browser Developer Tools for React",
-      "IDE/Editor Setup for React"
-    ]
-  },
-  "03_jsx_fundamentals": {
-    "jsx_concepts": [
-      "What is JSX (JavaScript XML)",
+  "React_Fundamentals": {
+    "01_introduction": {
+      "core_concepts": [
+        "React - JavaScript Library for Building User Interfaces",
+        "Library vs Framework Difference",
+        "Component-Based Architecture",
+        "Virtual DOM Concept"
+      ],
+      "development_environment": [
+        "Vite vs Create-React-App",
+        "Project Setup and Structure",
+        "Package.json and Dependencies",
+        "Development Server"
+      ]
+    },
+
+    "02_jsx_basics": [
+      "JSX Syntax (JavaScript XML)",
       "JSX vs HTML Differences",
-      "JSX Syntax and Rules",
-      "JSX Expressions and Interpolation",
-      "JSX Attribute Naming (className vs class)",
-      "JSX Fragments and Empty Tags"
+      "Embedding Expressions with Curly Braces {}",
+      "JSX Rules (Single Parent Element, className vs class)",
+      "Fragments (<></> or <Fragment>)"
     ],
-    "jsx_rendering": [
-      "How JSX is Transpiled by Babel",
-      "JSX to JavaScript Transformation",
-      "Browser Rendering of JSX",
-      "JSX Performance Considerations"
+
+    "03_components": {
+      "component_types": [
+        "Functional Components (Modern)",
+        "Class Components (Legacy)",
+        "Component Composition",
+        "Component Reusability"
+      ],
+      "component_structure": [
+        "Component Naming (PascalCase)",
+        "Import/Export Statements",
+        "Props System",
+        "Component Return Requirements"
+      ]
+    }
+  },
+
+  "State_Management": {
+    "01_state_basics": [
+      "State Definition and Purpose",
+      "useState Hook Syntax and Usage",
+      "State vs Props Comparison",
+      "State Immutability (Never Modify Directly)"
+    ],
+
+    "02_state_operations": [
+      "Updating State with setState/useState",
+      "State Batching and Updates",
+      "Functional Updates for State",
+      "State Initialization"
+    ],
+
+    "03_state_patterns": [
+      "Lifting State Up (Parent-Child Communication)",
+      "Prop Drilling (Pros and Cons)",
+      "Local State vs Global State",
+      "State Management Strategies"
     ]
   },
-  "04_components": {
-    "component_types": [
-      "What is a React Component",
-      "Functional Components",
-      "Class Components",
-      "Stateless vs Stateful Components",
-      "Presentational vs Container Components",
-      "Smart vs Dumb Components"
+
+  "Props_System": {
+    "props_basics": [
+      "Props as Component Parameters",
+      "Passing Data from Parent to Child",
+      "Props Immutability",
+      "Default Props and PropTypes"
     ],
-    "component_creation": [
-      "Functional Component Syntax",
-      "Class Component Syntax",
-      "Component Naming Conventions",
-      "Component File Structure"
-    ],
-    "component_composition": [
-      "Component Composition Patterns",
-      "Component Reusability",
-      "Children Prop Usage",
-      "Slot Patterns in React"
+
+    "props_advanced": [
+      "Children Prop (props.children)",
+      "Prop Validation with PropTypes",
+      "Destructuring Props",
+      "Spread Operator with Props"
     ]
   },
-  "05_props": {
-    "props_fundamentals": [
-      "What are Props in React",
-      "Passing Props to Components",
-      "Props as Read-Only",
-      "Default Props",
-      "Prop Types and Validation",
-      "Required Props"
+
+  "Hooks": {
+    "00_hooks_intro": [
+      "What are React Hooks?",
+      "Why Hooks? (Solving Class Component Issues)",
+      "Rules of Hooks (Top Level Only)",
+      "Hooks vs Lifecycle Methods",
+      "Types of Hooks (Built-in, Custom, 3rd Party)"
     ],
-    "props_patterns": [
-      "Props Destructuring",
-      "Spread Operator with Props",
-      "Passing Functions as Props",
-      "Props Drilling Problem",
-      "Prop Callbacks"
+
+    "01_basic_hooks": {
+      "usestate": [
+        "useState Declaration and Usage",
+        "Multiple State Variables",
+        "State Update Patterns",
+        "State Initialization Functions",
+        "Object and Array State Updates"
+      ],
+      "useeffect": [
+        "useEffect Syntax and Purpose",
+        "Dependency Array Behavior",
+        "Cleanup Function (Return Statement)",
+        "Lifecycle Simulation (mount, update, unmount)",
+        "API Calls in useEffect"
+      ],
+      "usecontext": [
+        "Context API for Global State",
+        "createContext, Provider, Consumer",
+        "useContext Hook Usage",
+        "Context Limitations and Performance"
+      ]
+    },
+
+    "02_performance_hooks": [
+      "useMemo for Expensive Calculations",
+      "useCallback for Function Memoization",
+      "Memoization Use Cases and Trade-offs",
+      "Dependency Array Rules and Pitfalls",
+      "React.memo vs useMemo"
+    ],
+
+    "03_reference_hooks": [
+      "useRef for DOM References",
+      "useRef for Mutable Values (Instance Variables)",
+      "forwardRef for Component Refs",
+      "Ref vs State Differences",
+      "useImperativeHandle (Customizing Ref Exposure)"
+    ],
+
+    "04_advanced_hooks": [
+      "useReducer (Complex State Logic)",
+      "useLayoutEffect (DOM Measurements)",
+      "useId (Unique IDs for Accessibility)",
+      "useDebugValue (DevTools Labels)",
+      "useDeferredValue (Non-urgent Updates)",
+      "useTransition (Concurrent Rendering)",
+      "useSyncExternalStore (Library Integration)",
+      "useInsertionEffect (CSS-in-JS Libraries)"
+    ],
+
+    "05_custom_hooks": [
+      "Building Your First Custom Hook",
+      "Extracting Logic into Hooks",
+      "Sharing State Logic vs State",
+      "Common Use Cases (useFetch, useForm, useLocalStorage)"
     ]
   },
-  "06_state_management": {
-    "state_fundamentals": [
-      "What is State in React",
-      "State vs Props Differences",
-      "State vs Normal Variables",
-      "State Immutability Principle"
+
+  "Component_Lifecycle": {
+    "class_components": [
+      "componentDidMount (Initial Render)",
+      "componentDidUpdate (Props/State Changes)",
+      "componentWillUnmount (Cleanup)",
+      "Lifecycle Order and Timing"
     ],
-    "useState_hook": [
-      "useState Hook Syntax",
-      "Initial State Values",
-      "State Update Functions",
-      "Functional Updates with Previous State",
-      "Batch State Updates",
-      "Multiple useState Calls"
-    ],
-    "state_patterns": [
-      "Lifting State Up",
-      "State Management Strategies",
-      "Local Component State",
-      "Global Application State"
+
+    "functional_components": [
+      "useEffect for Lifecycle Simulation",
+      "Dependency Array Control",
+      "Cleanup Functions",
+      "Lifecycle Best Practices"
     ]
   },
-  "07_event_handling": {
-    "event_fundamentals": [
-      "Event Handling in React",
-      "Synthetic Events System",
-      "Common Event Handlers (onClick, onChange, onSubmit)",
-      "Event Object in React"
+
+  "Event_Handling": {
+    "event_basics": [
+      "Synthetic Events (Cross-browser Wrapper)",
+      "Event Handlers (onClick, onChange)",
+      "Event Object Properties",
+      "Preventing Default Behavior (e.preventDefault())"
     ],
+
     "event_patterns": [
       "Inline Event Handlers",
-      "Named Event Handler Functions",
-      "Event Parameter Passing",
-      "Event Pooling Concept",
-      "preventDefault() Usage",
-      "stopPropagation() Usage"
+      "Arrow Functions in Events",
+      "Event Pooling (Legacy)",
+      "Event Delegation in React"
     ]
   },
-  "08_forms": {
-    "form_handling": [
-      "Form Elements in React",
-      "Controlled Components",
-      "Uncontrolled Components",
-      "Form Submission Handling"
+
+  "Forms": {
+    "controlled_components": [
+      "Form State Management",
+      "Input Binding with State",
+      "Form Submission Handling",
+      "Validation Patterns"
     ],
-    "input_handling": [
-      "Text Inputs",
-      "Checkboxes and Radio Buttons",
-      "Select Dropdowns",
-      "Textareas",
-      "File Inputs"
-    ],
-    "form_validation": [
-      "Basic Form Validation",
-      "Real-time Validation",
-      "Form Submission Validation",
-      "Error Message Display"
+
+    "uncontrolled_components": [
+      "useRef for Form Access",
+      "File Inputs Handling",
+      "When to Use Uncontrolled",
+      "Form Data Collection"
     ]
   },
-  "09_conditional_rendering": {
-    "rendering_patterns": [
-      "Conditional Rendering with if/else",
-      "Conditional Rendering with Ternary Operator",
-      "Conditional Rendering with Logical && Operator",
-      "Conditional Rendering with Switch Statements"
-    ],
-    "rendering_techniques": [
-      "Element Variables",
-      "Inline Conditional Rendering",
-      "Preventing Component Rendering",
-      "Loading States and Skeletons"
+
+  "Conditional_Rendering": {
+    "methods": [
+      "if-else in JSX",
+      "Ternary Operator (condition ? true : false)",
+      "Logical && Operator",
+      "Conditional Return Statements",
+      "Render Nothing (null or <></>)"
     ]
   },
-  "10_lists_keys": {
+
+  "Lists_Keys": {
     "list_rendering": [
-      "Rendering Lists with map()",
-      "List Item Keys Importance",
-      "Key Prop Rules and Best Practices",
-      "Index as Key (When to Use/Not Use)"
-      ],
-    "list_operations": [
-      "Adding Items to Lists",
-      "Removing Items from Lists",
-      "Updating Items in Lists",
-      "Filtering Lists",
-      "Sorting Lists"
+      "Array.map() for List Generation",
+      "Key Prop Requirements",
+      "Unique and Stable Keys",
+      "Key Prop Purpose in Reconciliation"
+    ],
+
+    "key_management": [
+      "Why Index is Bad for Keys",
+      "Generating Unique Keys",
+      "Key Stability Considerations",
+      "Performance Implications"
     ]
   },
-  "11_useEffect_hook": {
-    "useEffect_concepts": [
-      "What are Side Effects",
-      "useEffect Hook Syntax",
-      "Dependency Array Patterns",
-      "Cleanup Functions"
+
+  "React_Router": {
+    "routing_basics": [
+      "React Router Setup",
+      "BrowserRouter vs HashRouter",
+      "Route Configuration",
+      "Link and NavLink Components"
     ],
-    "useEffect_patterns": [
-      "Component Mount Effect",
-      "Component Update Effect",
-      "Component Unmount Effect",
-      "Conditional Effects",
-      "Multiple Effects"
+
+    "routing_features": [
+      "Nested Routes and Outlet",
+      "Route Parameters (useParams)",
+      "Query Parameters (useSearchParams)",
+      "Programmatic Navigation (useNavigate)"
     ],
-    "lifecycle_comparison": [
-      "Class Component Lifecycle Methods",
-      "Functional Component Lifecycle with useEffect",
-      "Lifecycle Method Mapping"
+
+    "routing_advanced": [
+      "Route Guards and Protection",
+      "Lazy Loading Routes",
+      "Route Transitions",
+      "404 Handling"
     ]
   },
-  "12_hooks_fundamentals": {
-    "hooks_overview": [
-      "What are React Hooks",
-      "Rules of Hooks",
-      "Custom Hooks Creation",
-      "Hooks Naming Convention"
+
+  "Performance_Optimization": {
+    "01_memoization": [
+      "React.memo for Component Memoization",
+      "useMemo for Value Memoization",
+      "useCallback for Function Memoization",
+      "When to Use Each"
     ],
-    "core_hooks": [
-      "useState Hook",
-      "useEffect Hook",
-      "useContext Hook",
-      "useReducer Hook",
-      "useRef Hook",
-      "useMemo Hook",
-      "useCallback Hook"
-    ]
-  },
-  "13_context_api": {
-    "context_fundamentals": [
-      "What is Context API",
-      "Creating React Context",
-      "Context Provider Component",
-      "Context Consumer Patterns"
+
+    "02_code_splitting": [
+      "React.lazy() for Component Lazy Loading",
+      "Dynamic Imports",
+      "Suspense with Fallback",
+      "Route-based Code Splitting"
     ],
-    "context_usage": [
-      "useContext Hook",
-      "Theme Switching with Context",
-      "Authentication with Context",
-      "Global State with Context"
-    ],
-    "context_patterns": [
-      "Multiple Contexts",
-      "Nested Contexts",
-      "Context Performance Considerations"
-    ]
-  },
-  "14_useRef_forwardref": {
-    "refs_fundamentals": [
-      "What are Refs in React",
-      "useRef Hook Usage",
-      "Refs vs State Differences",
-      "Refs Use Cases"
-      ],
-    "refs_advanced": [
-      "Forwarding Refs with forwardRef",
-      "useImperativeHandle Hook",
-      "Ref Callback Pattern",
-      "DOM Element Refs"
-    ]
-  },
-  "15_performance_optimization": {
-    "memoization": [
-      "React.memo Higher Order Component",
-      "useMemo Hook for Expensive Calculations",
-      "useCallback Hook for Function Memoization",
-      "Memoization Trade-offs and Considerations"
-    ],
-    "rendering_optimization": [
-      "Preventing Unnecessary Re-renders",
-      "Component Splitting Strategy",
+
+    "03_rendering_optimization": [
+      "Avoiding Unnecessary Re-renders",
       "Virtualization for Large Lists",
-      "Code Splitting and Lazy Loading"
+      "Debouncing and Throttling",
+      "Performance Profiling"
     ],
-    "react_features": [
-      "React Strict Mode",
-      "Profiler Component",
-      "React DevTools Profiler"
+
+    "04_other_optimizations": [
+      "Image Optimization",
+      "Bundle Size Reduction",
+      "Tree Shaking",
+      "Production Build Optimizations"
     ]
   },
-  "16_routing": {
-    "react_router": [
-      "React Router Installation",
-      "BrowserRouter Setup",
-      "Routes and Route Components",
-      "Route Configuration"
+
+  "Error_Handling": {
+    "error_boundaries": [
+      "Error Boundary Class Components",
+      "Error Handling in Functional Components",
+      "Fallback UI Display",
+      "Error Recovery Strategies"
     ],
-    "navigation": [
-      "Link Component",
-      "NavLink Component",
-      "useNavigate Hook",
-      "useParams Hook",
-      "useLocation Hook",
-      "useSearchParams Hook"
-    ],
-    "advanced_routing": [
-      "Nested Routes",
-      "Dynamic Routing",
-      "Route Guards (Protected Routes)",
-      "404 Page Handling",
-      "Programmatic Navigation"
+
+    "error_patterns": [
+      "try-catch in useEffect",
+      "Error State Management",
+      "User-friendly Error Messages",
+      "Logging and Monitoring"
     ]
   },
-  "17_networking": {
-    "http_clients": [
-      "Fetch API Usage",
-      "Axios Library Integration",
-      "Axios vs Fetch Comparison",
-      "HTTP Request Patterns"
-      ],
-    "api_integration": [
-      "GET Requests",
-      "POST/PUT/DELETE Requests",
-      "Request Headers Configuration",
-      "Response Handling"
+
+  "Advanced_Concepts": {
+    "01_react_internals": [
+      "Virtual DOM and Reconciliation",
+      "Diffing Algorithm",
+      "React Fiber Architecture",
+      "Render Phases (Render and Commit)"
     ],
-    "async_patterns": [
-      "Loading States",
-      "Error Handling",
-      "Data Caching Strategies",
-      "Polling and Real-time Updates"
-    ]
-  },
-  "18_authentication": {
-    "auth_concepts": [
-      "JWT (JSON Web Tokens)",
-      "Token-based Authentication",
-      "Session-based Authentication",
-      "OAuth Integration"
-    ],
-    "auth_implementation": [
-      "Login Flow Implementation",
-      "Token Storage Strategies (localStorage vs Cookies)",
-      "Protected Route Implementation",
-      "Token Refresh Mechanism"
-    ]
-  },
-  "19_state_management_advanced": {
-    "redux": [
-      "Redux Core Concepts",
-      "Redux Store Setup",
-      "Actions and Action Creators",
-      "Reducers Implementation",
-      "React-Redux Integration"
-    ],
-    "redux_toolkit": [
-      "Redux Toolkit Overview",
-      "createSlice Function",
-      "configureStore Setup",
-      "RTK Query for API Integration"
-    ],
-    "alternative_state": [
-      "Zustand State Management",
-      "Recoil State Management",
-      "MobX State Management",
-      "Context API vs Redux Comparison"
-    ]
-  },
-  "20_advanced_patterns": {
-    "composition_patterns": [
-      "Higher Order Components (HOC)",
+
+    "02_patterns": [
+      "Higher-Order Components (HOC)",
       "Render Props Pattern",
       "Compound Components",
       "Custom Hooks Patterns"
     ],
-    "error_handling": [
-      "Error Boundaries Implementation",
-      "Global Error Handling",
-      "Fallback UI Components"
-    ],
-    "advanced_features": [
-      "Portals for Modal Dialogs",
-      "React.lazy for Code Splitting",
-      "Suspense for Data Fetching",
-      "Concurrent Features"
+
+    "03_apis": [
+      "Context API Deep Dive",
+      "Portals for DOM Escape",
+      "Forwarding Refs",
+      "Strict Mode Benefits"
     ]
   },
-  "21_forms_advanced": {
-    "form_libraries": [
-      "React Hook Form",
-      "Formik Library",
-      "Yup Validation Schema"
+
+  "State_Management_Libraries": {
+    "01_context_api": [
+      "When to Use Context",
+      "Context Limitations",
+      "Performance Considerations",
+      "Context Patterns"
     ],
-    "advanced_validation": [
-      "Async Form Validation",
-      "Cross-field Validation",
-      "Dynamic Form Fields",
-      "Form State Management"
-    ]
-  },
-  "22_styling": {
-    "styling_approaches": [
-      "Inline Styles",
-      "CSS Modules",
-      "Styled Components",
-      "CSS-in-JS Libraries",
-      "Utility-First CSS (Tailwind)"
-    ],
-    "responsive_design": [
-      "Media Queries in React",
-      "Responsive Components",
-      "Mobile-First Design"
-    ]
-  },
-  "23_testing": {
-    "testing_tools": [
-      "Jest Testing Framework",
-      "React Testing Library",
-      "Enzyme (Legacy)",
-      "Test Runners"
-    ],
-    "test_types": [
-      "Unit Testing Components",
-      "Integration Testing",
-      "Snapshot Testing",
-      "End-to-End Testing"
-    ]
-  },
-  "24_build_deployment": {
-    "build_process": [
-      "Build Configuration",
-      "Environment Variables",
-      "Performance Optimization Builds",
-      "Bundle Analysis"
-    ],
-    "deployment": [
-      "Static Site Deployment",
-      "Server-Side Rendering Deployment",
-      "Docker Containerization",
-      "CI/CD Pipeline Setup"
-    ]
-  },
-  "25_tooling_ecosystem": {
-    "development_tools": [
-      "ESLint Configuration",
-      "Prettier Code Formatting",
-      "TypeScript Integration",
-      "Storybook for Component Development"
+
+    "02_redux_basics": {
+      "redux_fundamentals": [
+        "Redux Principles (Single Source of Truth)",
+        "Store, Actions, Reducers",
+        "Immutable Updates",
+        "Redux Data Flow"
       ],
-    "build_tools": [
-      "Webpack Configuration",
-      "Babel Transpilation",
-      "Module Bundling Concepts"
+      "redux_toolkit": [
+        "Redux Toolkit Advantages",
+        "createSlice for Reducers",
+        "configureStore Setup",
+        "RTK Query Basics"
+      ]
+    },
+
+    "03_redux_advanced": [
+      "Middleware (Redux Thunk, Saga)",
+      "Async Actions with createAsyncThunk",
+      "Redux DevTools Usage",
+      "Redux Persist for State Persistence"
+    ],
+
+    "04_alternatives": [
+      "Zustand Basics",
+      "Recoil Concepts",
+      "Jotai Introduction",
+      "Choosing State Management"
     ]
   },
-  "26_practical_projects": {
+
+  "API_Integration": {
+    "data_fetching": [
+      "useEffect for API Calls",
+      "Loading and Error States",
+      "AbortController for Cleanup",
+      "Data Caching Strategies"
+    ],
+
+    "http_clients": [
+      "Fetch API Usage",
+      "Axios Configuration",
+      "Interceptors for Headers",
+      "Error Handling Patterns"
+    ],
+
+    "authentication": [
+      "JWT Token Management",
+      "Protected Routes",
+      "Token Refresh Flow",
+      "Secure Storage (HttpOnly Cookies)"
+    ]
+  },
+
+  "Testing": {
+    "testing_basics": [
+      "React Testing Library Setup",
+      "Component Testing",
+      "User Event Simulation",
+      "Snapshot Testing"
+    ],
+
+    "testing_patterns": [
+      "Mocking API Calls",
+      "Testing Custom Hooks",
+      "Testing Redux",
+      "Test Coverage Goals"
+    ]
+  },
+
+  "Build_Tools": {
+    "development_tools": [
+      "Vite Configuration",
+      "Webpack Basics",
+      "Babel Transpilation",
+      "ESModules vs CommonJS"
+    ],
+
+    "environment": [
+      "Environment Variables (.env)",
+      "Build Scripts",
+      "Development vs Production Builds",
+      "Deployment Configuration"
+    ]
+  },
+
+  "Modern_React": {
+    "react_18_features": [
+      "Concurrent Features",
+      "Automatic Batching",
+      "Transitions (useTransition)",
+      "Suspense for Data Fetching"
+    ],
+
+    "react_19_features": [
+      "Actions and Form Handling",
+      "use Hook for Resources",
+      "Document Metadata",
+      "Performance Improvements"
+    ]
+  },
+
+  "Essential_Projects": {
     "beginner_projects": [
       "Todo List Application",
-      "Weather App",
-      "Recipe Finder",
-      "Expense Tracker"
+      "Counter with Multiple Features",
+      "Simple Calculator",
+      "Weather App with API"
     ],
+
     "intermediate_projects": [
-      "E-commerce Product Catalog",
-      "Social Media Dashboard",
-      "Real-time Chat Application",
-      "Project Management Tool"
+      "E-commerce Product Listing",
+      "Authentication Flow (Login/Register)",
+      "Dashboard with Charts",
+      "Real-time Chat Interface"
     ],
+
     "advanced_projects": [
-      "Full-stack Application with Backend",
-      "Micro-frontend Architecture",
-      "Real-time Collaboration Tool",
-      "Progressive Web App (PWA)"
+      "Full-stack Application",
+      "Social Media Clone",
+      "Admin Dashboard",
+      "Complex Form Management"
     ]
   },
-  "27_best_practices": {
-    "code_organization": [
-      "Component Structure Patterns",
-      "File Organization Strategies",
-      "Import/Export Best Practices",
+
+  "Best_Practices": {
+    "01_code_organization": [
+      "Folder Structure Patterns",
+      "Component Organization",
+      "Reusable Component Library",
       "Code Splitting Strategy"
     ],
-    "performance_practices": [
-      "Memoization Strategy",
-      "Bundle Size Optimization",
+
+    "02_performance": [
+      "Bundle Size Monitoring",
       "Image Optimization",
-      "Network Request Optimization"
+      "Code Splitting Implementation",
+      "Performance Monitoring"
     ],
-    "maintenance": [
-      "Component Documentation",
-      "TypeScript Integration",
-      "Testing Strategy",
-      "Code Review Practices"
+
+    "03_security": [
+      "XSS Prevention",
+      "Input Validation",
+      "Secure API Calls",
+      "Environment Variables Usage"
+    ],
+
+    "04_maintainability": [
+      "Prop Types or TypeScript",
+      "Documentation Practices",
+      "Code Review Guidelines",
+      "Refactoring Strategies"
+    ]
+  },
+
+  "Interview_Preparation": {
+    "core_concepts": [
+      "Virtual DOM and Reconciliation",
+      "Component Lifecycle",
+      "State and Props Management",
+      "Hooks Usage and Rules",
+      "Performance Optimization"
+    ],
+
+    "common_questions": [
+      "useEffect Dependency Array Behavior",
+      "Controlled vs Uncontrolled Components",
+      "Context API vs Redux",
+      "React.memo vs useMemo vs useCallback",
+      "Error Boundary Implementation"
+    ],
+
+    "practical_skills": [
+      "Build a Component from Scratch",
+      "Implement Custom Hook",
+      "Optimize Existing Code",
+      "Debug React Applications",
+      "Test React Components"
+    ]
+  },
+  "Styling_In_React": {
+    "01_css_methods": [
+      "CSS Stylesheets (Importing CSS)",
+      "CSS Modules (Scoped Styling)",
+      "Inline Styles (Style Object)",
+      "Classnames Utility Pattern"
+    ],
+    "02_css_in_js": [
+      "Styled Components Basics",
+      "Emotion/CSS-in-JS Concepts",
+      "Dynamic Styling based on Props",
+      "Theming and ThemeProvider"
+    ],
+    "03_utility_first": [
+      "Tailwind CSS Integration",
+      "Utility Class Patterns",
+      "Configuring Tailwind with React",
+      "Handling Dynamic Classes (clsx/tailwind-merge)"
+    ]
+  },
+
+  "Advanced_Forms": {
+    "01_react_hook_form": [
+      "React Hook Form Introduction",
+      "register and handleSubmit",
+      "Form Validation (Built-in)",
+      "Integrating UI Libraries (Controller)",
+      "Performance Benefits (Uncontrolled)"
+    ],
+    "02_validation_schemas": [
+      "Zod Validation Integration",
+      "Yup Schema Validation",
+      "Formik (Legacy vs Modern)",
+      "Handling Complex Form Data"
+    ]
+  },
+
+  "React_Query_And_Data": {
+    "01_tanstack_query": [
+      "Why React Query? (Server State Management)",
+      "useQuery for Fetching Data",
+      "useMutation for Updating Data",
+      "Query Invalidation and Refetching",
+      "Caching and Stale Time configuration"
+    ],
+    "02_swr": [
+      "SWR (Stale-While-Revalidate) Pattern",
+      "useSWR Basics",
+      "Global Configuration",
+      "Optimistic UI Updates"
+    ]
+  },
+
+  "React_With_TypeScript": {
+    "01_component_typing": [
+      "Typing Functional Components (usage of React.FC)",
+      "Typing Props (Interfaces vs Types)",
+      "Typing Children and ReactNode",
+      "Typing Event Handlers"
+    ],
+    "02_hooks_typing": [
+      "Typing useState (Inferred vs Explicit)",
+      "Typing useReducer (Discriminated Unions)",
+      "Typing useRef (DOM vs Mutable)",
+      "Typing Custom Hooks"
+    ],
+    "03_context_typing": [
+      "Typing Context and Providers",
+      "Handling null in Context Types",
+      "Generic Components with TypeScript"
+    ]
+  },
+
+  "Accessibility_A11y": {
+    "01_a11y_basics": [
+      "Semantic HTML in React",
+      "The `aria-*` Attributes",
+      "Keyboard Navigation (tabIndex)",
+      "Focus Management (useRef)"
+    ],
+    "02_testing_a11y": [
+      "Testing with Screen Readers",
+      "eslint-plugin-jsx-a11y",
+      "Jest-axe for Accessibility Testing",
+      "Accessible Design Patterns (Modals, Dropdowns)"
+    ]
+  },
+
+  "Animation": {
+    "01_framer_motion": [
+      "Framer Motion Basics (motion.div)",
+      "Animate Presence (Exit Animations)",
+      "Gestures (Hover, Tap, Drag)",
+      "Variants and Orchestration"
+    ],
+    "02_react_spring": [
+      "Physics-based Animation Concepts",
+      "useSpring Hook",
+      "Interpolation",
+      "React Transition Group (Legacy)"
+    ]
+  },
+
+  "Architecture_Patterns": {
+    "01_design_patterns": [
+      "Atomic Design Principle (Atoms, Molecules)",
+      "Container vs Presentational Components",
+      "Compound Component Pattern",
+      "Control Props Pattern",
+      "Render Props Pattern"
+    ],
+    "02_project_structure": [
+      "Feature-based Architecture",
+      "Layered Architecture",
+      "Managing Shared/Common Components",
+      "Barrel Exports (index.js)"
     ]
   }
 };
 
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import Topic from '../../models/Topic.js';
-import Category from '../../models/Category.js';
-import Section from '../../models/Section.js';
-import slugify from 'slugify';
-
-dotenv.config();
-
-const categorizeDifficulty = (name, parentName) => {
-  const lowerName = name.toLowerCase() + ' ' + parentName.toLowerCase();
-  
-  if (lowerName.includes('advanced') || 
-      lowerName.includes('optimization') || 
-      lowerName.includes('performance') || 
-      lowerName.includes('redux') ||
-      lowerName.includes('testing') ||
-      lowerName.includes('deployment') ||
-      lowerName.includes('next.js') ||
-      lowerName.includes('ssr')) {
-    return 'advanced';
-  }
-  
-  if (lowerName.includes('hook') || 
-      lowerName.includes('context') || 
-      lowerName.includes('routing') || 
-      lowerName.includes('form') ||
-      lowerName.includes('ref')) {
-    return 'intermediate';
-  }
-  
-  return 'beginner';
-};
-
-
-const seedHierarchy = async () => {
-  try {
-    console.log('🌱 Connecting to MongoDB...');
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('✅ Connected to MongoDB');
-
-    // 1. Find Main Topic (React)
-    let topic = await Topic.findOne({ slug: 'react' });
-    if (!topic) {
-        // Fallback or create
-        topic = await Topic.findOne({ slug: 'reactjs' });
-    }
-    
-    if (!topic) {
-      console.log('ℹ️ React topic not found, creating...');
-      topic = await Topic.create({
-        name: 'React',
-        slug: 'react',
-        description: 'A JavaScript library for building user interfaces',
-        icon: '⚛️',
-        order: 5,
-        isNew: false
-      });
-    }
-    console.log(`📌 Using Topic: ${topic.name}`);
-
-    // 2. Clear existing structure for this topic only
-    console.log('🧹 Clearing existing categories and sections...');
-    const categories = await Category.find({ topicId: topic._id });
-    const categoryIds = categories.map(c => c._id);
-    await Section.deleteMany({ categoryId: { $in: categoryIds } });
-    await Category.deleteMany({ topicId: topic._id });
-
-    // 3. Process new structure
-    console.log('🏗️ Building new hierarchy...');
-    
-    let categoryOrder = 1;
-    let totalSections = 0;
-
-    for (const [catKey, sectionsObj] of Object.entries(reactCurriculum)) {
-      // Format Category Name: "01_react_foundations" -> "React Foundations"
-      let catName = catKey.replace(/^\d+_/, '').split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-      
-      // Fix specific casing
-      catName = catName
-        .replace('Reactjs', 'React')
-        .replace('Ui', 'UI')
-        .replace('Ux', 'UX')
-        .replace('Jsx', 'JSX')
-        .replace('Api', 'API')
-        .replace('Dom', 'DOM')
-        .replace('Css', 'CSS')
-        .replace('Ssr', 'SSR')
-        .replace('Spa', 'SPA')
-        .replace('Npm', 'NPM')
-        .replace('Cli', 'CLI');
-
-      const category = await Category.create({
-        name: catName,
-        slug: slugify(catName, { lower: true, strict: true }),
-        topicId: topic._id,
-        order: categoryOrder++,
-        description: `Master ${catName}`
-      });
-
-      console.log(`  📂 Created Category: ${category.name}`);
-
-      let sectionOrder = 1;
-      
-      const sectionsToProcess = Array.isArray(sectionsObj) 
-        ? { "Core Concepts": sectionsObj } 
-        : sectionsObj;
-
-      for (const [secKey, keyPoints] of Object.entries(sectionsToProcess)) {
-        // Format Section Title
-        let secTitle = secKey.split('_')
-          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-          .join(' ');
-        
-        // Fix abbreviation casing
-        secTitle = secTitle
-          .replace('Jsx', 'JSX')
-          .replace('Dom', 'DOM')
-          .replace('Ui', 'UI')
-          .replace('Css', 'CSS')
-          .replace('Api', 'API')
-          .replace('Spa', 'SPA')
-          .replace('Url', 'URL')
-          .replace('Json', 'JSON')
-          .replace('Jwt', 'JWT')
-          .replace('Http', 'HTTP')
-          .replace('Crud', 'CRUD')
-          .replace('Npm', 'NPM')
-          .replace('Cli', 'CLI');
-
-        // Determine difficulty
-        const difficulty = categorizeDifficulty(secTitle, catName);
-
-        // Generate a description from key points
-        const description = `Learn about ${keyPoints.slice(0, 3).join(', ')}...`;
-
-        await Section.create({
-          title: secTitle,
-          slug: slugify(`${catName}-${secTitle}`, { lower: true, strict: true }),
-          categoryId: category._id,
-          topicId: topic._id,
-          order: sectionOrder++,
-          description: description,
-          content: `## ${secTitle}\n\n${description}\n\n### Key Concepts:\n${keyPoints.map(kp => `- ${kp}`).join('\n')}`,
-          difficulty: difficulty,
-          estimatedTime: 15 + (keyPoints.length * 2), // Rough estimate
-          isNew: false,
-          isPro: false
-        });
-        
-        totalSections++;
-      }
-    }
-
-    console.log(`\n✅ Seeding Complete!`);
-    console.log(`   - Categories: ${categoryOrder - 1}`);
-    console.log(`   - Sections: ${totalSections}`);
-
-    process.exit(0);
-  } catch (error) {
-    console.error('❌ Seeding failed:', error);
-    process.exit(1);
-  }
-};
-
-seedHierarchy();
+export { reactCurriculum };

@@ -3,539 +3,433 @@ import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
-
-const angularData = {
-  "Angular_Fundamentals": {
-    "01_introduction_setup": {
-      "core_concepts": [
-        "What is Angular - Framework Overview",
-        "Angular vs React vs Vue Comparison",
-        "Angular Architecture (Components, Modules, Services)",
-        "Angular CLI Basics"
-      ],
-      "project_setup": [
-        "Angular Project Creation (ng new)",
-        "Project Structure Overview",
-        "Angular.json Configuration",
-        "Development Server (ng serve)"
-      ]
-    },
-
-    "02_typescript_basics": [
-      "TypeScript in Angular",
-      "Type Annotations",
-      "Interfaces and Types",
-      "Classes and Decorators",
-      "ES6+ Features Used in Angular"
+const angularHierarchy = {
+  "Foundations & Setup": {
+    "Angular Overview": [
+      "What is Angular?",
+      "Angular vs React vs Vue",
+      "Framework vs Library",
+      "Angular Versions and Features",
+      "Angular CLI"
+    ],
+    "Project Setup": [
+      "Project Setup and First Project",
+      "Folder and File Structure",
+      "Angular.json Configuration",
+      "How an Angular App Gets Loaded",
+      "Linking Bootstrap with Angular"
+    ],
+    "Development Tools": [
+      "Angular CLI Commands",
+      "TypeScript Configuration",
+      "ES6+ Features in Angular",
+      "Source Maps"
     ]
   },
-
-  "Components_Templates": {
-    "01_component_basics": [
-      "Component Structure (@Component)",
-      "Template and Styles",
+  "Components & Templates": {
+    "Component Basics": [
+      "Components in Angular",
+      "Creating Components",
       "Component Selector",
-      "View Encapsulation"
-    ],
-
-    "02_data_binding": [
-      "Interpolation {{ }}",
-      "Property Binding [ ]",
-      "Event Binding ( )",
-      "Two-way Binding [( )]"
-    ],
-
-    "03_template_syntax": [
-      "Template Variables (#var)",
-      "ng-template and ng-container",
-      "ng-content (Content Projection)",
-      "Template Reference Variables"
-    ],
-
-    "04_component_communication": [
-      "@Input() - Parent to Child",
-      "@Output() - Child to Parent",
-      "EventEmitter for Custom Events",
-      "Service-based Communication"
-    ]
-  },
-
-  "Directives": {
-    "01_structural_directives": [
-      "*ngIf - Conditional Rendering",
-      "*ngFor - List Rendering",
-      "trackBy for Performance",
-      "*ngSwitch - Multiple Conditions"
-    ],
-
-    "02_attribute_directives": [
-      "[ngClass] - Dynamic CSS Classes",
-      "[ngStyle] - Dynamic Styles",
-      "[ngModel] - Two-way Data Binding",
-      "RouterLink for Navigation"
-    ],
-
-    "03_custom_directives": [
-      "Creating Attribute Directives",
-      "Creating Structural Directives",
-      "@HostListener and @HostBinding",
-      "Directive Use Cases"
-    ]
-  },
-
-  "Services_Dependency_Injection": {
-    "01_services": [
-      "Service Creation (@Injectable)",
-      "Singleton Services",
-      "Service vs Component",
-      "Business Logic in Services"
-    ],
-
-    "02_dependency_injection": [
-      "DI Container in Angular",
-      "Provider Configuration",
-      "@Injectable and providedIn",
-      "Hierarchical Injector"
-    ],
-
-    "03_injection_tokens": [
-      "InjectionToken Usage",
-      "Configuration with DI",
-      "Factory Providers",
-      "Value Providers"
-    ]
-  },
-
-  "Modules": {
-    "01_module_basics": [
-      "NgModule Structure",
-      "Declarations, Imports, Exports",
-      "AppModule (Root Module)",
-      "Feature Modules"
-    ],
-
-    "02_module_types": [
-      "Shared Modules",
-      "Core Modules",
-      "Routing Modules",
-      "Lazy-loaded Modules"
-    ],
-
-    "03_module_strategies": [
-      "Lazy Loading Configuration",
-      "Preloading Strategies",
-      "Module Organization Patterns",
+      "Component Templates and Styles",
+      "View Encapsulation",
       "Standalone Components"
+    ],
+    "Data Binding": [
+      "String Interpolation",
+      "Property Binding",
+      "Event Binding",
+      "Two-Way Binding (ngModel)",
+      "Dynamic Class/Style Binding"
+    ],
+    "Component Communication": [
+      "@Input Decorator",
+      "@Output Decorator with EventEmitter",
+      "Parent to Child Communication",
+      "Child to Parent Communication",
+      "Sibling Communication",
+      "Passing Data Using Services"
+    ],
+    "Template Features": [
+      "ng-template",
+      "ng-container",
+      "Content Projection (ng-content)",
+      "ViewChild and ViewChildren",
+      "Dynamic Components"
     ]
   },
-
-  "Routing": {
-    "01_routing_basics": [
+  "Directives": {
+    "Structural Directives": [
+      "ngIf",
+      "ngFor with trackBy",
+      "ngSwitch"
+    ],
+    "Attribute Directives": [
+      "ngStyle vs ngClass",
+      "ngModel",
+      "RouterLink and RouterLinkActive"
+    ],
+    "Custom Directives": [
+      "Custom Attribute Directives",
+      "Custom Structural Directives",
+      "HostListener and HostBinding",
+      "Directives vs Components"
+    ]
+  },
+  "Services & Dependency Injection": {
+    "Services": [
+      "What are Services?",
+      "Creating Services",
+      "Singleton Services",
+      "@Injectable Decorator",
+      "providedIn Property"
+    ],
+    "Dependency Injection": [
+      "Dependency Injection in Detail",
+      "Advantages of DI",
+      "Inject vs @Injectable",
+      "Hierarchical Dependency Injection"
+    ]
+  },
+  "Modules & Bootstrapping": {
+    "Modules": [
+      "Angular Modules (NgModule)",
+      "AppModule Role",
+      "Feature Modules",
+      "Shared Modules",
+      "Bootstrapping Module"
+    ],
+    "Module Loading": [
+      "Lazy Loading vs Eager Loading",
+      "Preloading Strategy"
+    ]
+  },
+  "Routing & Navigation": {
+    "Routing Basics": [
       "Router Configuration",
-      "RouterOutlet Directive",
-      "RouterLink Navigation",
-      "Route Parameters"
-    ],
-
-    "02_advanced_routing": [
-      "Child Routes",
-      "Route Guards (CanActivate)",
-      "Route Resolvers",
-      "Wildcard Routes"
-    ],
-
-    "03_navigation_features": [
-      "Programmatic Navigation",
+      "RouterOutlet",
+      "Route Parameters",
       "Query Parameters",
-      "Fragment Navigation",
-      "Route Events"
+      "Wildcard Route"
+    ],
+    "Advanced Routing": [
+      "Child Routes",
+      "Route Guards and Types",
+      "CanActivate, CanDeactivate, Resolve"
+    ],
+    "Navigation": [
+      "Programmatic Navigation",
+      "Relative vs Absolute Navigation"
     ]
   },
-
   "Forms": {
-    "01_template_driven_forms": [
-      "Template-driven Forms Basics",
-      "ngModel and ngForm",
+    "Template-Driven Forms": [
+      "Template-Driven Forms",
+      "ngModel Directive",
       "Form Validation",
       "Form Submission"
     ],
-
-    "02_reactive_forms": [
-      "ReactiveFormsModule",
+    "Reactive Forms": [
+      "Reactive Forms vs Template-Driven",
       "FormGroup and FormControl",
       "FormBuilder Service",
-      "FormArray for Dynamic Forms"
-    ],
-
-    "03_form_validation": [
-      "Built-in Validators",
-      "Custom Validators",
-      "Cross-field Validation",
-      "Validation Feedback"
-    ],
-
-    "04_form_operations": [
-      "setValue() and patchValue()",
-      "Form Status Properties",
-      "Value Changes Observables",
-      "Custom Form Controls"
+      "FormArray",
+      "setValue() vs patchValue()",
+      "ControlValueAccessor"
     ]
   },
-
-  "HTTP_Client": {
-    "01_http_basics": [
-      "HttpClientModule Setup",
-      "GET, POST, PUT, DELETE Requests",
-      "Request Headers",
-      "Response Handling"
+  "HTTP Client & APIs": {
+    "HTTP Basics": [
+      "HttpClient Module",
+      "HTTP Methods (GET, POST, PUT, DELETE)",
+      "HTTP Headers",
+      "Error Handling"
     ],
-
-    "02_advanced_http": [
+    "HTTP Interceptors": [
       "HTTP Interceptors",
-      "Error Handling",
-      "Request/Response Transformation",
-      "Progress Events"
-    ],
-
-    "03_api_integration": [
-      "Service Layer for APIs",
-      "Type-safe API Responses",
-      "Error Handling Patterns",
-      "Loading States"
+      "Implementing Interceptors",
+      "Request/Response Transformation"
     ]
   },
-
-  "RxJS_Reactive_Programming": {
-    "01_observables_basics": [
+  "State Management": {
+    "Component State": [
+      "Local Component State",
+      "Service-Based State",
+      "BehaviorSubject for State"
+    ],
+    "NgRx": [
+      "Why NgRx?",
+      "NgRx Store",
+      "Actions (createAction)",
+      "Reducers (Pure Functions)",
+      "Selectors",
+      "NgRx Entity"
+    ],
+    "Effects": [
+      "Effects in NgRx",
+      "Handling Asynchronous Actions",
+      "API Calls with Effects"
+    ],
+    "Authentication": [
+      "JWT Flow in Angular",
+      "JWT Structure",
+      "Token Authentication",
+      "Refresh Tokens",
+      "Authentication vs Authorization"
+    ]
+  },
+  "RxJS & Reactive Programming": {
+    "Observables": [
       "Observables in Angular",
       "Observable vs Promise",
-      "Async Pipe",
-      "Unsubscribe Strategies"
+      "Observable Architecture"
     ],
-
-    "02_rxjs_operators": [
-      "map, filter, tap",
-      "switchMap, mergeMap, concatMap",
-      "catchError for Error Handling",
-      "debounceTime and distinctUntilChanged"
+    "Subjects": [
+      "Subject vs BehaviorSubject",
+      "AsyncSubject",
+      "ReplaySubject",
+      "Multicasting"
     ],
-
-    "03_subjects": [
-      "Subject and BehaviorSubject",
-      "Service with Subjects",
-      "Multicasting Observables",
-      "State Management with RxJS"
+    "Operators": [
+      "mergeMap, switchMap, concatMap",
+      "forkJoin",
+      "takeUntil",
+      "debounceTime"
+    ],
+    "Advanced RxJS": [
+      "Hot vs Cold Observables",
+      "Memory Leak Prevention",
+      "Async Pipe"
     ]
   },
-
-  "State_Management": {
-    "01_component_state": [
-      "Local Component State",
-      "Service-based State",
-      "BehaviorSubject Pattern",
-      "Simple State Management"
-    ],
-
-    "02_ngrx_basics": [
-      "NgRx Store Setup",
-      "Actions, Reducers, Selectors",
-      "State Shape Design",
-      "Dispatching Actions"
-    ],
-
-    "03_ngrx_advanced": [
-      "Effects for Side Effects",
-      "Entity State Management",
-      "Feature State",
-      "NgRx DevTools"
-    ],
-
-    "04_authentication_state": [
-      "JWT Token Management",
-      "Auth Guards",
-      "User State Management",
-      "Token Refresh"
-    ]
-  },
-
   "Pipes": {
-    "built_in_pipes": [
-      "DatePipe for Date Formatting",
-      "CurrencyPipe and DecimalPipe",
-      "UpperCase, LowerCase Pipes",
-      "AsyncPipe for Observables"
+    "Built-in Pipes": [
+      "Date Pipe",
+      "Currency Pipe",
+      "Decimal Pipe",
+      "JSON Pipe",
+      "Async Pipe"
     ],
-
-    "custom_pipes": [
+    "Custom Pipes": [
       "Creating Custom Pipes",
       "Pure vs Impure Pipes",
-      "Pipe Parameters",
-      "Pipe Performance"
+      "Pipe vs Function"
     ]
   },
-
-  "Lifecycle_Hooks": {
-    "component_lifecycle": [
-      "ngOnInit - Initialization",
-      "ngOnChanges - Input Changes",
-      "ngOnDestroy - Cleanup",
-      "ngAfterViewInit - View Ready"
-    ],
-
-    "lifecycle_usage": [
-      "When to Use Each Hook",
-      "Memory Management",
-      "Performance Considerations",
-      "Lifecycle Best Practices"
-    ]
-  },
-
-  "Performance_Optimization": {
-    "01_change_detection": [
-      "Change Detection Strategy",
-      "OnPush Strategy Benefits",
-      "Change Detection Triggers",
-      "Manual Change Detection"
-    ],
-
-    "02_bundle_optimization": [
-      "Lazy Loading Modules",
+  "Performance Optimization": {
+    "Bundle Optimization": [
+      "Improve Bundle Size",
+      "AOT vs JIT Compilation",
       "Tree Shaking",
-      "AOT Compilation",
-      "Bundle Analysis"
+      "Code Splitting",
+      "Lazy Loading"
     ],
-
-    "03_runtime_optimization": [
-      "trackBy in ngFor",
-      "Pure Pipes",
-      "Memoization",
-      "Virtual Scrolling"
+    "Change Detection": [
+      "Change Detection in Angular",
+      "Default vs OnPush Strategy",
+      "Zones and Zone.js",
+      "markForCheck()"
+    ],
+    "Performance Tools": [
+      "Angular Budgets",
+      "Performance Profiling"
     ]
   },
-
   "Testing": {
-    "01_unit_testing": [
-      "Jasmine Framework",
-      "Component Testing",
-      "Service Testing",
-      "Test Bed Configuration"
+    "Testing Types": [
+      "Unit Testing",
+      "Integration Testing",
+      "E2E Testing"
     ],
-
-    "02_testing_utilities": [
-      "async and fakeAsync",
-      "Component Fixtures",
-      "Mock Services",
-      "Testing Forms and Routing"
+    "Testing Tools": [
+      "Jasmine",
+      "Karma",
+      "Angular Testing Utilities",
+      "Test Bed"
     ]
   },
-
-  "Advanced_Features": {
-    "01_angular_specific": [
-      "ViewChild and ContentChild",
-      "Dynamic Component Loading",
-      "Angular Elements",
-      "Internationalization (i18n)"
+  "Advanced Features": {
+    "Internationalization": [
+      "i18n in Angular",
+      "Localization",
+      "extract-i18n Command"
     ],
-
-    "02_signals": [
+    "Server-Side Rendering": [
+      "Angular Universal",
+      "SSR Benefits"
+    ],
+    "Signals": [
+      "Signals in Angular",
       "Signal-based Components",
       "Computed Signals",
-      "Effect Functions",
-      "Signal Best Practices"
+      "Effect Functions"
     ]
   },
-
   "Security": {
-    "security_basics": [
+    "Security Practices": [
       "XSS Prevention",
-      "Sanitization and Security",
-      "Content Security Policy",
-      "Authentication Best Practices"
+      "CSRF Protection",
+      "Content Security Policy"
     ]
   },
-
   "Deployment": {
-    "01_build_process": [
-      "Production Build (ng build)",
-      "Environment Configurations",
-      "Polyfills and Browser Support",
-      "Build Optimization Flags"
+    "Build Configuration": [
+      "Production Build",
+      "Environment Files",
+      "Polyfills"
     ],
-
-    "02_deployment_options": [
-      "Static File Hosting",
-      "Docker Containerization",
-      "CI/CD Pipeline",
-      "Monitoring and Analytics"
+    "Deployment Options": [
+      "Static Hosting",
+      "Server Deployment",
+      "Docker Deployment"
     ]
   },
-
-  "Best_Practices": {
-    "01_project_structure": [
-      "Feature-based Organization",
-      "Shared Module Organization",
-      "Core vs Shared Services",
-      "Utility Functions"
+  "Lifecycle Hooks": {
+    "Component Lifecycle": [
+      "ngOnInit",
+      "ngOnChanges",
+      "ngDoCheck",
+      "ngAfterViewInit",
+      "ngAfterContentInit",
+      "ngOnDestroy"
     ],
-
-    "02_code_organization": [
-      "Component Design Patterns",
-      "Service Layer Patterns",
-      "State Management Strategy",
-      "Error Handling Strategy"
-    ],
-
-    "03_development_workflow": [
-      "Code Quality Tools",
-      "Commit Guidelines",
-      "Pull Request Process",
-      "Documentation Practices"
+    "Lifecycle Best Practices": [
+      "When to Use Each Hook",
+      "Memory Leak Prevention",
+      "Handling Memory Leaks"
     ]
   },
-
-  "Essential_Projects": {
-    "learning_projects": [
-      "Todo Application (CRUD, State Management)",
-      "E-commerce Product Listing (API Integration)",
-      "Admin Dashboard (Routing, Forms, Charts)",
-      "Authentication System (JWT, Guards)"
+  "Decorators & Metadata": {
+    "Decorator Types": [
+      "Class Decorators",
+      "Property Decorators",
+      "Method Decorators",
+      "Parameter Decorators"
     ],
-
-    "must_implement_features": [
-      "Form with Validation",
-      "API Integration with Error Handling",
-      "Route Protection",
-      "State Management Solution",
-      "Responsive UI Components"
+    "Common Decorators": [
+      "@Component",
+      "@Directive",
+      "@Pipe",
+      "@Injectable",
+      "@Input",
+      "@Output",
+      "@ViewChild"
     ]
   },
-
-  "Interview_Preparation": {
-    "common_topics": [
-      "Component Lifecycle",
-      "Change Detection",
-      "Dependency Injection",
-      "RxJS Operators",
-      "State Management",
-      "Routing and Guards",
-      "Forms (Template vs Reactive)"
+  "Architecture Patterns": {
+    "Angular Architecture": [
+      "MVVM Architecture",
+      "Component-Based Architecture",
+      "Module-Based Architecture"
     ],
-
-    "practical_skills": [
-      "Build a CRUD Application",
-      "Implement Authentication",
-      "Optimize Performance",
-      "Write Unit Tests",
-      "Debug Angular Applications"
+    "Design Patterns": [
+      "Singleton Pattern",
+      "Factory Pattern",
+      "Observer Pattern",
+      "Dependency Injection Pattern"
+    ],
+    "Best Practices": [
+      "Separation of Concerns",
+      "Loosely Coupled Components",
+      "Reusable Components"
+    ]
+  },
+  "Debugging & Troubleshooting": {
+    "Common Issues": [
+      "Memory Leaks Detection",
+      "Change Detection Issues",
+      "Performance Bottlenecks"
+    ],
+    "Debugging Tools": [
+      "Angular DevTools",
+      "Browser DevTools",
+      "Logging Strategies"
     ]
   }
 };
 
-const formatName = (str) => {
-    return str
-        .replace(/^\\d+_/, '')
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
+const seedAngularHierarchy = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('📦 Connected to MongoDB');
 
-const seedAngular = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        let topic = await Topic.findOne({ slug: 'angular' });
-        if (!topic) {
-            console.log('Creating Angular topic...');
-            topic = await Topic.create({
-                name: 'Angular',
-                slug: 'angular',
-                description: 'Build enterprise-grade applications with Angular',
-                icon: '🅰️',
-                order: 9,
-                color: '#DD0031'
-            });
-        }
-
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ topicId: topic._id });
-            await Category.deleteMany({ topicId: topic._id });
-            console.log('Cleared existing Angular data');
-        }
-
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) => {
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
-        let order = 1;
-        for (const [mainKey, mainValue] of Object.entries(angularData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
-            
-            for (const [key, value] of Object.entries(mainValue)) {
-                const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
-
-                const category = await Category.create({
-                    name: categoryName,
-                    slug: categorySlug,
-                    description: `Learn about ${categoryName}`,
-                    topicId: topic._id,
-                    group: groupName,
-                    order: order++
-                });
-
-                let sections = [];
-                if (Array.isArray(value)) {
-                    sections = value;
-                } else {
-                    for (const [subKey, subItems] of Object.entries(value)) {
-                        sections = [...sections, ...subItems];
-                    }
-                }
-
-                const sectionDocs = sections.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Performance') || categoryName.includes('NgRx') ? 'advanced' : 
-                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Component Basics') ? 'beginner' : 'intermediate',
-                    estimatedTime: 15
-                }));
-
-                await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-            }
-        }
-
-        console.log('✅ Angular seeding complete!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        process.exit(1);
+    // Create Angular topic
+    let angularTopic = await Topic.findOne({ slug: 'angular' });
+    if (!angularTopic) {
+      const topicCount = await Topic.countDocuments();
+      angularTopic = await Topic.create({
+        name: 'Angular',
+        slug: 'angular',
+        description: 'Master Angular framework - from components and services to NgRx state management, RxJS, and production deployment.',
+        icon: '🅰️',
+        order: topicCount + 1,
+        estimatedHours: 55
+      });
+      console.log('✅ Created Angular topic');
     }
+
+    // Clear existing structure
+    console.log('🧹 Clearing existing categories and sections...');
+    await Section.deleteMany({ topicId: angularTopic._id });
+    await Category.deleteMany({ topicId: angularTopic._id });
+
+    // Seed hierarchy
+    const seenSlugs = new Set();
+    const generateUniqueSlug = (title) => {
+        let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        let slug = baseSlug;
+        let counter = 1;
+        while (seenSlugs.has(slug)) {
+            counter++;
+            slug = `${baseSlug}-${counter}`;
+        }
+        seenSlugs.add(slug);
+        return slug;
+    };
+
+    let categoryOrder = 1;
+    for (const [groupName, categories] of Object.entries(angularHierarchy)) {
+      // Create Group/Categories
+      for (const [categoryName, sections] of Object.entries(categories)) {
+        const categorySlug = generateUniqueSlug(categoryName);
+        
+        const category = await Category.create({
+          topicId: angularTopic._id,
+          name: categoryName,
+          slug: categorySlug,
+          group: groupName,
+          order: categoryOrder++,
+          description: `Learn ${categoryName} in Angular`
+        });
+        console.log(`✅ Created category: ${categoryName}`);
+
+        let sectionOrder = 1;
+        for (const sectionTitle of sections) {
+          const sectionSlug = generateUniqueSlug(`${categoryName}-${sectionTitle}`);
+
+          await Section.create({
+            categoryId: category._id,
+            topicId: angularTopic._id,
+            title: sectionTitle,
+            slug: sectionSlug,
+            order: sectionOrder++,
+            description: `Learn about ${sectionTitle}`,
+            difficulty: 'intermediate',
+            estimatedTime: 35
+          });
+        }
+      }
+    }
+
+    console.log('🎉 Angular hierarchy seeded successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding Angular:', error);
+    process.exit(1);
+  }
 };
 
-seedAngular();
+seedAngularHierarchy();

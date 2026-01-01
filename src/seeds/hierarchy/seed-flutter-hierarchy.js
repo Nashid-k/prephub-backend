@@ -1,355 +1,390 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import Topic from '../../models/Topic.js';
-import Category from '../../models/Category.js';
-import Section from '../../models/Section.js';
 
-dotenv.config();
+const flutterCurriculum = {
+  "Flutter_Fundamentals": {
+    "01_flutter_basics": {
+      "core_concepts": [
+        "What is Flutter - Cross-Platform Framework",
+        "Flutter Architecture Layers",
+        "Dart Language Overview",
+        "Hot Reload vs Hot Restart"
+      ],
+      "development_setup": [
+        "Flutter SDK Installation",
+        "IDE Setup (VS Code/Android Studio)",
+        "Flutter Doctor Commands",
+        "Creating First Flutter Project"
+      ]
+    },
 
-const flutterHierarchy = {
-  "Foundations & Overview": {
-    "Flutter Basics": [
-      "What is Flutter?",
-      "Advantages & Disadvantages",
-      "Flutter Architecture",
-      "Dart Language Overview",
-      "Flutter Doctor & Inspector",
-      "JIT vs AOT Compilation"
-    ],
-    "Project Setup": [
-      "Pubspec.yaml File",
-      "Packages vs Plugins",
-      "Managing Dependencies",
-      "Build Modes: Debug, Release, Profile"
-    ]
+    "02_project_structure": {
+      "key_files": [
+        "pubspec.yaml - Dependencies & Configuration",
+        "main.dart - Application Entry Point",
+        "MaterialApp/CupertinoApp Setup",
+        "Project Folder Organization"
+      ],
+      "build_modes": [
+        "Debug Mode (Hot Reload)",
+        "Release Mode (Optimized Build)",
+        "Profile Mode (Performance Testing)"
+      ]
+    }
   },
-  "Dart Programming": {
-    "Core Concepts": [
-      "Variables & Types (var, final, const)",
-      "String Interpolation",
-      "Operators & Control Flow",
-      "Functions & Parameters"
+
+  "Dart_Essentials": {
+    "01_basic_syntax": [
+      "Variables (var, final, const)",
+      "Data Types (String, int, double, bool)",
+      "Null Safety & Null Aware Operators",
+      "String Interpolation"
     ],
-    "Collections": [
-      "Lists, Maps, Sets",
-      "Spread Operator (...)",
-      "Collection Methods (map, where, forEach)",
-      "Map vs forEach difference"
+
+    "02_control_flow": [
+      "if-else Conditions",
+      "for, while, do-while Loops",
+      "switch-case Statements",
+      "Ternary Operator"
     ],
-    "Error Handling": [
-      "Try-Catch-Finally",
-      "Try-Parse",
-      "Rethrow & Assert"
+
+    "03_functions": [
+      "Function Declaration & Calling",
+      "Named & Optional Parameters",
+      "Arrow Functions",
+      "Higher-Order Functions"
     ],
-    "OOP in Dart": [
+
+    "04_collections": [
+      "Lists (Fixed & Growable)",
+      "Maps (Key-Value Pairs)",
+      "Sets (Unique Values)",
+      "Collection Methods (map, where, forEach)"
+    ],
+
+    "05_oop_dart": [
       "Classes & Objects",
-      "Constructors (Named, Factory)",
-      "Inheritance & Mixins",
-      "Abstract Classes & Interfaces",
-      "Singleton Pattern",
-      "Getters and Setters"
+      "Constructors (Default, Named)",
+      "Inheritance (extends)",
+      "Mixins (with)",
+      "Abstract Classes"
     ],
-    "Advanced Types": [
-      "Type Promotion & Casting",
-      "Generics",
-      "Typedef",
-      "Never Type",
-      "Pure vs Impure Functions"
+
+    "06_async_programming": [
+      "Futures & async/await",
+      "Error Handling (try-catch)",
+      "Streams Basics",
+      "FutureBuilder/StreamBuilder Usage"
     ]
   },
-  "Widgets & UI": {
-    "App Structure": [
-      "main() vs runApp()",
-      "MaterialApp & CupertinoApp",
-      "Scaffold Widget",
-      "SafeArea",
-      "ThemeData"
+
+  "Widgets_UI": {
+    "01_widget_basics": [
+      "Everything is a Widget",
+      "Stateless vs Stateful Widgets",
+      "Widget Tree & Composition",
+      "BuildContext Understanding"
     ],
-    "Layout Basics": [
-      "Container & SizedBox",
-      "Padding & Margin",
-      "Align & AspectRatio",
-      "ColoredBox & ClipRRect"
-    ],
-    "Multi-child Layouts": [
-      "Column & Row",
-      "Stack & Positioned",
-      "Expanded & Flexible",
-      "ListView & GridView",
-      "Table Widget"
-    ],
-    "Interactive Widgets": [
-      "GestureDetector vs InkWell",
-      "Buttons (Elevated, Text, Icon)",
-      "TextField & TextFormField",
-      "Forms & Validation",
-      "Checkbox, Radio, Switch"
-    ],
-    "Visual Widgets": [
+
+    "02_layout_widgets": {
+      "single_child": [
+        "Container (Padding, Margin, Decoration)",
+        "SizedBox (Fixed Dimensions)",
+        "Padding Widget",
+        "Align & Center"
+      ],
+      "multi_child": [
+        "Column & Row (Main/Cross Axis Alignment)",
+        "Stack & Positioned",
+        "Expanded & Flexible",
+        "ListView & GridView"
+      ]
+    },
+
+    "03_basic_widgets": [
       "Text & RichText",
-      "Image (Network, Asset, File)",
-      "Icon & CircleAvatar",
-      "Divider & Card"
+      "Image (Asset, Network)",
+      "Icon & IconButton",
+      "Card & Divider"
     ],
-    "Scrolling": [
-      "Scroll Physics",
+
+    "04_input_widgets": [
+      "TextField & TextFormField",
+      "Buttons (ElevatedButton, TextButton)",
+      "Checkbox, Radio, Switch",
+      "DropdownButton"
+    ],
+
+    "05_scrolling": [
       "SingleChildScrollView",
-      "ScrollController",
-      "ShrinkWrap Property"
+      "ListView.builder (Performance)",
+      "CustomScrollView",
+      "ScrollController Basics"
+    ],
+
+    "06_responsive_design": [
+      "MediaQuery for Screen Info",
+      "LayoutBuilder for Adaptive Layouts",
+      "Orientation Changes",
+      "SafeArea for Notches"
     ]
   },
-  "State Management": {
-    "State Concepts": [
-      "What is State?",
-      "Stateful vs Stateless Widgets",
+
+  "State_Management": {
+    "01_state_concepts": [
+      "Ephemeral vs App State",
+      "StatefulWidget Lifecycle",
       "setState() Method",
-      "Widget Lifecycle"
+      "When to Lift State Up"
     ],
-    "Simple Reactive": [
-      "InheritedWidget",
-      "ValueNotifier & ValueListenableBuilder",
-      "ChangeNotifier & Provider",
-      "MultiProvider"
+
+    "02_basic_state_management": [
+      "Provider Package Setup",
+      "ChangeNotifier & ChangeNotifierProvider",
+      "Consumer Widget",
+      "context.read() vs context.watch()"
     ],
-    "Advanced Patterns": [
-      "BLoC Pattern (Events, States)",
-      "Cubit (subset of BLoC)",
-      "MultiBlocProvider",
-      "GetX (State, Route, Dependency)",
-      "Riverpod"
-    ]
+
+    "03_advanced_state_management": {
+      "bloc_pattern": [
+        "BLoC Architecture (Events, States)",
+        "Cubit (Simpler BLoC)",
+        "BlocProvider & BlocBuilder",
+        "State Management Best Practices"
+      ],
+      "getx_pattern": [
+        "GetX Controller & .obs",
+        "Obx & GetBuilder",
+        "GetX Dependency Management",
+        "GetX Navigation"
+      ]
+    }
   },
-  "Navigation & Routing": {
-    "Imperative Navigation": [
-      "Navigator Widget",
-      "push(), pop(), pushNamed()",
-      "Returning Values from Routes",
-      "Current Route Name"
+
+  "Navigation_Routing": {
+    "01_basic_navigation": [
+      "Navigator.push() & pop()",
+      "Named Routes Setup",
+      "Passing Data Between Screens",
+      "Returning Data from Screens"
     ],
-    "Declarative Routing": [
-      "Router API",
+
+    "02_advanced_navigation": [
       "GoRouter Package",
-      "Named Routes",
-      "Passing Arguments",
+      "Nested Navigation",
+      "Route Guards & Middleware",
       "Deep Linking"
     ],
-    "Dialogs": [
-      "AlertDialog",
+
+    "03_dialogs_snackbars": [
+      "AlertDialog & SimpleDialog",
       "ModalBottomSheet",
-      "SnackBar"
+      "SnackBar for Notifications",
+      "Custom Dialog Implementation"
     ]
   },
-  "Asynchronous Programming": {
-    "Futures": [
-      "Async & Await",
-      "Future.then(), catchError()",
-      "FutureBuilder Widget"
+
+  "Networking_API": {
+    "01_http_requests": [
+      "http Package Setup",
+      "GET, POST Requests",
+      "Request Headers & Parameters",
+      "Error Handling"
     ],
-    "Streams": [
-      "Stream vs Future",
-      "StreamBuilder",
-      "Async* & Yield"
+
+    "02_data_parsing": [
+      "JSON Serialization/Deserialization",
+      "Model Classes with fromJson/toJson",
+      "json_serializable Package",
+      "Handling API Responses"
     ],
-    "Concurrency": [
-      "Isolates",
-      "Compute Function",
-      "Zones in Flutter"
+
+    "03_state_management_integration": [
+      "Loading & Error States UI",
+      "Pull-to-Refresh Implementation",
+      "Pagination",
+      "Caching Strategies"
     ]
   },
-  "Data Persistence": {
-    "Key-Value Storage": [
-      "Shared Preferences",
-      "Local Storage Concepts"
+
+  "Local_Storage": {
+    "01_key_value_storage": [
+      "Shared Preferences Package",
+      "Reading/Writing Simple Data",
+      "Secure Storage Options"
     ],
-    "Local Databases": [
+
+    "02_database_storage": [
       "SQLite with sqflite",
-      "Hive (NoSQL)",
-      "Database Migration"
+      "NoSQL with Hive",
+      "Database Models & CRUD",
+      "Migrations"
     ],
-    "File Storage": [
-      "path_provider",
-      "file_picker",
-      "Reading/Writing Files"
+
+    "03_file_storage": [
+      "File Picking (file_picker)",
+      "Reading/Writing Files",
+      "Path Provider Package",
+      "Image Caching"
     ]
   },
-  "Networking & APIs": {
-    "HTTP Communication": [
-      "http & dio Packages",
-      "HTTP Methods (GET, POST, PUT, DELETE)",
-      "Headers & Interceptors",
-      "JSON Serialization"
-    ],
-    "State Integration": [
-      "Fetching Data in initState",
-      "Loading & Error States",
-      "Pull-to-Refresh"
-    ]
-  },
-  "Platform Integration": {
-    "Platform Channels": [
-      "MethodChannel",
-      "EventChannel",
-      "BasicChannel",
-      "Native Communication"
-    ],
-    "Native Features": [
-      "Device Sensors",
-      "Camera/Gallery (image_picker)",
+
+  "Platform_Integration": {
+    "01_native_features": [
+      "Camera/Gallery Access (image_picker)",
       "Local Notifications",
-      "In-App Purchases"
+      "Location Services",
+      "Sensors Usage"
     ],
-    "Platform UI": [
-      "Cupertino vs Material",
+
+    "02_packages_plugins": [
+      "Finding & Evaluating Packages",
+      "Popular Package Categories",
+      "Native Plugin Communication Basics"
+    ],
+
+    "03_platform_ui": [
+      "Material vs Cupertino Widgets",
       "Adaptive Apps",
-      "SystemChrome"
+      "Platform-specific Styling"
     ]
   },
-  "Advanced Concepts": {
-    "Performance": [
-      "Widget Rebuild Optimization",
+
+  "Forms_Validation": {
+    "form_handling": [
+      "Form & FormField Widgets",
+      "TextFormField Validation",
+      "FormKey & GlobalKey",
+      "Form Submission Handling"
+    ],
+
+    "validation_patterns": [
+      "Built-in Validators",
+      "Custom Validators",
+      "Real-time Validation",
+      "Form State Management"
+    ]
+  },
+
+  "Animations": {
+    "basic_animations": [
+      "Implicit Animations (AnimatedContainer)",
+      "Explicit Animations (AnimationController)",
+      "Tween Animations",
+      "Hero Animations"
+    ],
+
+    "advanced_animations": [
+      "Custom Painter",
+      "Physics-based Animations",
+      "Performance Considerations",
+      "Animation Packages"
+    ]
+  },
+
+  "Testing": {
+    "testing_types": [
+      "Unit Testing (Business Logic)",
+      "Widget Testing (UI Components)",
+      "Integration Testing (Full Flows)",
+      "Golden Tests (Snapshot Testing)"
+    ],
+
+    "testing_tools": [
+      "test & flutter_test Packages",
+      "Mocking Dependencies",
+      "Test Coverage",
+      "CI/CD Integration"
+    ]
+  },
+
+  "Performance_Optimization": {
+    "performance_tips": [
+      "const Constructors Usage",
       "Keys in Flutter",
-      "addPostFrameCallback",
-      "AnimationController",
-      "Tree Shaking"
+      "ListView.builder for Large Lists",
+      "Image Optimization"
     ],
-    "Animations": [
-      "Implicit Animations",
-      "Explicit Animations",
-      "Hero Animations",
-      "Physics-based Animations"
-    ],
-    "Testing": [
-      "Unit Testing",
-      "Widget Testing",
-      "Integration Testing"
-    ],
-    "Security": [
-      "Data Encryption",
-      "SSL Pinning",
-      "Secure Storage"
-    ],
-    "Miscellaneous": [
-      "i18n & Localization",
-      "Accessibility",
-      "Responsive Design",
-      "Dependency Injection"
+
+    "debugging_tools": [
+      "Flutter Inspector",
+      "Performance Overlay",
+      "Dart DevTools",
+      "Memory Profiling"
     ]
   },
-  "Deployment & DevOps": {
-    "Build Process": [
-      "Flutter Build (apk, appbundle, ipa)",
-      "Code Signing",
+
+  "Deployment": {
+    "01_app_builds": [
+      "Android APK/AAB Generation",
+      "iOS IPA Generation",
+      "Code Signing Setup",
       "App Icons & Splash Screens"
     ],
-    "CI/CD": [
-      "GitHub Actions",
-      "Codemagic",
-      "Fastlane"
+
+    "02_app_store_deployment": [
+      "Google Play Store Submission",
+      "Apple App Store Submission",
+      "App Metadata & Screenshots",
+      "Release Management"
     ],
-    "Monitoring": [
-      "Firebase Crashlytics",
-      "Sentry",
-      "Analytics"
+
+    "03_continuous_integration": [
+      "GitHub Actions Setup",
+      "Automated Testing Pipeline",
+      "Automated Builds",
+      "Code Analysis Tools"
     ]
   },
-  "Practical Concepts": {
-    "Architecture": [
-      "Clean Architecture",
+
+  "Project_Architecture": {
+    "common_patterns": [
       "Repository Pattern",
-      "Feature-first Structure"
+      "Service Layer",
+      "Feature-based Organization",
+      "Clean Architecture Basics"
     ],
-    "Feature Implementation": [
+
+    "best_practices": [
+      "Separation of Concerns",
+      "Dependency Injection",
+      "Error Handling Strategy",
+      "Logging Implementation"
+    ]
+  },
+
+  "Essential_Projects": {
+    "learning_projects": [
+      "Todo List App (CRUD, Local Storage)",
+      "Weather App (API Integration, State Management)",
+      "E-commerce App (Complex UI, Cart Management)",
+      "Chat App (Real-time Features, Authentication)"
+    ],
+
+    "must_know_features": [
       "Authentication Flow",
-      "Real-time Features (WebSockets)",
-      "State Restoration",
-      "Offline-First Apps"
+      "REST API Integration",
+      "Local Database Usage",
+      "File Upload/Download",
+      "Push Notifications"
+    ]
+  },
+
+  "Interview_Preparation": {
+    "common_concepts": [
+      "Widget Lifecycle",
+      "State Management Choices",
+      "Performance Optimization",
+      "Navigation Patterns",
+      "Error Handling Strategies"
     ],
-    "Problem Solving": [
-      "Overflow Issues",
-      "Keyboard Insets",
-      "Performance Profiling",
-      "Memory Leak Detection"
+
+    "practical_skills": [
+      "Build a Simple App from Scratch",
+      "Debug Common Issues",
+      "Optimize Existing Code",
+      "Implement Complex UI",
+      "Integrate Third-party APIs"
     ]
   }
 };
 
-const seedFlutterHierarchy = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('📦 Connected to MongoDB');
-
-    // Create Flutter topic
-    let flutterTopic = await Topic.findOne({ slug: 'flutter' });
-    if (!flutterTopic) {
-      const topicCount = await Topic.countDocuments();
-      flutterTopic = await Topic.create({
-        name: 'Flutter',
-        slug: 'flutter',
-        description: 'Master Flutter framework for cross-platform mobile development - from Dart fundamentals to production-ready apps.',
-        icon: '🦋',
-        order: topicCount + 1,
-        estimatedHours: 60
-      });
-      console.log('✅ Created Flutter topic');
-    }
-
-    // Seed hierarchy
-    let categoryOrder = 1;
-    for (const [groupName, categories] of Object.entries(flutterHierarchy)) {
-      for (const [categoryName, sections] of Object.entries(categories)) {
-        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '');
-        
-        let category = await Category.findOne({
-          topicId: flutterTopic._id,
-          slug: categorySlug
-        });
-
-        if (!category) {
-          category = await Category.create({
-            topicId: flutterTopic._id,
-            name: categoryName,
-            slug: categorySlug,
-            group: groupName,
-            order: categoryOrder++,
-            description: `Learn ${categoryName} in Flutter`
-          });
-          console.log(`✅ Created category: ${categoryName}`);
-        }
-
-        let sectionOrder = 1;
-        for (const sectionTitle of sections) {
-          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[().,&/]/g, '')
-            .replace(/:/g, '')}`;
-
-          const existingSection = await Section.findOne({
-            categoryId: category._id,
-            slug: sectionSlug
-          });
-
-          if (!existingSection) {
-            await Section.create({
-              categoryId: category._id,
-              topicId: flutterTopic._id,
-              title: sectionTitle,
-              slug: sectionSlug,
-              order: sectionOrder++,
-              description: `Learn about ${sectionTitle}`,
-              difficulty: 'intermediate',
-              estimatedTime: 30
-            });
-          }
-        }
-      }
-    }
-
-    console.log('🎉 Flutter hierarchy seeded successfully!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Error seeding Flutter:', error);
-    process.exit(1);
-  }
-};
-
-seedFlutterHierarchy();
+export { flutterCurriculum };

@@ -9,58 +9,101 @@ dotenv.config();
 
 const javascriptCurriculum = {
   "01_javascript_foundations": {
-    "language_overview": [
-      "What is JavaScript",
-      "JavaScript vs ECMAScript",
-      "ECMAScript Versions (ES5, ES6+, ESNext)",
-      "JavaScript Engines (V8, SpiderMonkey, JavaScriptCore)",
+    "history_and_evolution": [
+      "Origin of JavaScript",
+      "Brendan Eich and Netscape",
+      "The Browser Wars",
+      "ECMAScript Standardization",
+      "ES5 vs ES6+ Evolution"
+    ],
+    "js_engine_architecture": [
+      "JavaScript Engine Overview",
+      "V8 Engine (Chrome/Node.js)",
+      "SpiderMonkey (Firefox)",
+      "JavaScriptCore (Safari)",
+      "Memory Heap",
+      "Call Stack Overview"
+    ],
+    "jit_compilation": [
+      "Interpretation vs Compilation",
       "Just-In-Time (JIT) Compilation",
-      "Interpreted vs Compiled Languages"
+      "Monitor & Profiler",
+      "Optimization & Deoptimization",
+      "Hot Functions",
+      "Inline Caching"
     ],
     "typing_system": [
       "Static vs Dynamic Typing",
       "Type Coercion (Implicit & Explicit)",
-      "Type Casting",
-      "Boxing and Unboxing in JavaScript",
-      "Primitive vs Non-Primitive (Reference) Data Types",
-      "typeof Operator",
-      "instanceof Operator"
+      "Boxing and Unboxing",
+      "Primitive vs Reference Types",
+      "typeof and instanceof"
     ],
     "special_values": [
-      "null vs undefined vs not defined",
-      "NaN (Not a Number) Behavior",
-      "Infinity and -Infinity",
-      "Truthy and Falsy Values",
-      "Escape Sequences in Strings"
+      "null vs undefined",
+      "NaN (Not a Number)",
+      "Infinity behavior",
+      "Truthy and Falsy Values"
     ]
   },
   "02_variables_scope": {
     "variable_declarations": [
-      "var Declaration",
-      "let Declaration",
-      "const Declaration",
-      "Redeclaration vs Reassignment",
-      "Temporal Dead Zone (TDZ)"
+      "var vs let vs const",
+      "Redeclaration Rules",
+      "Reassignment Rules"
     ],
-    "scope_management": [
-      "Scope Types (Global, Function, Block)",
-      "Lexical Scope",
-      "Scope Chain",
-      "Lexical Environment",
-      "Variable Shadowing",
-      "Illegal Shadowing",
-      "Hoisting Mechanism",
-      "Hoisting with var vs let/const"
-    ],
-    "execution_model": [
-      "Execution Context",
+    "execution_context": [
       "Global Execution Context",
       "Function Execution Context",
-      "Call Stack",
-      "Execution Order Prediction"
+      "Creation Phase vs Execution Phase",
+      "The 'this' Binding",
+      "Variable Environment"
+    ],
+    "call_stack_lifecycle": [
+      "Stack Frames",
+      "Push and Pop Operations",
+      "Stack Overflow",
+      "Recursion and Stack",
+      "Error Stack Traces"
+    ],
+    "scope_management": [
+      "Global, Function, Block Scope",
+      "Lexical (Static) Scope",
+      "Scope Chain",
+      "Variable Shadowing",
+      "Illegal Shadowing"
+    ],
+    "hoisting_details": [
+      "Variable Hoisting",
+      "Function Hoisting",
+      "Classes Hoisting",
+      "Temporal Dead Zone (TDZ)",
+      "Function Expressions vs Declarations"
+    ],
+    "strict_mode": [
+      "Purpose of 'use strict'",
+      "Enabling Strict Mode",
+      "Restrictions in Strict Mode",
+      "this in Strict Mode",
+      "Secure JavaScript"
     ]
   },
   "03_operators_expressions": {
+    "equality_algorithms": [
+      "Abstract Equality (==)",
+      "Strict Equality (===)",
+      "SameValueZero (Map/Set)",
+      "SameValue (Object.is)",
+      "Equality Comparison Table"
+    ],
+    "type_coercion": [
+      "Implicit Coercion Rules",
+      "Explicit Coercion",
+      "ToPrimitive Operation",
+      "valueOf vs toString",
+      "Symbol.toPrimitive",
+      "Corner Cases in Coercion"
+    ],
     "arithmetic_operators": [
       "Addition (+)",
       "Subtraction (-)",
@@ -73,8 +116,6 @@ const javascriptCurriculum = {
       "Pre-increment vs Post-increment"
     ],
     "comparison_operators": [
-      "Equality (==) vs Strict Equality (===)",
-      "Inequality (!=) vs Strict Inequality (!==)",
       "Greater Than (>)",
       "Less Than (<)",
       "Greater Than or Equal (>=)",
@@ -304,21 +345,30 @@ const javascriptCurriculum = {
   "10_prototypes_inheritance": {
     "prototype_concepts": [
       "Prototype Object",
-      "Prototype Chain",
-      "__proto__ Property",
+      "__proto__ vs prototype",
+      "Constructor Functions",
       "Prototype-based Inheritance"
+    ],
+    "prototype_chain": [
+      "The Prototype Chain Mechanism",
+      "Property Shadowing on Chain",
+      "End of Prototype Chain (null)",
+      "Performance and Lookup Time",
+      "Modifying Built-in Prototypes (Polyfills)"
     ],
     "prototype_methods": [
       "Object.getPrototypeOf()",
       "Object.setPrototypeOf()",
       "Object.hasOwnProperty()",
-      "instanceof Operator"
+      "instanceof Operator",
+      "Object.create()"
     ],
     "inheritance_patterns": [
       "Constructor Inheritance",
       "Class Inheritance",
       "Mixin Pattern",
-      "Composition over Inheritance"
+      "Composition over Inheritance",
+      "Prototypal Inheritance vs Classical"
     ]
   },
   "11_this_context": {
@@ -349,20 +399,26 @@ const javascriptCurriculum = {
       "Blocking vs Non-blocking Operations",
       "Concurrency Model"
     ],
-    "event_loop": [
-      "Call Stack",
-      "Web APIs (Browser Environment)",
-      "Callback Queue (Task Queue)",
-      "Microtask Queue",
-      "Event Loop Algorithm",
-      "Event Loop Starvation"
+    "event_loop_mechanics": [
+      "Call Stack vs Callback Queue",
+      "Microtasks vs Macrotasks",
+      "Render Cycle and Event Loop",
+      "Event Loop Visualization",
+      "Starvation handling"
+    ],
+    "job_queues": [
+      "Promise Jobs (Microtasks)",
+      "Script Jobs (Macrotasks)",
+      "Queue Priority Order",
+      "nextTick (Node.js)"
     ],
     "timers": [
       "setTimeout()",
       "setInterval()",
       "clearTimeout()",
       "clearInterval()",
-      "Zero-delay setTimeout"
+      "Zero-delay setTimeout",
+      "requestAnimationFrame"
     ]
   },
   "13_promises": {
@@ -446,14 +502,27 @@ const javascriptCurriculum = {
     "dom_concepts": [
       "DOM vs BOM",
       "DOM Tree Structure",
-      "Node Types"
+      "Node Types (Element, Text, Comment)",
+      "Live vs Static NodeLists"
+    ],
+    "shadow_dom": [
+      "What is Shadow DOM",
+      "Shadow Root and Shadow Host",
+      "Encapsulation and Styling",
+      "Slots and Templates",
+      "Open vs Closed Mode"
+    ],
+    "virtual_dom_concepts": [
+      "Concept of Virtual DOM",
+      "Reconciliation Process",
+      "Diffing Algorithm Basics",
+      "Real DOM vs Virtual DOM Performance"
     ],
     "dom_selection": [
       "getElementById()",
-      "getElementsByClassName()",
-      "getElementsByTagName()",
-      "querySelector()",
-      "querySelectorAll()"
+      "querySelector() / querySelectorAll()",
+      "Closest() method",
+      "matches() method"
     ],
     "dom_manipulation": [
       "createElement()",
@@ -465,10 +534,10 @@ const javascriptCurriculum = {
       "setAttribute() / getAttribute()"
     ],
     "dom_traversal": [
-      "parentNode",
-      "childNodes",
-      "firstChild / lastChild",
-      "nextSibling / previousSibling"
+      "parentNode / parentElement",
+      "children vs childNodes",
+      "firstElementChild / lastElementChild",
+      "nextElementSibling / previousElementSibling"
     ]
   },
   "18_events": {
@@ -493,29 +562,33 @@ const javascriptCurriculum = {
     ]
   },
   "19_advanced_concepts": {
-    "iterators_generators": [
-      "Iterators",
+    "generators_iterators": [
+      "Iterator Protocol",
       "Iterable Protocol",
-      "Generator Functions",
-      "yield Keyword",
-      "Generator Methods (next(), return(), throw())"
-    ],
-    "collections": [
-      "Map",
-      "Set",
-      "WeakMap",
-      "WeakSet"
+      "Generator Functions (function*)",
+      "yield and next()",
+      "Async Iterators"
     ],
     "proxies_reflection": [
-      "Proxy Objects",
-      "Reflect API",
-      "Property Traps"
+      "Proxy Object Fundamentals",
+      "Handler and Traps (get, set, apply)",
+      "Reflect API Usage",
+      "Data Validation with Proxies",
+      "Observables Pattern"
     ],
     "modules": [
       "ES Modules (import/export)",
-      "Default vs Named Exports",
-      "Module Loading",
-      "Dynamic Imports"
+      "CommonJS vs ES Modules",
+      "Circular Dependencies",
+      "Dynamic Imports (import())",
+      "Module Loading execution order"
+    ],
+    "collections": [
+      "Map vs Object",
+      "Set vs Array",
+      "WeakMap Use Cases",
+      "WeakSet Use Cases",
+      "Garbage Collection in WeakRefs"
     ]
   },
   "20_web_workers": {

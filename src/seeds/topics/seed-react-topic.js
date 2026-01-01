@@ -1,576 +1,42 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import slugify from 'slugify'; // Import slugify
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
+import { reactCurriculum as reactData } from '../hierarchy/seed-react-hierarchy.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, '../../../.env') });
 
-const reactData = {
-  "React_Fundamentals": {
-    "01_introduction": {
-      "core_concepts": [
-        "React - JavaScript Library for Building User Interfaces",
-        "Library vs Framework Difference",
-        "Component-Based Architecture",
-        "Virtual DOM Concept"
-      ],
-      "development_environment": [
-        "Vite vs Create-React-App",
-        "Project Setup and Structure",
-        "Package.json and Dependencies",
-        "Development Server"
-      ]
-    },
-
-    "02_jsx_basics": [
-      "JSX Syntax (JavaScript XML)",
-      "JSX vs HTML Differences",
-      "Embedding Expressions with Curly Braces {}",
-      "JSX Rules (Single Parent Element, className vs class)",
-      "Fragments (<></> or <Fragment>)"
-    ],
-
-    "03_components": {
-      "component_types": [
-        "Functional Components (Modern)",
-        "Class Components (Legacy)",
-        "Component Composition",
-        "Component Reusability"
-      ],
-      "component_structure": [
-        "Component Naming (PascalCase)",
-        "Import/Export Statements",
-        "Props System",
-        "Component Return Requirements"
-      ]
-    }
-  },
-
-  "State_Management": {
-    "01_state_basics": [
-      "State Definition and Purpose",
-      "useState Hook Syntax and Usage",
-      "State vs Props Comparison",
-      "State Immutability (Never Modify Directly)"
-    ],
-
-    "02_state_operations": [
-      "Updating State with setState/useState",
-      "State Batching and Updates",
-      "Functional Updates for State",
-      "State Initialization"
-    ],
-
-    "03_state_patterns": [
-      "Lifting State Up (Parent-Child Communication)",
-      "Prop Drilling (Pros and Cons)",
-      "Local State vs Global State",
-      "State Management Strategies"
-    ]
-  },
-
-  "Props_System": {
-    "props_basics": [
-      "Props as Component Parameters",
-      "Passing Data from Parent to Child",
-      "Props Immutability",
-      "Default Props and PropTypes"
-    ],
-
-    "props_advanced": [
-      "Children Prop (props.children)",
-      "Prop Validation with PropTypes",
-      "Destructuring Props",
-      "Spread Operator with Props"
-    ]
-  },
-
-  "Hooks": {
-    "01_basic_hooks": {
-      "usestate": [
-        "useState Declaration and Usage",
-        "Multiple State Variables",
-        "State Update Patterns",
-        "State Initialization Functions"
-      ],
-      "useeffect": [
-        "useEffect Syntax and Purpose",
-        "Dependency Array Behavior",
-        "Cleanup Function (Return Statement)",
-        "Lifecycle Simulation (mount, update, unmount)"
-      ],
-      "usecontext": [
-        "Context API for Global State",
-        "createContext, Provider, Consumer",
-        "useContext Hook Usage",
-        "Context Limitations"
-      ]
-    },
-
-    "02_performance_hooks": [
-      "useMemo for Expensive Calculations",
-      "useCallback for Function Memoization",
-      "Memoization Use Cases and Trade-offs",
-      "Dependency Array Rules"
-    ],
-
-    "03_reference_hooks": [
-      "useRef for DOM References",
-      "useRef for Mutable Values",
-      "forwardRef for Component Refs",
-      "Ref vs State Differences"
-    ],
-
-    "04_other_hooks": [
-      "useReducer (Alternative to useState)",
-      "Custom Hooks Creation",
-      "Rules of Hooks (No Conditionals)",
-      "Hook Dependencies and Updates"
-    ]
-  },
-
-  "Component_Lifecycle": {
-    "class_components": [
-      "componentDidMount (Initial Render)",
-      "componentDidUpdate (Props/State Changes)",
-      "componentWillUnmount (Cleanup)",
-      "Lifecycle Order and Timing"
-    ],
-
-    "functional_components": [
-      "useEffect for Lifecycle Simulation",
-      "Dependency Array Control",
-      "Cleanup Functions",
-      "Lifecycle Best Practices"
-    ]
-  },
-
-  "Event_Handling": {
-    "event_basics": [
-      "Synthetic Events (Cross-browser Wrapper)",
-      "Event Handlers (onClick, onChange)",
-      "Event Object Properties",
-      "Preventing Default Behavior (e.preventDefault())"
-    ],
-
-    "event_patterns": [
-      "Inline Event Handlers",
-      "Arrow Functions in Events",
-      "Event Pooling (Legacy)",
-      "Event Delegation in React"
-    ]
-  },
-
-  "Forms": {
-    "controlled_components": [
-      "Form State Management",
-      "Input Binding with State",
-      "Form Submission Handling",
-      "Validation Patterns"
-    ],
-
-    "uncontrolled_components": [
-      "useRef for Form Access",
-      "File Inputs Handling",
-      "When to Use Uncontrolled",
-      "Form Data Collection"
-    ]
-  },
-
-  "Conditional_Rendering": {
-    "methods": [
-      "if-else in JSX",
-      "Ternary Operator (condition ? true : false)",
-      "Logical && Operator",
-      "Conditional Return Statements",
-      "Render Nothing (null or <></>)"
-    ]
-  },
-
-  "Lists_Keys": {
-    "list_rendering": [
-      "Array.map() for List Generation",
-      "Key Prop Requirements",
-      "Unique and Stable Keys",
-      "Key Prop Purpose in Reconciliation"
-    ],
-
-    "key_management": [
-      "Why Index is Bad for Keys",
-      "Generating Unique Keys",
-      "Key Stability Considerations",
-      "Performance Implications"
-    ]
-  },
-
-  "React_Router": {
-    "routing_basics": [
-      "React Router Setup",
-      "BrowserRouter vs HashRouter",
-      "Route Configuration",
-      "Link and NavLink Components"
-    ],
-
-    "routing_features": [
-      "Nested Routes and Outlet",
-      "Route Parameters (useParams)",
-      "Query Parameters (useSearchParams)",
-      "Programmatic Navigation (useNavigate)"
-    ],
-
-    "routing_advanced": [
-      "Route Guards and Protection",
-      "Lazy Loading Routes",
-      "Route Transitions",
-      "404 Handling"
-    ]
-  },
-
-  "Performance_Optimization": {
-    "01_memoization": [
-      "React.memo for Component Memoization",
-      "useMemo for Value Memoization",
-      "useCallback for Function Memoization",
-      "When to Use Each"
-    ],
-
-    "02_code_splitting": [
-      "React.lazy() for Component Lazy Loading",
-      "Dynamic Imports",
-      "Suspense with Fallback",
-      "Route-based Code Splitting"
-    ],
-
-    "03_rendering_optimization": [
-      "Avoiding Unnecessary Re-renders",
-      "Virtualization for Large Lists",
-      "Debouncing and Throttling",
-      "Performance Profiling"
-    ],
-
-    "04_other_optimizations": [
-      "Image Optimization",
-      "Bundle Size Reduction",
-      "Tree Shaking",
-      "Production Build Optimizations"
-    ]
-  },
-
-  "Error_Handling": {
-    "error_boundaries": [
-      "Error Boundary Class Components",
-      "Error Handling in Functional Components",
-      "Fallback UI Display",
-      "Error Recovery Strategies"
-    ],
-
-    "error_patterns": [
-      "try-catch in useEffect",
-      "Error State Management",
-      "User-friendly Error Messages",
-      "Logging and Monitoring"
-    ]
-  },
-
-  "Advanced_Concepts": {
-    "01_react_internals": [
-      "Virtual DOM and Reconciliation",
-      "Diffing Algorithm",
-      "React Fiber Architecture",
-      "Render Phases (Render and Commit)"
-    ],
-
-    "02_patterns": [
-      "Higher-Order Components (HOC)",
-      "Render Props Pattern",
-      "Compound Components",
-      "Custom Hooks Patterns"
-    ],
-
-    "03_apis": [
-      "Context API Deep Dive",
-      "Portals for DOM Escape",
-      "Forwarding Refs",
-      "Strict Mode Benefits"
-    ]
-  },
-
-  "State_Management_Libraries": {
-    "01_context_api": [
-      "When to Use Context",
-      "Context Limitations",
-      "Performance Considerations",
-      "Context Patterns"
-    ],
-
-    "02_redux_basics": {
-      "redux_fundamentals": [
-        "Redux Principles (Single Source of Truth)",
-        "Store, Actions, Reducers",
-        "Immutable Updates",
-        "Redux Data Flow"
-      ],
-      "redux_toolkit": [
-        "Redux Toolkit Advantages",
-        "createSlice for Reducers",
-        "configureStore Setup",
-        "RTK Query Basics"
-      ]
-    },
-
-    "03_redux_advanced": [
-      "Middleware (Redux Thunk, Saga)",
-      "Async Actions with createAsyncThunk",
-      "Redux DevTools Usage",
-      "Redux Persist for State Persistence"
-    ],
-
-    "04_alternatives": [
-      "Zustand Basics",
-      "Recoil Concepts",
-      "Jotai Introduction",
-      "Choosing State Management"
-    ]
-  },
-
-  "API_Integration": {
-    "data_fetching": [
-      "useEffect for API Calls",
-      "Loading and Error States",
-      "AbortController for Cleanup",
-      "Data Caching Strategies"
-    ],
-
-    "http_clients": [
-      "Fetch API Usage",
-      "Axios Configuration",
-      "Interceptors for Headers",
-      "Error Handling Patterns"
-    ],
-
-    "authentication": [
-      "JWT Token Management",
-      "Protected Routes",
-      "Token Refresh Flow",
-      "Secure Storage (HttpOnly Cookies)"
-    ]
-  },
-
-  "Testing": {
-    "testing_basics": [
-      "React Testing Library Setup",
-      "Component Testing",
-      "User Event Simulation",
-      "Snapshot Testing"
-    ],
-
-    "testing_patterns": [
-      "Mocking API Calls",
-      "Testing Custom Hooks",
-      "Testing Redux",
-      "Test Coverage Goals"
-    ]
-  },
-
-  "Build_Tools": {
-    "development_tools": [
-      "Vite Configuration",
-      "Webpack Basics",
-      "Babel Transpilation",
-      "ESModules vs CommonJS"
-    ],
-
-    "environment": [
-      "Environment Variables (.env)",
-      "Build Scripts",
-      "Development vs Production Builds",
-      "Deployment Configuration"
-    ]
-  },
-
-  "Modern_React": {
-    "react_18_features": [
-      "Concurrent Features",
-      "Automatic Batching",
-      "Transitions (useTransition)",
-      "Suspense for Data Fetching"
-    ],
-
-    "react_19_features": [
-      "Actions and Form Handling",
-      "use Hook for Resources",
-      "Document Metadata",
-      "Performance Improvements"
-    ]
-  },
-
-  "Essential_Projects": {
-    "beginner_projects": [
-      "Todo List Application",
-      "Counter with Multiple Features",
-      "Simple Calculator",
-      "Weather App with API"
-    ],
-
-    "intermediate_projects": [
-      "E-commerce Product Listing",
-      "Authentication Flow (Login/Register)",
-      "Dashboard with Charts",
-      "Real-time Chat Interface"
-    ],
-
-    "advanced_projects": [
-      "Full-stack Application",
-      "Social Media Clone",
-      "Admin Dashboard",
-      "Complex Form Management"
-    ]
-  },
-
-
-
-  "React_Server_Components": {
-    "rsc_fundamentals": [
-      "Server vs Client Components",
-      "Streaming SSR",
-      "Data Fetching in RSC",
-      "Server Actions (React 19)"
-    ],
-    "rsc_patterns": [
-      "Interleaving Server/Client Components",
-      "Serializeable Props",
-      "Use Client Directive",
-      "Use Server Directive"
-    ]
-  },
-
-  "UI_Libraries_And_Design": {
-    "styling_solutions": [
-      "Tailwind CSS in React",
-      "CSS-in-JS (Styled Components/Emotion)",
-      "CSS Modules",
-      "Utility-first Styling"
-    ],
-    "component_libraries": [
-      "Material UI (MUI) Basics",
-      "Chakra UI Setup",
-      "Shadcn/UI (Headless+Tailwind)",
-      "Radix UI Primitives"
-    ]
-  },
-
-  "Animations_And_Motion": {
-    "framer_motion": [
-      "Motion Components",
-      "Animate Presence",
-      "Layout Animations",
-      "Gestures (Drag, Hover, Tap)"
-    ],
-    "react_spring": [
-      "Physics-based Animations",
-      "Spring Hooks",
-      "Parallax Effects"
-    ]
-  },
-
-  "Accessibility_A11y": {
-    "a11y_fundamentals": [
-      "WAI-ARIA Roles and Attributes",
-      "Keyboard Navigation Support",
-      "Focus Management",
-      "Screen Reader Compatibility"
-    ],
-    "testing_a11y": [
-      "Lighthouse Audits",
-      "axe-core Integration",
-      "Color Contrast Checking"
-    ]
-  },
-
-  "Advanced_Architecture": {
-    "micro_frontends": [
-      "Module Federation (Webpack)",
-      "Micro-frontend Patterns",
-      "Shared Dependencies",
-      "Routing in Micro-frontends"
-    ],
-    "monorepos": [
-      "Turborepo Basics",
-      "Nx Workspaces",
-      "Sharing Components across Apps"
-    ]
-  },
-
-  "Best_Practices": {
-    "01_code_organization": [
-      "Folder Structure Patterns",
-      "Component Organization",
-      "Reusable Component Library",
-      "Code Splitting Strategy"
-    ],
-
-    "02_performance": [
-      "Bundle Size Monitoring",
-      "Image Optimization",
-      "Code Splitting Implementation",
-      "Performance Monitoring"
-    ],
-
-    "03_security": [
-      "XSS Prevention",
-      "Input Validation",
-      "Secure API Calls",
-      "Environment Variables Usage"
-    ],
-
-    "04_maintainability": [
-      "Prop Types or TypeScript",
-      "Documentation Practices",
-      "Code Review Guidelines",
-      "Refactoring Strategies"
-    ]
-  },
-
-  "Interview_Preparation": {
-    "core_concepts": [
-      "Virtual DOM and Reconciliation",
-      "Component Lifecycle",
-      "State and Props Management",
-      "Hooks Usage and Rules",
-      "Performance Optimization"
-    ],
-
-    "common_questions": [
-      "useEffect Dependency Array Behavior",
-      "Controlled vs Uncontrolled Components",
-      "Context API vs Redux",
-      "React.memo vs useMemo vs useCallback",
-      "Error Boundary Implementation"
-    ],
-
-    "practical_skills": [
-      "Build a Component from Scratch",
-      "Implement Custom Hook",
-      "Optimize Existing Code",
-      "Debug React Applications",
-      "Test React Components"
-    ]
-  }
-};
-
 const formatName = (str) => {
     return str
-        .replace(/^\\d+_/, '')
+        .replace(/^\d+_/, '')
         .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map(word => {
+            if (['JSX', 'DOM', 'API', 'HOC', 'CLI', 'ES6', 'REST', 'SSR', 'CSR', 'SEO', 'JWT', 'HTTP', 'HTTPS', 'JSON'].includes(word.toUpperCase())) {
+                return word.toUpperCase();
+            }
+            return word.charAt(0).toUpperCase() + word.slice(1);
+        })
         .join(' ');
+};
+
+const generateUniqueSlug = async (Model, baseText, topicId, scopeField = 'topicId') => {
+    const baseSlug = slugify(baseText, { lower: true, strict: true });
+    let slug = baseSlug;
+    let counter = 1;
+    
+    // Check for collisions within the scope (topic)
+    while (await Model.findOne({ [scopeField]: topicId, slug })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
+    }
+    return slug;
 };
 
 const seedReact = async () => {
@@ -584,13 +50,14 @@ const seedReact = async () => {
             topic = await Topic.create({
                 name: 'React',
                 slug: 'react',
-                description: 'Build modern user interfaces with React',
+                description: 'A JavaScript library for building user interfaces',
                 icon: '⚛️',
-                order: 2,
+                order: 5,
                 color: '#61DAFB'
             });
         }
 
+        // Robust Cleanup
         const categoriesToDelete = await Category.find({ topicId: topic._id });
         const categoryIds = categoriesToDelete.map(c => c._id);
         if (categoryIds.length > 0) {
@@ -599,27 +66,13 @@ const seedReact = async () => {
             console.log('Cleared existing React data');
         }
 
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) => {
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!baseSlug) baseSlug = 'section'; // Fallback for special-char only titles
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
         let order = 1;
         for (const [mainKey, mainValue] of Object.entries(reactData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
+            const groupName = formatName(mainKey); 
             
             for (const [key, value] of Object.entries(mainValue)) {
                 const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
+                const categorySlug = await generateUniqueSlug(Category, categoryName, topic._id);
 
                 const category = await Category.create({
                     name: categoryName,
@@ -639,21 +92,27 @@ const seedReact = async () => {
                     }
                 }
 
-                const sectionDocs = sections.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Performance') || categoryName.includes('Redux') ? 'advanced' : 
-                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Jsx') ? 'beginner' : 'intermediate',
-                    estimatedTime: 15
-                }));
+                const sectionDocs = [];
+                for (let i = 0; i < sections.length; i++) {
+                    const sectionTitle = sections[i];
+                    const sectionSlug = await generateUniqueSlug(Section, sectionTitle, topic._id);
+
+                    sectionDocs.push({
+                        title: sectionTitle,
+                        slug: sectionSlug,
+                        description: `Detailed explanation of ${sectionTitle}`,
+                        content: `## ${sectionTitle}\n\nContent coming soon...`,
+                        categoryId: category._id,
+                        topicId: topic._id,
+                        order: i + 1,
+                        difficulty: categoryName.includes('Advanced') || categoryName.includes('Optimization') || categoryName.includes('Testing') || categoryName.includes('Redux') ? 'advanced' : 
+                                   categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Basic') ? 'beginner' : 'intermediate',
+                        estimatedTime: 15
+                    });
+                }
 
                 await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
+                console.log(`Created Category: ${categoryName} (Group: ${groupName}) with ${sectionDocs.length} sections`);
             }
         }
 

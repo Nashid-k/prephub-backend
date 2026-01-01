@@ -3,604 +3,640 @@ import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
-
-const csharpData = {
-  "C#_Fundamentals": {
-    "01_introduction": {
-      "core_concepts": [
-        "C# - Modern Object-Oriented Language",
-        ".NET Ecosystem (.NET Framework, .NET Core, .NET 5+)",
-        "C# vs Java Comparison",
-        "Common Application Types (Web, Desktop, Mobile)"
-      ],
-      "development_environment": [
-        "Visual Studio Installation",
-        "Visual Studio Code Setup",
-        ".NET SDK Installation",
-        "First Console Application"
-      ]
-    },
-
-    "02_basic_syntax": {
-      "data_types": [
-        "Value Types (int, double, bool, char)",
-        "Reference Types (string, object, arrays)",
-        "Nullable Types (int?, string?)",
-        "Type Inference (var keyword)"
-      ],
-      "variables_constants": [
-        "Variable Declaration and Initialization",
-        "Constants (const)",
-        "Readonly Fields",
-        "Scope and Lifetime"
-      ]
-    }
-  },
-
-  "Operators_Control_Flow": {
-    "operators": [
-      "Arithmetic Operators",
-      "Comparison Operators",
-      "Logical Operators",
-      "Null-coalescing Operator (??)",
-      "Null-conditional Operator (?.)",
-      "Ternary Operator"
+const csharpHierarchy = {
+  "Foundations & Basics": {
+    "C# Overview": [
+      "What is C#?",
+      ".NET Framework vs .NET Core vs .NET 5+",
+      "C# vs Java vs C++",
+      "Features of C#",
+      "C# Version History",
+      "Common Use Cases"
     ],
-
-    "control_flow": {
-      "conditionals": [
-        "if-else Statements",
-        "switch Statement",
-        "Pattern Matching (C# 8+)",
-        "Switch Expressions"
-      ],
-      "loops": [
-        "for Loop",
-        "foreach Loop",
-        "while Loop",
-        "do-while Loop",
-        "Loop Control (break, continue)"
-      ]
-    }
+    "Environment Setup": [
+      "Visual Studio Installation",
+      "Visual Studio Code Setup",
+      ".NET SDK Installation",
+      "Creating First Console Application",
+      "Project Structure in .NET"
+    ],
+    "Basic Syntax": [
+      "Hello World Program",
+      "Namespace Declaration",
+      "Class Structure",
+      "Main Method Entry Point",
+      "Comments"
+    ]
   },
-
-  "Arrays_Collections": {
-    "arrays": [
+  "Variables & Data Types": {
+    "Value Types": [
+      "Integral Types (byte, short, int, long)",
+      "Floating-point (float, double, decimal)",
+      "Character (char)",
+      "Boolean (bool)",
+      "Struct Types"
+    ],
+    "Reference Types": [
+      "Class Types",
+      "Interface Types",
+      "Array Types",
+      "Delegate Types",
+      "Object and String Types"
+    ],
+    "Variables": [
+      "Variable Declaration and Initialization",
+      "Implicitly Typed Variables (var)",
+      "Constants (const)",
+      "Readonly Variables",
+      "Scope and Lifetime"
+    ],
+    "Type Conversion": [
+      "Implicit Conversion",
+      "Explicit Conversion (Casting)",
+      "Convert Class Methods",
+      "Parse and TryParse Methods",
+      "Boxing and Unboxing"
+    ]
+  },
+  "Operators & Control Flow": {
+    "Operators": [
+      "Arithmetic Operators",
+      "Relational Operators",
+      "Logical Operators",
+      "Bitwise Operators",
+      "Assignment Operators",
+      "Conditional Operator (?:)",
+      "Null-coalescing Operators (??, ??=)",
+      "Null-conditional Operators (?., ?[])"
+    ],
+    "Conditional Statements": [
+      "if Statement",
+      "if-else Statement",
+      "if-else-if Ladder",
+      "switch Statement",
+      "switch Expression (C# 8+)",
+      "Pattern Matching in switch"
+    ],
+    "Looping": [
+      "for Loop",
+      "foreach Loop",
+      "while Loop",
+      "do-while Loop",
+      "Nested Loops"
+    ],
+    "Jump Statements": [
+      "break Statement",
+      "continue Statement",
+      "goto Statement",
+      "return Statement"
+    ]
+  },
+  "Arrays & Collections": {
+    "Arrays": [
       "Single-dimensional Arrays",
       "Multi-dimensional Arrays",
       "Jagged Arrays",
-      "Array Methods and Properties"
+      "Array Initialization",
+      "Array Properties and Methods"
     ],
-
-    "collections": {
-      "generic_collections": [
-        "List<T> (Dynamic Arrays)",
-        "Dictionary<TKey, TValue> (Key-Value Pairs)",
-        "HashSet<T> (Unique Elements)",
-        "Queue<T> and Stack<T>"
-      ],
-      "collection_operations": [
-        "Adding and Removing Elements",
-        "Iterating Collections",
-        "Collection Initializers",
-        "LINQ with Collections"
-      ]
-    }
+    "Generic Collections": [
+      "List<T>",
+      "Dictionary<TKey, TValue>",
+      "HashSet<T>",
+      "Queue<T> and Stack<T>",
+      "LinkedList<T>",
+      "SortedDictionary and SortedSet"
+    ],
+    "Non-Generic Collections": [
+      "ArrayList",
+      "Hashtable",
+      "Queue and Stack"
+    ],
+    "Concurrent Collections": [
+      "ConcurrentDictionary<TKey, TValue>",
+      "ConcurrentQueue<T>",
+      "BlockingCollection<T>"
+    ],
+    "Collection Operations": [
+      "Iterating Collections",
+      "LINQ with Collections",
+      "Collection Initializers"
+    ]
   },
-
-  "Object_Oriented_Programming": {
-    "01_classes_objects": [
+  "Object-Oriented Programming": {
+    "Classes & Objects": [
       "Class Definition",
       "Object Creation (new keyword)",
-      "Constructors (Default, Parameterized)",
-      "Access Modifiers (public, private, protected, internal)"
+      "Constructors",
+      "Destructors (Finalizers)",
+      "this Keyword",
+      "Access Modifiers"
     ],
-
-    "02_properties_methods": {
-      "properties": [
-        "Auto-implemented Properties",
-        "Properties with Logic",
-        "Read-only Properties",
-        "Property Initializers"
-      ],
-      "methods": [
-        "Method Declaration",
-        "Parameters (value, ref, out, params)",
-        "Method Overloading",
-        "Extension Methods"
-      ]
-    },
-
-    "03_inheritance_polymorphism": [
-      "Inheritance (base class, derived class)",
+    "Properties & Indexers": [
+      "Auto-implemented Properties",
+      "Properties with Backing Fields",
+      "Read-only Properties",
+      "Indexers"
+    ],
+    "Methods": [
+      "Method Declaration",
+      "Parameters (Value, ref, out, params)",
+      "Optional and Named Parameters",
+      "Method Overloading",
+      "Extension Methods"
+    ],
+    "Inheritance": [
+      "Base and Derived Classes",
       "Method Overriding (virtual, override)",
+      "Sealed Classes and Methods",
       "Abstract Classes and Methods",
-      "Sealed Classes and Methods"
+      "base Keyword"
     ],
-
-    "04_static_members": [
+    "Polymorphism": [
+      "Compile-time Polymorphism",
+      "Runtime Polymorphism",
+      "Interface Polymorphism"
+    ],
+    "Static Members": [
       "Static Classes",
-      "Static Methods and Fields",
-      "Static Constructors",
-      "Singleton Pattern"
-    ],
-
-    "05_interfaces": [
-      "Interface Definition and Implementation",
+      "Static Methods and Variables",
+      "Static Constructors"
+    ]
+  },
+  "Interfaces": {
+    "Interface Basics": [
+      "Interface Definition",
+      "Implementing Interfaces",
       "Explicit Interface Implementation",
+      "Interface Inheritance"
+    ],
+    "Modern Interfaces": [
       "Default Interface Methods (C# 8+)",
-      "Common Interfaces (IEnumerable, IDisposable)"
-    ]
-  },
-
-  "Exception_Handling": {
-    "exception_basics": [
-      "try-catch-finally Blocks",
-      "Exception Hierarchy",
-      "Common Exception Types",
-      "Multiple Catch Blocks"
+      "Static Members in Interfaces"
     ],
-
-    "exception_operations": [
-      "throw Statement",
-      "Custom Exception Classes",
-      "Exception Filtering",
-      "Resource Management (using statement)"
+    "Common Interfaces": [
+      "IEnumerable, IEnumerator",
+      "ICollection, IList",
+      "IComparable, IComparer",
+      "IDisposable",
+      "IEquatable"
     ]
   },
-
-  "Delegates_Events_Lambdas": {
-    "delegates": [
+  "Delegates & Events": {
+    "Delegates": [
       "Delegate Declaration",
-      "Func and Action Delegates",
+      "Delegate Instantiation",
       "Multicast Delegates",
-      "Delegate Usage Patterns"
+      "Func, Action, Predicate Delegates"
     ],
-
-    "events": [
-      "Event Declaration (event keyword)",
-      "EventHandler Pattern",
-      "Publisher-Subscriber Model",
+    "Events": [
+      "Event Declaration",
+      "Event Handlers",
+      "Publisher-Subscriber Pattern",
       "Custom EventArgs"
     ],
-
-    "lambda_expressions": [
-      "Lambda Syntax",
+    "Lambda Expressions": [
       "Anonymous Methods",
-      "Expression-bodied Members",
-      "Lambda Best Practices"
+      "Lambda Expressions",
+      "Expression-bodied Members"
     ]
   },
-
+  "Exception Handling": {
+    "Exception Basics": [
+      "Exception Hierarchy",
+      "try-catch Block",
+      "Multiple catch Blocks",
+      "finally Block",
+      "throw Statement"
+    ],
+    "Exception Types": [
+      "System.Exception Base Class",
+      "Common Exception Types",
+      "Custom Exception Classes"
+    ],
+    "Best Practices": [
+      "Exception Handling Strategies",
+      "When to Catch vs Throw",
+      "Using Blocks for Resource Management"
+    ]
+  },
   "Generics": {
-    "generics_basics": [
+    "Generic Basics": [
       "Generic Classes",
       "Generic Methods",
-      "Type Constraints (where T)",
-      "Generic Collections"
+      "Generic Constraints (where T: class, new(), struct)",
+      "Covariance and Contravariance (in, out)"
     ],
-
-    "advanced_generics": [
-      "Covariance and Contravariance (in, out)",
+    "Advanced Generics": [
+      "Generic Delegates",
       "Generic Interfaces",
-      "Default Values for Generic Types",
-      "Generic Delegates"
+      "Default Keyword with Generics"
     ]
   },
-
   "LINQ": {
-    "01_linq_basics": [
-      "What is LINQ (Language Integrated Query)",
+    "LINQ Basics": [
+      "What is LINQ?",
       "Query Syntax vs Method Syntax",
-      "Deferred vs Immediate Execution",
-      "LINQ Providers"
+      "Deferred Execution",
+      "Immediate Execution"
     ],
-
-    "02_linq_operations": [
-      "Filtering (Where)",
-      "Projection (Select, SelectMany)",
-      "Ordering (OrderBy, ThenBy)",
-      "Grouping (GroupBy)",
-      "Aggregation (Sum, Average, Count)"
+    "LINQ Providers": [
+      "LINQ to Objects",
+      "LINQ to SQL",
+      "LINQ to XML",
+      "Entity Framework (LINQ to Entities)"
     ],
-
-    "03_advanced_linq": [
-      "Joins (Join, GroupJoin)",
-      "Set Operations (Union, Intersect, Except)",
-      "Element Operations (First, Last, Single)",
-      "Quantifiers (Any, All)"
+    "LINQ Operators - Filtering": [
+      "Where",
+      "OfType"
+    ],
+    "LINQ Operators - Projection": [
+      "Select",
+      "SelectMany"
+    ],
+    "LINQ Operators - Ordering": [
+      "OrderBy, OrderByDescending",
+      "ThenBy, Reverse"
+    ],
+    "LINQ Operators - Grouping": [
+      "GroupBy",
+      "ToLookup"
+    ],
+    "LINQ Operators - Aggregation": [
+      "Count, Sum, Min, Max, Average",
+      "Aggregate"
+    ],
+    "LINQ Operators - Set Operations": [
+      "Distinct, Union, Intersect, Except"
+    ],
+    "LINQ Operators - Conversion": [
+      "ToArray, ToList, ToDictionary",
+      "Cast, AsEnumerable"
     ]
   },
-
-  "Asynchronous_Programming": {
-    "01_async_await": [
+  "Asynchronous Programming": {
+    "Async/Await": [
       "async and await Keywords",
       "Task and Task<T>",
-      "Async Method Patterns",
-      "Exception Handling in Async Methods"
+      "Async Method Return Types",
+      "ConfigureAwait"
     ],
-
-    "02_task_operations": [
+    "Task Parallel Library": [
       "Task Creation",
-      "Task Continuation (ContinueWith)",
+      "Task Continuation",
       "Task Cancellation (CancellationToken)",
-      "Task.WhenAll, Task.WhenAny"
+      "Parallel Class",
+      "PLINQ (Parallel LINQ)"
     ],
-
-    "03_async_patterns": [
-      "Async Streams (IAsyncEnumerable)",
-      "ValueTask for Performance",
-      "Async Main Method",
-      "ConfigureAwait(false) Usage"
+    "Advanced Async": [
+      "ValueTask<T>",
+      "IAsyncEnumerable (C# 8+)",
+      "Async Streams",
+      "Async Main Method"
     ]
   },
-
-  "Memory_Management": [
-    "Garbage Collection Basics",
-    "IDisposable Interface",
-    "using Statement for Resource Management",
-    "Memory Leak Prevention",
-    "Weak References"
-  ],
-
-  "File_IO_Serialization": {
-    "file_operations": [
-      "File Class (Static Methods)",
-      "FileInfo Class (Instance Methods)",
-      "Directory Operations",
-      "Stream Reading and Writing"
+  "Memory Management": {
+    "Garbage Collection": [
+      "GC Fundamentals",
+      "Generations (Gen 0, 1, 2)",
+      "GC.Collect()",
+      "Finalizers vs Dispose Pattern"
     ],
-
-    "serialization": [
-      "JSON Serialization (System.Text.Json)",
-      "XML Serialization",
+    "Memory Patterns": [
+      "IDisposable Interface",
+      "Using Statement",
+      "Memory Leak Detection",
+      "Weak References"
+    ]
+  },
+  "Reflection & Attributes": {
+    "Reflection": [
+      "Type Class",
+      "Assembly Class",
+      "Getting Type Information",
+      "Dynamic Method Invocation",
+      "Activator Class"
+    ],
+    "Attributes": [
+      "Built-in Attributes",
+      "Custom Attributes",
+      "Attribute Targets",
+      "Reading Attributes at Runtime"
+    ],
+    "Dynamic": [
+      "dynamic Keyword",
+      "Dynamic Language Runtime (DLR)",
+      "ExpandoObject"
+    ]
+  },
+  "File I/O": {
+    "File Operations": [
+      "File Class",
+      "Directory Class",
+      "Path Class",
+      "FileStream",
+      "StreamReader and StreamWriter"
+    ],
+    "Serialization": [
       "Binary Serialization",
-      "Custom Serialization"
+      "XML Serialization",
+      "JSON Serialization (System.Text.Json, Newtonsoft.Json)"
     ]
   },
-
   "Multithreading": {
-    "01_thread_basics": [
+    "Thread Basics": [
       "Thread Class",
-      "ThreadPool Usage",
-      "Background vs Foreground Threads",
-      "Thread Synchronization Basics"
+      "Thread Lifecycle",
+      "Thread Pool",
+      "Background vs Foreground Threads"
     ],
-
-    "02_synchronization": [
+    "Synchronization": [
       "lock Statement",
       "Monitor Class",
-      "Mutex and Semaphore",
+      "Mutex",
+      "Semaphore",
       "ReaderWriterLockSlim"
     ],
-
-    "03_concurrent_collections": [
-      "ConcurrentDictionary",
-      "ConcurrentQueue and ConcurrentStack",
-      "BlockingCollection",
-      "Thread-Safe Collections Usage"
+    "Concurrent Programming": [
+      "Concurrent Collections",
+      "Interlocked Class",
+      "Volatile Keyword",
+      "Thread-local Storage"
     ]
   },
-
-  "Modern_C#_Features": {
-    "csharp_8_plus": [
+  ".NET Framework APIs": {
+    "Collections": [
+      "System.Collections",
+      "System.Collections.Generic",
+      "System.Collections.Concurrent"
+    ],
+    "Diagnostics": [
+      "Debug Class",
+      "Trace Class",
+      "Stopwatch"
+    ],
+    "Networking": [
+      "HttpClient",
+      "WebClient",
+      "Sockets"
+    ],
+    "Security": [
+      "Cryptography",
+      "SecureString",
+      "Hashing"
+    ]
+  },
+  "Design Patterns": {
+    "Creational Patterns": [
+      "Singleton",
+      "Factory",
+      "Builder",
+      "Prototype"
+    ],
+    "Structural Patterns": [
+      "Adapter",
+      "Decorator",
+      "Facade",
+      "Proxy"
+    ],
+    "Behavioral Patterns": [
+      "Observer",
+      "Strategy",
+      "Command",
+      "Template Method"
+    ]
+  },
+  "Entity Framework": {
+    "EF Core": [
+      "DbContext",
+      "DbSet",
+      "Migrations",
+      "LINQ Queries with EF",
+      "Change Tracking"
+    ],
+    "Patterns": [
+      "Repository Pattern",
+      "Unit of Work",
+      "Code First vs Database First"
+    ]
+  },
+  "ASP.NET Core": {
+    "Web API": [
+      "Controller Classes",
+      "Routing",
+      "Model Binding",
+      "Middleware Pipeline",
+      "Dependency Injection in ASP.NET Core"
+    ],
+    "MVC": [
+      "Model-View-Controller Pattern",
+      "Razor Views",
+      "Tag Helpers",
+      "View Components"
+    ],
+    "Advanced Web": [
+      "Authentication and Authorization",
+      "JWT Tokens",
+      "CORS",
+      "Swagger/OpenAPI"
+    ]
+  },
+  "Testing": {
+    "Unit Testing": [
+      "xUnit",
+      "NUnit",
+      "MSTest",
+      "Mocking with Moq"
+    ],
+    "Integration Testing": [
+      "Test Servers",
+      "Test Databases"
+    ],
+    "TDD": [
+      "Test-Driven Development Principles"
+    ]
+  },
+  "Dependency Injection": {
+    "DI Basics": [
+      "Service Lifetime (Singleton, Scoped, Transient)",
+      "Service Registration",
+      "Service Resolution"
+    ],
+    "Advanced DI": [
+      "Factory Pattern with DI",
+      "Options Pattern"
+    ]
+  },
+  "C# Versions": {
+    "C# 8": [
       "Nullable Reference Types",
-      "Pattern Matching Enhancements",
-      "Ranges and Indices (.., ^)",
       "Default Interface Methods",
-      "Async Streams"
+      "Async Streams",
+      "Ranges and Indices"
     ],
-
-    "csharp_9_plus": [
-      "Records (Immutable Data Types)",
-      "Init-only Setters",
-      "Top-level Statements",
-      "Pattern Matching Improvements"
+    "C# 9": [
+      "Records",
+      "Init-only Properties",
+      "Pattern Matching Enhancements",
+      "Top-level Statements"
     ],
-
-    "csharp_10_plus": [
+    "C# 10": [
       "Record Structs",
       "Global Using Directives",
       "File-scoped Namespaces",
-      "Extended Property Patterns"
+      "Lambda Improvements"
+    ],
+    "C# 11": [
+      "Raw String Literals",
+      "Generic Attributes",
+      "UTF-8 String Literals"
+    ],
+    "C# 12": [
+      "Primary Constructors",
+      "Collection Expressions",
+      "Inline Arrays"
     ]
   },
-
-  "Reflection_Attributes": [
-    "Type Class for Reflection",
-    "Getting Type Information",
-    "Custom Attributes",
-    "Reading Attributes at Runtime",
-    "Dynamic Type Creation"
-  ],
-
-  "Dependency_Injection": {
-    "di_basics": [
-      "Dependency Injection Principles",
-      "Service Registration",
-      "Service Lifetimes (Singleton, Scoped, Transient)",
-      "Constructor Injection"
+  "Development Tools": {
+    "IDEs": [
+      "Visual Studio",
+      "Visual Studio Code",
+      "Rider"
     ],
-
-    "advanced_di": [
-      "Factory Pattern with DI",
-      "Options Pattern",
-      "Service Provider Patterns",
-      "DI Container Best Practices"
+    "Build Tools": [
+      "MSBuild",
+      "dotnet CLI"
+    ],
+    "NuGet": [
+      "Package Management",
+      "Creating NuGet Packages"
     ]
   },
-
-  "Entity_Framework_Core": {
-    "01_ef_basics": [
-      "DbContext Configuration",
-      "DbSet for Entity Collections",
-      "Entity Configuration",
-      "Migrations"
-    ],
-
-    "02_data_operations": [
-      "CRUD Operations",
-      "LINQ Queries with EF",
-      "Change Tracking",
-      "Eager vs Lazy Loading"
-    ],
-
-    "03_ef_patterns": [
-      "Repository Pattern",
-      "Unit of Work Pattern",
-      "Code First Approach",
-      "Database Relationships"
-    ]
-  },
-
-  "ASP.NET_Core": {
-    "01_web_api": [
-      "Controller Classes",
-      "Action Methods",
-      "Routing Configuration",
-      "Model Binding",
-      "Middleware Pipeline"
-    ],
-
-    "02_authentication": [
-      "JWT Authentication",
-      "Identity Framework",
-      "Authorization Policies",
-      "Role-based Access Control"
-    ],
-
-    "03_web_development": [
-      "Razor Pages",
-      "Model-View-Controller Pattern",
-      "Tag Helpers",
-      "View Components"
-    ]
-  },
-
-  "Testing": {
-    "unit_testing": [
-      "xUnit Test Framework",
-      "Test Structure (Arrange-Act-Assert)",
-      "Mocking with Moq",
-      "Test Driven Development Basics"
-    ],
-
-    "integration_testing": [
-      "Integration Test Setup",
-      "Test Databases",
-      "API Testing",
-      "End-to-End Testing"
-    ]
-  },
-
-  "Design_Patterns": {
-    "common_patterns": [
-      "Singleton Pattern",
-      "Factory Pattern",
-      "Repository Pattern",
-      "Strategy Pattern",
-      "Observer Pattern"
-    ],
-
-    "pattern_implementation": [
-      "Pattern Selection Guidelines",
-      "C# Specific Implementations",
-      "Modern C# Features with Patterns"
-    ]
-  },
-
-  "Best_Practices": {
-    "01_code_quality": [
+  "Best Practices": {
+    "Coding Standards": [
       "Naming Conventions",
       "Code Formatting",
-      "XML Documentation Comments",
-      "SOLID Principles Introduction"
+      "XML Documentation"
     ],
-
-    "02_performance": [
-      "String Operations Best Practices",
-      "Collection Selection Guidelines",
-      "Memory Management Tips",
-      "Async Performance Considerations"
+    "Performance": [
+      "Performance Profiling",
+      "Memory Optimization",
+      "Async Best Practices"
     ],
-
-    "03_security": [
+    "Security": [
       "Input Validation",
       "SQL Injection Prevention",
-      "Authentication Best Practices",
-      "Secure Coding Guidelines"
+      "Cross-site Scripting Prevention"
     ]
   },
-
-  "Essential_Projects": {
-    "learning_projects": [
-      "Console Application (Task Manager, File Processor)",
-      "REST API (Todo API, Product Catalog)",
-      "Desktop Application (WPF/WinForms)",
-      "Web Application (ASP.NET Core MVC)"
+  "Practical Projects": {
+    "Console Apps": [
+      "Task Manager",
+      "Budget Tracker",
+      "File Organizer"
     ],
-
-    "must_implement_features": [
-      "CRUD Operations with Database",
-      "Authentication and Authorization",
-      "File Upload and Processing",
-      "API Integration",
-      "Async Operations"
-    ]
-  },
-
-  "Development_Tools": {
-    "ides": [
-      "Visual Studio Features",
-      "Visual Studio Code Extensions",
-      "Debugging Tools",
-      "Performance Profilers"
+    "Web Apps": [
+      "E-commerce Site",
+      "Blog Platform",
+      "API Gateway"
     ],
-
-    "command_line": [
-      "dotnet CLI Commands",
-      "Package Management (NuGet)",
-      "Build and Deployment",
-      "Testing Commands"
-    ]
-  },
-
-  "Interview_Preparation": {
-    "core_concepts": [
-      "OOP Principles in C#",
-      "Memory Management",
-      "Async Programming",
-      "LINQ Queries",
-      "Exception Handling"
-    ],
-
-    "practical_skills": [
-      "Implement Data Access Layer",
-      "Build REST API",
-      "Handle Concurrent Operations",
-      "Optimize C# Code",
-      "Debug Common Issues"
-    ],
-
-    "common_problems": [
-      "String Manipulation Problems",
-      "Collection Processing",
-      "Algorithm Implementation",
-      "Design Pattern Application",
-      "Database Operations"
+    "Desktop Apps": [
+      "Inventory Management",
+      "Student Information System",
+      "Media Player"
     ]
   }
 };
 
-const formatName = (str) => {
-    return str
-        .replace(/^\\d+_/, '')
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
+const seedCSharpHierarchy = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('📦 Connected to MongoDB');
 
-const seedCSharp = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        let topic = await Topic.findOne({ slug: 'csharp' });
-        if (!topic) {
-            console.log('Creating C# topic...');
-            topic = await Topic.create({
-                name: 'C#',
-                slug: 'csharp',
-                description: 'Master modern .NET development with C#',
-                icon: '#️⃣',
-                order: 12,
-                color: '#239120'
-            });
-        }
-
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ topicId: topic._id });
-            await Category.deleteMany({ topicId: topic._id });
-            console.log('Cleared existing C# data');
-        }
-
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) => {
-            if (!title || typeof title !== 'string') {
-                title = 'section';
-            }
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!baseSlug) baseSlug = 'section';
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
-        let order = 1;
-        for (const [mainKey, mainValue] of Object.entries(csharpData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
-            
-            for (const [key, value] of Object.entries(mainValue)) {
-                const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
-
-                const category = await Category.create({
-                    name: categoryName,
-                    slug: categorySlug,
-                    description: `Learn about ${categoryName}`,
-                    topicId: topic._id,
-                    group: groupName,
-                    order: order++
-                });
-
-                let sections = [];
-                if (Array.isArray(value)) {
-                    sections = value;
-                } else {
-                    for (const [subKey, subItems] of Object.entries(value)) {
-                        sections = [...sections, ...subItems];
-                    }
-                }
-
-                const sectionDocs = sections.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Entity Framework') || categoryName.includes('ASP.NET') ? 'advanced' : 
-                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Basic') ? 'beginner' : 'intermediate',
-                    estimatedTime: 15
-                }));
-
-                await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-            }
-        }
-
-        console.log('✅ C# seeding complete!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        process.exit(1);
+    // Create C# topic
+    let csharpTopic = await Topic.findOne({ slug: 'csharp' });
+    if (!csharpTopic) {
+      const topicCount = await Topic.countDocuments();
+      csharpTopic = await Topic.create({
+        name: 'C#',
+        slug: 'csharp',
+        description: 'Master C# programming - from .NET fundamentals to ASP.NET Core, Entity Framework, and modern C# features.',
+        icon: '🔷',
+        order: topicCount + 1,
+        estimatedHours: 65
+      });
+      console.log('✅ Created C# topic');
     }
+
+    // Clear existing structure
+    console.log('🧹 Clearing existing categories and sections...');
+    await Section.deleteMany({ topicId: csharpTopic._id });
+    await Category.deleteMany({ topicId: csharpTopic._id });
+
+    // Seed hierarchy
+    let categoryOrder = 1;
+    for (const [groupName, categories] of Object.entries(csharpHierarchy)) {
+      for (const [categoryName, sections] of Object.entries(categories)) {
+        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '').replace(/#/g, 'sharp');
+        
+        let category = await Category.findOne({
+          topicId: csharpTopic._id,
+          slug: categorySlug
+        });
+
+        if (!category) {
+          category = await Category.create({
+            topicId: csharpTopic._id,
+            name: categoryName,
+            slug: categorySlug,
+            group: groupName,
+            order: categoryOrder++,
+            description: `Learn ${categoryName} in C#`
+          });
+          console.log(`✅ Created category: ${categoryName}`);
+        }
+
+        let sectionOrder = 1;
+        for (const sectionTitle of sections) {
+          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[().,&/]/g, '')
+            .replace(/:/g, '')
+            .replace(/#/g, 'sharp')
+            .replace(/</g, '')
+            .replace(/>/g, '')
+            .replace(/\+/g, '-plus')}`;
+
+          const existingSection = await Section.findOne({
+            categoryId: category._id,
+            slug: sectionSlug
+          });
+
+          if (!existingSection) {
+            await Section.create({
+              categoryId: category._id,
+              topicId: csharpTopic._id,
+              title: sectionTitle,
+              slug: sectionSlug,
+              order: sectionOrder++,
+              description: `Learn about ${sectionTitle}`,
+              difficulty: 'intermediate',
+              estimatedTime: 35
+            });
+          }
+        }
+      }
+    }
+
+    console.log('🎉 C# hierarchy seeded successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding C#:', error);
+    process.exit(1);
+  }
 };
 
-seedCSharp();
+seedCSharpHierarchy();

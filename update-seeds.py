@@ -28,6 +28,7 @@ SEED_FILES = [
     "seed-django-topic.js",
     "seed-postgresql-topic.js",
     "seed-dsa-topic.js",
+    "seed-html-css-topic.js",
 ]
 
 def update_seed_file(filepath):

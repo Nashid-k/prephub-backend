@@ -1,687 +1,400 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import slugify from 'slugify'; // Import slugify
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 dotenv.config({ path: path.join(__dirname, '../../../.env') });
 
-const djangoData = {
-  "Django_Fundamentals": {
-    "01_framework_basics": {
-      "core_concepts": [
-        "What is Django - Python Web Framework",
-        "MVT Architecture (Model-View-Template)",
-        "Django vs Other Frameworks",
-        "Pros and Cons of Django"
-      ],
-      "project_setup": [
-        "Creating a Django Project",
-        "Project vs App Structure",
-        "Virtual Environment Setup",
-        "Dependencies Management (requirements.txt)"
-      ]
-    },
-
-    "02_project_structure": {
-      "project_files": [
-        "settings.py - Configuration",
-        "urls.py - URL Routing",
-        "wsgi.py - WSGI Configuration",
-        "asgi.py - ASGI Configuration"
-      ],
-      "app_files": [
-        "models.py - Database Models",
-        "views.py - Business Logic",
-        "urls.py - App Routing",
-        "admin.py - Admin Configuration",
-        "apps.py - App Configuration"
-      ]
-    },
-
-    "03_configuration": {
-      "critical_settings": [
-        "SECRET_KEY Management",
-        "DEBUG Mode and Security",
-        "ALLOWED_HOSTS Configuration",
-        "Database Configuration (DATABASES)"
-      ],
-      "file_handling": [
-        "STATIC_URL and STATIC_ROOT",
-        "MEDIA_URL and MEDIA_ROOT",
-        "Static File Serving",
-        "Media File Uploads"
-      ],
-      "internationalization": [
-        "TIME_ZONE and LANGUAGE_CODE",
-        "Internationalization Settings"
-      ]
-    }
-  },
-
-  "Database_Models": {
-    "01_orm_basics": [
-      "Object-Relational Mapping (ORM)",
-      "Advantages of Django ORM",
-      "Model Definition Syntax",
-      "Database Migrations"
+const djangoHierarchy = {
+  // ... existing hierarchy structure ...
+  "Django Fundamentals": {
+    "Framework Basics": [
+      "What is a Framework",
+      "What is Django",
+      "Pros and cons of Django",
+      "MVT architecture",
+      "MVC vs MVT",
+      "Django project structure",
+      "Creating and managing apps"
     ],
-
-    "02_model_fields": {
-      "field_types": [
-        "CharField, TextField",
-        "IntegerField, DecimalField",
-        "DateTimeField, DateField",
-        "BooleanField"
-      ],
-      "field_options": [
-        "null=True vs blank=True",
-        "default Values",
-        "unique and db_index",
-        "choices Option"
-      ]
-    },
-
-    "03_relationships": [
-      "ForeignKey - Many-to-One",
-      "OneToOneField - One-to-One",
-      "ManyToManyField - Many-to-Many",
-      "related_name Parameter",
-      "on_delete Options"
-    ],
-
-    "04_model_operations": {
-      "queries": [
-        "Creating Objects (create, save)",
-        "Retrieving Objects (get, filter, all)",
-        "Updating Objects",
-        "Deleting Objects"
-      ],
-      "optimizations": [
-        "select_related() - ForeignKey Optimization",
-        "prefetch_related() - ManyToMany Optimization",
-        "QuerySet Caching",
-        "only() and defer() for Partial Loading"
-      ]
-    },
-
-    "05_advanced_models": [
-      "Model Inheritance (Abstract, Multi-table)",
-      "Custom User Model",
-      "Model Meta Options",
-      "Custom Model Managers"
+    "Core Configuration": [
+      "SECRET_KEY and DEBUG mode",
+      "ALLOWED_HOSTS configuration",
+      "Database configuration",
+      "STATIC_ROOT and MEDIA_ROOT",
+      "Virtual environment setup"
     ]
   },
-
-  "Views_Templates": {
-    "01_view_types": {
-      "function_based": [
-        "Function-Based Views Structure",
-        "Request and Response Objects",
-        "Decorators for Views"
-      ],
-      "class_based": [
-        "Class-Based Views Basics",
-        "Generic Class-Based Views",
-        "View Mixins"
-      ]
-    },
-
-    "02_template_system": [
+  "Project Structure": {
+    "Core Files": [
+      "settings.py",
+      "urls.py (URL routing)",
+      "wsgi.py and asgi.py",
+      "__init__.py and __pycache__"
+    ],
+    "App Files": [
+      "apps.py",
+      "admin.py usage",
+      "models.py and views.py",
+      "App-level URL configuration"
+    ]
+  },
+  "Models & ORM": {
+    "ORM Concepts": [
+      "What is ORM",
+      "Advantages of ORM over raw SQL",
+      "Models creation and management"
+    ],
+    "Model Fields": [
+      "Field types and options",
+      "null=True vs blank=True",
+      "Relationship fields (ForeignKey, ManyToMany)",
+      "unique_together constraint"
+    ],
+    "Model Inheritance": [
+      "Abstract model inheritance",
+      "Proxy model inheritance",
+      "Multi-table inheritance",
+      "AbstractUser vs AbstractBaseUser"
+    ],
+    "Meta Class": [
+      "Meta class in models",
+      "Meta options configuration"
+    ]
+  },
+  "Database": {
+    "Migrations": [
+      "makemigrations command",
+      "migrate command",
+      "Migration process",
+      "Revert/unapply migrations"
+    ],
+    "Built-in Models": [
+      "User model (default)",
+      "User.is_authenticated property",
+      "Group and Permission models"
+    ]
+  },
+  "Views": {
+    "View Types": [
+      "Function-Based Views (FBVs)",
+      "Class-Based Views (CBVs)",
+      "Generic Views",
+      "Viewsets"
+    ],
+    "View Components": [
+      "Request and response objects",
+      "Context in Django views",
+      "render() function",
+      "redirect() and reverse()",
+      "@login_required decorator"
+    ]
+  },
+  "Templates": {
+    "Template Basics": [
       "Django Template Language (DTL)",
-      "Template Inheritance (extends, block)",
-      "Template Tags and Filters",
-      "Context Variables in Templates"
+      "Template inheritance",
+      "Extend and block tags",
+      "Template filters"
     ],
-
-    "03_common_patterns": [
-      "CRUD Operations Implementation",
-      "Form Handling in Views",
-      "Redirecting and Reverse URL Lookup",
-      "Context Data Preparation"
+    "Context": [
+      "Passing context to templates",
+      "Context processors",
+      "Custom context processors"
     ]
   },
-
-  "Forms_Validation": {
-    "01_form_basics": [
-      "Django Forms Creation",
-      "ModelForms for Model Binding",
-      "Form Field Types and Validation",
-      "Rendering Forms in Templates"
+  "Forms": {
+    "Form Types": [
+      "Django Forms",
+      "ModelForms",
+      "Form validation"
     ],
-
-    "02_form_handling": [
-      "Processing Form Submissions",
-      "Form Validation and Error Handling",
-      "File Upload Forms",
-      "CSRF Protection in Forms"
-    ],
-
-    "03_custom_validation": [
-      "Custom Form Validation Methods",
-      "Custom Form Widgets",
-      "Dynamic Form Generation"
+    "Form Security": [
+      "CSRF protection",
+      "CSRF token usage",
+      "Form security best practices"
     ]
   },
-
-  "URL_Routing": {
-    "routing_basics": [
-      "URL Patterns and Path Converters",
-      "Named URL Patterns",
-      "URL Parameters Capture",
-      "App Namespacing"
-    ],
-
-    "reverse_urls": [
-      "reverse() Function",
-      "reverse_lazy() for Class-Based Views",
-      "url Template Tag",
-      "Dynamic URL Generation"
+  "Admin Interface": {
+    "Admin Panel": [
+      "Admin panel configuration",
+      "Registering models",
+      "Custom admin interfaces",
+      "Superuser creation"
     ]
   },
-
-  "Admin_Interface": {
-    "admin_configuration": [
-      "Registering Models in Admin",
-      "Customizing Admin Display",
-      "Admin Actions",
-      "Inline Model Admins"
-    ],
-
-    "user_management": [
-      "Creating Superusers",
-      "User Permissions in Admin",
-      "Custom Admin Templates",
-      "Admin Site Customization"
+  "URL Routing": {
+    "URL Configuration": [
+      "URL patterns",
+      "path() and re_path()",
+      "URL parameters",
+      "Query parameters"
     ]
   },
-
-  "Authentication_Authorization": {
-    "01_user_authentication": [
-      "Django Authentication System",
-      "User Model and Authentication Backends",
-      "Login/Logout Implementation",
-      "User Registration"
-    ],
-
-    "02_authorization": [
-      "Permissions System",
-      "@login_required Decorator",
-      "@permission_required Decorator",
-      "User Groups and Permissions"
-    ],
-
-    "03_advanced_auth": [
-      "Custom Authentication Backends",
-      "Password Validation and Policies",
-      "Session Authentication",
-      "Social Authentication Basics"
+  "Static & Media Files": {
+    "File Management": [
+      "Static files handling",
+      "collectstatic command",
+      "Media files handling",
+      "File upload handling"
     ]
   },
-
-  "REST_APIs": {
-    "01_drf_basics": [
-      "Django REST Framework Setup",
-      "Serializers (ModelSerializer)",
-      "APIView and ViewSets",
-      "Request/Response Formats"
+  "Authentication & Authorization": {
+    "Concepts": [
+      "Authentication vs Authorization",
+      "Django authentication system",
+      "Permissions and groups"
     ],
-
-    "02_api_features": [
-      "Authentication (Token, JWT)",
-      "Permissions and Throttling",
-      "Pagination",
-      "Filtering and Searching"
-    ],
-
-    "03_api_design": [
-      "RESTful URL Design",
-      "HTTP Methods Usage",
-      "Status Codes Appropriately",
-      "API Versioning"
+    "Implementation": [
+      "User registration",
+      "Login/logout implementation",
+      "authenticate() function",
+      "Custom authentication backends"
     ]
   },
-
+  "Sessions & Cookies": {
+    "Session Management": [
+      "Django session framework",
+      "Session configuration",
+      "Session lifetime"
+    ],
+    "Cookies": [
+      "Cookie handling",
+      "Setting cookie expiry",
+      "Cookies vs sessions"
+    ]
+  },
+  "Middleware": {
+    "Middleware Concepts": [
+      "What is middleware",
+      "Middleware order",
+      "Custom middleware",
+      "Built-in middleware"
+    ]
+  },
+  "Signals": {
+    "Signal Concepts": [
+      "Django signals",
+      "pre_save vs post_save",
+      "Signal configuration",
+      "Custom signals"
+    ]
+  },
   "Security": {
-    "essential_security": [
-      "CSRF Protection",
-      "XSS Prevention",
-      "SQL Injection Prevention",
-      "Clickjacking Protection"
+    "CSRF Protection": [
+      "CSRF attack prevention",
+      "CSRF tokens"
     ],
-
-    "authentication_security": [
-      "Password Hashing",
-      "Session Security",
-      "HTTPS Enforcement",
-      "Security Headers"
+    "XSS Protection": [
+      "XSS prevention techniques",
+      "Input validation"
     ],
-
-    "input_validation": [
-      "Form Validation",
-      "File Upload Validation",
-      "Input Sanitization",
-      "Safe Database Queries"
+    "Password Security": [
+      "Password hashing",
+      "SECRET_KEY security"
     ]
   },
-
-  "Performance_Optimization": {
-    "database_optimization": [
-      "Query Optimization (select_related, prefetch_related)",
-      "Database Indexing",
-      "Bulk Operations",
-      "Caching Strategies"
+  "HTTP Protocol": {
+    "HTTP Basics": [
+      "HTTP vs HTTPS",
+      "Request-response cycle",
+      "HTTP headers",
+      "HTTP methods (GET, POST, PUT, DELETE)"
     ],
-
-    "application_optimization": [
-      "Template Caching",
-      "Static File Optimization",
-      "Middleware Optimization",
-      "Connection Pooling"
+    "Status Codes": [
+      "Common status codes",
+      "200, 400, 401, 403, 404, 500",
+      "Custom status codes"
     ]
   },
-
-  "Deployment": {
-    "pre_deployment": [
-      "Production Settings Configuration",
-      "Static Files Collection",
-      "Database Migrations in Production",
-      "Environment Variables"
+  "Web Servers & Deployment": {
+    "Servers": [
+      "WSGI (Web Server Gateway Interface)",
+      "ASGI (Asynchronous Server Gateway Interface)",
+      "Gunicorn usage",
+      "Web vs Application servers"
     ],
-
-    "deployment_stack": [
-      "WSGI Servers (Gunicorn, uWSGI)",
-      "ASGI Servers (Daphne)",
-      "Web Servers (Nginx, Apache)",
-      "Process Management (systemd, supervisor)"
-    ],
-
-    "cloud_deployment": [
-      "Deployment to Heroku",
-      "Deployment to AWS/GCP",
-      "Docker Containerization",
-      "CI/CD Pipeline Basics"
+    "Deployment": [
+      "Production settings",
+      "Static file serving",
+      "Deployment configurations"
     ]
   },
-
-  "Essential_Middleware": [
-    "Common Middleware Components",
-    "Custom Middleware Creation",
-    "Middleware Order and Execution",
-    "Security Middleware"
-  ],
-
-  "Signals": [
-    "Signal Basics (pre_save, post_save)",
-    "Custom Signal Creation",
-    "Signal Receivers",
-    "When to Use Signals"
-  ],
-
-  "Testing": {
-    "testing_basics": [
-      "Django Test Framework",
-      "Model Testing",
-      "View Testing",
-      "Form Testing"
+  "Django REST Framework": {
+    "Serializers": [
+      "Serializers in DRF",
+      "Serializer fields",
+      "Model serializers"
     ],
-
-    "api_testing": [
-      "DRF API Testing",
-      "Authentication Testing",
-      "Integration Testing",
-      "Test Database Setup"
-    ]
-  },
-
-  "Celery_Task_Queue": {
-    "celery_basics": [
-      "Task Queues Concept",
-      "Celery & Redis Setup",
-      "Creating Tasks (@shared_task)",
-      "Monitoring with Flower"
+    "API Authentication": [
+      "Token authentication",
+      "JWT authentication",
+      "Access vs Refresh tokens"
     ],
-    "advanced_tasks": [
-      "Periodic Tasks (Celery Beat)",
-      "Task Chaining and Groups",
-      "Error Handling and Retries",
-      "Task Prioritization"
+    "API Features": [
+      "Viewsets",
+      "Mixins",
+      "Pagination",
+      "Rate limiting"
     ]
   },
-
-  "WebSockets_Channels": {
-    "channels_setup": [
-      "ASGI Configuration",
-      "Channel Layers (Redis)",
-      "Consumers vs Views",
-      "Routing in Channels"
+  "Networking Concepts": {
+    "Network Basics": [
+      "Client-Server architecture",
+      "Port numbers",
+      "DNS resolving"
     ],
-    "realtime_features": [
-      "Group Communication",
-      "Chat Application Logic",
-      "Notifications System",
-      "WebSocket Security"
-    ]
-  },
-
-  "Advanced_Caching": {
-    "caching_strategies": [
-      "Memcached vs Redis",
-      "Per-view Caching",
-      "Template Fragment Caching",
-      "Low-level Cache API"
+    "URL Components": [
+      "URL structure",
+      "Query parameters",
+      "Path parameters"
     ],
-    "optimization": [
-      "Cache Invalidation",
-      "CDN Integration",
-      "Browser Caching Policy",
-      "Database Caching"
+    "Protocols": [
+      "TCP vs UDP",
+      "SSH protocol"
     ]
   },
-
-  "Microservices_With_Django": {
-    "architecture_patterns": [
-      "Service Oriented Architecture",
-      "API Gateway Pattern",
-      "Communication (gRPC/REST)",
-      "Distributed Tracing"
+  "CORS": {
+    "CORS Concepts": [
+      "Cross-Origin Resource Sharing",
+      "CORS headers",
+      "Preflight requests",
+      "CORS configuration"
+    ]
+  },
+  "Caching": {
+    "Cache Types": [
+      "Browser caching",
+      "Server-side caching",
+      "Cache in Django",
+      "Cache backends"
+    ]
+  },
+  "Asynchronous Programming": {
+    "Async Concepts": [
+      "ASGI and async views",
+      "Django Channels",
+      "WebSocket support"
+    ]
+  },
+  "Query Optimization": {
+    "QuerySet Optimization": [
+      "select_related()",
+      "prefetch_related()",
+      "Raw SQL queries",
+      "Bulk operations",
+      "F and Q objects"
+    ]
+  },
+  "Advanced Features": {
+    "Messages Framework": [
+      "Django messages",
+      "Message types",
+      "Displaying messages"
     ],
-    "nameko_integration": [
-      "Nameko Microservices",
-      "RPC over AMQP",
-      "Service Discovery",
-      "Django-Nameko Integration"
-    ]
-  },
-
-  "Search_Integration": {
-    "elasticsearch_dsl": [
-      "Elasticsearch Setup",
-      "Django-Elasticsearch-DSL",
-      "Indexing Documents",
-      "Complex Search Queries"
-    ],
-    "search_features": [
-      "Full-text Search",
-      "Faceted Search",
-      "Autocomplete Suggestions",
-      "Search Highlighting"
-    ]
-  },
-
-  "Containerization_Orchestration": {
-    "docker_django": [
-      "Dockerfile Best Practices",
-      "Docker Compose for Dev",
-      "Multi-stage Builds",
-      "Volume Management"
-    ],
-    "kubernetes_basics": [
-      "K8s Concepts (Pods, Services)",
-      "Deploying Django on K8s",
-      "ConfigMaps and Secrets",
-      "Horizontal Pod Autoscaling"
-    ]
-  },
-
-  "Payments_Billing": {
-    "stripe_integration": [
-      "Stripe API Basics",
-      "Checkout Sessions",
-      "Webhook Handling",
-      "Subscription Management"
-    ],
-    "security_compliance": [
-      "PCI-DSS Basics",
-      "Secure Payment Flows",
-      "Fraud Detection",
-      "Invoice Generation"
-    ]
-  },
-
-  "GIS_Mappings": {
-    "geodjango": [
-      "PostGIS Setup",
-      "Spatial Queries",
-      "Distance Calculations",
-      "Map Visualization"
-    ]
-  },
-
-  "GraphQL_Graphene": {
-    "graphene_django": [
-      "GraphQL vs REST",
-      "Schema Definition",
-      "Queries and Mutations",
-      "Filtering and Pagination"
-    ]
-  },
-
-  "Common_Patterns_Best_Practices": {
-    "project_structure": [
-      "App Organization",
-      "Reusable Apps Design",
-      "Settings Configuration Management",
-      "Environment-based Configuration"
-    ],
-
-    "code_organization": [
-      "Business Logic Placement",
-      "Utility Functions",
-      "Custom Template Tags",
-      "Management Commands"
-    ],
-
-    "development_workflow": [
-      "Migration Best Practices",
-      "Debugging Techniques",
-      "Logging Configuration",
-      "Error Handling"
-    ]
-  },
-
-  "Practical_Projects_Checklist": {
-    "must_implement_features": {
-      "authentication": [
-        "User Registration",
-        "Login/Logout",
-        "Password Reset",
-        "Profile Management"
-      ],
-      "crud_operations": [
-        "Create/Read/Update/Delete Models",
-        "Form Validation",
-        "File Uploads",
-        "Search Functionality"
-      ],
-      "api_endpoints": [
-        "RESTful API Creation",
-        "Authentication Endpoints",
-        "CRUD API Operations",
-        "API Documentation"
-      ],
-      "admin_features": [
-        "Custom Admin Interface",
-        "Bulk Actions",
-        "Export Functionality",
-        "Dashboard Views"
-      ]
-    },
-
-    "common_project_types": [
-      "Blog/CMS Application",
-      "E-commerce Platform",
-      "Task Management System",
-      "Social Media Features",
-      "API Backend Service"
-    ]
-  },
-
-  "Interview_Preparation": {
-    "common_concepts": [
-      "MVT Architecture",
-      "ORM and Queries",
-      "Authentication System",
-      "Forms and Validation",
-      "URL Routing",
-      "Middleware",
-      "Signals",
-      "Security Features"
-    ],
-
-    "practical_questions": [
-      "Implement Custom User Model",
-      "Create REST API Endpoint",
-      "Optimize Database Queries",
-      "Handle File Uploads",
-      "Implement Pagination",
-      "Add Caching Layer",
-      "Set Up Authentication"
+    "Miscellaneous": [
+      "Mixins usage",
+      "Custom managers",
+      "Email functionality",
+      "Task queues"
     ]
   }
 };
 
-// Helper to format strings: "01_framework_basics" -> "Framework Basics"
-const formatName = (str) => {
-    return str
-        .replace(/^\\d+_/, '') // Remove leading numbers
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
-
-const seedDjango = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        // 1. Create Topic
-        let topic = await Topic.findOne({ slug: 'django' });
-        if (!topic) {
-            console.log('Creating Django topic...');
-            topic = await Topic.create({
-                name: 'Django',
-                slug: 'django',
-                description: 'Master Django web framework for Python',
-                icon: '🎸',
-                order: 6,
-                color: '#092e20'
-            });
-        }
-
-        // 2. Clear existing data
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ topicId: topic._id });
-            await Category.deleteMany({ topicId: topic._id });
-            console.log('Cleared existing Django data');
-        }
-
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) =>{
-            if (!title || typeof title !== 'string') {
-                title = 'section';
-            }
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            if (!baseSlug) baseSlug = 'section'; // Fallback if slug is empty after cleaning
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
-        // 3. Process Data
-        let order = 1;
-        for (const [mainKey, mainValue] of Object.entries(djangoData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
-            
-            // Handle if mainValue is an ARRAY (like Essential_Middleware, Signals)
-            if (Array.isArray(mainValue)) {
-                // Create a single category for this group
-                const category = await Category.create({
-                    name: groupName,
-                    slug: generateUniqueSlug(groupName),
-                    description: `Learn about ${groupName}`,
-                    topicId: topic._id,
-                    group: groupName,
-                    order: order++
-                });
-
-                const sectionDocs = mainValue.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: 'intermediate',
-                    estimatedTime: 15
-                }));
-
-                await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${groupName} (Group: ${groupName}) with ${sectionDocs.length} sections`);
-            } else {
-                // Handle Object mainValue (normal case)
-                for (const [key, value] of Object.entries(mainValue)) {
-                    const categoryName = formatName(key);
-                    const categorySlug = generateUniqueSlug(categoryName);
-
-                    const category = await Category.create({
-                        name: categoryName,
-                        slug: categorySlug,
-                        description: `Learn about ${categoryName}`,
-                        topicId: topic._id,
-                        group: groupName,
-                        order: order++
-                    });
-
-                    // Handle value being Array (direct sections) or Object (subgroups which we flatten)
-                    let sections = [];
-                    if (Array.isArray(value)) {
-                        sections = value;
-                    } else {
-                        for (const [subKey, subItems] of Object.entries(value)) {
-                            sections = [...sections, ...subItems];
-                        }
-                    }
-
-                    const sectionDocs = sections.map((sectionTitle, index) => ({
-                        title: sectionTitle,
-                        slug: generateUniqueSlug(sectionTitle),
-                        description: `Detailed explanation of ${sectionTitle}`,
-                        content: 'Coming soon...',
-                        categoryId: category._id,
-                        topicId: topic._id,
-                        order: index + 1,
-                        difficulty: categoryName.includes('Advanced') || categoryName.includes('Security') ? 'advanced' : 
-                                   categoryName.includes('Basics') || categoryName.includes('Framework') ? 'beginner' : 'intermediate',
-                        estimatedTime: 15
-                    }));
-
-                    await Section.insertMany(sectionDocs);
-                    console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-                }
-            }
-        }
-
-        console.log('✅ Django seeding complete!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        process.exit(1);
+const generateUniqueSlug = async (Model, baseText, topicId, scopeField = 'topicId') => {
+    const baseSlug = slugify(baseText, { lower: true, strict: true });
+    let slug = baseSlug;
+    let counter = 1;
+    
+    // Check for collisions within the scope (topic)
+    while (await Model.findOne({ [scopeField]: topicId, slug })) {
+        slug = `${baseSlug}-${counter}`;
+        counter++;
     }
+    return slug;
 };
 
-seedDjango();
+const seedDjangoHierarchy = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('📦 Connected to MongoDB');
+
+    // Create Django topic
+    let djangoTopic = await Topic.findOne({ slug: 'django' });
+    if (!djangoTopic) {
+      const topicCount = await Topic.countDocuments();
+      djangoTopic = await Topic.create({
+        name: 'Django',
+        slug: 'django',
+        description: 'Master Django web framework - from fundamentals to advanced REST APIs, authentication, and deployment.',
+        icon: '🦄',
+        order: topicCount + 1,
+        estimatedHours: 50
+      });
+      console.log('✅ Created Django topic');
+    }
+
+    // Clear existing structure
+    console.log('🧹 Clearing existing categories and sections...');
+    await Section.deleteMany({ topicId: djangoTopic._id });
+    await Category.deleteMany({ topicId: djangoTopic._id });
+
+    // Seed hierarchy
+    let categoryOrder = 1;
+    // Iterate Groups (Top Keys)
+    for (const [groupKey, categories] of Object.entries(djangoHierarchy)) {
+        const groupName = groupKey; // e.g. "Django Fundamentals"
+        
+        // Iterate Categories (Sub Keys)
+        for (const [categoryName, sections] of Object.entries(categories)) {
+            const categorySlug = await generateUniqueSlug(Category, categoryName, djangoTopic._id);
+            
+            const category = await Category.create({
+                topicId: djangoTopic._id,
+                name: categoryName,
+                slug: categorySlug,
+                group: groupName,
+                order: categoryOrder++,
+                description: `Learn ${categoryName} in Django`
+            });
+            console.log(`✅ Created category: ${categoryName} (Group: ${groupName})`);
+
+            // Iterate Sections (List)
+            const sectionDocs = [];
+            for (let i = 0; i < sections.length; i++) {
+                const sectionTitle = sections[i];
+                const sectionSlug = await generateUniqueSlug(Section, sectionTitle, djangoTopic._id);
+                
+                sectionDocs.push({
+                    categoryId: category._id,
+                    topicId: djangoTopic._id,
+                    title: sectionTitle,
+                    slug: sectionSlug,
+                    order: i + 1,
+                    description: `Learn about ${sectionTitle}`,
+                    difficulty: 'intermediate',
+                    estimatedTime: 25,
+                    content: 'Coming soon...'
+                });
+            }
+            
+            await Section.insertMany(sectionDocs);
+        }
+    }
+
+    console.log('🎉 Django hierarchy seeded successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding Django:', error);
+    process.exit(1);
+  }
+};
+
+seedDjangoHierarchy();

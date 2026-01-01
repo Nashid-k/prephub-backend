@@ -3,537 +3,398 @@ import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
-
-const dartData = {
-  "Dart_Fundamentals": {
-    "01_introduction": {
-      "core_concepts": [
-        "Dart - Client-optimized Language for Multi-platform Development",
-        "Dart in Flutter Ecosystem",
-        "JIT (Just-In-Time) vs AOT (Ahead-Of-Time) Compilation",
-        "Dart vs JavaScript/TypeScript Comparison"
-      ],
-      "development_environment": [
-        "Dart SDK Installation",
-        "DartPad Online Editor",
-        "IDE Setup (VS Code, IntelliJ)",
-        "Running Dart Programs"
-      ]
-    },
-
-    "02_basic_syntax": {
-      "program_structure": [
-        "Main Function Entry Point",
-        "Import Statements",
-        "Comments (Single-line //, Multi-line /* */)",
-        "Dart File Structure"
-      ]
-    }
-  },
-
-  "Variables_Data_Types": {
-    "01_basic_types": [
-      "int - Integer Numbers",
-      "double - Floating-point Numbers",
-      "num - Parent Type for int and double",
-      "String - Text Data",
-      "bool - Boolean Values",
-      "Null Type"
+const dartHierarchy = {
+  "Language Fundamentals": {
+    "Overview": [
+      "What is Dart?",
+      "Advantages of Dart",
+      "Why Flutter uses Dart?",
+      "Compiled vs Interpreted Language",
+      "JIT vs AOT Compilation"
     ],
-
-    "02_type_system": [
-      "Type Inference (var keyword)",
-      "Type Safety and Sound Null Safety",
-      "Type Checking (is, is! operators)",
-      "Type Casting (as operator)",
-      "Type Promotion"
-    ],
-
-    "03_variable_declaration": [
-      "var for Type Inference",
-      "final for Runtime Constants",
-      "const for Compile-time Constants",
-      "late for Deferred Initialization",
-      "Choosing Between var, final, const"
+    "Program Structure": [
+      "Main Function",
+      "Comments",
+      "Imports and Libraries",
+      "Core Libraries in Dart"
     ]
   },
-
-  "Operators": {
-    "arithmetic": [
-      "Basic Arithmetic (+, -, *, /)",
-      "Integer Division (~/)",
-      "Modulo (%)",
-      "Increment/Decrement (++, --)"
+  "Variables & Data Types": {
+    "Basic Types": [
+      "int, double, num",
+      "String",
+      "bool and null",
+      "Primitive vs Non-Primitive Types"
     ],
-
-    "comparison": [
-      "Equality Operators (==, !=)",
-      "Relational Operators (>, <, >=, <=)"
+    "Type System": [
+      "Type Inference",
+      "Type Safety",
+      "Type Checking (is, is!)",
+      "Type Casting (as operator)",
+      "Type Promotion",
+      "Dynamic vs Object"
     ],
-
-    "logical": [
-      "Logical AND (&&)",
-      "Logical OR (||)",
-      "Logical NOT (!)"
+    "Type Modifiers": [
+      "final (Runtime Constant)",
+      "const (Compile-time Constant)",
+      "late Keyword",
+      "final + late Behavior"
+    ]
+  },
+  "Operators & Expressions": {
+    "Arithmetic": [
+      "Basic Operators (+, -, *, /)",
+      "Modulo (%) and Integer Division (~/)"
     ],
-
-    "null_aware": [
-      "Null-aware Operator (??)",
-      "Null-aware Assignment (??=)",
-      "Null-aware Access (?.)",
+    "Equality & Relational": [
+      "Comparison Operators (==, !=, >, <, >=, <=)"
+    ],
+    "Logical": [
+      "Logical AND, OR, NOT (&&, ||, !)"
+    ],
+    "Type Test": [
+      "is and is! operators",
+      "as (Type Cast)"
+    ],
+    "Assignment": [
+      "Assignment Operators (=, +=, -=, *=, /=)"
+    ],
+    "Conditional": [
+      "Ternary Operator (? :)",
+      "Null-aware Operators (??, ??=, ?.)"
+    ],
+    "Cascade": [
+      "Cascade Operator (..)",
       "Null-aware Cascade (?..)"
     ],
-
-    "other_operators": [
-      "Cascade Operator (..) for Method Chaining",
-      "Spread Operator (...) for Collections",
-      "Conditional (Ternary) Operator (?:)",
-      "Type Test Operators (is, is!, as)"
+    "Bitwise": [
+      "Bitwise Operators (&, |, ^, ~, <<, >>)"
     ]
   },
-
-  "Control_Flow": {
-    "conditionals": [
-      "if-else Statements",
-      "Switch-case Statements",
-      "Switch Expressions",
-      "Conditional Expressions"
+  "Control Flow": {
+    "Decision Making": [
+      "if-else statements",
+      "switch-case",
+      "Enum with Switch"
     ],
-
-    "loops": [
-      "for Loop (Traditional)",
-      "for-in Loop (Collection Iteration)",
-      "while Loop",
-      "do-while Loop",
-      "Loop Control (break, continue)"
+    "Loops": [
+      "for Loop",
+      "for-in Loop",
+      "while and do-while",
+      "Entry vs Exit Control Loops"
+    ],
+    "Jump Statements": [
+      "break, continue, return"
     ]
   },
-
   "Functions": {
-    "01_function_basics": [
-      "Function Declaration Syntax",
+    "Function Basics": [
+      "Function Declaration",
       "Parameters and Arguments",
-      "Return Types (void, explicit types)",
-      "Function Scope"
+      "Return Types",
+      "void Return Type"
     ],
-
-    "02_parameter_types": [
+    "Parameter Types": [
       "Required Positional Parameters",
-      "Optional Positional Parameters ([] syntax)",
-      "Named Parameters ({} syntax)",
-      "Required Named Parameters (required keyword)",
-      "Default Parameter Values"
+      "Optional Positional Parameters ([])",
+      "Named Parameters ({})",
+      "Default Parameter Values",
+      "Required Named Parameters"
     ],
-
-    "03_function_types": [
-      "Anonymous Functions",
-      "Arrow Functions (=> syntax)",
-      "Higher-order Functions",
+    "Function Types": [
+      "Anonymous Functions (Lambda)",
+      "Arrow Functions (=>)",
+      "Higher-Order Functions",
       "Closures",
       "Recursive Functions"
+    ],
+    "Special Functions": [
+      "getters and setters",
+      "Extension Methods",
+      "Function Type Aliases (typedef)"
     ]
   },
-
   "Collections": {
-    "01_lists": [
-      "List Creation (List literal, List constructor)",
-      "Fixed-length vs Growable Lists",
-      "List Operations (add, remove, insert)",
-      "List Properties (length, isEmpty, first, last)",
-      "List Iteration Methods"
+    "Lists": [
+      "List Basics",
+      "Fixed-length vs Growable List",
+      "List Properties and Methods",
+      "firstWhere() vs singleWhere()"
     ],
-
-    "02_sets": [
-      "Set Creation (Set literal)",
-      "Unique Element Guarantee",
-      "Set Operations (union, intersection, difference)",
-      "Set vs List Use Cases"
+    "Sets": [
+      "Set Basics",
+      "List vs Set Difference",
+      "Set Operations"
     ],
-
-    "03_maps": [
-      "Map Creation (Map literal)",
-      "Key-Value Pair Storage",
-      "Accessing and Modifying Values",
-      "Map Iteration (keys, values, entries)",
-      "Map Methods (containsKey, remove)"
+    "Maps": [
+      "Map Basics",
+      "Map Literals",
+      "Accessing Values",
+      "Mixed Maps"
     ],
-
-    "04_collection_operators": [
-      "Spread Operator (...) for Expanding Collections",
-      "Collection If for Conditional Elements",
-      "Collection For for Generating Elements",
-      "Null-aware Spread (...?)"
+    "Collection Operators": [
+      "Spread Operator (...)",
+      "Null-aware Spread (...?)",
+      "Collection if and for"
     ],
-
-    "05_collection_methods": [
-      "forEach() for Iteration",
-      "map() for Transformation",
-      "where() for Filtering",
-      "reduce() and fold() for Aggregation",
-      "any() and every() for Condition Checking"
+    "Collection Methods": [
+      "forEach(), map(), where()",
+      "reduce() and fold()",
+      "map() vs forEach()"
     ]
   },
-
-  "Strings": {
-    "string_basics": [
-      "String Literals (Single vs Double Quotes)",
-      "String Interpolation (\${expression})",
-      "Multi-line Strings (Triple Quotes)",
-      "Raw Strings (r prefix)"
+  "String Manipulation": {
+    "String Basics": [
+      "String Literals",
+      "Multi-line Strings",
+      "String Interpolation"
     ],
-
-    "string_methods": [
-      "Length and Empty Checks",
-      "Case Conversion (toUpperCase, toLowerCase)",
-      "Trimming (trim, trimLeft, trimRight)",
-      "Substring and Character Access",
-      "Searching (contains, indexOf, lastIndexOf)",
-      "Splitting and Joining (split, join)"
+    "String Methods": [
+      "length, isEmpty, isNotEmpty",
+      "toUpperCase(), toLowerCase()",
+      "trim(), split(), contains()",
+      "replaceAll(), substring()",
+      "indexOf(), lastIndexOf()"
+    ],
+    "Escape Sequences": [
+      "Common Escape Characters"
     ]
   },
-
-  "Object_Oriented_Programming": {
-    "01_classes_objects": [
-      "Class Definition Syntax",
-      "Object Creation (new keyword optional)",
-      "Instance Variables (Fields)",
-      "Constructors (Default, Parameterized)"
+  "Object-Oriented Programming": {
+    "OOP Concepts": [
+      "Four Pillars of OOP",
+      "Class and Object",
+      "Instance vs Local Variables",
+      "Static Variables and Methods",
+      "super Keyword"
     ],
-
-    "02_constructors": [
+    "Constructors": [
+      "Default Constructor",
+      "Parameterized Constructor",
       "Named Constructors",
       "Factory Constructors",
       "Constant Constructors (const)",
       "Redirecting Constructors",
       "Private Constructors"
     ],
-
-    "03_inheritance": [
-      "extends Keyword for Inheritance",
-      "Method Overriding (@override)",
-      "super Keyword (Accessing Parent)",
-      "Single Inheritance in Dart"
+    "Inheritance": [
+      "extends Keyword",
+      "Method Overriding",
+      "@override Annotation",
+      "covariant Keyword",
+      "super Constructor"
     ],
-
-    "04_interfaces": [
+    "Interfaces": [
       "Implicit Interfaces",
       "implements Keyword",
-      "Multiple Interface Implementation",
-      "Interface vs Abstract Class"
+      "Multiple Interface Implementation"
     ],
-
-    "05_abstract_classes": [
-      "Abstract Class Definition",
-      "Abstract Methods",
-      "Concrete Implementation in Subclasses"
+    "Abstraction": [
+      "Abstract Classes",
+      "Abstract Methods"
     ],
-
-    "06_mixins": [
-      "Mixin Definition (mixin keyword)",
-      "with Keyword for Mixin Application",
-      "Mixin Constraints (on keyword)",
-      "Multiple Mixins"
+    "Mixins": [
+      "Mixin Concept",
+      "with Keyword",
+      "Multiple Inheritance via Mixins",
+      "Mixin Constraints (on keyword)"
     ],
-
-    "07_advanced_oop": [
-      "Static Members (Variables and Methods)",
-      "Getter and Setter Methods",
-      "Private Members (_ prefix)",
-      "Extension Methods"
+    "Design Patterns": [
+      "Singleton Pattern",
+      "Factory Pattern",
+      "Immutable Classes"
     ]
   },
-
-  "Exception_Handling": {
-    "exception_basics": [
-      "Exception vs Error Difference",
-      "Built-in Exception Types",
-      "try-catch Block",
-      "Multiple catch Blocks"
+  "Exception Handling": {
+    "Exception Types": [
+      "Exception vs Error",
+      "Built-in Exceptions",
+      "Custom Exceptions"
     ],
-
-    "exception_operations": [
-      "finally Block for Cleanup",
-      "rethrowing Exceptions",
-      "Custom Exception Classes",
-      "Error Handling Best Practices"
+    "Handling Mechanisms": [
+      "try-catch",
+      "try-catch-on",
+      "finally Block",
+      "rethrow keyword"
+    ],
+    "Prevention": [
+      "tryParse() vs parse()",
+      "null-safety Operators",
+      "assert Keyword"
     ]
   },
-
-  "Asynchronous_Programming": {
-    "01_futures": [
-      "Future Type (Asynchronous Operations)",
-      "async and await Keywords",
-      "Future.then() for Chaining",
-      "Error Handling with Future.catchError()"
+  "Asynchronous Programming": {
+    "Futures": [
+      "Future Basics",
+      "async and await",
+      "Future.then(), catchError()",
+      "Future.delayed(), value(), error()"
     ],
-
-    "02_async_patterns": [
-      "Future.delayed() for Timed Operations",
-      "Multiple Future Execution",
-      "Future.wait() for Parallel Operations",
-      "Async Error Handling Patterns"
+    "Streams": [
+      "Stream Basics",
+      "Stream vs Future",
+      "Single-subscription vs Broadcast",
+      "async* and yield",
+      "StreamController"
     ],
-
-    "03_streams": [
-      "Stream Type (Sequence of Events)",
-      "Single-subscription vs Broadcast Streams",
-      "Stream Listeners",
-      "Stream Controllers"
-    ],
-
-    "04_generators": [
-      "Synchronous Generator (sync*)",
-      "Asynchronous Generator (async*)",
-      "yield Keyword for Value Emission",
-      "Generator Use Cases"
+    "Generators": [
+      "Synchronous Generators (sync*)",
+      "Asynchronous Generators (async*)",
+      "return vs yield"
     ]
   },
-
-  "Generics": {
-    "generics_basics": [
-      "Generic Type Parameters (<T>)",
-      "Generic Classes",
-      "Generic Methods",
-      "Type Constraints (extends keyword)"
+  "Concurrency": {
+    "Isolates": [
+      "Isolates vs Threads",
+      "Creating Isolates",
+      "Message Passing",
+      "compute() Function"
     ],
-
-    "generic_collections": [
-      "List<T> for Type-safe Lists",
-      "Set<T> for Type-safe Sets",
-      "Map<K, V> for Type-safe Maps",
-      "Generic Function Types"
+    "Zones": [
+      "Zone Concept",
+      "Zone.current",
+      "Zone.fork()",
+      "Error Handling in Zones"
     ]
   },
-
-  "Null_Safety": {
-    "null_safety_basics": [
-      "Sound Null Safety Principles",
-      "Nullable Types (Type?)",
-      "Non-nullable Types",
-      "Null-aware Operators Usage"
+  "Advanced Features": {
+    "Generics": [
+      "Generic Types",
+      "Generic Classes and Methods",
+      "Type Constraints"
     ],
-
-    "migration_patterns": [
-      "Handling Legacy Code",
-      "Null Assertion Operator (!)",
-      "late Keyword for Non-nullable Variables",
-      "Null Safety Best Practices"
+    "Metadata": [
+      "Annotations (@)",
+      "Built-in Annotations",
+      "Custom Annotations"
+    ],
+    "Enums": [
+      "Enum Basics",
+      "Enhanced Enums",
+      "Enum Properties"
+    ],
+    "Immutability": [
+      "Mutable vs Immutable Objects",
+      "Creating Immutable Classes"
     ]
   },
-
-  "Enums": {
-    "enum_basics": [
-      "Enum Definition",
-      "Enum Values Access",
-      "Switch with Enums",
-      "Enhanced Enums (Methods and Properties)"
+  "File I/O": {
+    "File Operations": [
+      "Reading Files",
+      "Writing Files",
+      "Deleting Files"
+    ],
+    "Directories": [
+      "Creating Directories",
+      "Listing Contents",
+      "Deleting Directories"
     ]
   },
-
-  "File_IO": {
-    "file_operations": [
-      "dart:io Package Import",
-      "File Reading (readAsString, readAsLines)",
-      "File Writing (writeAsString)",
-      "File and Directory Operations"
+  "Practical Applications": {
+    "Data Structures": [
+      "Linked Lists",
+      "Trees and Graphs",
+      "Hash Tables",
+      "Sorting Algorithms"
     ],
-
-    "json_handling": [
-      "dart:convert Package",
-      "JSON Encoding (jsonEncode)",
-      "JSON Decoding (jsonDecode)",
-      "Model Classes with fromJson/toJson"
-    ]
-  },
-
-  "Practical_Skills": {
-    "01_common_patterns": [
-      "Singleton Pattern Implementation",
-      "Factory Pattern Usage",
-      "Builder Pattern for Complex Objects",
-      "Repository Pattern"
+    "Parsing": [
+      "JSON Parsing",
+      "XML Parsing",
+      "CSV Parsing"
     ],
-
-    "02_data_processing": [
-      "List Transformations with map()",
-      "Data Filtering with where()",
-      "Data Aggregation with reduce()/fold()",
-      "Sorting Collections"
-    ],
-
-    "03_error_handling": [
-      "Robust Input Validation",
-      "Graceful Error Recovery",
-      "Logging and Debugging",
-      "Unit Testing Basics"
-    ]
-  },
-
-  "Essential_Projects": {
-    "learning_projects": [
-      "Console Calculator",
-      "Todo List Application",
-      "File Processor (Read/Write/Transform)",
-      "API Client with HTTP Requests",
-      "Data Analysis Tool"
-    ],
-
-    "must_implement_features": [
-      "CRUD Operations with Collections",
-      "File I/O Operations",
-      "Error Handling Implementation",
-      "Asynchronous Operations",
-      "Data Validation"
-    ]
-  },
-
-  "Best_Practices": {
-    "01_code_quality": [
-      "Effective Naming Conventions",
-      "Code Organization (Separation of Concerns)",
-      "Commenting and Documentation",
-      "Consistent Code Style"
-    ],
-
-    "02_performance": [
-      "Efficient Collection Usage",
-      "Memory Management Considerations",
-      "Asynchronous Operation Optimization",
-      "Avoiding Common Pitfalls"
-    ],
-
-    "03_testing": [
-      "Unit Test Writing Basics",
-      "Test-driven Development Concepts",
-      "Mocking Dependencies",
-      "Test Coverage Awareness"
-    ]
-  },
-
-  "Interview_Preparation": {
-    "core_concepts": [
-      "Null Safety Implementation",
-      "Asynchronous Programming Patterns",
-      "OOP Principles in Dart",
-      "Collection Operations",
-      "Error Handling Strategies"
-    ],
-
-    "practical_skills": [
-      "Implement Common Data Structures",
-      "Write Asynchronous Code",
-      "Handle File I/O Operations",
-      "Parse and Process JSON Data",
-      "Debug Dart Applications"
+    "Math Operations": [
+      "abs(), ceil(), floor(), round()",
+      "Mathematical Operations"
     ]
   }
 };
 
-const formatName = (str) => {
-    return str
-        .replace(/^\\d+_/, '')
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
+const seedDartHierarchy = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('📦 Connected to MongoDB');
 
-const seedDart = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        let topic = await Topic.findOne({ slug: 'dart' });
-        if (!topic) {
-            console.log('Creating Dart topic...');
-            topic = await Topic.create({
-                name: 'Dart',
-                slug: 'dart',
-                description: 'Master Dart for Flutter development',
-                icon: '🎯',
-                order: 14,
-                color: '#0175C2'
-            });
-        }
-
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ topicId: topic._id });
-            await Category.deleteMany({ topicId: topic._id });
-            console.log('Cleared existing Dart data');
-        }
-
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) => {
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
-        let order = 1;
-        for (const [mainKey, mainValue] of Object.entries(dartData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
-            
-            for (const [key, value] of Object.entries(mainValue)) {
-                const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
-
-                const category = await Category.create({
-                    name: categoryName,
-                    slug: categorySlug,
-                    description: `Learn about ${categoryName}`,
-                    topicId: topic._id,
-                    group: groupName,
-                    order: order++
-                });
-
-                let sections = [];
-                if (Array.isArray(value)) {
-                    sections = value;
-                } else {
-                    for (const [subKey, subItems] of Object.entries(value)) {
-                        sections = [...sections, ...subItems];
-                    }
-                }
-
-                const sectionDocs = sections.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Asynchronous') ? 'advanced' : 
-                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Basic') ? 'beginner' : 'intermediate',
-                    estimatedTime: 15
-                }));
-
-                await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-            }
-        }
-
-        console.log('✅ Dart seeding complete!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        process.exit(1);
+    // Create Dart topic
+    let dartTopic = await Topic.findOne({ slug: 'dart' });
+    if (!dartTopic) {
+      const topicCount = await Topic.countDocuments();
+      dartTopic = await Topic.create({
+        name: 'Dart',
+        slug: 'dart',
+        description: 'Master Dart programming language - the foundation of Flutter. From fundamentals to advanced async patterns and OOP.',
+        icon: '🎯',
+        order: topicCount + 1,
+        estimatedHours: 40
+      });
+      console.log('✅ Created Dart topic');
     }
+
+    // Clear existing structure
+    console.log('🧹 Clearing existing categories and sections...');
+    await Section.deleteMany({ topicId: dartTopic._id });
+    await Category.deleteMany({ topicId: dartTopic._id });
+
+    // Seed hierarchy
+    let categoryOrder = 1;
+    for (const [groupName, categories] of Object.entries(dartHierarchy)) {
+      for (const [categoryName, sections] of Object.entries(categories)) {
+        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '');
+        
+        let category = await Category.findOne({
+          topicId: dartTopic._id,
+          slug: categorySlug
+        });
+
+        if (!category) {
+          category = await Category.create({
+            topicId: dartTopic._id,
+            name: categoryName,
+            slug: categorySlug,
+            group: groupName,
+            order: categoryOrder++,
+            description: `Learn ${categoryName} in Dart`
+          });
+          console.log(`✅ Created category: ${categoryName}`);
+        }
+
+        let sectionOrder = 1;
+        for (const sectionTitle of sections) {
+          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[().,&/]/g, '')
+            .replace(/:/g, '')
+            .replace(/!/g, '')}`;
+
+          const existingSection = await Section.findOne({
+            categoryId: category._id,
+            slug: sectionSlug
+          });
+
+          if (!existingSection) {
+            await Section.create({
+              categoryId: category._id,
+              topicId: dartTopic._id,
+              title: sectionTitle,
+              slug: sectionSlug,
+              order: sectionOrder++,
+              description: `Learn about ${sectionTitle}`,
+              difficulty: 'beginner',
+              estimatedTime: 25
+            });
+          }
+        }
+      }
+    }
+
+    console.log('🎉 Dart hierarchy seeded successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding Dart:', error);
+    process.exit(1);
+  }
 };
 
-seedDart();
+seedDartHierarchy();

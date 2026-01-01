@@ -1,270 +1,145 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import Topic from '../../models/Topic.js';
-import Category from '../../models/Category.js';
-import Section from '../../models/Section.js';
 
-dotenv.config();
-
-const pythonHierarchy = {
-  "Python Fundamentals": {
-    "Python Basics": [
-      "What is Python",
-      "Features of Python",
-      "Dynamic typing",
-      "CPython and its advantages",
-      "PEP 8 coding conventions",
-      "Python scope resolution"
+const pythonCurriculum = {
+  "Python_Foundations": {
+    "language_basics": [
+      "Python 2 vs Python 3",
+      "Interpreter & Bytecode (CPython)",
+      "PEP 8 Style Guide",
+      "Dynamic Typing Philosophy",
+      "Memory Management (Reference Counting)",
+      "Garbage Collection Mechanics"
     ],
-    "Execution Environment": [
-      "Virtual environment management",
-      "PIP package management",
-      "Import statements",
-      "Environment variables"
+    "environment_setup": [
+      "Virtual Environments (venv)",
+      "Package Management (pip)",
+      "Dependency Management (requirements.txt)",
+      "Modern Packaging (Poetry/Pipenv)",
+      "Jupyter Notebooks Setup"
+    ],
+    "syntax_deep_dive": [
+      "Walrus Operator (:=)",
+      "Pattern Matching (match/case)",
+      "F-Strings Advanced Formatting",
+      "Slicing & Striding",
+      "Comprehensions (List, Dict, Set)"
     ]
   },
-  "Data Types": {
-    "Basic Types": [
-      "int, float, str types",
-      "bool and NoneType",
-      "Type mutability",
-      "Falsy values in Python"
+  "Data_Structures_Algorithms": {
+    "built_in_types": [
+      "Lists vs Tuples (Mutability)",
+      "Dictionaries (Hash Tables)",
+      "Sets (Theory & Operations)",
+      "Collections Module (Counter, deque, namedtuple)",
+      "Heapq (Priority Queues)"
     ],
-    "Lists": [
-      "List operations",
-      "append() vs extend()",
-      "List slicing",
-      "List comprehension"
+    "algorithms_in_python": [
+      "Sorting (Timsort Internals)",
+      "Binary Search (bisect module)",
+      "Recursion & Memoization",
+      "Graph Traversal Implementations"
     ],
-    "Tuples": [
-      "Tuple immutability",
-      "Tuple operations",
-      "Converting tuples to dict"
-    ],
-    "Sets": [
-      "Set operations",
-      "Removing duplicates"
-    ],
-    "Dictionaries": [
-      "Dictionary operations",
-      "Dict comprehension",
-      "Merging dictionaries",
-      "Sorting dict items"
+    "essential_problems": [
+      "Reverse a string/list (Slicing vs Methods)",
+      "Check Palindrome",
+      "Find Anagrams",
+      "Count Character Frequency",
+      "Flatten Nested Lists",
+      "Merge Dictionaries",
+      "Fibonacci (Iterative vs Recursive)"
     ]
   },
-  "Type System": {
-    "Type Handling": [
-      "Type annotation",
-      "Type casting",
-      "isinstance() and type()",
-      "is vs == operator"
+  "Object_Oriented_Programming": {
+    "oop_core": [
+      "Classes & Instances",
+      "Constructors (__init__ vs __new__)",
+      "Instance vs Class vs Static Methods",
+      "Property Decorators (@property)",
+      "Magic Methods (Dunder Methods)"
     ],
-    "Memory & References": [
-      "Reference counting",
-      "Deep copy vs shallow copy",
-      "Python memory model"
+    "oop_advanced": [
+      "Inheritance & Composition",
+      "Method Resolution Order (MRO)",
+      "Abstract Base Classes (ABC)",
+      "Mixins & Multiple Inheritance",
+      "Dataclasses & Pydantic"
+    ],
+    "metaprogramming": [
+      "Decorators (Function & Class)",
+      "Context Managers (with statement)",
+      "Descriptors Protocol",
+      "Metaclasses (__metaclass__)",
+      "Monkey Patching"
     ]
   },
-  "Functions": {
-    "Function Basics": [
-      "Function definition",
-      "*args and **kwargs",
-      "Default parameters",
-      "Lambda functions"
+  "Functional_Programming": {
+    "functional_concepts": [
+      "Lambda Functions",
+      "Higher-Order Functions",
+      "Map, Filter, Reduce",
+      "Iterators & Generators",
+      "Yield vs Yield From"
     ],
-    "Built-in Functions": [
-      "map(), filter(), reduce()",
-      "zip(), enumerate()",
-      "any() and all()"
-    ],
-    "Advanced Functions": [
-      "Closures",
-      "Decorators",
-      "@property decorator",
-      "Currying"
+    "itertools_module": [
+      "Infinite Iterators",
+      "Combinatoric Iterators",
+      "Terminating Iterators",
+      "Functools (partial, lru_cache)",
+      "Closure & Scope (LEGB Rule)"
     ]
   },
-  "Object-Oriented Programming": {
-    "OOP Basics": [
-      "Classes and Objects",
-      "__init__ constructor",
-      "Instance vs Class variables",
-      "Self parameter"
+  "Concurrency_Parallelism": {
+    "threading_multiprocessing": [
+      "Global Interpreter Lock (GIL)",
+      "Threading Module Basics",
+      "Multiprocessing Module",
+      "ProcessPoolExecutor",
+      "ThreadPoolExecutor"
     ],
-    "Inheritance & Polymorphism": [
-      "Types of inheritance",
-      "Method overriding",
-      "super() function",
-      "MRO (Method Resolution Order)"
-    ],
-    "Access Control": [
-      "Public, Protected, Private",
-      "Getters and setters",
-      "Encapsulation"
-    ],
-    "Special Methods": [
-      "Magic methods",
-      "__str__ vs __repr__",
-      "Abstract Base Classes",
-      "Metaclasses"
+    "async_io": [
+      "Async/Await Syntax",
+      "Event Loop Fundamentals",
+      "Coroutines & Tasks",
+      "Asyncio Module Deep Dive",
+      "Aiohttp for Async Requests"
     ]
   },
-  "Control Flow": {
-    "Conditionals": [
-      "if-elif-else",
-      "Ternary operator",
-      "match statement (3.10+)"
+  "Web_Dev_Data_Science": {
+    "web_frameworks": [
+      "WSGI vs ASGI Standards",
+      "Django (ORM, Admin, MVT)",
+      "Flask (Blueprints, Patterns)",
+      "FastAPI (Pydantic, Async)",
+      "REST API Design"
     ],
-    "Loops": [
-      "for and while loops",
-      "for-else pattern",
-      "break, continue, pass",
-      "Loop comprehensions"
-    ]
-  },
-  "Advanced Features": {
-    "Generators & Iterators": [
-      "Generator functions",
-      "yield keyword",
-      "Iterator protocol",
-      "Generator expressions"
+    "data_science_stack": [
+      "NumPy (Broadcasting, Arrays)",
+      "Pandas (DataFrames, Cleaning)",
+      "Matplotlib/Seaborn (Visualization)",
+      "Jupyter Workflow"
     ],
-    "Context Managers": [
-      "with statement",
-      "File handling",
-      "Custom context managers"
+    "testing_qa": [
+      "Unittest vs Pytest",
+      "Fixtures and Mocking",
+      "Code Coverage",
+      "Type Checking (Mypy)"
+    ]
+  },
+  "Interview_Prep": {
+    "core_concepts": [
+      "Mutable vs Immutable Arguments",
+      "List vs Tuple vs Set vs Dict Performance",
+      "Deep Copy vs Shallow Copy",
+      "Decorator Implementation",
+      "Generator Memory Benefits",
+      "GIL Impact on CPU-bound Tasks"
     ],
-    "Concurrency": [
-      "GIL (Global Interpreter Lock)",
-      "Threading vs Multiprocessing",
-      "async/await"
-    ]
-  },
-  "Error Handling": {
-    "Exceptions": [
-      "try-except-finally",
-      "Raising exceptions",
-      "Custom exceptions",
-      "Exception hierarchy"
-    ]
-  },
-  "Modules & Packages": {
-    "Module System": [
-      "Importing modules",
-      "Creating packages",
-      "__init__.py files",
-      "Common libraries (os, re, math)"
-    ]
-  },
-  "File Operations": {
-    "File Handling": [
-      "open() and file modes",
-      "Reading and writing files",
-      "Pickling",
-      "Context managers for files"
-    ]
-  },
-  "String Operations": {
-    "String Manipulation": [
-      "String methods",
-      "f-strings",
-      "String slicing",
-      "Common string problems"
-    ]
-  },
-  "Practical Problems": {
-    "Data Manipulation": [
-      "List and dict operations",
-      "Filtering and transforming",
-      "Sorting algorithms",
-      "Common coding patterns"
-    ],
-    "Algorithm Implementation": [
-      "Reverse operations",
-      "Palindrome checking",
-      "Fibonacci series",
-      "Prime numbers"
+    "practical_projects": [
+      "Web Scraper (BeautifulSoup/Scrapy)",
+      "REST API with FastAPI",
+      "File Organizer Script",
+      "Task Manager CLI"
     ]
   }
 };
 
-const seedPythonHierarchy = async () => {
-  try {
-    await mongoose.connect(process.env.MONGODB_URI);
-    console.log('📦 Connected to MongoDB');
-
-    // Create Python topic
-    let pythonTopic = await Topic.findOne({ slug: 'python' });
-    if (!pythonTopic) {
-      const topicCount = await Topic.countDocuments();
-      pythonTopic = await Topic.create({
-        name: 'Python',
-        slug: 'python',
-        description: 'Master Python programming from fundamentals to advanced concepts, including OOP, data structures, and practical problem-solving.',
-        icon: '🐍',
-        order: topicCount + 1,
-        estimatedHours: 45
-      });
-      console.log('✅ Created Python topic');
-    }
-
-    // Seed hierarchy
-    let categoryOrder = 1;
-    for (const [groupName, categories] of Object.entries(pythonHierarchy)) {
-      for (const [categoryName, sections] of Object.entries(categories)) {
-        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()]/g, '');
-        
-        let category = await Category.findOne({
-          topicId: pythonTopic._id,
-          slug: categorySlug
-        });
-
-        if (!category) {
-          category = await Category.create({
-            topicId: pythonTopic._id,
-            name: categoryName,
-            slug: categorySlug,
-            group: groupName,
-            order: categoryOrder++,
-            description: `Learn ${categoryName}`
-          });
-          console.log(`✅ Created category: ${categoryName}`);
-        }
-
-        let sectionOrder = 1;
-        for (const sectionTitle of sections) {
-          const sectionSlug = sectionTitle.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[().,]/g, '')
-            .replace(/\//g, '-');
-
-          const existingSection = await Section.findOne({
-            categoryId: category._id,
-            slug: sectionSlug
-          });
-
-          if (!existingSection) {
-            await Section.create({
-              categoryId: category._id,
-              topicId: pythonTopic._id,
-              title: sectionTitle,
-              slug: sectionSlug,
-              order: sectionOrder++,
-              description: `Learn about ${sectionTitle}`,
-              difficulty: 'beginner',
-              estimatedTime: 20
-            });
-          }
-        }
-      }
-    }
-
-    console.log('🎉 Python hierarchy seeded successfully!');
-    process.exit(0);
-  } catch (error) {
-    console.error('Error seeding Python:', error);
-    process.exit(1);
-  }
-};
-
-seedPythonHierarchy();
+export { pythonCurriculum };

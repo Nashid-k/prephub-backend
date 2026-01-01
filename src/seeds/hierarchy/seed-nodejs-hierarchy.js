@@ -714,4 +714,6 @@ const seedHierarchy = async () => {
   }
 };
 
-seedHierarchy();
+// seedHierarchy();
+
+export { nodejsCurriculum };

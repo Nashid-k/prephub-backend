@@ -3,541 +3,559 @@ import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { assignGroup } from '../utils/categoryGrouping.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+dotenv.config();
 
-dotenv.config({ path: path.join(__dirname, '../../../.env') });
-
-const cData = {
-  "C_Programming_Fundamentals": {
-    "01_introduction": {
-      "core_concepts": [
-        "C - Systems Programming Language",
-        "History and Importance",
-        "C vs C++ vs Other Languages",
-        "Applications of C"
-      ],
-      "development_environment": [
-        "Compiler Setup (GCC)",
-        "IDE/Editor Setup",
-        "Compilation Process (Preprocessor → Compiler → Linker)",
-        "Hello World Program"
-      ]
-    },
-
-    "02_basic_syntax": {
-      "data_types": [
-        "Basic Types (int, float, double, char)",
-        "Type Modifiers (signed, unsigned, short, long)",
-        "sizeof Operator",
-        "Type Qualifiers (const, volatile)"
-      ],
-      "variables_constants": [
-        "Variable Declaration and Initialization",
-        "Naming Conventions",
-        "Constants (#define, const)",
-        "Scope and Lifetime"
-      ]
-    }
-  },
-
-  "Operators_Expressions": {
-    "operators": [
-      "Arithmetic Operators (+, -, *, /, %, ++, --)",
-      "Relational Operators (==, !=, >, <, >=, <=)",
-      "Logical Operators (&&, ||, !)",
-      "Bitwise Operators (&, |, ^, ~, <<, >>)",
-      "Assignment Operators (=, +=, -=, etc.)",
-      "Ternary Operator (?:)"
+const cHierarchy = {
+  "Foundations & Basics": {
+    "C Overview": [
+      "What is C Programming?",
+      "History and Importance of C",
+      "Features of C Language",
+      "C vs Other Languages",
+      "Applications of C"
     ],
-
-    "expressions": [
-      "Operator Precedence and Associativity",
-      "Type Conversion (Implicit and Explicit)",
-      "Expression Evaluation"
+    "Environment Setup": [
+      "Setting up C Compiler (GCC, Clang)",
+      "IDE Setup",
+      "Writing First C Program",
+      "Compilation Process",
+      "Compiler, Assembler, Linker"
+    ],
+    "Program Structure": [
+      "Basic Structure of C Program",
+      "Header Files (#include)",
+      "Main Function (main())",
+      "Comments"
     ]
   },
-
-  "Input_Output": {
-    "standard_io": [
-      "printf() for Output",
-      "scanf() for Input",
-      "Format Specifiers (%d, %f, %c, %s)",
-      "Escape Sequences (\\n, \\t, \\b)"
+  "Variables & Data Types": {
+    "Basic Data Types": [
+      "int (Integer Types)",
+      "float, double (Floating-point)",
+      "char (Character)",
+      "void (Void Type)"
     ],
-
-    "character_io": [
+    "Type Modifiers": [
+      "signed and unsigned",
+      "short and long",
+      "Data Type Sizes (sizeof operator)",
+      "Type Qualifiers (const, volatile)"
+    ],
+    "Variables": [
+      "Variable Declaration and Initialization",
+      "Local vs Global Variables",
+      "Static Variables",
+      "Register Variables",
+      "External Variables (extern)"
+    ],
+    "Constants": [
+      "Integer Constants",
+      "Floating-point Constants",
+      "Character Constants",
+      "String Literals",
+      "Defining Constants (#define, const)"
+    ]
+  },
+  "Operators & Expressions": {
+    "Arithmetic Operators": [
+      "+, -, *, /, %",
+      "Increment (++), Decrement (--)"
+    ],
+    "Relational Operators": [
+      "==, !=, >, <, >=, <="
+    ],
+    "Logical Operators": [
+      "&& (AND), || (OR), ! (NOT)"
+    ],
+    "Bitwise Operators": [
+      "&, |, ^, ~",
+      "Left Shift (<<), Right Shift (>>)"
+    ],
+    "Assignment Operators": [
+      "=, +=, -=, *=, /=, %=",
+      "&=, |=, ^=, <<=, >>="
+    ],
+    "Misc Operators": [
+      "sizeof() Operator",
+      "Ternary Operator (?:)",
+      "Comma Operator (,)",
+      "Address (&) and Pointer (*)"
+    ],
+    "Operator Precedence": [
+      "Precedence and Associativity Rules"
+    ]
+  },
+  "Input/Output": {
+    "Standard I/O": [
+      "printf() Function",
+      "scanf() Function",
+      "Format Specifiers",
+      "Escape Sequences"
+    ],
+    "Character I/O": [
       "getchar() and putchar()",
-      "gets() and puts() (with limitations)",
-      "Safe Input Alternatives"
+      "gets() and puts()",
+      "fgets() and fputs()"
+    ],
+    "File I/O": [
+      "FILE Pointer",
+      "fopen() and fclose()",
+      "Reading from Files",
+      "Writing to Files",
+      "Binary File Operations"
     ]
   },
-
-  "Control_Flow": {
-    "decision_making": [
-      "if, if-else Statements",
+  "Control Statements": {
+    "Decision Making": [
+      "if Statement",
+      "if-else Statement",
       "Nested if-else",
-      "switch-case Statement",
-      "Conditional Expressions"
+      "else-if Ladder",
+      "switch Statement"
     ],
-
-    "loops": [
+    "Looping": [
       "while Loop",
       "do-while Loop",
       "for Loop",
       "Nested Loops",
-      "break and continue Statements"
+      "break and continue",
+      "goto Statement"
     ]
   },
-
   "Arrays": {
-    "one_dimensional": [
+    "One-Dimensional Arrays": [
       "Array Declaration and Initialization",
-      "Array Access and Traversal",
-      "Array Operations",
-      "Array Limitations"
+      "Accessing Array Elements",
+      "Array Bounds and Memory Layout",
+      "Array Operations"
     ],
-
-    "multi_dimensional": [
+    "Multi-Dimensional Arrays": [
       "2D Arrays (Matrices)",
-      "Declaration and Access",
-      "Row-major Order",
-      "Applications of 2D Arrays"
+      "Row-major and Column-major Order",
+      "3D Arrays"
     ],
-
-    "character_arrays": [
+    "Character Arrays": [
       "Strings as Character Arrays",
       "String Initialization",
-      "Null Terminator (\\0)",
-      "Basic String Operations"
+      "Null Terminator (\\0)"
     ]
   },
-
   "Pointers": {
-    "01_pointer_basics": [
-      "Pointer Declaration and Initialization",
+    "Pointer Basics": [
+      "Understanding Memory Addresses",
+      "Pointer Declaration",
       "Address-of Operator (&)",
       "Dereference Operator (*)",
-      "NULL Pointer",
-      "Pointer Arithmetic"
+      "Pointer Arithmetic",
+      "NULL Pointer"
     ],
-
-    "02_pointers_and_arrays": [
+    "Pointers & Arrays": [
       "Array Name as Pointer",
-      "Pointer to Array Elements",
+      "Pointer to Array",
       "Array of Pointers",
-      "Pointer Indexing"
+      "Pointer Arithmetic with Arrays"
     ],
-
-    "03_advanced_pointers": [
-      "Pointer to Pointer",
+    "Advanced Pointers": [
+      "Pointer to Pointer (Double Pointer)",
       "Pointer to Function",
-      "void Pointer (Generic Pointer)",
-      "Pointer Best Practices"
+      "void Pointer",
+      "Dangling Pointer",
+      "Wild Pointer"
+    ],
+    "Dynamic Memory": [
+      "malloc() Function",
+      "calloc() Function",
+      "realloc() Function",
+      "free() Function",
+      "Memory Leak Prevention"
     ]
   },
-
   "Functions": {
-    "01_function_basics": [
+    "Function Basics": [
       "Function Declaration (Prototype)",
       "Function Definition",
       "Function Call",
-      "Return Values",
-      "Parameters and Arguments"
+      "Return Statement",
+      "Parameters vs Arguments"
     ],
-
-    "02_parameter_passing": [
+    "Parameter Passing": [
       "Pass by Value",
-      "Pass by Reference (using Pointers)",
-      "Arrays as Parameters",
-      "Returning Values from Functions"
+      "Pass by Reference (Using Pointers)",
+      "Array as Function Parameter"
     ],
-
-    "03_function_types": [
-      "Standard Library Functions",
+    "Function Types": [
+      "Library Functions",
       "User-defined Functions",
       "Recursive Functions",
-      "Static Functions",
-      "Inline Functions"
+      "Inline Functions",
+      "Static Functions"
     ],
-
-    "04_scope_storage": [
-      "Local vs Global Variables",
+    "Scope & Storage": [
+      "Local vs Global Scope",
       "Block Scope",
-      "Storage Classes (auto, register, static, extern)",
-      "Variable Lifetime"
+      "Storage Classes (auto, register, static, extern)"
     ]
   },
-
   "Strings": {
-    "string_operations": [
-      "String Length (strlen)",
-      "String Copy (strcpy, strncpy)",
-      "String Concatenation (strcat, strncat)",
-      "String Comparison (strcmp, strncmp)"
+    "String Operations": [
+      "String Length (strlen())",
+      "String Copy (strcpy(), strncpy())",
+      "String Concatenation (strcat(), strncat())",
+      "String Comparison (strcmp(), strncmp())",
+      "String Search (strchr(), strstr())"
     ],
-
-    "character_functions": [
-      "Character Classification (isalpha, isdigit)",
-      "Character Conversion (toupper, tolower)",
-      "String Searching (strchr, strstr)"
+    "Character Handling": [
+      "Character Classification (isalpha(), isdigit())",
+      "Character Conversion (toupper(), tolower())"
     ],
-
-    "memory_functions": [
-      "memcpy for Memory Copy",
-      "memset for Memory Set",
-      "memcmp for Memory Compare",
-      "memmove for Overlapping Memory"
+    "Memory Functions": [
+      "memcpy()",
+      "memmove()",
+      "memset()",
+      "memcmp()"
     ]
   },
-
-  "Structures_Unions": {
-    "structures": [
+  "Structures & Unions": {
+    "Structures": [
       "Structure Definition",
       "Structure Variable Declaration",
-      "Accessing Members (., ->)",
-      "Structure Initialization",
+      "Accessing Structure Members",
       "Array of Structures",
-      "Nested Structures"
+      "Nested Structures",
+      "Pointer to Structure (->)",
+      "Structure Padding"
     ],
-
-    "unions": [
+    "Unions": [
       "Union Definition",
-      "Union vs Structure",
-      "Union Memory Usage",
-      "Practical Applications"
+      "Structure vs Union",
+      "Union Memory Allocation"
     ],
-
-    "type_definitions": [
-      "typedef for Type Aliases",
-      "typedef with Structures",
-      "enum for Enumerations"
+    "Typedef & Enums": [
+      "typedef Keyword",
+      "Creating Aliases",
+      "Enumeration Types (enum)",
+      "Enum vs #define"
     ]
   },
-
-  "Dynamic_Memory_Allocation": {
-    "memory_functions": [
-      "malloc for Memory Allocation",
-      "calloc for Contiguous Allocation",
-      "realloc for Reallocation",
-      "free for Memory Deallocation"
+  "Preprocessor Directives": {
+    "File Inclusion": [
+      "#include Directive",
+      "Angle Brackets vs Quotes"
     ],
-
-    "memory_management": [
-      "Heap Memory Usage",
-      "Memory Leak Prevention",
-      "Common Memory Errors",
-      "Dynamic Arrays"
-    ]
-  },
-
-  "File_Handling": {
-    "01_file_basics": [
-      "File Operations (Open, Read, Write, Close)",
-      "File Modes (r, w, a, r+, w+, a+)",
-      "Text vs Binary Files",
-      "FILE Pointer"
+    "Macro Definitions": [
+      "#define Directive",
+      "Object-like Macros",
+      "Function-like Macros",
+      "# and ## Operators"
     ],
-
-    "02_file_operations": [
-      "Character I/O (fgetc, fputc)",
-      "String I/O (fgets, fputs)",
-      "Formatted I/O (fprintf, fscanf)",
-      "Binary I/O (fread, fwrite)"
-    ],
-
-    "03_file_management": [
-      "File Positioning (fseek, ftell, rewind)",
-      "Error Handling (feof, ferror)",
-      "File Copy Operations",
-      "File Processing Patterns"
-    ]
-  },
-
-  "Preprocessor_Directives": {
-    "directives": [
-      "#include for File Inclusion",
-      "#define for Macros",
-      "#ifdef, #ifndef for Conditional Compilation",
+    "Conditional Compilation": [
+      "#ifdef, #ifndef, #endif",
       "#if, #elif, #else",
-      "Predefined Macros (__DATE__, __LINE__)"
+      "#undef Directive",
+      "Predefined Macros"
     ]
   },
-
-  "Memory_Layout": {
-    "segments": [
+  "Memory Management": {
+    "Memory Layout": [
       "Text Segment (Code)",
-      "Data Segment (Initialized Data)",
-      "BSS Segment (Uninitialized Data)",
+      "Data Segment",
+      "BSS Segment",
       "Stack Memory",
-      "Heap Memory",
-      "Function Call Stack"
+      "Heap Memory"
+    ],
+    "Stack Operations": [
+      "Function Call Stack",
+      "Stack Frame",
+      "Stack Overflow"
+    ],
+    "Heap Management": [
+      "Dynamic Memory Allocation",
+      "Memory Fragmentation",
+      "Memory Leak Detection",
+      "Valgrind Tool"
     ]
   },
-
-  "Command_Line_Arguments": {
-    "basics": [
+  "File Handling": {
+    "File Modes": [
+      "Text vs Binary Files",
+      "File Opening Modes (r, w, a, r+, w+, a+)",
+      "Binary Modes (rb, wb, ab)"
+    ],
+    "File Operations": [
+      "Character I/O (fgetc(), fputc())",
+      "String I/O (fgets(), fputs())",
+      "Formatted I/O (fprintf(), fscanf())",
+      "Binary I/O (fread(), fwrite())"
+    ],
+    "File Positioning": [
+      "ftell() Function",
+      "fseek() Function",
+      "rewind() Function",
+      "Random Access Files"
+    ],
+    "Error Handling": [
+      "feof() Function",
+      "ferror() Function",
+      "perror() Function",
+      "errno Variable"
+    ]
+  },
+  "Advanced Concepts": {
+    "Command Line Args": [
       "argc and argv Parameters",
-      "Processing Command Line Input",
-      "Argument Parsing",
-      "Practical Applications"
-    ]
-  },
-
-  "Standard_Library": {
-    "essential_headers": {
-      "stdio.h": ["Input/Output Functions"],
-      "stdlib.h": ["Memory Allocation, Type Conversion"],
-      "string.h": ["String Manipulation"],
-      "math.h": ["Mathematical Functions"],
-      "ctype.h": ["Character Handling"],
-      "time.h": ["Date and Time Functions"]
-    }
-  },
-
-  "Data_Structures": {
-    "01_linked_lists": [
-      "Singly Linked List Implementation",
-      "Node Structure",
-      "Insert, Delete, Traverse Operations",
-      "Linked List Applications"
+      "Processing Command Line Arguments"
     ],
-
-    "02_stacks_queues": [
-      "Stack Implementation (Array/Linked List)",
-      "Stack Operations (Push, Pop, Peek)",
-      "Queue Implementation",
-      "Queue Operations (Enqueue, Dequeue)"
+    "Bit Fields": [
+      "Bit Field Declaration",
+      "Memory Saving with Bit Fields"
     ],
-
-    "03_trees": [
-      "Binary Tree Basics",
-      "Binary Search Tree Implementation",
-      "Tree Traversals (Inorder, Preorder, Postorder)"
+    "Variable Arguments": [
+      "stdarg.h Library",
+      "va_list, va_start, va_arg, va_end"
     ],
-
-    "04_sorting_searching": [
-      "Bubble Sort, Selection Sort, Insertion Sort",
-      "Merge Sort, Quick Sort Basics",
-      "Linear Search and Binary Search",
-      "Algorithm Complexity Basics"
-    ]
-  },
-
-  "Recursion": {
-    "concepts": [
+    "Recursion": [
       "Recursive Function Design",
       "Base Case and Recursive Case",
-      "Recursion vs Iteration",
-      "Stack Usage in Recursion",
-      "Common Recursive Problems"
+      "Recursion vs Iteration"
     ]
   },
-
-  "Bit_Manipulation": {
-    "basics": [
-      "Bitwise Operations",
-      "Bit Masking",
-      "Bit Fields in Structures",
-      "Practical Applications"
+  "Data Structures": {
+    "Linked Lists": [
+      "Singly Linked List",
+      "Doubly Linked List",
+      "Circular Linked List",
+      "Linked List Operations"
+    ],
+    "Stacks": [
+      "Stack Implementation (Array-based)",
+      "Stack Implementation (Linked List)",
+      "Stack Operations (Push, Pop, Peek)"
+    ],
+    "Queues": [
+      "Queue Implementation",
+      "Circular Queue",
+      "Priority Queue",
+      "Queue Operations"
+    ],
+    "Trees": [
+      "Binary Tree",
+      "Binary Search Tree (BST)",
+      "Tree Traversals",
+      "AVL Trees (Introduction)"
+    ],
+    "Graphs": [
+      "Graph Representation",
+      "Graph Traversal (BFS, DFS)"
     ]
   },
-
-  "Error_Handling": {
-    "techniques": [
+  "Sorting & Searching": {
+    "Sorting Algorithms": [
+      "Bubble Sort",
+      "Selection Sort",
+      "Insertion Sort",
+      "Merge Sort",
+      "Quick Sort",
+      "Heap Sort"
+    ],
+    "Searching Algorithms": [
+      "Linear Search",
+      "Binary Search",
+      "Complexity Analysis"
+    ]
+  },
+  "C Standard Library": {
+    "stdio.h": [
+      "Standard I/O Functions",
+      "File Operations"
+    ],
+    "stdlib.h": [
+      "Memory Allocation",
+      "Type Conversions",
+      "Random Numbers"
+    ],
+    "string.h": [
+      "String Manipulation Functions"
+    ],
+    "math.h": [
+      "Mathematical Functions"
+    ],
+    "time.h": [
+      "Date and Time Functions"
+    ],
+    "ctype.h": [
+      "Character Handling Functions"
+    ]
+  },
+  "Debugging & Testing": {
+    "Debugging Techniques": [
+      "Print Statement Debugging",
+      "Debugger Tools (GDB)",
+      "Core Dump Analysis"
+    ],
+    "Testing": [
+      "Unit Testing Concepts",
+      "Test Case Design",
+      "Boundary Value Testing"
+    ],
+    "Error Handling": [
       "Return Value Checking",
       "Error Codes",
-      "errno Variable",
-      "perror() Function",
-      "Robust Programming Practices"
+      "Robust Programming"
     ]
   },
-
-  "Debugging_Tools": {
-    "tools": [
-      "Print Statement Debugging",
-      "GDB Basics (GNU Debugger)",
-      "Common Compiler Warnings",
-      "Code Analysis Tools"
+  "System Programming": {
+    "Process Management": [
+      "Process Creation (fork())",
+      "Process Termination",
+      "Process Control"
+    ],
+    "IPC": [
+      "Pipes (pipe())",
+      "Signals",
+      "Shared Memory"
+    ],
+    "System Calls": [
+      "Understanding System Calls",
+      "Common System Calls"
     ]
   },
-
-  "Best_Practices": {
-    "01_code_quality": [
-      "Meaningful Variable Names",
-      "Consistent Code Formatting",
-      "Commenting Guidelines",
-      "Function Size and Complexity"
+  "Multithreading": {
+    "Thread Basics": [
+      "Thread vs Process",
+      "POSIX Threads (pthreads)",
+      "Thread Creation and Termination"
     ],
-
-    "02_performance": [
-      "Efficient Loop Structures",
-      "Memory Usage Optimization",
-      "Algorithm Selection",
-      "Compiler Optimization Flags"
+    "Synchronization": [
+      "Mutex (Mutual Exclusion)",
+      "Semaphores",
+      "Race Conditions",
+      "Deadlock Prevention"
+    ]
+  },
+  "Best Practices": {
+    "Coding Standards": [
+      "Naming Conventions",
+      "Code Formatting",
+      "Commenting Guidelines"
     ],
-
-    "03_security": [
+    "Performance": [
+      "Optimization Techniques",
+      "Memory Optimization",
+      "CPU Optimization"
+    ],
+    "Security": [
       "Buffer Overflow Prevention",
-      "Input Validation",
-      "Safe String Functions",
-      "Memory Safety"
+      "Secure Coding Practices",
+      "Input Validation"
     ]
   },
-
-  "Essential_Projects": {
-    "beginner_projects": [
-      "Calculator with Menu",
-      "Student Grade Management System",
-      "Bank Account Simulation",
-      "Number Guessing Game"
+  "Practical Projects": {
+    "Beginner Projects": [
+      "Calculator Program",
+      "Student Record System",
+      "Bank Account Management",
+      "Library Management System"
     ],
-
-    "intermediate_projects": [
-      "File Encryption/Decryption Tool",
-      "Contact Management System",
-      "Mini Database with File Storage",
-      "Text File Statistics Generator"
+    "Intermediate Projects": [
+      "File Compression Utility",
+      "Mini Database System",
+      "Text Editor",
+      "Chat Application"
     ],
-
-    "must_implement_features": [
-      "Dynamic Array Implementation",
-      "Linked List Operations",
-      "File I/O Operations",
-      "Command Line Interface",
-      "Data Sorting and Searching"
-    ]
-  },
-
-  "Interview_Preparation": {
-    "core_concepts": [
-      "Pointers and Memory Management",
-      "Arrays and Strings",
-      "Functions and Recursion",
-      "Structures and Unions",
-      "File Handling",
-      "Dynamic Memory Allocation"
-    ],
-
-    "practical_skills": [
-      "Implement Data Structures",
-      "File Processing Programs",
-      "Memory Management Exercises",
-      "Algorithm Implementation",
-      "Debugging C Code"
-    ],
-
-    "common_problems": [
-      "String Manipulation Problems",
-      "Array Processing Problems",
-      "Pointer-based Problems",
-      "File I/O Problems",
-      "Recursive Problems"
+    "Advanced Projects": [
+      "Shell Implementation",
+      "Memory Allocator",
+      "Compiler for C Subset",
+      "OS Components"
     ]
   }
 };
 
-const formatName = (str) => {
-    return str
-        .replace(/^\\d+_/, '')
-        .split('_')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
-};
+const seedCHierarchy = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB_URI);
+    console.log('📦 Connected to MongoDB');
 
-const seedC = async () => {
-    try {
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
-
-        let topic = await Topic.findOne({ slug: 'c' });
-        if (!topic) {
-            console.log('Creating C topic...');
-            topic = await Topic.create({
-                name: 'C',
-                slug: 'c',
-                description: 'Master systems programming with C language',
-                icon: '©️',
-                order: 11,
-                color: '#A8B9CC'
-            });
-        }
-
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ topicId: topic._id });
-            await Category.deleteMany({ topicId: topic._id });
-            console.log('Cleared existing C data');
-        }
-
-        const seenSlugs = new Set();
-        const generateUniqueSlug = (title) => {
-            let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
-            let slug = baseSlug;
-            let counter = 1;
-            while (seenSlugs.has(slug)) {
-                counter++;
-                slug = `${baseSlug}-${counter}`;
-            }
-            seenSlugs.add(slug);
-            return slug;
-        };
-
-        let order = 1;
-        for (const [mainKey, mainValue] of Object.entries(cData)) {
-            const groupName = formatName(mainKey); // Use mainKey as group - maintains study order!
-            
-            for (const [key, value] of Object.entries(mainValue)) {
-                const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
-
-                const category = await Category.create({
-                    name: categoryName,
-                    slug: categorySlug,
-                    description: `Learn about ${categoryName}`,
-                    topicId: topic._id,
-                    group: groupName,
-                    order: order++
-                });
-
-                let sections = [];
-                if (Array.isArray(value)) {
-                    sections = value;
-                } else {
-                    for (const [subKey, subItems] of Object.entries(value)) {
-                        sections = [...sections, ...subItems];
-                    }
-                }
-
-                const sectionDocs = sections.map((sectionTitle, index) => ({
-                    title: sectionTitle,
-                    slug: generateUniqueSlug(sectionTitle),
-                    description: `Detailed explanation of ${sectionTitle}`,
-                    content: 'Coming soon...',
-                    categoryId: category._id,
-                    topicId: topic._id,
-                    order: index + 1,
-                    difficulty: categoryName.includes('Advanced') || categoryName.includes('Data Structures') || categoryName.includes('Bit Manipulation') ? 'advanced' : 
-                               categoryName.includes('Introduction') || categoryName.includes('Fundamentals') || categoryName.includes('Basic') ? 'beginner' : 'intermediate',
-                    estimatedTime: 15
-                }));
-
-                await Section.insertMany(sectionDocs);
-                console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
-            }
-        }
-
-        console.log('✅ C seeding complete!');
-        process.exit(0);
-    } catch (error) {
-        console.error('Error seeding data:', error);
-        process.exit(1);
+    // Create C topic
+    let cTopic = await Topic.findOne({ slug: 'c-programming' });
+    if (!cTopic) {
+      const topicCount = await Topic.countDocuments();
+      cTopic = await Topic.create({
+        name: 'C Programming',
+        slug: 'c-programming',
+        description: 'Master C programming - the foundation of modern programming. From fundamentals to system programming and data structures.',
+        icon: '🔤',
+        order: topicCount + 1,
+        estimatedHours: 60
+      });
+      console.log('✅ Created C Programming topic');
     }
+
+    // Clear existing structure
+    console.log('🧹 Clearing existing categories and sections...');
+    await Section.deleteMany({ topicId: cTopic._id });
+    await Category.deleteMany({ topicId: cTopic._id });
+
+    // Seed hierarchy
+    let categoryOrder = 1;
+    for (const [groupName, categories] of Object.entries(cHierarchy)) {
+      for (const [categoryName, sections] of Object.entries(categories)) {
+        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '');
+        
+        let category = await Category.findOne({
+          topicId: cTopic._id,
+          slug: categorySlug
+        });
+
+        if (!category) {
+          category = await Category.create({
+            topicId: cTopic._id,
+            name: categoryName,
+            slug: categorySlug,
+            group: groupName,
+            order: categoryOrder++,
+            description: `Learn ${categoryName} in C`
+          });
+          console.log(`✅ Created category: ${categoryName}`);
+        }
+
+        let sectionOrder = 1;
+        for (const sectionTitle of sections) {
+          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[().,&/]/g, '')
+            .replace(/:/g, '')
+            .replace(/#/g, 'hash-')
+            .replace(/\\/g, '')}`;
+
+          const existingSection = await Section.findOne({
+            categoryId: category._id,
+            slug: sectionSlug
+          });
+
+          if (!existingSection) {
+            await Section.create({
+              categoryId: category._id,
+              topicId: cTopic._id,
+              title: sectionTitle,
+              slug: sectionSlug,
+              order: sectionOrder++,
+              description: `Learn about ${sectionTitle}`,
+              difficulty: 'beginner',
+              estimatedTime: 30
+            });
+          }
+        }
+      }
+    }
+
+    console.log('🎉 C Programming hierarchy seeded successfully!');
+    process.exit(0);
+  } catch (error) {
+    console.error('Error seeding C Programming:', error);
+    process.exit(1);
+  }
 };
 
-seedC();
+seedCHierarchy();
