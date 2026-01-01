@@ -3,14 +3,20 @@ import Section from '../models/Section.js';
 import Category from '../models/Category.js';
 import Progress from '../models/Progress.js';
 import UserPreferences from '../models/userPreferences.model.js';
+import PathMap from '../models/PathMap.js';
 
+/**
+ * Get all topics with category counts and section counts
+ */
 /**
  * Get all topics with category counts and section counts
  */
 export const getAllTopics = async (req, res) => {
   try {
     const userId = req.user ? req.user.id : null;
+    const { experienceLevel } = req.query;
     
+    // 1. Fetch Aggregation
     const topicsWithCounts = await Topic.aggregate([
       {
         $lookup: {
@@ -67,43 +73,63 @@ export const getAllTopics = async (req, res) => {
       ] : []),
       {
         $sort: { order: 1 }
-      },
-      {
-        $project: {
-          name: 1,
-          slug: 1,
-          description: 1,
-          icon: 1,
-          color: 1,
-          order: 1,
-          categoryCount: { $size: '$categories' },
-          sectionCount: { $size: '$sections' },
-          totalSections: { $size: '$sections' },
-          completedSections: userId ? { $size: '$userProgress' } : { $literal: 0 },
-          progress: {
-            $cond: {
-              if: { $gt: [{ $size: '$sections' }, 0] },
-              then: {
-                $multiply: [
-                  { $divide: [userId ? { $size: '$userProgress' } : 0, { $size: '$sections' }] },
-                  100
-                ]
-              },
-              else: 0
-            }
-          }
-        }
-      },
-      {
-        $addFields: {
-          progress: { $round: ['$progress', 0] }
-        }
       }
     ]);
+
+    // 2. Fetch PathMaps if level provided
+    let pathMaps = [];
+    if (experienceLevel) {
+        pathMaps = await PathMap.find({ experienceLevel }).lean();
+    }
+
+    // 3. Process Counts using JS (More robust than complex aggregation)
+    const finalTopics = topicsWithCounts.map(topic => {
+        let visibleCategories = topic.categories;
+        let visibleSections = topic.sections;
+        
+        if (experienceLevel) {
+            const map = pathMaps.find(p => p.topicId.toString() === topic._id.toString());
+            if (map && map.visibleCategorySlugs?.length > 0) {
+                 visibleCategories = topic.categories.filter(c => map.visibleCategorySlugs.includes(c.slug));
+                 // Filter sections belonging to visible categories
+                 const visibleCatIds = visibleCategories.map(c => c._id.toString());
+                 visibleSections = topic.sections.filter(s => visibleCatIds.includes(s.categoryId?.toString()));
+            }
+        }
+
+        const stats = {
+            categoryCount: visibleCategories.length,
+            sectionCount: visibleSections.length,
+            totalSections: visibleSections.length,
+        };
+        
+        // Recalculate progress based on filtered sections
+        let completedSections = 0;
+        
+        if (topic.userProgress && topic.userProgress.length > 0) {
+            const visibleSectionIds = visibleSections.map(s => s._id.toString());
+            completedSections = topic.userProgress.filter(p => visibleSectionIds.includes(p.sectionId?.toString())).length;
+        }
+        
+        let progress = 0;
+        if (stats.totalSections > 0) {
+            progress = Math.round((completedSections / stats.totalSections) * 100);
+        }
+
+        return {
+            ...topic,
+            categories: undefined, // Don't send heavy arrays
+            sections: undefined,   // Don't send heavy arrays
+            userProgress: undefined,
+            ...stats,
+            completedSections,
+            progress
+        };
+    });
     
     res.json({
       success: true,
-      topics: topicsWithCounts
+      topics: finalTopics
     });
   } catch (error) {
     console.error('Get Topics Error:', error);
@@ -116,142 +142,10 @@ export const getAllTopics = async (req, res) => {
 /**
  * Get personalized topics based on user activity
  */
+// Simplified wrapper to reuse logic since filtering is now identical
 export const getPersonalizedTopics = async (req, res) => {
-  try {
-    const userId = req.user?.id;
-
-    // If no user or no preferences, fall back to default order
-    if (!userId) {
-      return getAllTopics(req, res);
-    }
-
-    // Get user preferences
-    const preferences = await UserPreferences.findOne({ userId }).lean();
-
-    if (!preferences || !preferences.topicRankings || preferences.topicRankings.length === 0) {
-      // New user - return default order
-      return getAllTopics(req, res);
-    }
-
-    // Get all topics with progress
-    const topicsWithCounts = await Topic.aggregate([
-      {
-        $lookup: {
-          from: 'categories',
-          localField: '_id',
-          foreignField: 'topicId',
-          as: 'categories'
-        }
-      },
-      {
-        $lookup: {
-          from: 'sections',
-          localField: '_id',
-          foreignField: 'topicId',
-          as: 'sections'
-        }
-      },
-      {
-        $lookup: {
-          from: 'progresses',
-          let: { topicId: '$_id' },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    { $eq: ['$userId', userId] },
-                    { $eq: ['$completed', true] }
-                  ]
-                }
-              }
-            },
-            {
-              $lookup: {
-                from: 'sections',
-                localField: 'sectionId',
-                foreignField: '_id',
-                as: 'section'
-              }
-            },
-            {
-              $unwind: '$section'
-            },
-            {
-              $match: {
-                $expr: { $eq: ['$section.topicId', '$$topicId'] }
-              }
-            }
-          ],
-          as: 'userProgress'
-        }
-      },
-      {
-        $addFields: {
-          categoryCount: { $size: '$categories' },
-          sectionCount: { $size: '$sections' },
-          completedCount: { $size: '$userProgress' },
-          completionPercentage: {
-            $cond: {
-              if: { $gt: [{ $size: '$sections' }, 0] },
-              then: {
-                $multiply: [
-                  { $divide: [{ $size: '$userProgress' }, { $size: '$sections' }] },
-                  100
-                ]
-              },
-              else: 0
-            }
-          }
-        }
-      },
-      {
-        $project: {
-          categories: 0,
-          sections: 0,
-          userProgress: 0
-        }
-      }
-    ]);
-
-    // Create ranking map
-    const rankingMap = new Map(
-      preferences.topicRankings.map(r => [r.topicSlug, r.score])
-    );
-
-    // Sort by personalized rankings
-    topicsWithCounts.sort((a, b) => {
-      const scoreA = rankingMap.get(a.slug) || 0;
-      const scoreB = rankingMap.get(b.slug) || 0;
-      
-      if (scoreB !== scoreA) {
-        return scoreB - scoreA; // Higher score first
-      }
-      
-      // Fallback to last accessed if scores are equal
-      const lastAccessedA = preferences.topicRankings.find(r => r.topicSlug === a.slug)?.lastAccessed || 0;
-      const lastAccessedB = preferences.topicRankings.find(r => r.topicSlug === b.slug)?.lastAccessed || 0;
-      
-      if (lastAccessedB !== lastAccessedA) {
-        return new Date(lastAccessedB) - new Date(lastAccessedA);
-      }
-
-      // Fallback to alphabetical
-      return a.name.localeCompare(b.name);
-    });
-
-      res.json({
-        success: true,
-        topics: topicsWithCounts,
-        personalized: true,
-        learningPath: preferences.learningPath,
-        aiSuggestion: preferences.aiSuggestion || null
-      });
-  } catch (error) {
-    console.error('Get Personalized Topics Error:', error);
-    // Fallback to default on error
+    // We delegate to getAllTopics to ensure consistent filtering counts
     return getAllTopics(req, res);
-  }
 };
 
 /**
@@ -290,6 +184,7 @@ export const getTopicBySlug = async (req, res) => {
 export const getTopicAggregate = async (req, res) => {
   try {
     const { slug } = req.params;
+    const { experienceLevel } = req.query; // Get experience level from query params
     const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
     const topic = await Topic.findOne({ slug });
@@ -297,11 +192,35 @@ export const getTopicAggregate = async (req, res) => {
       return res.status(404).json({ error: 'Topic not found' });
     }
 
-    const [categories, sections, progressRecords] = await Promise.all([
-      Category.find({ topicId: topic._id }).sort({ order: 1 }),
-      Section.find({ topicId: topic._id }).sort({ order: 1 }),
-      Progress.find({ userId, sectionId: { $in: await Section.distinct('_id', { topicId: topic._id }) } })
-    ]);
+    // 1. Determine visible categories based on PathMap
+    let categoryQuery = { topicId: topic._id };
+    
+    console.log(`[API] Fetching topic ${topic.slug}. ExpLevel: ${experienceLevel || 'NONE'}`);
+
+    if (experienceLevel) {
+      const pathMap = await PathMap.findOne({ topicId: topic._id, experienceLevel });
+      if (pathMap && pathMap.visibleCategorySlugs && pathMap.visibleCategorySlugs.length > 0) {
+        console.log(`[API] PathMap FOUND. Filtered ${topic.slug} to ${pathMap.visibleCategorySlugs.length} categories.`);
+        categoryQuery.slug = { $in: pathMap.visibleCategorySlugs };
+      } else {
+        console.log(`[API] PathMap NOT found or empty for ${topic.slug} / ${experienceLevel}`);
+      }
+    }
+
+    // 2. Fetch filtered categories and their sections
+    const categories = await Category.find(categoryQuery).sort({ order: 1 });
+    const categoryIds = categories.map(c => c._id);
+    
+    // 3. Fetch sections ONLY for these categories to ensure accurate counts
+    const sections = await Section.find({ 
+      topicId: topic._id, 
+      categoryId: { $in: categoryIds } 
+    }).sort({ order: 1 });
+
+    const progressRecords = await Progress.find({ 
+      userId, 
+      sectionId: { $in: sections.map(s => s._id) } 
+    });
 
     // Build progress map
     const progressMap = {};

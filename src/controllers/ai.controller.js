@@ -86,12 +86,12 @@ export const generateQuiz = async (req, res) => {
  */
 export const structurePath = async (req, res) => {
   try {
-    const { topics, pathName } = req.body;
+    const { topics, pathName, experienceLevel } = req.body;
     if (!topics || !Array.isArray(topics) || !pathName) {
         return res.status(400).json({ error: 'Topics array and pathName are required' });
     }
 
-    const structure = await geminiService.structureLearningPath(topics, pathName);
+    const structure = await geminiService.structureLearningPath(topics, pathName, experienceLevel);
     
     res.json({
         success: true,

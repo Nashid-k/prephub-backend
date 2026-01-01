@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
+import PathMap from '../../models/PathMap.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { assignGroup } from '../utils/categoryGrouping.js';
@@ -680,6 +681,60 @@ const seedPython = async () => {
                 await Section.insertMany(sectionDocs);
                 console.log(`Created Category: ${categoryName} (Group: ${formatName(mainKey)}) with ${sectionDocs.length} sections`);
             }
+        }
+
+
+
+        // --- PathMap Generation ---
+        console.log('Generating PathMaps for Experience Levels...');
+
+        const allCategories = await Category.find({ topicId: topic._id });
+        const categoriesByGroup = {};
+        allCategories.forEach(c => {
+            if (!categoriesByGroup[c.group]) categoriesByGroup[c.group] = [];
+            categoriesByGroup[c.group].push(c.slug);
+        });
+
+        const levels = {
+            '0-1_year': [
+                'Python Basics', 'Data Types And Structures', 'Control Flow', 'Functions', 'String Operations', 'File Operations', 
+                'Useful Modules', 'Essential Problems', 'Development Best Practices'
+            ],
+            '1-3_years': [
+                'Python Basics', 'Data Types And Structures', 'Control Flow', 'Functions', 'String Operations', 'File Operations', 
+                'Useful Modules', 'Essential Problems', 'Development Best Practices',
+                'Object Oriented Programming', 'Error Handling', 'Advanced Features', 'Practical Skills', 'Testing And TDD', 
+                'Web Development Ecosystem', 'Database Interaction'
+            ],
+            '3-5_years': [
+                'Python Basics', 'Data Types And Structures', 'Control Flow', 'Functions', 'String Operations', 'File Operations', 
+                'Useful Modules', 'Essential Problems', 'Development Best Practices',
+                'Object Oriented Programming', 'Error Handling', 'Advanced Features', 'Practical Skills', 'Testing And TDD', 
+                'Web Development Ecosystem', 'Database Interaction',
+                'Advanced Metaprogramming', 'Type Hinting And Static Analysis', 'Concurrency And Parallelism Advanced', 
+                'Data Science Fundamentals', 'Networking And Sockets', 'Packaging And Distribution', 'Clean Code And Architecture', 'Interview Preparation'
+            ]
+        };
+
+        for (const [level, groups] of Object.entries(levels)) {
+            let visibleSlugs = [];
+            groups.forEach(g => {
+                const matchGroup = Object.keys(categoriesByGroup).find(k => k.toLowerCase() === g.toLowerCase());
+                if (matchGroup && categoriesByGroup[matchGroup]) {
+                    visibleSlugs = [...visibleSlugs, ...categoriesByGroup[matchGroup]];
+                }
+            });
+
+            await PathMap.findOneAndUpdate(
+                { topicId: topic._id, experienceLevel: level },
+                { 
+                    topicId: topic._id,
+                    experienceLevel: level,
+                    visibleCategorySlugs: visibleSlugs 
+                },
+                { upsert: true, new: true }
+            );
+            console.log(`Created PathMap for ${level}: ${visibleSlugs.length} categories`);
         }
 
         console.log('✅ Python seeding complete!');

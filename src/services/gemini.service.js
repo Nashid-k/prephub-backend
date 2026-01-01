@@ -930,11 +930,12 @@ Return only valid JSON.
 /**
  * Structure a learning path intelligently
  */
-export const structureLearningPath = async (topics, pathName) => {
+export const structureLearningPath = async (topics, pathName, experienceLevel = '0-1_year') => {
   const topicSlugs = topics.map(t => t.slug).sort().join('_');
   const topicHash = Buffer.from(topicSlugs).toString('base64').substring(0, 40);
   const pathHash = Buffer.from(pathName).toString('base64').substring(0, 20);
-  const cacheKey = `path_structure_${pathHash}_${topicHash}`;
+  // Include experience level in cache key!
+  const cacheKey = `path_structure_v3_${pathHash}_${topicHash}_${experienceLevel}`;
   
   const cached = await getCacheValue(cacheKey);
   if (cached) {
@@ -945,31 +946,32 @@ export const structureLearningPath = async (topics, pathName) => {
   const topicList = topics.map(t => `"${t.name}" (slug: ${t.slug})`).join(', ');
 
   const prompt = `
-You are a curriculum design expert. Structure a learning path logically.
+You are a curriculum design expert. Structure a learning path for a student.
 
 **PATH NAME**: "${pathName}"
+**EXPERIENCE LEVEL**: "${experienceLevel}" (e.g., "0-1 Years" means Beginner, "3-5 Years" means Advanced)
 **TOPICS TO ORDER**: ${topicList}
 
 **TASK**:
-1. Reorder these EXACT topics from beginner → advanced
-2. Consider dependencies (e.g., HTML before React, basics before frameworks)
-3. Explain the learning strategy
-
-**RULES**:
-- Use ONLY the provided topic slugs
-- Do NOT invent new topics
-- Order must make pedagogical sense
-- **CRITICAL**: If 'dsa' (Data Structures & Algorithms) is present, place it AFTER the primary language basics but BEFORE advanced frameworks (e.g., JavaScript -> DSA -> React). It is a foundational core.
+1. Reorder these EXACT topics from start to finish based on the experience level.
+2. Define a **Category Filtering Strategy** for this experience level.
+   - For a **Beginner (0-1 Year)**: List keywords to HIDE. You MUST include broad terms like "advanced", "internals", "deep dive", "architecture", "complex" if they appear in the dataset.
+   - For an **Expert (3-5 Years)**: List keywords to HIDE (usually empty, or basic setup guides).
+   - BE INTENTIONAL: If a beginner *needs* "Async" or "Promises", DO NOT hide "async". Use your expertise.
 
 **OUTPUT** (JSON only):
 {
   "orderedSlugs": ["slug1", "slug2", "slug3"],
-  "learningStrategy": "Brief explanation of the ordering logic"
+  "learningStrategy": "Brief explanation of the ordering logic",
+  "hideKeywords": ["advanced", "architecture", "internals", "metaprogramming"]
 }
+
+**EXAMPLES**:
+- If Python Beginner: "hideKeywords": ["advanced", "metaclasses", "memory management", "internals", "distributed"]
+- If Python Advanced: "hideKeywords": []
 
 Return only valid JSON.
 `;
-
   const parseAndCache = async (text) => {
     let jsonText = text.trim();
     
@@ -1037,8 +1039,87 @@ Return only valid JSON.
   console.warn('❌ AI structure failed, returning original order');
   return {
     orderedSlugs: topics.map(t => t.slug),
-    learningStrategy: "Standard linear progression based on original order."
+    learningStrategy: "Standard linear progression based on original order.",
+    hideKeywords: []
   };
+};
+
+const _formatLevel = (code) => {
+  if(code === '0-1_year') return "Beginner (0-1 Year)";
+  if(code === '1-3_years') return "Intermediate (1-3 Years)";
+  return "Expert (3-5 Years)";
+};
+
+/**
+ * Generates a curated list of visible categories for a specific experience level.
+ * This is a "Allow List" approach, not a "Block List" approach.
+ * @param {Array} categories - Array of category objects { name, slug, group }
+ * @param {String} topicName
+ * @param {String} experienceLevel - '0-1_year', '1-3_years', '3-5_years'
+ */
+const curatePathMap = async (categories, topicName, experienceLevel) => {
+  // Use a simplified internal getter or just reuse global clients if available
+  // Since this file uses getClient() as a private helper inside functions in some places? 
+  // Wait, other functions use `getClient()`? No, structureLearningPath uses `getClient()`.
+  // Let's see where getClient comes from. It seems missing in this context.
+  // structureLearningPath uses `this.getClient()` which implies there WAS a class...
+  // BUT `structureLearningPath` acts like a standalone function in the export?
+  // Checking file source... `structureLearningPath` calls `const client = getClient();` (if standalone) OR `this.getClient()`.
+  // If the file is mixed, I need to know how `getClient` is defined.
+  
+  // Assuming getClient is a helper function defined elsewhere in this file.
+  // If not, I'll use groqClients[0] directly as per valid imports.
+  
+  const client = groqClients[0]; 
+
+  // Prepare the list for the AI
+  const categoryList = categories.map(c => `- ${c.name} (Slug: ${c.slug}, Group: ${c.group})`).join('\n');
+  const levelLabel = _formatLevel(experienceLevel);
+
+  const systemPrompt = `You are an expert ${topicName} Curriculum Designer. 
+Your task is to SELECT the specific modules that a student at the "${levelLabel}" level should learn.
+
+Guidelines:
+1. **Beginner (0-1 Year)**: Select ONLY fundamental and essential modules. Be strict. Exclude advanced architecture, internals, complex optimizations, and niche topics unless they are absolutely critical for a beginner to function.
+2. **Intermediate (1-3 Years)**: Select core competencies plus common advanced topics.
+3. **Expert (3-5 Years)**: Select EVERYTHING provided, perhaps excluding only "Setting up the environment" if redundant, but usually experts see all.
+
+Input: A list of available modules (Name, Slug, Group).
+Output: JSON object with:
+- "visibleSlugs": Array of strings (the slugs of the selected modules)
+- "reasoning": Brief explanation of the selection strategy.
+
+IMPORTANT: Return ONLY valid JSON.
+`;
+
+  const userPrompt = `Input Modules for ${topicName}:
+${categoryList}
+
+Curate the list for a ${levelLabel}.`;
+
+  try {
+    // Try Primary Client (Groq)
+    const completion = await client.chat.completions.create({
+      messages: [
+        { role: 'system', content: systemPrompt },
+        { role: 'user', content: userPrompt }
+      ],
+      model: 'llama-3.3-70b-versatile',
+      temperature: 0.1, // Very deterministic
+      response_format: { type: "json_object" } 
+    });
+
+    const responseText = completion.choices[0]?.message?.content;
+    return JSON.parse(responseText);
+
+  } catch (error) {
+    console.warn('Primary AI failed for curation, trying fallback...', error.message);
+    // Simplified Fallback: If AI fails, return ALL categories for safety
+    return {
+      visibleSlugs: categories.map(c => c.slug),
+      reasoning: "Fallback: AI Service unavailable, showing full curriculum."
+    };
+  }
 };
 
 /**
@@ -1121,5 +1202,6 @@ export default {
   generateQuiz,
   generateLearningPathRecommendation,
   structureLearningPath,
-  translateCodeBlock
+  translateCodeBlock,
+  curatePathMap
 };

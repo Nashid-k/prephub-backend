@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
+import PathMap from '../../models/PathMap.js';
 import { assignGroup } from '../utils/categoryGrouping.js';
 import dotenv from 'dotenv';
 import path from 'path';
@@ -103,6 +104,35 @@ const mlData = {
       "BERT & GPT Architecture"
     ]
   },
+  "08_Natural_Language_Processing": {
+    "nlp_foundations": [
+      "Text Preprocessing (Tokenization, Stemming)",
+      "Bag of Words & TF-IDF",
+      "Word Embeddings (Word2Vec, GloVe)",
+      "RNNs and LSTMs for Text"
+    ],
+    "transformers_llms": [
+      "Attention Mechanism Explained",
+      "BERT Architecture & Fine-tuning",
+      "GPT Architecture Basics",
+      "Prompt Engineering",
+      "Hugging Face Ecosystem"
+    ]
+  },
+  "09_Reinforcement_Learning": {
+    "rl_basics": [
+      "Agent, Environment, Reward",
+      "Markov Decision Processes (MDP)",
+      "Q-Learning Algorithm",
+      "Exploration vs Exploitation"
+    ],
+    "deep_rl": [
+      "Deep Q-Networks (DQN)",
+      "Policy Gradients",
+      "Actor-Critic Methods",
+      "Proximal Policy Optimization (PPO)"
+    ]
+  },
   "07_MLOps_Deployment": {
     "model_deployment": [
       "Serving Models with Flask/FastAPI",
@@ -167,7 +197,7 @@ const seedTopic = async () => {
       // Ensure specific study order in name if needed
       const categorySlug = await generateUniqueSlug(Category, categoryKey.toLowerCase().replace(/_/g, '-'));
       
-      const group = await assignGroup(categoryName, topicSlug);
+      const group = categoryName; // Bypass AI grouping for deterministic matching
       
       const category = await Category.create({
         name: categoryName,
@@ -201,6 +231,58 @@ const seedTopic = async () => {
           }
       }
       console.log(`  - Added sections from sub-groups`);
+    }
+
+
+
+    // --- PathMap Generation ---
+    console.log('Generating PathMaps for Experience Levels...');
+
+    const allCategories = await Category.find({ topicId: topic._id });
+    const categoriesByGroup = {};
+    allCategories.forEach(c => {
+        if (!categoriesByGroup[c.group]) categoriesByGroup[c.group] = [];
+        categoriesByGroup[c.group].push(c.slug);
+    });
+
+    const levels = {
+        '0-1_year': [
+            'Math Foundations', 'Data Handling', 'Supervised Learning'
+        ],
+        '1-3_years': [
+            'Math Foundations', 'Data Handling', 'Supervised Learning',
+            'Unsupervised Learning', 'Deep Learning Fundamentals', 'Natural Language Processing'
+        ],
+        '3-5_years': [
+            'Math Foundations', 'Data Handling', 'Supervised Learning',
+            'Unsupervised Learning', 'Deep Learning Fundamentals', 'Natural Language Processing',
+            'Advanced Architectures', 'MLOps Deployment', 'Reinforcement Learning'
+        ]
+    };
+
+    for (const [level, groups] of Object.entries(levels)) {
+        let visibleSlugs = [];
+        groups.forEach(g => {
+            // Use rigorous matching: check if database group name INCLUDES our config name OR config name INCLUDES db group name
+            const matchGroup = Object.keys(categoriesByGroup).find(dbGroup => 
+                dbGroup.toLowerCase().includes(g.toLowerCase()) || g.toLowerCase().includes(dbGroup.toLowerCase())
+            );
+            
+            if (matchGroup && categoriesByGroup[matchGroup]) {
+                visibleSlugs = [...visibleSlugs, ...categoriesByGroup[matchGroup]];
+            }
+        });
+
+        await PathMap.findOneAndUpdate(
+            { topicId: topic._id, experienceLevel: level },
+            { 
+                topicId: topic._id,
+                experienceLevel: level,
+                visibleCategorySlugs: visibleSlugs 
+            },
+            { upsert: true, new: true }
+        );
+        console.log(`Created PathMap for ${level}: ${visibleSlugs.length} categories`);
     }
 
     console.log('✅ Machine Learning seeding complete!');
