@@ -183,13 +183,15 @@ const reactData = {
     ]
   },
 
-  "Conditional_Rendering": [
-    "if-else in JSX",
-    "Ternary Operator (condition ? true : false)",
-    "Logical && Operator",
-    "Conditional Return Statements",
-    "Render Nothing (null or <></>)"
-  ],
+  "Conditional_Rendering": {
+    "methods": [
+      "if-else in JSX",
+      "Ternary Operator (condition ? true : false)",
+      "Logical && Operator",
+      "Conditional Return Statements",
+      "Render Nothing (null or <></>)"
+    ]
+  },
 
   "Lists_Keys": {
     "list_rendering": [
@@ -517,14 +519,15 @@ const seedReact = async () => {
         const categoriesToDelete = await Category.find({ topicId: topic._id });
         const categoryIds = categoriesToDelete.map(c => c._id);
         if (categoryIds.length > 0) {
-            await Section.deleteMany({ categoryId: { $in: categoryIds } });
-            await Category.deleteMany({ _id: { $in: categoryIds } });
+            await Section.deleteMany({ topicId: topic._id });
+            await Category.deleteMany({ topicId: topic._id });
             console.log('Cleared existing React data');
         }
 
         const seenSlugs = new Set();
         const generateUniqueSlug = (title) => {
             let baseSlug = title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+            if (!baseSlug) baseSlug = 'section'; // Fallback for special-char only titles
             let slug = baseSlug;
             let counter = 1;
             while (seenSlugs.has(slug)) {

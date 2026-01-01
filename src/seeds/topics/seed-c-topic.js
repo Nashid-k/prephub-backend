@@ -257,29 +257,35 @@ const cData = {
     ]
   },
 
-  "Preprocessor_Directives": [
-    "#include for File Inclusion",
-    "#define for Macros",
-    "#ifdef, #ifndef for Conditional Compilation",
-    "#if, #elif, #else",
-    "Predefined Macros (__DATE__, __LINE__)"
-  ],
+  "Preprocessor_Directives": {
+    "directives": [
+      "#include for File Inclusion",
+      "#define for Macros",
+      "#ifdef, #ifndef for Conditional Compilation",
+      "#if, #elif, #else",
+      "Predefined Macros (__DATE__, __LINE__)"
+    ]
+  },
 
-  "Memory_Layout": [
-    "Text Segment (Code)",
-    "Data Segment (Initialized Data)",
-    "BSS Segment (Uninitialized Data)",
-    "Stack Memory",
-    "Heap Memory",
-    "Function Call Stack"
-  ],
+  "Memory_Layout": {
+    "segments": [
+      "Text Segment (Code)",
+      "Data Segment (Initialized Data)",
+      "BSS Segment (Uninitialized Data)",
+      "Stack Memory",
+      "Heap Memory",
+      "Function Call Stack"
+    ]
+  },
 
-  "Command_Line_Arguments": [
-    "argc and argv Parameters",
-    "Processing Command Line Input",
-    "Argument Parsing",
-    "Practical Applications"
-  ],
+  "Command_Line_Arguments": {
+    "basics": [
+      "argc and argv Parameters",
+      "Processing Command Line Input",
+      "Argument Parsing",
+      "Practical Applications"
+    ]
+  },
 
   "Standard_Library": {
     "essential_headers": {
@@ -321,35 +327,43 @@ const cData = {
     ]
   },
 
-  "Recursion": [
-    "Recursive Function Design",
-    "Base Case and Recursive Case",
-    "Recursion vs Iteration",
-    "Stack Usage in Recursion",
-    "Common Recursive Problems"
-  ],
+  "Recursion": {
+    "concepts": [
+      "Recursive Function Design",
+      "Base Case and Recursive Case",
+      "Recursion vs Iteration",
+      "Stack Usage in Recursion",
+      "Common Recursive Problems"
+    ]
+  },
 
-  "Bit_Manipulation": [
-    "Bitwise Operations",
-    "Bit Masking",
-    "Bit Fields in Structures",
-    "Practical Applications"
-  ],
+  "Bit_Manipulation": {
+    "basics": [
+      "Bitwise Operations",
+      "Bit Masking",
+      "Bit Fields in Structures",
+      "Practical Applications"
+    ]
+  },
 
-  "Error_Handling": [
-    "Return Value Checking",
-    "Error Codes",
-    "errno Variable",
-    "perror() Function",
-    "Robust Programming Practices"
-  ],
+  "Error_Handling": {
+    "techniques": [
+      "Return Value Checking",
+      "Error Codes",
+      "errno Variable",
+      "perror() Function",
+      "Robust Programming Practices"
+    ]
+  },
 
-  "Debugging_Tools": [
-    "Print Statement Debugging",
-    "GDB Basics (GNU Debugger)",
-    "Common Compiler Warnings",
-    "Code Analysis Tools"
-  ],
+  "Debugging_Tools": {
+    "tools": [
+      "Print Statement Debugging",
+      "GDB Basics (GNU Debugger)",
+      "Common Compiler Warnings",
+      "Code Analysis Tools"
+    ]
+  },
 
   "Best_Practices": {
     "01_code_quality": [
@@ -455,8 +469,8 @@ const seedC = async () => {
         const categoriesToDelete = await Category.find({ topicId: topic._id });
         const categoryIds = categoriesToDelete.map(c => c._id);
         if (categoryIds.length > 0) {
-            await Section.deleteMany({ categoryId: { $in: categoryIds } });
-            await Category.deleteMany({ _id: { $in: categoryIds } });
+            await Section.deleteMany({ topicId: topic._id });
+            await Category.deleteMany({ topicId: topic._id });
             console.log('Cleared existing C data');
         }
 

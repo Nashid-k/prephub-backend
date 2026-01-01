@@ -215,12 +215,14 @@ const mongodbData = {
     ]
   },
 
-  "CAP_Theorem": [
-    "Consistency in Distributed Systems",
-    "Availability Requirements",
-    "Partition Tolerance",
-    "MongoDB's CAP Approach"
-  ],
+  "CAP_Theorem": {
+    "concepts": [
+      "Consistency in Distributed Systems",
+      "Availability Requirements",
+      "Partition Tolerance",
+      "MongoDB's CAP Approach"
+    ]
+  },
 
   "Special_Collections": {
     "capped_collections": [
@@ -290,12 +292,14 @@ const mongodbData = {
     ]
   },
 
-  "GridFS": [
-    "What is GridFS",
-    "Storing Large Files",
-    "GridFS Collections (chunks and files)",
-    "Use Cases for GridFS"
-  ],
+  "GridFS": {
+    "basics": [
+      "What is GridFS",
+      "Storing Large Files",
+      "GridFS Collections (chunks and files)",
+      "Use Cases for GridFS"
+    ]
+  },
 
   "Practical_Queries": {
     "01_basic_queries": [
@@ -416,8 +420,8 @@ const seedMongoDB = async () => {
         const categoriesToDelete = await Category.find({ topicId: topic._id });
         const categoryIds = categoriesToDelete.map(c => c._id);
         if (categoryIds.length > 0) {
-            await Section.deleteMany({ categoryId: { $in: categoryIds } });
-            await Category.deleteMany({ _id: { $in: categoryIds } });
+            await Section.deleteMany({ topicId: topic._id });
+            await Category.deleteMany({ topicId: topic._id });
             console.log('Cleared existing MongoDB data');
         }
 
@@ -454,7 +458,15 @@ const seedMongoDB = async () => {
                     sections = value;
                 } else {
                     for (const [subKey, subItems] of Object.entries(value)) {
-                        sections = [...sections, ...subItems];
+                        if (Array.isArray(subItems)) {
+                            sections = [...sections, ...subItems];
+                        } else if (typeof subItems === 'object' && subItems !== null) {
+                            for (const nestedItems of Object.values(subItems)) {
+                                if (Array.isArray(nestedItems)) {
+                                    sections = [...sections, ...nestedItems];
+                                }
+                            }
+                        }
                     }
                 }
 

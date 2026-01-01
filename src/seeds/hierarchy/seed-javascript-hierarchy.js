@@ -694,9 +694,10 @@ const seedHierarchy = async () => {
 
     // 2. Clear existing structure for this topic only
     console.log('🧹 Clearing existing categories and sections...');
-    const categories = await Category.find({ topicId: topic._id });
-    const categoryIds = categories.map(c => c._id);
-    await Section.deleteMany({ categoryId: { $in: categoryIds } });
+    // 2. Clear existing structure for this topic only
+    console.log('🧹 Clearing existing categories and sections...');
+    // Delete ALL sections for this topic, regardless of category linkage
+    await Section.deleteMany({ topicId: topic._id });
     await Category.deleteMany({ topicId: topic._id });
 
     // 3. Process new structure

@@ -499,13 +499,10 @@ const seedJavaScript = async () => {
             });
         }
 
-        const categoriesToDelete = await Category.find({ topicId: topic._id });
-        const categoryIds = categoriesToDelete.map(c => c._id);
-        if (categoryIds.length > 0) {
-            await Section.deleteMany({ categoryId: { $in: categoryIds } });
-            await Category.deleteMany({ _id: { $in: categoryIds } });
-            console.log('Cleared existing JavaScript data');
-        }
+        // Delete ALL sections and categories for this topic to ensure no orphans
+        await Section.deleteMany({ topicId: topic._id });
+        await Category.deleteMany({ topicId: topic._id });
+        console.log('Cleared existing JavaScript data');
 
         const seenSlugs = new Set();
         const generateUniqueSlug = (title) => {

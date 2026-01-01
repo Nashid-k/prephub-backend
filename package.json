@@ -9,11 +9,11 @@
     "dev": "nodemon src/server.js",
     "seed": "node src/seed.js",
     "seed-mongodb-ai": "node src/seed-mongodb-ai.js",
-    "seed-hierarchy": "node src/seed-mongodb-hierarchy.js",
-    "seed-express": "node src/seed-express-hierarchy.js",
-    "seed-nodejs": "node src/seed-nodejs-hierarchy.js",
-    "seed-react": "node src/seed-react-hierarchy.js",
-    "seed-javascript": "node src/seed-javascript-hierarchy.js",
+    "seed-hierarchy": "node src/seeds/topics/seed-mongodb-topic.js",
+    "seed-express": "node src/seeds/topics/seed-express-topic.js",
+    "seed-nodejs": "node src/seeds/topics/seed-nodejs-topic.js",
+    "seed-react": "node src/seeds/topics/seed-react-topic.js",
+    "seed-javascript": "node src/seeds/topics/seed-javascript-topic.js",
     "seed:all": "node src/seed-all.js"
   },
   "keywords": [

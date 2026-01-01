@@ -410,7 +410,7 @@ export const getSectionAggregate = async (req, res) => {
             as: 'category'
           }
         },
-        { $unwind: { path: '$category', preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: '$category', preserveNullAndEmptyArrays: false } },
         { $sort: { 'category.order': 1, 'order': 1 } },
         {
           $project: {
@@ -420,7 +420,11 @@ export const getSectionAggregate = async (req, res) => {
             categoryId: 1,
             topicId: 1,
             difficulty: 1,
-            order: 1
+            order: 1,
+            category: {
+              name: '$category.name',
+              group: '$category.group'
+            }
           }
         }
       ]),
