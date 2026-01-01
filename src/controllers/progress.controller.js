@@ -17,7 +17,7 @@ export const toggleSectionCompletion = async (req, res) => {
     }
 
     // Find the section first
-    const section = await Section.findOne({ slug: sectionSlug });
+    const section = await Section.findOne({ slug: sectionSlug }).lean();
     if (!section) {
       return res.status(404).json({ message: 'Section not found' });
     }
@@ -54,7 +54,7 @@ export const getSectionProgress = async (req, res) => {
     const { topicSlug, sectionSlug } = req.params;
     const userId = req.user ? req.user._id : null;
 
-    const section = await Section.findOne({ slug: sectionSlug });
+    const section = await Section.findOne({ slug: sectionSlug }).lean();
     if (!section) {
       return res.status(404).json({ message: 'Section not found' });
     }
@@ -82,18 +82,18 @@ export const getCategoryProgress = async (req, res) => {
     const userId = req.user ? req.user._id : null;
 
     // 1. Find Topic and Category IDs
-    const topic = await Topic.findOne({ slug: topicSlug });
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
     if (!topic) {
         return res.status(404).json({ message: 'Topic not found' });
     }
 
-    const category = await Category.findOne({ slug: categorySlug, topicId: topic._id });
+    const category = await Category.findOne({ slug: categorySlug, topicId: topic._id }).lean();
     if (!category) {
         return res.status(404).json({ message: 'Category not found' });
     }
 
     // 2. Find all sections for this category
-    const sections = await Section.find({ categoryId: category._id });
+    const sections = await Section.find({ categoryId: category._id }).lean();
     const sectionIds = sections.map(s => s._id);
 
     // 4. Create a map of { sectionSlug: isCompleted }
@@ -128,18 +128,18 @@ export const getTopicProgress = async (req, res) => {
     const userId = req.user ? req.user._id : null;
 
     // 1. Find Topic
-    const topic = await Topic.findOne({ slug: topicSlug });
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
     if (!topic) {
         return res.status(404).json({ message: 'Topic not found' });
     }
 
     // 2. Find all Categories for this topic
-    const categories = await Category.find({ topicId: topic._id });
+    const categories = await Category.find({ topicId: topic._id }).lean();
     
     // 3. Find all Sections for these categories
     // We need to group sections by category to check completion
     const categoryIds = categories.map(c => c._id);
-    const sections = await Section.find({ categoryId: { $in: categoryIds } });
+    const sections = await Section.find({ categoryId: { $in: categoryIds } }).lean();
     
     // 4. Find all Progress for these sections
     const sectionIds = sections.map(s => s._id);
@@ -301,7 +301,7 @@ export const getAllTopicsProgress = async (req, res) => {
     ]);
 
     // Post-process to add continueLink and handle slug lookup
-    const categories = await Category.find({});
+    const categories = await Category.find({}).lean();
     const categoryMap = {};
     categories.forEach(c => categoryMap[c._id.toString()] = c.slug);
 
@@ -349,7 +349,7 @@ export const updateTimeSpent = async (req, res) => {
     }
 
     // Find the section
-    const section = await Section.findOne({ slug: sectionSlug });
+    const section = await Section.findOne({ slug: sectionSlug }).lean();
     if (!section) {
       return res.status(404).json({ message: 'Section not found' });
     }
@@ -405,8 +405,8 @@ export const getDueReviews = async (req, res) => {
       if (!progress.sectionId) continue;
 
       const section = progress.sectionId;
-      const category = await Category.findById(section.categoryId);
-      const topic = await Topic.findById(category?.topicId);
+      const category = await Category.findById(section.categoryId).lean();
+      const topic = await Topic.findById(category?.topicId).lean();
 
       enrichedReviews.push({
         _id: progress._id,
@@ -451,7 +451,7 @@ export const updateReview = async (req, res) => {
     }
 
     // Find the section
-    const section = await Section.findOne({ slug: sectionSlug });
+    const section = await Section.findOne({ slug: sectionSlug }).lean();
     if (!section) {
       return res.status(404).json({ message: 'Section not found' });
     }
@@ -528,14 +528,14 @@ export const toggleCategoryCompletion = async (req, res) => {
     }
 
     // 1. Find Topic and Category
-    const topic = await Topic.findOne({ slug: topicSlug });
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
     if (!topic) return res.status(404).json({ message: 'Topic not found' });
 
-    const category = await Category.findOne({ slug: categorySlug, topicId: topic._id });
+    const category = await Category.findOne({ slug: categorySlug, topicId: topic._id }).lean();
     if (!category) return res.status(404).json({ message: 'Category not found' });
 
     // 2. Find all sections
-    const sections = await Section.find({ categoryId: category._id });
+    const sections = await Section.find({ categoryId: category._id }).lean();
     if (sections.length === 0) {
         return res.json({ success: true, message: 'No sections to update' });
     }
@@ -579,11 +579,11 @@ export const toggleTopicCompletion = async (req, res) => {
     }
 
     // 1. Find Topic
-    const topic = await Topic.findOne({ slug: topicSlug });
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
     if (!topic) return res.status(404).json({ message: 'Topic not found' });
 
     // 2. Find all categories and sections
-    const categories = await Category.find({ topicId: topic._id });
+    const categories = await Category.find({ topicId: topic._id }).lean();
     const categoryIds = categories.map(c => c._id);
     
     // Sections belonging to these categories OR directly to the topic (if any)

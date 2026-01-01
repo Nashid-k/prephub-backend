@@ -155,7 +155,7 @@ export const getTopicBySlug = async (req, res) => {
   try {
     const { slug } = req.params;
     
-    const topic = await Topic.findOne({ slug });
+    const topic = await Topic.findOne({ slug }).lean();
     
     if (!topic) {
       return res.status(404).json({ 
@@ -163,7 +163,7 @@ export const getTopicBySlug = async (req, res) => {
       });
     }
 
-    const sections = await Section.find({ topicId: topic._id }).sort({ order: 1 });
+    const sections = await Section.find({ topicId: topic._id }).sort({ order: 1 }).lean();
 
     res.json({
       success: true,
@@ -187,7 +187,7 @@ export const getTopicAggregate = async (req, res) => {
     const { experienceLevel } = req.query; // Get experience level from query params
     const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
-    const topic = await Topic.findOne({ slug });
+    const topic = await Topic.findOne({ slug }).lean();
     if (!topic) {
       return res.status(404).json({ error: 'Topic not found' });
     }
@@ -208,14 +208,14 @@ export const getTopicAggregate = async (req, res) => {
     }
 
     // 2. Fetch filtered categories and their sections
-    const categories = await Category.find(categoryQuery).sort({ order: 1 });
+    const categories = await Category.find(categoryQuery).sort({ order: 1 }).lean();
     const categoryIds = categories.map(c => c._id);
     
     // 3. Fetch sections ONLY for these categories to ensure accurate counts
     const sections = await Section.find({ 
       topicId: topic._id, 
       categoryId: { $in: categoryIds } 
-    }).sort({ order: 1 });
+    }).sort({ order: 1 }).lean();
 
     const progressRecords = await Progress.find({ 
       userId, 
@@ -268,13 +268,13 @@ export const getCategoryAggregate = async (req, res) => {
     const { topicSlug, categorySlug } = req.params;
     const userId = req.user ? req.user._id : (req.headers['x-session-id'] || 'default-user');
 
-    const topic = await Topic.findOne({ slug: topicSlug });
+    const topic = await Topic.findOne({ slug: topicSlug }).lean();
     if (!topic) return res.status(404).json({ error: 'Topic not found' });
 
-    const category = await Category.findOne({ topicId: topic._id, slug: categorySlug });
+    const category = await Category.findOne({ topicId: topic._id, slug: categorySlug }).lean();
     if (!category) return res.status(404).json({ error: 'Category not found' });
 
-    const sections = await Section.find({ categoryId: category._id }).sort({ order: 1 });
+    const sections = await Section.find({ categoryId: category._id }).sort({ order: 1 }).lean();
     const sectionIds = sections.map(s => s._id);
 
     const progressRecords = await Progress.find({
