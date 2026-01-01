@@ -361,6 +361,208 @@ const pythonData = {
     ]
   },
 
+  "Advanced_Metaprogramming": {
+    "metaclasses": [
+      "Metaclass Basics (type)",
+      "Custom Metaclasses",
+      "__new__ vs __init__",
+      "Abstract Base Classes (ABCs)",
+      "Metaclass Conflicts"
+    ],
+    "descriptors": [
+      "Descriptor Protocol (__get__, __set__)",
+      "Data vs Non-Data Descriptors",
+      "Property Decorator Implementation",
+      "Lazy Properties"
+    ],
+    "dynamic_attributes": [
+      "__getattr__ vs __getattribute__",
+      "__setattr__ and __delattr__",
+      "Dynamic Attribute Access",
+      "Monkey Patching"
+    ]
+  },
+
+  "Type_Hinting_And_Static_Analysis": {
+    "type_hints_basics": [
+      "Variable and Function Annotations",
+      "Optional and Union Types",
+      "List, Dict, and Set Typing",
+      "Type Aliases"
+    ],
+    "advanced_typing": [
+      "Generics (TypeVar)",
+      "Callable and Protocol",
+      "Literal and Final Types",
+      "TypedDict",
+      "Overloading Functions"
+    ],
+    "static_analysis_tools": [
+      "MyPy Configuration and Usage",
+      "Pylint and Flake8",
+      "Runtime Type Checking",
+      "Stub Files (.pyi)"
+    ]
+  },
+
+  "Testing_And_TDD": {
+    "unittest_framework": [
+      "TestCase Structure",
+      "Assertions and Test States",
+      "Setup and Teardown",
+      "Test Discovery",
+      "Skipping Tests and Subtests"
+    ],
+    "pytest_framework": [
+      "Pytest Fixtures and Scopes",
+      "Parametrized Tests",
+      "Marks and Plugins",
+      "Conftest.py Configuration",
+      "Testing Exceptions"
+    ],
+    "mocking_patching": [
+      "unittest.mock Basics",
+      "Patching Objects and Methods",
+      "Mock Side Effects",
+      "Spy Objects",
+      "Dependency Injection"
+    ]
+  },
+
+  "Web_Development_Ecosystem": {
+    "web_foundations": [
+      "WSGI vs ASGI",
+      "HTTP Methods and Status Codes",
+      "RESTful API Principles",
+      "JSON Web Tokens (JWT)",
+      "WebSockets Basics"
+    ],
+    "frameworks_overview": [
+      "Django (Batteries Included)",
+      "Flask (Microframework)",
+      "FastAPI (Modern & Async)",
+      "Choosing the Right Framework"
+    ],
+    "web_security": [
+      "SQL Injection Prevention",
+      "XSS and CSRF Protection",
+      "Secure Password Hashing",
+      "Rate Limiting"
+    ]
+  },
+
+  "Database_Interaction": {
+    "sql_databases": [
+      "SQLite (Built-in)",
+      "PostgreSQL Integration (psycopg2)",
+      "Connection Pooling",
+      "Parameterized Queries (Security)"
+    ],
+    "orms": [
+      "SQLAlchemy Core vs ORM",
+      "Django ORM Basics",
+      "Tortoise ORM (Async)",
+      "Migration Management (Alembic)"
+    ],
+    "nosql_databases": [
+      "MongoDB with PyMongo",
+      "Redis for Caching",
+      "Key-Value Stores"
+    ]
+  },
+
+  "Concurrency_And_Parallelism_Advanced": {
+    "asyncio_deep_dive": [
+      "Event Loops and Tasks",
+      "Async Context Managers",
+      "Async Iterators",
+      "Synchronization Primitives",
+      "Integrating Sync and Async Code"
+    ],
+    "multiprocessing_advanced": [
+      "Shared Memory and Queues",
+      "Process Pools",
+      "Inter-Process Communication (IPC)",
+      "Avoid Global Interpreter Lock (GIL)"
+    ]
+  },
+
+  "Data_Science_Fundamentals": {
+    "numpy_basics": [
+      "ndarray Creation and Indexing",
+      "Vectorization and Broadcasting",
+      "Mathematical Operations",
+      "Reshaping and Slicing"
+    ],
+    "pandas_basics": [
+      "Series and DataFrame",
+      "Reading/Writing CSV/Excel",
+      "Data Cleaning and Filtering",
+      "Grouping and Aggregation"
+    ],
+    "visualization": [
+      "Matplotlib Basics",
+      "Seaborn for Statistical Plots",
+      "Plotting Line, Bar, Scatter Charts"
+    ]
+  },
+
+  "Networking_And_Sockets": {
+    "socket_programming": [
+      "TCP vs UDP Sockets",
+      "Creating Client and Server",
+      "Blocking vs Non-Blocking Sockets",
+      "Socket Options"
+    ],
+    "high_level_networking": [
+      "Requests Library (HTTP Client)",
+      "Session Objects",
+      "Handling Cookies and Headers",
+      "Web Scraping (BeautifulSoup)"
+    ]
+  },
+
+  "Packaging_And_Distribution": {
+    "dependency_management": [
+      "Pipenv vs Poetry",
+      "requirements.txt Best Practices",
+      "Virtual Environment Strategies",
+      "Dependency Resolution"
+    ],
+    "packaging_projects": [
+      "setup.py and pyproject.toml",
+      "Building Source Distributions",
+      "Building Wheels",
+      "Publishing to PyPI"
+    ],
+    "executable_creation": [
+      "PyInstaller Basics",
+      "Freezing Code",
+      "Cross-Platform Distribution"
+    ]
+  },
+
+  "Clean_Code_And_Architecture": {
+    "design_patterns": [
+      "Singleton and Factory Patterns",
+      "Observer and Strategy Patterns",
+      "Decorator and Adapter Patterns",
+      "Dependency Injection Pattern"
+    ],
+    "architectural_patterns": [
+      "MVC (Model-View-Controller)",
+      "Microservices Concepts",
+      "Event-Driven Architecture",
+      "Hexagonal Architecture Overview"
+    ],
+    "refactoring_techniques": [
+      "Extract Method/Class",
+      "Rename Refactoring",
+      "Simplifying Conditional Logic",
+      "Removing Dead Code"
+    ]
+  },
+
   "Interview_Preparation": {
     "common_topics": [
       "Mutable vs Immutable Types",

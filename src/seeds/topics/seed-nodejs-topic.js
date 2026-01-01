@@ -426,6 +426,97 @@ const nodejsData = {
     ]
   },
 
+
+
+  "Microservices_Architecture": {
+    "microservices_patterns": [
+      "Monolith vs Microservices",
+      "API Gateway Pattern",
+      "Service Discovery",
+      "Inter-service Communication (gRPC/HTTP)"
+    ],
+    "message_queues": [
+      "RabbitMQ Basics",
+      "Kafka Introduction",
+      "Event-Driven Architecture",
+      "Message Reliability"
+    ]
+  },
+
+  "Advanced_Async_Patterns": {
+    "worker_threads": [
+      "Worker Threads API",
+      "CPU-intensive Tasks",
+      "SharedArrayBuffer",
+      "Thread Pools"
+    ],
+    "child_processes": [
+      "spawn(), exec(), fork()",
+      "Process Communication (IPC)",
+      "Dealing with Stdout/Stderr",
+      "Zombie Processes"
+    ]
+  },
+
+  "GraphQL_Integration": {
+    "graphql_basics": [
+      "GraphQL vs REST",
+      "Schema Definition (SDL)",
+      "Queries and Mutations",
+      "Resolvers Implementation"
+    ],
+    "apollo_server": [
+      "Apollo Server Setup",
+      "Data Sources Pattern",
+      "Authentication in GraphQL",
+      "N+1 Problem (DataLoader)"
+    ]
+  },
+
+  "Security_Hardening": {
+    "advanced_security": [
+      "Rate Limiting Strategies",
+      "DDOS Protection",
+      "Helmet.js Configuration",
+      "Data Encryption (Crypto Module)"
+    ],
+    "auth_implementation": [
+      "Passport.js Strategies",
+      "JWT Refresh Tokens",
+      "Role-Based Access Control (RBAC)",
+      "2FA Implementation"
+    ]
+  },
+
+  "Performance_Profiling": {
+    "monitoring_tools": [
+      "Node.js Inspector",
+      "Memory Leaks Identification",
+      "CPU Flame Graphs",
+      "Event Loop Lag"
+    ],
+    "caching_strategies": [
+      "Redis Caching Patterns",
+      "In-memory Caching",
+      "HTTP Caching Headers",
+      "Cache Invalidation"
+    ]
+  },
+
+  "Serverless_Nodejs": {
+    "serverless_concepts": [
+      "FaaS (Function as a Service)",
+      "AWS Lambda Basics",
+      "Cold Starts",
+      "Serverless Framework"
+    ],
+    "deployment": [
+      "Vercel/Netlify Functions",
+      "Azure Functions",
+      "Google Cloud Functions"
+    ]
+  },
+
   "Best_Practices": {
     "01_code_organization": [
       "Project Structure Patterns",

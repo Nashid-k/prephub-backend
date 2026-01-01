@@ -434,6 +434,80 @@ const reactData = {
     ]
   },
 
+
+
+  "React_Server_Components": {
+    "rsc_fundamentals": [
+      "Server vs Client Components",
+      "Streaming SSR",
+      "Data Fetching in RSC",
+      "Server Actions (React 19)"
+    ],
+    "rsc_patterns": [
+      "Interleaving Server/Client Components",
+      "Serializeable Props",
+      "Use Client Directive",
+      "Use Server Directive"
+    ]
+  },
+
+  "UI_Libraries_And_Design": {
+    "styling_solutions": [
+      "Tailwind CSS in React",
+      "CSS-in-JS (Styled Components/Emotion)",
+      "CSS Modules",
+      "Utility-first Styling"
+    ],
+    "component_libraries": [
+      "Material UI (MUI) Basics",
+      "Chakra UI Setup",
+      "Shadcn/UI (Headless+Tailwind)",
+      "Radix UI Primitives"
+    ]
+  },
+
+  "Animations_And_Motion": {
+    "framer_motion": [
+      "Motion Components",
+      "Animate Presence",
+      "Layout Animations",
+      "Gestures (Drag, Hover, Tap)"
+    ],
+    "react_spring": [
+      "Physics-based Animations",
+      "Spring Hooks",
+      "Parallax Effects"
+    ]
+  },
+
+  "Accessibility_A11y": {
+    "a11y_fundamentals": [
+      "WAI-ARIA Roles and Attributes",
+      "Keyboard Navigation Support",
+      "Focus Management",
+      "Screen Reader Compatibility"
+    ],
+    "testing_a11y": [
+      "Lighthouse Audits",
+      "axe-core Integration",
+      "Color Contrast Checking"
+    ]
+  },
+
+  "Advanced_Architecture": {
+    "micro_frontends": [
+      "Module Federation (Webpack)",
+      "Micro-frontend Patterns",
+      "Shared Dependencies",
+      "Routing in Micro-frontends"
+    ],
+    "monorepos": [
+      "Turborepo Basics",
+      "Nx Workspaces",
+      "Sharing Components across Apps"
+    ]
+  },
+
   "Best_Practices": {
     "01_code_organization": [
       "Folder Structure Patterns",

@@ -310,6 +310,96 @@ const expressData = {
     ]
   },
 
+  "Microservices_Architecture": {
+    "gateway_patterns": [
+      "API Gateway Concepts",
+      "Express Gateway Setup",
+      "Request Forwarding (http-proxy)",
+      "Service Registry"
+    ],
+    "inter_service_comm": [
+      "HTTP/REST Communication",
+      "Message Queues (RabbitMQ/Kafka)",
+      "Circuit Breaker Pattern",
+      "Distributed Tracing"
+    ]
+  },
+
+  "RealTime_Communication": {
+    "socket_io_integration": [
+      "Socket.io Server Setup",
+      "Events and Broadcasting",
+      "Namespaces and Rooms",
+      "Authentication in WebSockets"
+    ],
+    "sse_implementation": [
+      "Server-Sent Events (SSE) Basics",
+      "Streaming Data to Client",
+      "Connection Management",
+      "Reconnection Strategies"
+    ]
+  },
+
+  "GraphQL_Integration": {
+    "express_graphql": [
+      "Apollo Server Express",
+      "Schema and Resolvers",
+      "Query Execution",
+      "GraphiQL Interface"
+    ],
+    "performance": [
+      "DataLoader for N+1 Problem",
+      "Query Complexity Analysis",
+      "Caching GraphQL Responses",
+      "Subscriptions"
+    ]
+  },
+
+  "TypeScript_Integration": {
+    "ts_setup": [
+      "TypeScript Configuration (tsconfig.json)",
+      "Type Definitions (@types/express)",
+      "Request/Response Interfaces",
+      "Custom Type Declarations"
+    ],
+    "patterns": [
+      "Data Transfer Objects (DTOs)",
+      "Type-safe Middleware",
+      "Dependency Injection",
+      "Decorators Usage"
+    ]
+  },
+
+  "Advanced_Security": {
+    "attack_prevention": [
+      "Rate Limiting (express-rate-limit)",
+      "Dos Prevention",
+      "Parameter Pollution (hpp)",
+      "NoSQL Injection Prevention"
+    ],
+    "data_protection": [
+      "Data Encryption at Rest",
+      "Secure Cookie Strategies",
+      "Content Security Policy (CSP)",
+      "Helmet Configuration Deep Dive"
+    ]
+  },
+
+  "Task_Scheduling_Queues": {
+    "job_queues": [
+      "BullMQ / Bull Setup",
+      "Redis Connection",
+      "Job Processing",
+      "Delayed Jobs"
+    ],
+    "scheduling": [
+      "Cron Jobs (node-cron)",
+      "Agenda.js Usage",
+      "Distributed Scheduling",
+      "Task Monitoring"
+    ]
+  },
+
   "Best_Practices": {
     "01_code_organization": [
       "Project Structure",

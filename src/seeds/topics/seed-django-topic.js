@@ -340,6 +340,129 @@ const djangoData = {
     ]
   },
 
+  "Celery_Task_Queue": {
+    "celery_basics": [
+      "Task Queues Concept",
+      "Celery & Redis Setup",
+      "Creating Tasks (@shared_task)",
+      "Monitoring with Flower"
+    ],
+    "advanced_tasks": [
+      "Periodic Tasks (Celery Beat)",
+      "Task Chaining and Groups",
+      "Error Handling and Retries",
+      "Task Prioritization"
+    ]
+  },
+
+  "WebSockets_Channels": {
+    "channels_setup": [
+      "ASGI Configuration",
+      "Channel Layers (Redis)",
+      "Consumers vs Views",
+      "Routing in Channels"
+    ],
+    "realtime_features": [
+      "Group Communication",
+      "Chat Application Logic",
+      "Notifications System",
+      "WebSocket Security"
+    ]
+  },
+
+  "Advanced_Caching": {
+    "caching_strategies": [
+      "Memcached vs Redis",
+      "Per-view Caching",
+      "Template Fragment Caching",
+      "Low-level Cache API"
+    ],
+    "optimization": [
+      "Cache Invalidation",
+      "CDN Integration",
+      "Browser Caching Policy",
+      "Database Caching"
+    ]
+  },
+
+  "Microservices_With_Django": {
+    "architecture_patterns": [
+      "Service Oriented Architecture",
+      "API Gateway Pattern",
+      "Communication (gRPC/REST)",
+      "Distributed Tracing"
+    ],
+    "nameko_integration": [
+      "Nameko Microservices",
+      "RPC over AMQP",
+      "Service Discovery",
+      "Django-Nameko Integration"
+    ]
+  },
+
+  "Search_Integration": {
+    "elasticsearch_dsl": [
+      "Elasticsearch Setup",
+      "Django-Elasticsearch-DSL",
+      "Indexing Documents",
+      "Complex Search Queries"
+    ],
+    "search_features": [
+      "Full-text Search",
+      "Faceted Search",
+      "Autocomplete Suggestions",
+      "Search Highlighting"
+    ]
+  },
+
+  "Containerization_Orchestration": {
+    "docker_django": [
+      "Dockerfile Best Practices",
+      "Docker Compose for Dev",
+      "Multi-stage Builds",
+      "Volume Management"
+    ],
+    "kubernetes_basics": [
+      "K8s Concepts (Pods, Services)",
+      "Deploying Django on K8s",
+      "ConfigMaps and Secrets",
+      "Horizontal Pod Autoscaling"
+    ]
+  },
+
+  "Payments_Billing": {
+    "stripe_integration": [
+      "Stripe API Basics",
+      "Checkout Sessions",
+      "Webhook Handling",
+      "Subscription Management"
+    ],
+    "security_compliance": [
+      "PCI-DSS Basics",
+      "Secure Payment Flows",
+      "Fraud Detection",
+      "Invoice Generation"
+    ]
+  },
+
+  "GIS_Mappings": {
+    "geodjango": [
+      "PostGIS Setup",
+      "Spatial Queries",
+      "Distance Calculations",
+      "Map Visualization"
+    ]
+  },
+
+  "GraphQL_Graphene": {
+    "graphene_django": [
+      "GraphQL vs REST",
+      "Schema Definition",
+      "Queries and Mutations",
+      "Filtering and Pagination"
+    ]
+  },
+
   "Common_Patterns_Best_Practices": {
     "project_structure": [
       "App Organization",

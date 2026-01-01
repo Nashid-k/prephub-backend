@@ -293,6 +293,166 @@ const flutterData = {
     ]
   },
 
+  "Firebase_Integration": {
+    "firebase_setup": [
+      "Firebase Console Setup",
+      "FlutterFire Configuration (CLI)",
+      "GoogleServices Json/Plist",
+      "Firebase Options"
+    ],
+    "authentication": [
+      "Email/Password Auth",
+      "Google Sign-In",
+      "Phone Authentication",
+      "Anonymous Auth",
+      "User Session Management"
+    ],
+    "cloud_firestore": [
+      "Firestore Data Model",
+      "CRUD Operations",
+      "Real-time Updates (Streams)",
+      "Complex Queries & Indexes",
+      "Security Rules"
+    ],
+    "other_services": [
+      "Firebase Storage (Images/Files)",
+      "Cloud Functions Basics",
+      "Firebase Analytics",
+      "Crashlytics Setup",
+      "Remote Config"
+    ]
+  },
+
+  "Advanced_State_Management": {
+    "riverpod_deep_dive": [
+      "Riverpod vs Provider",
+      "Providers Types (State, Future, Stream)",
+      "Riverpod Modifiers (autoDispose, family)",
+      "Testing with Riverpod"
+    ],
+    "bloc_advanced": [
+      "Bloc Testing",
+      "Bloc to Bloc Communication",
+      "Hydrated Bloc (Persisting State)",
+      "Freezed Code Generation"
+    ]
+  },
+
+  "App_Architecture": {
+    "architectural_patterns": [
+      "MVVM (Model-View-ViewModel)",
+      "Clean Architecture Layers",
+      "Feature-first Project Structure",
+      "Dependency Injection Pattern"
+    ],
+    "repository_pattern": [
+      "Repository Concept",
+      "Data Sources (Remote/Local)",
+      "Caching Strategies",
+      "Error Handling Layer"
+    ]
+  },
+
+  "Theming_And_Styling": {
+    "advanced_theming": [
+      "ThemeData Customization",
+      "ColorSchemes (Material 3)",
+      "Dark Mode Implementation",
+      "Custom Fonts & Typography",
+      "Component Themes"
+    ],
+    "responsive_layouts": [
+      "LayoutBuilder vs MediaQuery",
+      "FractionallySizedBox",
+      "AspectRatio Widget",
+      "Adaptive Adaptive Scaffolds"
+    ]
+  },
+
+  "Internationalization_i18n": {
+    "localization_setup": [
+      "Adding Supported Locales",
+      "L10n Arb Files",
+      "Generating Localized Strings",
+      "Dynamic Language Switching",
+      "Formatting Dates/Numbers for Locales"
+    ]
+  },
+
+  "Performance_Optimization": {
+    "devtools_usage": [
+      "Flutter DevTools Overview",
+      "Performance Overlay",
+      "Widget Inspector",
+      "Memory Profiling"
+    ],
+    "rendering_pipeline": [
+      "Build vs Layout vs Paint",
+      "const Constructors",
+      "RepaintBoundaries",
+      "Listview Optimization"
+    ]
+  },
+
+  "Native_Integration": {
+    "platform_channels": [
+      "MethodChannel (Dart to Native)",
+      "EventChannel (Streams)",
+      "Writing Android (Kotlin) Code",
+      "Writing iOS (Swift) Code"
+    ],
+    "background_processing": [
+      "WorkManager",
+      "Isolates for Heavy Computation",
+      "Background Fetch"
+    ]
+  },
+
+  "Flutter_Web_And_Desktop": {
+    "web_support": [
+      "Web-specific Considerations",
+      "SEO for Flutter Web",
+      "URL Strategy (PathUrlStrategy)",
+      "PWA Configuration"
+    ],
+    "desktop_support": [
+      "Windows/MacOS/Linux Support",
+      "Keyboard Shortcuts",
+      "Desktop-specific UI patterns",
+      "Menu Bars and System Tray"
+    ]
+  },
+
+  "Deployment_CI_CD": {
+    "store_deployment": [
+      "App Signing (Keystore/Certificates)",
+      "Google Play Store Release",
+      "Apple App Store Release",
+      "App Icons and Splash Screens"
+    ],
+    "ci_cd_pipelines": [
+      "GitHub Actions for Flutter",
+      "Codemagic Basics",
+      "Fastlane Setup",
+      "Automated Testing in CI"
+    ]
+  },
+
+  "Advanced_UI_Challenges": {
+    "custom_painting": [
+      "CustomPainter & Canvas",
+      "Path & Curves",
+      "Drawing Shapes & Gradients",
+      "Complex UI Replications"
+    ],
+    "advanced_effects": [
+      "Shaders & FragmentShaders",
+      "BackdropFilter & Blurs",
+      "Slivers Deep Dive",
+      "Transform & Matrix4"
+    ]
+  },
+
   "Testing": {
     "testing_types": [
       "Unit Testing (Business Logic)",

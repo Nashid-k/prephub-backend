@@ -10,6 +10,8 @@ echo ""
 
 # Array of all topic seed files
 SEED_FILES=(
+    "seed-html-css-topic.js"
+    "seed-git-topic.js"
     "seed-javascript-topic.js"
     "seed-typescript-topic.js"
     "seed-python-topic.js"
@@ -28,6 +30,10 @@ SEED_FILES=(
     "seed-django-topic.js"
     "seed-postgresql-topic.js"
     "seed-dsa-topic.js"
+    "seed-machine-learning-topic.js"
+    "seed-data-analyst-topic.js"
+    "seed-dotnet-topic.js"
+    "seed-aws-cloud-topic.js"
 )
 
 # Counter for tracking
@@ -51,6 +57,8 @@ for SEED_FILE in "${SEED_FILES[@]}"; do
     fi
     
     echo ""
+    echo "⏳ Cooling down for 5 seconds to prevent rate limiting..."
+    sleep 5
 done
 
 # Summary

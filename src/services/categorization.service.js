@@ -6,6 +6,9 @@ import Cache from '../models/Cache.js';
 // Memory Cache for categorization (TTL: 30 days) - Categorizations are stable
 const memoryCache = new NodeCache({ stdTTL: 3600 * 24 * 30 });
 
+// Helper for delays
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 /**
  * Get categorization from cache (Memory first, then MongoDB)
  */
@@ -272,6 +275,12 @@ Categories are numbered to show LEARNING SEQUENCE. Students learn in order - can
     } catch (groqError) {
       console.error(`❌ Groq failed (Key ${index + 1}):`, groqError.message);
       providers.push({ provider: `Groq-${index + 1}`, error: groqError.message });
+      
+      // If rate limited (429), wait before trying next key to be safe
+      if (groqError.message.includes('429') || groqError.message.includes('Rate limit')) {
+        console.log('⏳ Rate limit hit, cooling down for 2s...');
+        await sleep(2000);
+      }
     }
   }
 

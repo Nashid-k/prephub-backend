@@ -348,6 +348,122 @@ const nextjsData = {
     ]
   },
 
+
+
+  "App_Router_Architecture": {
+    "app_router_basics": [
+      "app/ Directory Structure",
+      "Pages vs Layouts",
+      "Templates vs Layouts",
+      "Groups and Private Folders"
+    ],
+    "nested_layouts": [
+      "Root Layout (layout.js)",
+      "Nested Layouts",
+      "Multiple Root Layouts",
+      "UI Colocation"
+    ]
+  },
+
+  "Server_Components_And_Actions": {
+    "rsc_in_nextjs": [
+      "Server vs Client Components",
+      "Fetching Data on Server",
+      "Streaming and Suspense",
+      "Static vs Dynamic Rendering"
+    ],
+    "server_actions": [
+      "Form Actions (action prop)",
+      "Server Mutations (useFormState)",
+      "Revalidating Data (revalidatePath)",
+      "Redirecting (redirect)"
+    ]
+  },
+
+  "NextAuth_v5": {
+    "auth_setup": [
+      "Auth.js Installation",
+      "Route Handlers (GET/POST)",
+      "Middleware Protection",
+      "Session Management"
+    ],
+    "providers": [
+      "OAuth Providers (Google/GitHub)",
+      "Credentials Provider",
+      "Email Magic Links",
+      "Database Adapters (Prisma/Drizzle)"
+    ]
+  },
+
+  "Advanced_Routing_Patterns": {
+    "route_handlers": [
+      "GET/POST/PUT/DELETE Handlers",
+      "Dynamic Route Segments",
+      "URL Query Parameters",
+      "Cookie and Header Manipulation"
+    ],
+    "parallel_intercepting_routes": [
+      "Parallel Routes (@slot)",
+      "Intercepting Routes (.)",
+      "Modal Patterns",
+      "Conditional Routes"
+    ]
+  },
+
+  "Edge_Functions_And_Middleware": {
+    "middleware_deep_dive": [
+      "Matching Paths",
+      "Modifying Request/Response",
+      "Geo-blocking/localization",
+      "A/B Testing with Middleware"
+    ],
+    "edge_runtime": [
+      "Edge vs Node Runtime",
+      "Supported APIs on Edge",
+      "Vercel Edge Functions",
+      "OpenNext Adapter"
+    ]
+  },
+
+  "Database_Integration": {
+    "prisma_orm": [
+      "Prisma Schema Setup",
+      "Prisma Client in Next.js",
+      "Database Migrations",
+      "Seeding Data"
+    ],
+    "drizzle_orm": [
+      "Drizzle Config",
+      "Type-safe SQL Queries",
+      "Serverless Database Connections",
+      "Drizzle Kit"
+    ]
+  },
+
+  "Internationalization_i18n": {
+    "app_router_i18n": [
+      "Routing with Locales",
+      "Middleware for Locale Detection",
+      "Dictionaries Pattern",
+      "Static Generation with Locales"
+    ]
+  },
+
+  "Advanced_Deployment": {
+    "vercel_features": [
+      "Feature Flags (Edge Config)",
+      "Vercel Blob Storage",
+      "Vercel KV (Redis)",
+      "Vercel Postgres"
+    ],
+    "docker_self_hosting": [
+      "Multi-stage Dockerfile",
+      "Standalone Output Mode",
+      "Environment Management",
+      "PM2 Process Management"
+    ]
+  },
+
   "Best_Practices": {
     "01_project_structure": [
       "Feature-Based Organization",

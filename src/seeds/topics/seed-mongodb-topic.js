@@ -302,6 +302,96 @@ const mongodbData = {
     ]
   },
 
+  "MongoDB_Atlas_Cloud": {
+    "atlas_basics": [
+      "Atlas Cluster Deployment",
+      "Auto-scaling Configuration",
+      "Global Clusters (Geo-sharding)",
+      "Serverless Instances"
+    ],
+    "atlas_services": [
+      "Atlas Search (Lucene)",
+      "Atlas Triggers & Functions",
+      "Data Lake",
+      "Charts & Visualization"
+    ]
+  },
+
+  "Advanced_Aggregation_DeepDive": {
+    "graph_lookup": [
+      "$graphLookup (Recursive Search)",
+      "Hierarchy Modeling",
+      "Social Network Graphs",
+      "Recursive Queries"
+    ],
+    "window_functions": [
+      "$setWindowFields",
+      "Moving Averages",
+      "Cumulative Sums",
+      "Ranking Data"
+    ]
+  },
+
+  "Transactions_And_ACID": {
+    "multi_document_transactions": [
+      "ACID Compliance in MongoDB",
+      "Transaction API (startTransaction)",
+      "Commit and Abort Logic",
+      "Transient Transaction Errors"
+    ],
+    "consistency_patterns": [
+      "Causal Consistency",
+      "Linearizable Reads",
+      "Write Concerns in Transactions",
+      "Isolation Levels"
+    ]
+  },
+
+  "Security_And_Encryption": {
+    "encryption_at_rest": [
+      "Client-Side Field Level Encryption (CSFLE)",
+      "Key Management (KMIP)",
+      "Encrypted Query Support",
+      "Audit Logging"
+    ],
+    "network_security": [
+      "TLS/SSL Configuration",
+      "IP Whitelisting (Peering)",
+      "Private Endpoints",
+      "X.509 Authentication"
+    ]
+  },
+
+  "Mobile_Development_Realm": {
+    "realm_basics": [
+      "Realm Database Introduction",
+      "Object-Oriented Data Model",
+      "Reactive Architecture",
+      "Realm vs SQLite"
+    ],
+    "device_sync": [
+      "Atlas Device Sync",
+      "Flexible Sync Permissions",
+      "Conflict Resolution",
+      "Offline-First Apps"
+    ]
+  },
+
+  "Time_Series_Collections": {
+    "time_series_basics": [
+      "Time Series Collection Creation",
+      "Granularity (Seconds, Minutes)",
+      "Automatic Expiration (TTL)",
+      "Querying Time Series Data"
+    ],
+    "sensor_patterns": [
+      "IoT Data Modeling",
+      "Bucket Pattern",
+      "Downsampling with $merge",
+      "Window Functions for IoT"
+    ]
+  },
+
   "Practical_Queries": {
     "01_basic_queries": [
       "Find documents with specific field values",
