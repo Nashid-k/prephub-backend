@@ -7,7 +7,8 @@ import Section from '../../models/Section.js';
 dotenv.config();
 
 const golangHierarchy = {
-  "Foundations & Setup": {
+
+  "01_go_language_foundations": {
     "Go Overview": [
       "What is Go (Golang)?",
       "Why Golang? Features and Benefits",
@@ -29,7 +30,8 @@ const golangHierarchy = {
       "Code Formatting (gofmt)"
     ]
   },
-  "Basic Syntax & Types": {
+
+  "02_basic_syntax_and_types": {
     "Variables & Constants": [
       "Variable Declaration (var, :=)",
       "Zero Values",
@@ -57,7 +59,8 @@ const golangHierarchy = {
       "Bitwise Operators"
     ]
   },
-  "Control Structures": {
+
+  "03_control_flow_and_functions": {
     "Conditional Statements": [
       "if-else Statements",
       "switch Statements",
@@ -70,9 +73,7 @@ const golangHierarchy = {
       "infinite Loop",
       "break and continue",
       "Range-based Loops"
-    ]
-  },
-  "Functions & Error Handling": {
+    ],
     "Function Basics": [
       "Function Declaration",
       "Multiple Return Values",
@@ -81,7 +82,10 @@ const golangHierarchy = {
       "Anonymous Functions",
       "Closures",
       "Higher-Order Functions"
-    ],
+    ]
+  },
+
+  "04_error_handling_and_execution_flow": {
     "Error Handling": [
       "Error Interface",
       "Returning Errors",
@@ -97,7 +101,8 @@ const golangHierarchy = {
       "Defer Stack (LIFO)"
     ]
   },
-  "Data Structures": {
+
+  "05_core_data_structures": {
     "Arrays": [
       "Array Declaration",
       "Fixed Size Arrays",
@@ -124,7 +129,8 @@ const golangHierarchy = {
       "strconv Package"
     ]
   },
-  "Structs & Methods": {
+
+  "06_structs_methods_and_memory_model": {
     "Struct Basics": [
       "Struct Definition",
       "Creating Structs",
@@ -138,9 +144,22 @@ const golangHierarchy = {
       "Value vs Pointer Receivers",
       "Method Expressions",
       "Changing Values with Methods"
+    ],
+    "Pointer Basics": [
+      "Pointer Declaration",
+      "Address Operator (&)",
+      "Dereference Operator (*)",
+      "Pointers to Structs"
+    ],
+    "Memory Management": [
+      "Pass by Value vs Reference",
+      "Garbage Collection in Go",
+      "Escape Analysis",
+      "Stack vs Heap Allocation"
     ]
   },
-  "Interfaces & Generics": {
+
+  "07_interfaces_and_generics": {
     "Interfaces": [
       "Interface Definition",
       "Why Interfaces?",
@@ -157,21 +176,8 @@ const golangHierarchy = {
       "When to Use Generics"
     ]
   },
-  "Pointers & Memory": {
-    "Pointer Basics": [
-      "Pointer Declaration",
-      "Address Operator (&)",
-      "Dereference Operator (*)",
-      "Pointers to Structs"
-    ],
-    "Memory Management": [
-      "Pass by Value vs Reference",
-      "Garbage Collection in Go",
-      "Escape Analysis",
-      "Stack vs Heap Allocation"
-    ]
-  },
-  "Concurrency & Parallelism": {
+
+  "08_concurrency_and_parallelism": {
     "Concurrency Concepts": [
       "Concurrency vs Parallelism",
       "Goroutines",
@@ -208,7 +214,8 @@ const golangHierarchy = {
       "Handling Deadlocks"
     ]
   },
-  "Packages & Standard Library": {
+
+  "09_standard_library_and_io": {
     "Common Packages": [
       "fmt Package",
       "os Package",
@@ -230,7 +237,8 @@ const golangHierarchy = {
       "Base64 Encoding"
     ]
   },
-  "Advanced Concepts": {
+
+  "10_advanced_runtime_concepts": {
     "Reflection": [
       "reflect Package",
       "Type Reflection",
@@ -254,17 +262,13 @@ const golangHierarchy = {
       "Performance Evaluation"
     ]
   },
-  "Web Development": {
+
+  "11_web_and_cli_development": {
     "HTTP Basics": [
       "net/http Package",
       "HTTP Server Creation",
       "HTTP Client",
       "HTTP Stateless Nature"
-    ],
-    "Web Frameworks": [
-      "Gin Framework",
-      "Echo Framework",
-      "Chi Router"
     ],
     "Advanced HTTP": [
       "Middleware Implementation",
@@ -272,13 +276,19 @@ const golangHierarchy = {
       "Graceful Shutdown",
       "HTTP Status Codes"
     ],
+    "Web Frameworks": [
+      "Gin Framework",
+      "Echo Framework",
+      "Chi Router"
+    ],
     "CLI Applications": [
       "Creating CLI Apps",
       "flag Package",
       "Cobra Library"
     ]
   },
-  "Database Interaction": {
+
+  "12_database_interaction": {
     "Database Drivers": [
       "database/sql Package",
       "SQL Drivers",
@@ -294,7 +304,8 @@ const golangHierarchy = {
       "ACID Properties"
     ]
   },
-  "Testing & Debugging": {
+
+  "13_testing_benchmarking_and_debugging": {
     "Testing": [
       "testing Package",
       "Unit Testing",
@@ -313,7 +324,8 @@ const golangHierarchy = {
       "Error Investigation"
     ]
   },
-  "Best Practices & Patterns": {
+
+  "14_best_practices_and_architecture": {
     "Design Patterns": [
       "Repository Pattern",
       "Factory Pattern",
@@ -332,7 +344,8 @@ const golangHierarchy = {
       "CPU Optimization"
     ]
   },
-  "DevOps Integration": {
+
+  "15_devops_and_cloud_integration": {
     "Docker": [
       "Dockerizing Go Apps",
       "Dockerfile for Go",
@@ -351,7 +364,8 @@ const golangHierarchy = {
       "Environment Variables"
     ]
   },
-  "Practical Problems": {
+
+  "16_practical_problem_solving": {
     "Array Problems": [
       "Second Largest Element",
       "Find Duplicates",
@@ -374,7 +388,9 @@ const golangHierarchy = {
       "Pipeline Implementation"
     ]
   }
+
 };
+
 
 const seedGolangHierarchy = async () => {
   try {

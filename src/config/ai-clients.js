@@ -37,7 +37,7 @@ export const hfApiKey = process.env.HUGGING_FACE_API_KEY;
 
 // Individual exports for backwards compatibility (uses primary = Groq now)
 export const groqClient = groqClients[0];
-export const geminiModel = geminiModels[0]?.instance;
+export const geminiModel = geminiModels[0] && geminiModels[0].instance;
 
 console.log(`✅ AI clients initialized: ${groqClients.length} Groq (PRIMARY) + ${geminiModels.length} Gemini (fallback) + ${hfApiKey ? '1' : '0'} HF`);
 

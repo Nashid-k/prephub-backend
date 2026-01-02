@@ -1,6 +1,7 @@
 
 const concurrencyCurriculum = {
   "Concurrency_Async_Processing": {
+
     "concurrency_fundamentals": {
       "basic_concepts": [
         "Process vs thread vs coroutine differences",
@@ -13,37 +14,20 @@ const concurrencyCurriculum = {
       "concurrency_primitives": [
         "Mutexes, semaphores, and locks",
         "Condition variables and barriers",
-        "Atomic operations and memory ordering",
         "Read-write locks and their optimizations",
-        "Spin locks vs blocking locks",
-        "Memory barriers and fence operations"
+        "Atomic operations and memory ordering",
+        "Memory barriers and fence operations",
+        "Spin locks vs blocking locks"
       ]
     },
-    "parallel_programming": {
-      "parallel_patterns": [
-        "MapReduce and its variations",
-        "Fork-join parallelism",
-        "Pipeline parallelism patterns",
-        "Task parallelism vs data parallelism",
-        "Divide and conquer parallel algorithms",
-        "Parallel sorting and searching algorithms"
-      ],
-      "parallel_models": [
-        "Shared memory vs distributed memory models",
-        "SIMD (Single Instruction Multiple Data)",
-        "MIMD (Multiple Instruction Multiple Data)",
-        "GPU computing and CUDA/OpenCL",
-        "Vector processing optimizations",
-        "NUMA-aware parallel programming"
-      ]
-    },
+
     "async_processing": {
       "async_patterns": [
         "Callback-based asynchronous programming",
         "Promise/future patterns and implementations",
         "Async/await syntactic sugar",
-        "Reactive programming with Rx patterns",
         "Event-driven architectures",
+        "Reactive programming with Rx patterns",
         "Message-driven processing"
       ],
       "async_io": [
@@ -55,24 +39,26 @@ const concurrencyCurriculum = {
         "Database connection pooling"
       ]
     },
-    "distributed_concurrency": {
-      "distributed_locks": [
-        "Distributed lock implementations",
-        "Consensus algorithms (Paxos, Raft)",
-        "Leader election algorithms",
-        "Distributed transactions and 2PC",
-        "Quorum-based consistency",
-        "Clock synchronization (Lamport clocks, vector clocks)"
+
+    "parallel_programming": {
+      "parallel_patterns": [
+        "Task parallelism vs data parallelism",
+        "Fork-join parallelism",
+        "Pipeline parallelism patterns",
+        "Divide and conquer parallel algorithms",
+        "MapReduce and its variations",
+        "Parallel sorting and searching algorithms"
       ],
-      "coordination_services": [
-        "ZooKeeper for distributed coordination",
-        "etcd for service discovery and configuration",
-        "Consul for service mesh and discovery",
-        "Distributed queue implementations",
-        "Workflow orchestration engines",
-        "State machine replication"
+      "parallel_models": [
+        "Shared memory vs distributed memory models",
+        "SIMD (Single Instruction Multiple Data)",
+        "MIMD (Multiple Instruction Multiple Data)",
+        "Vector processing optimizations",
+        "NUMA-aware parallel programming",
+        "GPU computing and CUDA/OpenCL"
       ]
     },
+
     "concurrent_data_structures": {
       "thread_safe_structures": [
         "Concurrent queues (bounded and unbounded)",
@@ -91,6 +77,7 @@ const concurrencyCurriculum = {
         "Priority inversion and solutions"
       ]
     },
+
     "message_queuing": {
       "message_patterns": [
         "Publish-subscribe patterns",
@@ -109,16 +96,37 @@ const concurrencyCurriculum = {
         "ZeroMQ for lightweight messaging"
       ]
     },
+
+    "distributed_concurrency": {
+      "distributed_locks": [
+        "Distributed lock implementations",
+        "Leader election algorithms",
+        "Consensus algorithms (Paxos, Raft)",
+        "Distributed transactions and 2PC",
+        "Quorum-based consistency",
+        "Clock synchronization (Lamport clocks, vector clocks)"
+      ],
+      "coordination_services": [
+        "ZooKeeper for distributed coordination",
+        "etcd for service discovery and configuration",
+        "Consul for service mesh and discovery",
+        "Distributed queue implementations",
+        "Workflow orchestration engines",
+        "State machine replication"
+      ]
+    },
+
     "faang_interview_focus": [
       "Design concurrent data structures",
-      "Implement distributed locking mechanisms",
       "Handle race conditions and deadlocks",
-      "Design async processing pipelines",
       "Optimize for multi-core processors",
+      "Design async processing pipelines",
+      "Implement distributed locking mechanisms",
       "Scale message queuing systems"
     ]
   }
-}
+};
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

@@ -1,3 +1,4 @@
+import slugify from 'slugify';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import Topic from '../../models/Topic.js';
@@ -499,9 +500,14 @@ const seedCHierarchy = async () => {
 
     // Seed hierarchy
     let categoryOrder = 1;
-    for (const [groupName, categories] of Object.entries(cHierarchy)) {
-      for (const [categoryName, sections] of Object.entries(categories)) {
-        const categorySlug = categoryName.toLowerCase().replace(/\s+/g, '-').replace(/[()&]/g, '');
+    for (const [rawGroupKey, categories] of Object.entries(cHierarchy)) {
+      // Sanitize group name (e.g. "Input/Output" -> "Input Output")
+      const groupName = rawGroupKey.replace(/\//g, ' '); 
+
+      for (const [rawCategoryName, sections] of Object.entries(categories)) {
+        // Sanitize category name and prefix with "C " for global uniqueness
+        const categoryName = rawCategoryName.replace(/\//g, ' '); 
+        const categorySlug = slugify(`C ${categoryName}`, { lower: true, strict: true });
         
         let category = await Category.findOne({
           topicId: cTopic._id,
@@ -522,13 +528,8 @@ const seedCHierarchy = async () => {
 
         let sectionOrder = 1;
         for (const sectionTitle of sections) {
-          const sectionSlug = `${categorySlug}-${sectionTitle.toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[().,&/]/g, '')
-            .replace(/:/g, '')
-            .replace(/#/g, 'hash-')
-            .replace(/\\/g, '')}`;
-
+          const sectionSlug = slugify(`${categoryName}-${sectionTitle}`, { lower: true, strict: true });
+          
           const existingSection = await Section.findOne({
             categoryId: category._id,
             slug: sectionSlug

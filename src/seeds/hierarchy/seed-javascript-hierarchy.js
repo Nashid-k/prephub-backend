@@ -1,5 +1,7 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import assignGroupBatch from '../../services/assignGroupBatch.service.js';
+
 import Topic from '../../models/Topic.js';
 import Category from '../../models/Category.js';
 import Section from '../../models/Section.js';
@@ -8,7 +10,8 @@ import slugify from 'slugify';
 dotenv.config();
 
 const javascriptCurriculum = {
-  "01_javascript_foundations": {
+
+  "01_language_origins_and_runtime": {
     "history_and_evolution": [
       "Origin of JavaScript",
       "Brendan Eich and Netscape",
@@ -31,12 +34,15 @@ const javascriptCurriculum = {
       "Optimization & Deoptimization",
       "Hot Functions",
       "Inline Caching"
-    ],
+    ]
+  },
+
+  "02_type_system_and_values": {
     "typing_system": [
       "Static vs Dynamic Typing",
+      "Primitive vs Reference Types",
       "Type Coercion (Implicit & Explicit)",
       "Boxing and Unboxing",
-      "Primitive vs Reference Types",
       "typeof and instanceof"
     ],
     "special_values": [
@@ -46,7 +52,8 @@ const javascriptCurriculum = {
       "Truthy and Falsy Values"
     ]
   },
-  "02_variables_scope": {
+
+  "03_variables_scope_and_execution": {
     "variable_declarations": [
       "var vs let vs const",
       "Redeclaration Rules",
@@ -58,13 +65,6 @@ const javascriptCurriculum = {
       "Creation Phase vs Execution Phase",
       "The 'this' Binding",
       "Variable Environment"
-    ],
-    "call_stack_lifecycle": [
-      "Stack Frames",
-      "Push and Pop Operations",
-      "Stack Overflow",
-      "Recursion and Stack",
-      "Error Stack Traces"
     ],
     "scope_management": [
       "Global, Function, Block Scope",
@@ -80,6 +80,13 @@ const javascriptCurriculum = {
       "Temporal Dead Zone (TDZ)",
       "Function Expressions vs Declarations"
     ],
+    "call_stack_lifecycle": [
+      "Stack Frames",
+      "Push and Pop Operations",
+      "Stack Overflow",
+      "Recursion and Stack",
+      "Error Stack Traces"
+    ],
     "strict_mode": [
       "Purpose of 'use strict'",
       "Enabling Strict Mode",
@@ -88,22 +95,8 @@ const javascriptCurriculum = {
       "Secure JavaScript"
     ]
   },
-  "03_operators_expressions": {
-    "equality_algorithms": [
-      "Abstract Equality (==)",
-      "Strict Equality (===)",
-      "SameValueZero (Map/Set)",
-      "SameValue (Object.is)",
-      "Equality Comparison Table"
-    ],
-    "type_coercion": [
-      "Implicit Coercion Rules",
-      "Explicit Coercion",
-      "ToPrimitive Operation",
-      "valueOf vs toString",
-      "Symbol.toPrimitive",
-      "Corner Cases in Coercion"
-    ],
+
+  "04_operators_and_control_flow": {
     "arithmetic_operators": [
       "Addition (+)",
       "Subtraction (-)",
@@ -129,6 +122,29 @@ const javascriptCurriculum = {
       "Nullish Coalescing Operator (??)",
       "Optional Chaining Operator (?.)"
     ],
+    "equality_algorithms": [
+      "Abstract Equality (==)",
+      "Strict Equality (===)",
+      "SameValueZero (Map/Set)",
+      "SameValue (Object.is)",
+      "Equality Comparison Table"
+    ],
+    "type_coercion": [
+      "Implicit Coercion Rules",
+      "Explicit Coercion",
+      "ToPrimitive Operation",
+      "valueOf vs toString",
+      "Symbol.toPrimitive",
+      "Corner Cases in Coercion"
+    ],
+    "assignment_operators": [
+      "Assignment (=)",
+      "Addition Assignment (+=)",
+      "Subtraction Assignment (-=)",
+      "Multiplication Assignment (*=)",
+      "Division Assignment (/=)",
+      "Modulus Assignment (%=)"
+    ],
     "bitwise_operators": [
       "Bitwise AND (&)",
       "Bitwise OR (|)",
@@ -138,26 +154,13 @@ const javascriptCurriculum = {
       "Right Shift (>>)",
       "Zero-fill Right Shift (>>>)"
     ],
-    "assignment_operators": [
-      "Assignment (=)",
-      "Addition Assignment (+=)",
-      "Subtraction Assignment (-=)",
-      "Multiplication Assignment (*=)",
-      "Division Assignment (/=)",
-      "Modulus Assignment (%=)"
-    ]
-  },
-  "04_control_flow": {
-    "conditional_statements": [
+    "control_flow": [
       "if Statement",
       "if-else Statement",
       "if-else if-else Statement",
       "Switch Statement",
       "Ternary Operator",
-      "Nested Conditionals"
-    ],
-    "loops_iteration": [
-      "Entry-controlled vs Exit-controlled Loops",
+      "Nested Conditionals",
       "for Loop",
       "while Loop",
       "do-while Loop",
@@ -168,7 +171,8 @@ const javascriptCurriculum = {
       "Labeled Statements"
     ]
   },
-  "05_functions": {
+
+  "05_functions_and_closures": {
     "function_types": [
       "Function Declarations",
       "Function Expressions",
@@ -200,91 +204,63 @@ const javascriptCurriculum = {
       "Partial Application",
       "Memoization",
       "Benefits of Functional Programming"
-    ]
-  },
-  "06_closures": {
-    "closure_concepts": [
+    ],
+    "closures": [
       "What are Closures",
       "How Closures Work",
       "Lexical Scoping in Closures",
-      "Closure Examples"
-    ],
-    "closure_applications": [
+      "Closure Examples",
       "Data Privacy (Module Pattern)",
       "Function Factories",
       "Event Handlers with Closures",
-      "Currying Implementation"
-    ],
-    "closure_considerations": [
+      "Currying Implementation",
       "Memory Management with Closures",
       "Potential Memory Leaks",
       "Performance Considerations"
     ]
   },
-  "07_arrays": {
-    "array_basics": [
+
+  "06_core_data_structures": {
+    "arrays": [
       "Array Creation",
       "Array Mutability",
       "Array Length Property",
-      "Array Indexing"
-    ],
-    "array_methods_modification": [
+      "Array Indexing",
       "push() - Add to end",
       "pop() - Remove from end",
       "shift() - Remove from beginning",
       "unshift() - Add to beginning",
       "splice() - Add/remove elements",
-      "slice() - Extract portion"
-    ],
-    "array_methods_iteration": [
-      "forEach() - Iterate elements",
-      "map() - Transform elements",
-      "filter() - Filter elements",
-      "reduce() - Accumulate values",
-      "some() - Test any element",
-      "every() - Test all elements",
-      "find() - Find element",
-      "findIndex() - Find index"
-    ],
-    "array_methods_searching": [
-      "indexOf() - Find index",
-      "lastIndexOf() - Find last index",
-      "includes() - Check inclusion",
-      "Array.isArray() - Type check"
-    ],
-    "array_methods_transformation": [
-      "concat() - Merge arrays",
-      "join() - Join to string",
-      "reverse() - Reverse order",
-      "sort() - Sort elements",
-      "flat() - Flatten nested",
-      "flatMap() - Map and flatten"
-    ],
-    "array_operations": [
+      "slice() - Extract portion",
+      "forEach()",
+      "map()",
+      "filter()",
+      "reduce()",
+      "some()",
+      "every()",
+      "find()",
+      "findIndex()",
+      "indexOf()",
+      "lastIndexOf()",
+      "includes()",
+      "Array.isArray()",
+      "concat()",
+      "join()",
+      "reverse()",
+      "sort()",
+      "flat()",
+      "flatMap()",
       "Array Destructuring",
       "Spread Operator with Arrays",
       "Multidimensional Arrays",
-      "Array.from() and Array.of()"
+      "Array.from()",
+      "Array.of()"
     ],
-    "practical_array_problems": [
-      "Remove Duplicates",
-      "Find Maximum/Minimum",
-      "Find Second Largest",
-      "Reverse Array",
-      "Array Rotation",
-      "Array Intersection/Union",
-      "Custom map/filter Implementation",
-      "Pattern Problems"
-    ]
-  },
-  "08_objects": {
-    "object_basics": [
+    "objects": [
       "Object Creation (Object Literal, Constructor, Class)",
       "Properties and Methods",
       "Property Access (Dot vs Bracket)",
-      "Property Existence Checking"
-    ],
-    "object_methods": [
+      "Property Existence Checking",
       "Object.keys()",
       "Object.values()",
       "Object.entries()",
@@ -293,41 +269,32 @@ const javascriptCurriculum = {
       "Object.freeze()",
       "Object.seal()",
       "Object.isFrozen()",
-      "Object.isSealed()"
-    ],
-    "object_operations": [
+      "Object.isSealed()",
       "Object Destructuring",
       "Spread Operator with Objects",
       "Property Shorthand",
       "Method Shorthand",
-      "Computed Property Names"
-    ],
-    "object_immutability": [
-      "Shallow Copy vs Deep Copy",
-      "Object Immutability Patterns",
-      "Structured Clone API",
-      "JSON.parse(JSON.stringify()) Limitations"
-    ],
-    "object_iteration": [
+      "Computed Property Names",
       "for...in Loop",
       "Object.entries() with for...of",
-      "Object.keys() with forEach()"
+      "Object.keys() with forEach()",
+      "Shallow Copy vs Deep Copy",
+      "Structured Clone API",
+      "JSON.parse(JSON.stringify()) Limitations"
     ]
   },
-  "09_object_oriented_javascript": {
+
+  "07_object_model_and_this": {
     "oop_concepts": [
       "Encapsulation",
       "Abstraction",
       "Polymorphism",
       "Inheritance"
     ],
-    "constructor_functions": [
+    "constructors_and_classes": [
       "Constructor Pattern",
       "new Keyword",
-      "Instance Properties",
-      "Prototype Property"
-    ],
-    "classes": [
+      "Prototype Property",
       "Class Declaration",
       "Class Expression",
       "Constructor Method",
@@ -337,31 +304,36 @@ const javascriptCurriculum = {
       "Class Inheritance (extends)",
       "super Keyword"
     ],
-    "factory_functions": [
-      "Factory Function Pattern",
-      "Benefits of Factory Functions"
+    "this_context": [
+      "this in Global Context",
+      "this in Function Context",
+      "this in Object Method",
+      "this in Constructor",
+      "this in Arrow Functions",
+      "this in Event Handlers",
+      "call() Method",
+      "apply() Method",
+      "bind() Method",
+      "Function Borrowing"
     ]
   },
-  "10_prototypes_inheritance": {
-    "prototype_concepts": [
+
+  "08_prototypes_and_inheritance": {
+    "prototype_system": [
       "Prototype Object",
       "__proto__ vs prototype",
-      "Constructor Functions",
-      "Prototype-based Inheritance"
-    ],
-    "prototype_chain": [
-      "The Prototype Chain Mechanism",
+      "Prototype-based Inheritance",
+      "Prototype Chain Mechanism",
       "Property Shadowing on Chain",
       "End of Prototype Chain (null)",
-      "Performance and Lookup Time",
-      "Modifying Built-in Prototypes (Polyfills)"
+      "Performance and Lookup Time"
     ],
-    "prototype_methods": [
+    "prototype_utilities": [
       "Object.getPrototypeOf()",
       "Object.setPrototypeOf()",
       "Object.hasOwnProperty()",
       "instanceof Operator",
-      "Object.create()"
+      "Modifying Built-in Prototypes (Polyfills)"
     ],
     "inheritance_patterns": [
       "Constructor Inheritance",
@@ -371,64 +343,31 @@ const javascriptCurriculum = {
       "Prototypal Inheritance vs Classical"
     ]
   },
-  "11_this_context": {
-    "this_binding": [
-      "this in Global Context",
-      "this in Function Context",
-      "this in Object Method",
-      "this in Constructor",
-      "this in Arrow Functions",
-      "this in Event Handlers"
-    ],
-    "explicit_binding": [
-      "call() Method",
-      "apply() Method",
-      "bind() Method",
-      "Function Borrowing"
-    ],
-    "this_patterns": [
-      "Self Pattern (that = this)",
-      "Arrow Function Pattern",
-      "bind() in Event Handlers"
-    ]
-  },
-  "12_asynchronous_javascript": {
-    "async_concepts": [
+
+  "09_async_and_concurrency": {
+    "async_foundations": [
       "Synchronous vs Asynchronous",
       "Single-threaded Nature",
       "Blocking vs Non-blocking Operations",
       "Concurrency Model"
     ],
-    "event_loop_mechanics": [
+    "event_loop": [
       "Call Stack vs Callback Queue",
       "Microtasks vs Macrotasks",
       "Render Cycle and Event Loop",
       "Event Loop Visualization",
       "Starvation handling"
     ],
-    "job_queues": [
-      "Promise Jobs (Microtasks)",
-      "Script Jobs (Macrotasks)",
-      "Queue Priority Order",
-      "nextTick (Node.js)"
+    "callbacks": [
+      "Callback Functions",
+      "Error-first Callbacks",
+      "Callback Hell",
+      "Converting Callbacks to Promises"
     ],
-    "timers": [
-      "setTimeout()",
-      "setInterval()",
-      "clearTimeout()",
-      "clearInterval()",
-      "Zero-delay setTimeout",
-      "requestAnimationFrame"
-    ]
-  },
-  "13_promises": {
-    "promise_concepts": [
-      "Promise States (Pending, Fulfilled, Rejected)",
+    "promises": [
+      "Promise States",
       "Promise Creation",
       "Promise Chaining",
-      "Error Handling in Promises"
-    ],
-    "promise_methods": [
       "Promise.all()",
       "Promise.allSettled()",
       "Promise.race()",
@@ -441,146 +380,118 @@ const javascriptCurriculum = {
       "await Expression",
       "Error Handling with try-catch",
       "Parallel Execution with Promise.all()"
-    ]
-  },
-  "14_callbacks": {
-    "callback_patterns": [
-      "Callback Functions",
-      "Error-first Callbacks (Node.js Pattern)",
-      "Callback Hell (Pyramid of Doom)"
     ],
-    "callback_conversion": [
-      "Converting Callbacks to Promises",
-      "Promisify Utility",
-      "Async/Await with Callbacks"
+    "timers": [
+      "setTimeout()",
+      "setInterval()",
+      "clearTimeout()",
+      "clearInterval()",
+      "Zero-delay setTimeout",
+      "requestAnimationFrame",
+      "nextTick (Node.js)"
     ]
   },
-  "15_error_handling": {
-    "error_types": [
+
+  "10_error_memory_and_platform": {
+    "error_handling": [
       "Error Object",
       "SyntaxError",
       "ReferenceError",
       "TypeError",
       "RangeError",
       "URIError",
-      "EvalError"
-    ],
-    "error_handling_syntax": [
-      "try-catch Block",
-      "try-catch-finally Block",
+      "EvalError",
+      "try-catch",
+      "try-catch-finally",
       "throw Statement",
-      "Custom Error Classes"
-    ],
-    "async_error_handling": [
-      "Error Handling in Promises",
-      "Error Handling with async/await",
+      "Custom Error Classes",
       "Global Error Handlers"
-    ]
-  },
-  "16_browser_apis": {
-    "fetch_api": [
-      "Fetch API Basics",
-      "GET, POST, PUT, DELETE Requests",
+    ],
+    "memory_management": [
+      "Garbage Collection",
+      "Reference Counting",
+      "Mark-and-Sweep Algorithm",
+      "Common Memory Leaks",
+      "Circular References",
+      "Detached DOM Elements",
+      "Closures and Memory"
+    ],
+    "browser_apis": [
+      "Fetch API",
       "Request Headers",
       "Response Handling",
-      "Error Handling with Fetch"
-    ],
-    "web_storage": [
       "localStorage",
       "sessionStorage",
-      "Storage Methods (setItem, getItem, removeItem, clear)",
-      "Storage Events"
-    ],
-    "other_apis": [
+      "Storage Events",
       "Geolocation API",
       "Notification API",
       "Clipboard API",
       "Web Audio API"
     ]
   },
-  "17_dom_manipulation": {
-    "dom_concepts": [
+
+  "11_dom_events_and_workers": {
+    "dom": [
       "DOM vs BOM",
       "DOM Tree Structure",
-      "Node Types (Element, Text, Comment)",
-      "Live vs Static NodeLists"
-    ],
-    "shadow_dom": [
-      "What is Shadow DOM",
-      "Shadow Root and Shadow Host",
-      "Encapsulation and Styling",
-      "Slots and Templates",
-      "Open vs Closed Mode"
-    ],
-    "virtual_dom_concepts": [
-      "Concept of Virtual DOM",
-      "Reconciliation Process",
-      "Diffing Algorithm Basics",
-      "Real DOM vs Virtual DOM Performance"
-    ],
-    "dom_selection": [
+      "Node Types",
+      "Live vs Static NodeLists",
       "getElementById()",
-      "querySelector() / querySelectorAll()",
-      "Closest() method",
-      "matches() method"
-    ],
-    "dom_manipulation": [
+      "querySelector()",
+      "querySelectorAll()",
       "createElement()",
       "appendChild()",
       "removeChild()",
       "replaceChild()",
       "innerHTML vs textContent",
       "classList API",
-      "setAttribute() / getAttribute()"
+      "setAttribute()",
+      "getAttribute()"
     ],
-    "dom_traversal": [
-      "parentNode / parentElement",
-      "children vs childNodes",
-      "firstElementChild / lastElementChild",
-      "nextElementSibling / previousElementSibling"
-    ]
-  },
-  "18_events": {
-    "event_concepts": [
+    "events": [
       "Event Listeners",
       "Event Object",
-      "Event Types (click, submit, keydown, etc.)"
-    ],
-    "event_flow": [
       "Event Bubbling",
       "Event Capturing",
       "Event Propagation",
       "stopPropagation()",
       "stopImmediatePropagation()",
-      "preventDefault()"
-    ],
-    "event_patterns": [
+      "preventDefault()",
       "Event Delegation",
       "Custom Events",
       "Event Throttling",
       "Event Debouncing"
+    ],
+    "workers": [
+      "Web Workers Basics",
+      "Dedicated Workers",
+      "Shared Workers",
+      "Service Workers",
+      "Message Passing",
+      "Worker Scope"
     ]
   },
-  "19_advanced_concepts": {
-    "generators_iterators": [
+
+  "12_advanced_language_and_architecture": {
+    "iterators_generators": [
       "Iterator Protocol",
       "Iterable Protocol",
-      "Generator Functions (function*)",
+      "Generator Functions",
       "yield and next()",
       "Async Iterators"
     ],
-    "proxies_reflection": [
+    "proxies_and_reflection": [
       "Proxy Object Fundamentals",
-      "Handler and Traps (get, set, apply)",
+      "Handler and Traps",
       "Reflect API Usage",
       "Data Validation with Proxies",
       "Observables Pattern"
     ],
     "modules": [
-      "ES Modules (import/export)",
+      "ES Modules",
       "CommonJS vs ES Modules",
       "Circular Dependencies",
-      "Dynamic Imports (import())",
+      "Dynamic Imports",
       "Module Loading execution order"
     ],
     "collections": [
@@ -591,127 +502,70 @@ const javascriptCurriculum = {
       "Garbage Collection in WeakRefs"
     ]
   },
-  "20_web_workers": {
-     "core_concepts": [
-      "Web Workers Basics",
-      "Dedicated Workers",
-      "Shared Workers",
-      "Service Workers",
-      "Message Passing",
-      "Worker Scope"
-    ]
-  },
-  "21_memory_management": {
-    "garbage_collection": [
-      "Garbage Collection in JavaScript",
-      "Reference Counting",
-      "Mark-and-Sweep Algorithm",
-      "Memory Leaks Detection"
-    ],
-    "memory_patterns": [
-      "Common Memory Leaks",
-      "Circular References",
-      "Detached DOM Elements",
-      "Closures and Memory"
-    ]
-  },
-  "22_design_patterns": {
-    "creational_patterns": [
+
+  "13_design_performance_and_tooling": {
+    "design_patterns": [
       "Singleton Pattern",
       "Factory Pattern",
-      "Builder Pattern"
-    ],
-    "structural_patterns": [
+      "Builder Pattern",
       "Module Pattern",
       "Proxy Pattern",
-      "Decorator Pattern"
-    ],
-    "behavioral_patterns": [
+      "Decorator Pattern",
       "Observer Pattern",
       "Strategy Pattern",
       "Command Pattern"
-    ]
-  },
-  "23_performance_optimization": {
-    "optimization_techniques": [
+    ],
+    "performance_optimization": [
       "Debouncing Implementation",
       "Throttling Implementation",
       "Lazy Loading",
       "Code Splitting",
       "Tree Shaking"
     ],
-    "performance_tools": [
+    "tooling": [
+      "npm",
+      "yarn",
+      "pnpm",
+      "package.json Configuration",
+      "Webpack",
+      "Babel",
+      "ESLint",
+      "Prettier",
       "Chrome DevTools Profiler",
       "Memory Snapshots",
       "Performance API",
       "Lighthouse Audits"
     ]
   },
-  "24_tooling_ecosystem": {
-    "package_management": [
-      "npm",
-      "yarn",
-      "pnpm",
-      "package.json Configuration"
-    ],
-    "build_tools": [
-      "Webpack",
-      "Babel",
-      "ESLint",
-      "Prettier"
-    ],
-    "testing": [
-      "Unit Testing (Jest, Mocha)",
-      "Integration Testing",
-      "End-to-End Testing (Cypress, Playwright)"
-    ]
-  },
-  "25_practical_workouts": {
-    "basic_problems": [
+
+  "14_practice_and_professionalism": {
+    "practical_workouts": [
       "FizzBuzz Implementation",
       "Palindrome Checker",
       "Factorial Calculator",
-      "Fibonacci Sequence"
-    ],
-    "array_object_problems": [
+      "Fibonacci Sequence",
       "Deep Object Comparison",
       "Array Flattening",
       "Object Deep Cloning",
-      "Array Grouping"
-    ],
-    "async_problems": [
+      "Array Grouping",
       "Sequential API Calls",
       "Parallel API Calls",
       "Retry Logic Implementation",
-      "Timeout Wrapper"
-    ],
-    "dom_problems": [
+      "Timeout Wrapper",
       "Infinite Scroll Implementation",
       "Modal Dialog Component",
       "Form Validation",
       "Dynamic Table Generation"
     ],
-    "algorithm_problems": [
-      "Sorting Algorithms",
-      "Searching Algorithms",
-      "String Manipulation",
-      "Data Structure Implementation"
-    ]
-  },
-  "26_best_practices": {
-    "coding_standards": [
+    "best_practices": [
       "Code Style Guidelines",
       "Naming Conventions",
       "Commenting Practices",
-      "Error Handling Strategy"
-    ],
-    "security_practices": [
+      "Error Handling Strategy",
       "XSS Prevention",
       "CSRF Protection",
       "Input Validation",
-      "Secure Coding Practices"
-    ],
-    "maintenance": [
+      "Secure Coding Practices",
       "Code Organization",
       "Modular Architecture",
       "Documentation",
@@ -719,6 +573,7 @@ const javascriptCurriculum = {
     ]
   }
 };
+
 
 const categorizeDifficulty = (name, parentName) => {
   const lowerName = name.toLowerCase() + ' ' + parentName.toLowerCase();
@@ -773,12 +628,14 @@ const seedHierarchy = async () => {
     await Section.deleteMany({ topicId: topic._id });
     await Category.deleteMany({ topicId: topic._id });
 
-    // 3. Process new structure
-    console.log('🏗️ Building new hierarchy...');
+    // 3. Process new structure with AI-powered grouping
+    console.log('🏗️ Building new hierarchy with AI categorization...');
     
+    // STEP 1: Collect all category metadata
+    console.log('📋 Step 1: Collecting category metadata...');
+    const categoryMetadata = [];
     let categoryOrder = 1;
-    let totalSections = 0;
-
+    
     for (const [catKey, sectionsObj] of Object.entries(javascriptCurriculum)) {
       // Format Category Name: "01_javascript_foundations" -> "JavaScript Foundations"
       let catName = catKey.replace(/^\d+_/, '').split('_')
@@ -787,25 +644,61 @@ const seedHierarchy = async () => {
       
       // Fix potential odd naming like "Javascript Foundations" -> "JavaScript Foundations"
       catName = catName.replace('Javascript', 'JavaScript');
+      
+      categoryMetadata.push({
+        key: catKey,
+        name: catName,
+        order: categoryOrder++,
+        sectionsObj: sectionsObj
+      });
+    }
+    
+    // STEP 2: Get AI group assignments for all categories at once
+    console.log(`🤖 Step 2: AI categorizing ${categoryMetadata.length} categories...`);
+    const groupAssignments = await assignGroupBatch(categoryMetadata, topic.slug);
+    
+    console.log(`✅ Received ${groupAssignments.size} group assignments`);
+    
+    // STEP 3: Create categories with AI-assigned groups
+    console.log('💾 Step 3: Creating categories and sections...');
+    
+    //DEBUG: Show what we're looking up
+    console.log('\n🔍 DEBUG: Lookup Keys (first 3):');
+    categoryMetadata.slice(0, 3).forEach(meta => {
+      console.log(`   Looking for KEY: "${meta.key}"`);
+      console.log(`   Found: ${groupAssignments.has(meta.key) ? `"${groupAssignments.get(meta.key)}"` : 'NOT FOUND'}`);
+    });
+    console.log('');
+    
+    let totalSections = 0;
+
+    for (const meta of categoryMetadata) {
+      // Get AI-assigned group using the ORIGINAL KEY (with numbers and underscores)
+      // This matches whatthe AI received in the prompt
+      const aiGroup = groupAssignments.get(meta.key);
+      const finalGroup = aiGroup || `${meta.order <= 5 ? '01' : meta.order <= 15 ? '02' : '03'}. General`;
+      
+      if (!aiGroup) {
+        console.warn(`⚠️  No AI group for "${meta.key}" (${meta.name}), using fallback: ${finalGroup}`);
+      }
 
       const category = await Category.create({
-        name: catName,
-        slug: slugify(catName, { lower: true, strict: true }),
+        name: meta.name,
+        slug: slugify(meta.name, { lower: true, strict: true }),
         topicId: topic._id,
-        order: categoryOrder++,
-        description: `Master ${catName}`
+        group: finalGroup,
+        order: meta.order,
+        description: `Master ${meta.name}`
       });
 
-      console.log(`  📂 Created Category: ${category.name}`);
+      console.log(`  📂 Created Category: ${category.name} [${finalGroup}]`);
 
       let sectionOrder = 1;
 
       // Handle both array (simple list) and object (subcategories) structures
-      // Note: User's JSON mostly has objects, but "20_web_workers" was an array in original input 
-      // I converted it to an object above to be consistent, but let's handle both just in case.
-      const sectionsToProcess = Array.isArray(sectionsObj) 
-        ? { "Core Concepts": sectionsObj } 
-        : sectionsObj;
+      const sectionsToProcess = Array.isArray(meta.sectionsObj) 
+        ? { "Core Concepts": meta.sectionsObj } 
+        : meta.sectionsObj;
 
       for (const [secKey, keyPoints] of Object.entries(sectionsToProcess)) {
         // Format Section Title
@@ -814,14 +707,14 @@ const seedHierarchy = async () => {
           .join(' ');
 
         // Determine difficulty
-        const difficulty = categorizeDifficulty(secTitle, catName);
+        const difficulty = categorizeDifficulty(secTitle, meta.name);
 
         // Generate a description from key points
         const description = `Learn about ${keyPoints.slice(0, 3).join(', ')}...`;
 
         await Section.create({
           title: secTitle,
-          slug: slugify(`${catName}-${secTitle}`, { lower: true, strict: true }),
+          slug: slugify(`${meta.name}-${secTitle}`, { lower: true, strict: true }),
           categoryId: category._id,
           topicId: topic._id,
           order: sectionOrder++,
@@ -838,7 +731,7 @@ const seedHierarchy = async () => {
     }
 
     console.log(`\n✅ Seeding Complete!`);
-    console.log(`   - Categories: ${categoryOrder - 1}`);
+    console.log(`   - Categories: ${categoryMetadata.length}`);
     console.log(`   - Sections: ${totalSections}`);
 
     process.exit(0);

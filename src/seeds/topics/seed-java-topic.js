@@ -70,7 +70,7 @@ const seedJava = async () => {
             
             for (const [key, value] of Object.entries(mainValue)) {
                 const categoryName = formatName(key);
-                const categorySlug = generateUniqueSlug(categoryName);
+                const categorySlug = generateUniqueSlug(`java ${categoryName}`);
 
                 const category = await Category.create({
                     name: categoryName,

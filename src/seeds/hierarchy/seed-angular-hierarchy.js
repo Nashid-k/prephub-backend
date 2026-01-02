@@ -1,6 +1,7 @@
 
 const angularCurriculum = {
-  "Angular_Fundamentals": {
+
+  "01_angular_foundations": {
     "01_introduction_setup": {
       "core_concepts": [
         "What is Angular - Framework Overview",
@@ -25,7 +26,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Components_Templates": {
+  "02_components_and_templates": {
     "01_component_basics": [
       "Component Structure (@Component)",
       "Template and Styles",
@@ -55,7 +56,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Directives": {
+  "03_directives": {
     "01_structural_directives": [
       "*ngIf - Conditional Rendering",
       "*ngFor - List Rendering",
@@ -78,7 +79,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Services_Dependency_Injection": {
+  "04_services_and_dependency_injection": {
     "01_services": [
       "Service Creation (@Injectable)",
       "Singleton Services",
@@ -101,7 +102,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Modules": {
+  "05_modules_and_project_structure": {
     "01_module_basics": [
       "NgModule Structure",
       "Declarations, Imports, Exports",
@@ -124,7 +125,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Routing": {
+  "06_routing_and_navigation": {
     "01_routing_basics": [
       "Router Configuration",
       "RouterOutlet Directive",
@@ -147,7 +148,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Forms": {
+  "07_forms_and_validation": {
     "01_template_driven_forms": [
       "Template-driven Forms Basics",
       "ngModel and ngForm",
@@ -177,7 +178,7 @@ const angularCurriculum = {
     ]
   },
 
-  "HTTP_Client": {
+  "08_http_and_api_integration": {
     "01_http_basics": [
       "HttpClientModule Setup",
       "GET, POST, PUT, DELETE Requests",
@@ -200,7 +201,7 @@ const angularCurriculum = {
     ]
   },
 
-  "RxJS_Reactive_Programming": {
+  "09_rxjs_and_reactive_programming": {
     "01_observables_basics": [
       "Observables in Angular",
       "Observable vs Promise",
@@ -223,7 +224,7 @@ const angularCurriculum = {
     ]
   },
 
-  "State_Management": {
+  "10_state_management": {
     "01_component_state": [
       "Local Component State",
       "Service-based State",
@@ -253,7 +254,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Pipes": {
+  "11_pipes_and_lifecycle": {
     "built_in_pipes": [
       "DatePipe for Date Formatting",
       "CurrencyPipe and DecimalPipe",
@@ -266,10 +267,8 @@ const angularCurriculum = {
       "Pure vs Impure Pipes",
       "Pipe Parameters",
       "Pipe Performance"
-    ]
-  },
+    ],
 
-  "Lifecycle_Hooks": {
     "component_lifecycle": [
       "ngOnInit - Initialization",
       "ngOnChanges - Input Changes",
@@ -285,7 +284,55 @@ const angularCurriculum = {
     ]
   },
 
-  "Performance_Optimization": {
+  "12_dom_rendering_and_events": {
+    "dom_concepts": [
+      "DOM vs BOM",
+      "DOM Tree Structure",
+      "Node Types (Element, Text, Comment)",
+      "Live vs Static NodeLists"
+    ],
+
+    "shadow_dom": [
+      "What is Shadow DOM",
+      "Shadow Root and Shadow Host",
+      "Encapsulation and Styling",
+      "Slots and Templates",
+      "Open vs Closed Mode"
+    ],
+
+    "virtual_dom_concepts": [
+      "Concept of Virtual DOM",
+      "Reconciliation Process",
+      "Diffing Algorithm Basics",
+      "Real DOM vs Virtual DOM Performance"
+    ]
+  },
+
+  "13_events_and_interaction": {
+    "event_concepts": [
+      "Event Listeners",
+      "Event Object",
+      "Event Types (click, submit, keydown, etc.)"
+    ],
+
+    "event_flow": [
+      "Event Bubbling",
+      "Event Capturing",
+      "Event Propagation",
+      "stopPropagation()",
+      "stopImmediatePropagation()",
+      "preventDefault()"
+    ],
+
+    "event_patterns": [
+      "Event Delegation",
+      "Custom Events",
+      "Event Throttling",
+      "Event Debouncing"
+    ]
+  },
+
+  "14_performance_optimization": {
     "01_change_detection": [
       "Change Detection Strategy",
       "OnPush Strategy Benefits",
@@ -308,7 +355,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Testing": {
+  "15_testing": {
     "01_unit_testing": [
       "Jasmine Framework",
       "Component Testing",
@@ -324,7 +371,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Advanced_Features": {
+  "16_advanced_angular_features": {
     "01_angular_specific": [
       "ViewChild and ContentChild",
       "Dynamic Component Loading",
@@ -340,7 +387,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Security": {
+  "17_security": {
     "security_basics": [
       "XSS Prevention",
       "Sanitization and Security",
@@ -349,7 +396,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Deployment": {
+  "18_deployment_and_operations": {
     "01_build_process": [
       "Production Build (ng build)",
       "Environment Configurations",
@@ -365,7 +412,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Best_Practices": {
+  "19_best_practices": {
     "01_project_structure": [
       "Feature-based Organization",
       "Shared Module Organization",
@@ -388,7 +435,7 @@ const angularCurriculum = {
     ]
   },
 
-  "Essential_Projects": {
+  "20_projects_and_interview": {
     "learning_projects": [
       "Todo Application (CRUD, State Management)",
       "E-commerce Product Listing (API Integration)",
@@ -402,10 +449,8 @@ const angularCurriculum = {
       "Route Protection",
       "State Management Solution",
       "Responsive UI Components"
-    ]
-  },
+    ],
 
-  "Interview_Preparation": {
     "common_topics": [
       "Component Lifecycle",
       "Change Detection",
@@ -424,6 +469,8 @@ const angularCurriculum = {
       "Debug Angular Applications"
     ]
   }
+
 };
+
 
 export { angularCurriculum };

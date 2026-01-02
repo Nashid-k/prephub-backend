@@ -8,32 +8,53 @@ import slugify from 'slugify';
 dotenv.config();
 
 const nodejsCurriculum = {
-  "01_nodejs_foundations": {
-    "runtime_overview": [
+
+  "00_programming_and_runtime_prerequisites": {
+    "javascript_runtime_basics": [
+      "JavaScript Execution Model",
+      "Call Stack and Heap",
+      "Synchronous vs Asynchronous Code",
+      "Why JavaScript Needs a Runtime"
+    ],
+    "backend_mental_models": [
+      "What Happens When a Request Hits a Server",
+      "Blocking vs Non-blocking Systems",
+      "CPU-bound vs I/O-bound Workloads"
+    ]
+  },
+
+  "01_nodejs_runtime_foundations": {
+    "nodejs_overview": [
       "What is Node.js",
       "Node.js as a Runtime Environment",
+      "Node.js vs Browser JavaScript",
+      "Why Node.js Was Created",
+      "Use Cases of Node.js"
+    ],
+    "architecture_core": [
       "JavaScript Runtime Architecture",
       "V8 JavaScript Engine",
-      "Node.js vs Browser JavaScript",
+      "Libuv Overview",
       "Single-threaded Nature of Node.js",
       "Event-driven Programming Model",
       "Non-blocking I/O Operations"
     ],
-    "installation_setup": [
+    "installation_and_environment": [
       "Node.js Installation",
       "Node.js Version Management",
       "NVM (Node Version Manager)",
       "Checking Node.js Version",
       "Environment Setup"
     ],
-    "repl_cli": [
+    "cli_and_repl": [
       "REPL (Read-Eval-Print Loop)",
       "Command-line Interface (CLI)",
       "Command-line Arguments",
       "User Agent Information"
     ]
   },
-  "02_package_management": {
+
+  "02_package_and_environment_management": {
     "npm_ecosystem": [
       "NPM (Node Package Manager)",
       "NPX (Node Package Execute)",
@@ -42,101 +63,73 @@ const nodejsCurriculum = {
       "Package-lock.json Purpose",
       ".npmrc Configuration File"
     ],
-    "package_operations": [
-      "Installing Packages (npm install)",
-      "Global Installation (-g flag)",
-      "Local Installation",
-      "Removing Packages (npm uninstall)",
-      "Updating Packages (npm update)",
-      "Listing Installed Packages"
-    ],
     "dependency_management": [
+      "Installing Packages",
+      "Global vs Local Packages",
+      "Removing and Updating Packages",
       "Dependencies vs Dev Dependencies",
-      "Peer Dependencies",
-      "Optional Dependencies",
+      "Peer and Optional Dependencies",
       "Semantic Versioning (SemVer)",
-      "Version Ranges (^, ~, *)",
-      "Package.json Scripts"
+      "Version Ranges (^, ~, *)"
     ],
-    "environment_configuration": [
+    "scripts_and_config": [
+      "Package.json Scripts",
       "Environment Variables",
-      ".env Files and dotenv Package",
-      "Accessing Environment Variables",
+      ".env Files and dotenv",
       "Environment-specific Configuration",
-      "Configuration Management"
+      "Configuration Management Strategies"
     ]
   },
-  "03_core_modules": {
+
+  "03_nodejs_core_modules": {
     "global_objects": [
-      "Global Object in Node.js",
+      "Global Object",
       "process Object",
       "console Object",
       "Buffer Global",
       "__dirname and __filename"
     ],
-    "process_module": [
-      "process.argv (Command-line Arguments)",
-      "process.env (Environment Variables)",
-      "process.cwd() (Current Working Directory)",
+    "process_and_system": [
+      "process.argv",
+      "process.env",
+      "process.cwd()",
       "process.exit()",
       "process.nextTick()",
       "process.memoryUsage()"
     ],
-    "file_system_module": [
+    "filesystem": [
       "fs Module Overview",
-      "Synchronous vs Asynchronous Operations",
-      "File Reading (readFile, readFileSync)",
-      "File Writing (writeFile, writeFileSync)",
-      "File Appending (appendFile)",
-      "File Operations: rename, unlink, copy",
-      "Directory Operations: mkdir, readdir, rmdir",
-      "File Statistics (fs.stat)",
-      "File Descriptors (fs.open)",
+      "Sync vs Async File Operations",
+      "File Read/Write",
+      "Append, Rename, Delete, Copy",
+      "Directory Operations",
+      "File Descriptors",
+      "File Statistics",
       "Stream-based File Operations"
     ],
-    "path_module": [
-      "path Module Overview",
-      "path.join()",
-      "path.resolve()",
-      "path.basename()",
-      "path.dirname()",
-      "path.extname()",
-      "path.parse()",
-      "path.normalize()"
-    ],
-    "os_module": [
-      "os Module Overview",
-      "os.platform()",
-      "os.arch()",
-      "os.cpus()",
-      "os.freemem()",
-      "os.totalmem()",
-      "os.hostname()",
-      "os.networkInterfaces()"
-    ],
-    "url_module": [
-      "url Module Overview",
-      "URL Parsing (url.parse)",
-      "URL Formatting (url.format)",
-      "URL Resolution (url.resolve)",
+    "path_os_url": [
+      "path Module (join, resolve, parse, normalize)",
+      "os Module (cpu, memory, network)",
+      "url Module",
       "WHATWG URL API",
       "Query String Parsing"
     ],
-    "utility_modules": [
+    "utility_and_crypto": [
       "util Module",
       "util.promisify()",
       "util.inherits()",
       "util.types",
-      "zlib Module (Compression)",
+      "zlib Compression",
       "crypto Module"
     ]
   },
-  "04_networking_fundamentals": {
-    "network_concepts": [
+
+  "04_networking_and_http_fundamentals": {
+    "network_basics": [
       "TCP/IP Protocol",
-      "DNS (Domain Name System)",
-      "Host and Port Concepts",
-      "Sockets and Ports",
+      "DNS Resolution",
+      "Hosts and Ports",
+      "Sockets",
       "Network Layers Overview"
     ],
     "http_protocol": [
@@ -146,427 +139,330 @@ const nodejsCurriculum = {
       "Stateless Nature of HTTP",
       "HTTP/1.1 vs HTTP/2"
     ],
-    "http_components": [
+    "http_anatomy": [
       "HTTP Request Structure",
       "HTTP Response Structure",
-      "HTTP Methods (GET, POST, PUT, DELETE, PATCH)",
+      "HTTP Methods",
       "HTTP Headers",
-      "Status Codes Categories"
-    ],
-    "status_codes": [
-      "1xx Informational (100 Continue)",
-      "2xx Success (200 OK, 201 Created, 204 No Content)",
-      "3xx Redirection (301 Moved Permanently, 304 Not Modified)",
-      "4xx Client Errors (400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found)",
-      "5xx Server Errors (500 Internal Server Error, 502 Bad Gateway)"
+      "Status Code Categories"
     ]
   },
-  "05_http_server": {
+
+  "05_building_http_servers_from_scratch": {
     "http_module": [
       "http Module Overview",
       "Creating HTTP Server",
-      "Server Configuration",
-      "Server Lifecycle"
+      "Server Lifecycle",
+      "Server Configuration"
     ],
-    "request_handling": [
+    "request_response_cycle": [
       "Request Object (req)",
-      "Request Properties: method, url, headers",
-      "Request Body Parsing",
-      "Query Parameters",
-      "Route Parameters"
-    ],
-    "response_handling": [
       "Response Object (res)",
-      "Setting Headers (setHeader)",
-      "Setting Status Code (writeHead)",
-      "Sending Response (write, end)",
-      "Response Chunking"
+      "Headers and Status Codes",
+      "Chunked Responses"
     ],
-    "routing": [
-      "Basic Routing Implementation",
-      "Route Matching",
-      "HTTP Method-based Routing",
-      "Route Parameters Handling",
+    "routing_logic": [
+      "Manual Routing",
+      "Method-based Routing",
+      "Query Parameters",
+      "Route Parameters",
       "Wildcard Routes"
     ],
-    "server_configuration": [
-      "Server Listening Configuration",
+    "server_tuning": [
       "Port Binding",
-      "Host Configuration",
-      "Server Timeouts",
+      "Timeouts",
       "Keep-alive Connections"
     ]
   },
-  "06_asynchronous_programming": {
-    "async_patterns": [
-      "Callback Pattern",
+
+  "06_asynchronous_programming_models": {
+    "callback_model": [
+      "Callbacks",
       "Error-first Callbacks",
-      "Callback Hell (Pyramid of Doom)",
-      "Promises",
-      "async/await Syntax"
+      "Callback Hell"
     ],
-    "promise_operations": [
+    "promise_model": [
       "Promise Creation",
       "Promise Chaining",
-      "Promise.all()",
-      "Promise.race()",
-      "Promise.allSettled()",
-      "Promise.any()",
-      "Error Handling in Promises"
+      "Promise.all",
+      "Promise.race",
+      "Promise.allSettled",
+      "Promise.any"
+    ],
+    "async_await": [
+      "async Functions",
+      "await Keyword",
+      "Error Handling with try-catch"
     ],
     "conversion_utilities": [
-      "Promisify Utility",
+      "Promisify",
       "Callback to Promise Conversion",
-      "Async Function Wrappers"
+      "Async Wrappers"
     ]
   },
-  "07_event_loop": {
-    "event_loop_architecture": [
+
+  "07_event_loop_and_execution_model": {
+    "event_loop_core": [
       "Event Loop Concept",
-      "Event Loop Phases",
-      "Libuv Library",
-      "Event Loop Visualization"
+      "Libuv Role",
+      "Event Loop Phases"
     ],
-    "queues_phases": [
-      "Timer Queue (setTimeout, setInterval)",
-      "I/O Callback Queue",
-      "Idle/Prepare Queue",
-      "Poll Queue",
-      "Check Queue (setImmediate)",
-      "Close Callback Queue"
+    "queues_and_phases": [
+      "Timer Queue",
+      "I/O Callbacks",
+      "Poll Phase",
+      "Check Phase",
+      "Close Callbacks"
     ],
-    "priority_queues": [
-      "Microtask Queue (Promises)",
-      "process.nextTick Queue",
-      "Queue Priority Order",
-      "Event Loop Starvation"
+    "microtasks": [
+      "Microtask Queue",
+      "process.nextTick",
+      "Promise Queue",
+      "Execution Priority"
     ],
-    "performance_considerations": [
+    "performance_impact": [
       "Blocking the Event Loop",
-      "CPU-bound Operations Impact",
-      "I/O-bound Operations",
-      "Event Loop Monitoring"
+      "CPU-bound Tasks",
+      "I/O-bound Tasks",
+      "Starvation Scenarios"
     ]
   },
-  "08_concurrency_threading": {
+
+  "08_concurrency_parallelism_and_threads": {
     "concurrency_concepts": [
       "Concurrency vs Parallelism",
-      "Single-threaded Event Loop",
-      "Non-blocking I/O Model",
-      "How Node.js Handles Concurrency"
+      "Single-threaded Model",
+      "Non-blocking Architecture"
     ],
     "worker_threads": [
-      "Worker Threads Module",
-      "Creating Worker Threads",
+      "Worker Threads",
       "Message Passing",
-      "Shared Memory (SharedArrayBuffer)",
-      "Worker Thread Pool Pattern"
+      "SharedArrayBuffer",
+      "Thread Pool Patterns"
     ],
-    "cluster_module": [
+    "cluster_and_scaling": [
       "Cluster Module",
       "Master-Worker Architecture",
       "Process Forking",
       "Load Balancing",
       "Zero-downtime Restarts"
     ],
-    "thread_pool": [
-      "Libuv Thread Pool",
-      "Thread Pool Size Configuration",
-      "Operations Using Thread Pool",
+    "libuv_thread_pool": [
+      "Thread Pool Usage",
+      "Pool Size Configuration",
       "Thread Pool Exhaustion"
     ]
   },
-  "09_streams": {
-    "stream_concepts": [
-      "What are Streams",
-      "Stream Benefits",
-      "Streaming vs Buffering",
-      "Backpressure Handling"
-    ],
-    "stream_types": [
+
+  "09_streams_and_buffers": {
+    "streams": [
       "Readable Streams",
       "Writable Streams",
       "Duplex Streams",
       "Transform Streams",
-      "Duplex vs Transform Differences"
+      "Backpressure Handling",
+      "Piping"
     ],
-    "stream_operations": [
-      "Piping Streams",
-      "Chunk Processing",
-      "Stream Events (data, end, error)",
-      "Stream Methods (pipe, write, read)",
-      "Stream Destruction"
-    ],
-    "practical_streaming": [
-      "File Streaming",
-      "HTTP Request/Response Streaming",
-      "Data Transformation Piping",
-      "Stream Error Handling"
-    ]
-  },
-  "10_buffers": {
-    "buffer_concepts": [
-      "What are Buffers",
-      "Binary Data Handling",
+    "buffers": [
+      "Binary Data",
       "Buffer Allocation",
-      "Buffer Encoding (utf8, base64, hex)"
+      "Encodings",
+      "Buffer Operations"
     ],
-    "buffer_operations": [
-      "Buffer Creation",
-      "Buffer Reading",
-      "Buffer Writing",
-      "Buffer Concatenation",
-      "Buffer Comparison",
-      "Buffer Slicing"
-    ],
-    "buffer_stream_relationship": [
-      "Buffers in Streams",
-      "Chunk Buffering",
-      "Memory Management with Buffers"
+    "stream_buffer_relationship": [
+      "Chunk Processing",
+      "Memory Management"
     ]
   },
-  "11_child_processes": {
-    "process_management": [
-      "Child Process Module",
-      "Process Creation Methods",
-      "Inter-process Communication"
-    ],
-    "execution_methods": [
-      "spawn() Method",
-      "exec() Method",
-      "execFile() Method",
-      "fork() Method"
+
+  "10_process_management": {
+    "child_processes": [
+      "spawn",
+      "exec",
+      "execFile",
+      "fork"
     ],
     "comparisons": [
-      "spawn vs exec Differences",
-      "fork vs spawn Differences",
-      "When to Use Each Method"
+      "spawn vs exec",
+      "fork vs spawn",
+      "Use-case Selection"
     ],
-    "process_communication": [
-      "Standard I/O Streams (stdin, stdout, stderr)",
+    "ipc": [
+      "stdin/stdout/stderr",
       "Message Passing",
-      "Process Signaling",
-      "Exit Codes and Status"
+      "Signals",
+      "Exit Codes"
     ]
   },
-  "12_error_handling": {
-    "error_patterns": [
-      "Error Types in Node.js",
-      "Synchronous Error Handling",
-      "Asynchronous Error Handling"
+
+  "11_error_handling_and_resilience": {
+    "error_types": [
+      "Synchronous Errors",
+      "Asynchronous Errors"
     ],
-    "error_handling_strategies": [
-      "try-catch Blocks",
-      "Error-first Callbacks",
+    "error_strategies": [
+      "try-catch",
       "Promise Error Handling",
-      "async/await Error Handling",
       "Global Error Handlers"
     ],
     "custom_errors": [
       "Custom Error Classes",
       "Error Propagation",
-      "Error Logging Strategies"
+      "Logging Strategies"
     ]
   },
-  "13_security": {
-    "authentication_authorization": [
-      "Authentication Concepts",
-      "Authorization Concepts",
-      "Authentication vs Authorization Differences"
+
+  "12_security_fundamentals": {
+    "auth_concepts": [
+      "Authentication",
+      "Authorization",
+      "Auth vs AuthZ"
     ],
     "web_security": [
-      "CORS (Cross-Origin Resource Sharing)",
-      "Same Origin Policy",
-      "Preflight Requests",
-      "CSRF (Cross-Site Request Forgery) Protection",
-      "XSS (Cross-Site Scripting) Prevention"
+      "CORS",
+      "CSRF",
+      "XSS",
+      "Same Origin Policy"
     ],
     "cryptography": [
       "Hashing vs Encryption",
       "Password Hashing",
-      "JSON Web Tokens (JWT)",
-      "Token-based Authentication",
-      "API Key Authentication"
+      "JWT",
+      "API Keys"
     ],
-    "api_security": [
+    "api_protection": [
       "Rate Limiting",
-      "Request Throttling",
+      "Throttling",
       "Input Validation",
       "Output Encoding"
     ]
   },
-  "14_performance_optimization": {
-    "monitoring": [
-      "Performance Monitoring Tools",
-      "Memory Usage Monitoring",
-      "CPU Profiling",
-      "Event Loop Monitoring"
-    ],
-    "optimization_techniques": [
-      "Connection Pooling",
-      "Caching Strategies",
-      "Compression",
-      "Database Query Optimization"
-    ],
-    "scaling_strategies": [
-      "Vertical Scaling",
-      "Horizontal Scaling",
-      "Load Balancing",
-      "Microservices Architecture"
-    ]
-  },
-  "15_debugging_logging": {
-    "debugging_tools": [
-      "Node.js Debugger",
-      "Chrome DevTools Integration",
-      "Breakpoints and Stepping",
-      "Inspect Variables"
-    ],
-    "logging": [
-      "Console Logging",
-      "Structured Logging",
-      "Log Levels",
-      "Log Rotation",
-      "Winston/Bunyan Libraries"
-    ],
-    "system_monitoring": [
-      "Health Checks",
-      "Metrics Collection",
-      "Alerting Configuration"
-    ]
-  },
-  "16_testing": {
-    "testing_frameworks": [
-      "Jest Testing Framework",
-      "Mocha with Chai",
-      "Test Structure"
-    ],
-    "test_types": [
-      "Unit Testing",
-      "Integration Testing",
-      "API Testing",
-      "Mocking and Stubbing"
-    ],
-    "testing_tools": [
-      "Test Runners",
-      "Assertion Libraries",
-      "Coverage Reports",
-      "Continuous Integration"
-    ]
-  },
-  "17_file_handling_practical": {
-    "file_operations": [
-      "Reading Configuration Files",
-      "Writing Log Files",
-      "File Upload Handling",
-      "File Download Serving"
-    ],
-    "data_processing": [
-      "CSV File Processing",
-      "JSON File Operations",
-      "XML Parsing",
-      "Data Transformation Pipelines"
-    ]
-  },
-  "18_network_operations": {
-    "http_clients": [
-      "Making HTTP Requests",
-      "Axios Library",
-      "Request Library",
-      "Fetch API (Node.js 18+)"
-    ],
-    "web_sockets": [
-      "WebSocket Protocol",
-      "Socket.io Library",
-      "Real-time Communication"
-    ],
-    "tcp_servers": [
-      "TCP Server Creation",
-      "net Module",
-      "Custom Protocol Implementation"
-    ]
-  },
-  "19_database_integration": {
-    "database_drivers": [
+
+  "13_database_and_external_services": {
+    "drivers": [
       "MongoDB Driver",
-      "MySQL/PostgreSQL Drivers",
-      "Redis Client",
-      "Connection Pooling"
+      "PostgreSQL/MySQL Drivers",
+      "Redis Client"
     ],
     "orm_odm": [
-      "Mongoose ODM",
-      "Sequelize ORM",
-      "Prisma ORM",
-      "Database Migrations"
+      "Mongoose",
+      "Sequelize",
+      "Prisma",
+      "Migrations"
+    ],
+    "connection_management": [
+      "Pooling",
+      "Timeouts",
+      "Retries"
     ]
   },
-  "20_practical_projects": {
-    "basic_projects": [
-      "REST API Server",
-      "File Server",
-      "Chat Application",
-      "Real-time Dashboard"
+
+  "14_network_clients_and_realtime": {
+    "http_clients": [
+      "Fetch (Node 18+)",
+      "Axios",
+      "Request Libraries"
     ],
-    "intermediate_projects": [
-      "Authentication Service",
-      "API Gateway",
-      "Background Job Processor",
-      "Web Scraper"
-    ],
-    "advanced_projects": [
-      "Microservices Architecture",
-      "Real-time Collaboration Tool",
-      "Stream Processing Pipeline",
-      "Load Balancer Implementation"
+    "realtime": [
+      "WebSockets",
+      "Socket.io",
+      "TCP Servers",
+      "Custom Protocols"
     ]
   },
-  "21_deployment_production": {
-    "deployment_strategies": [
-      "Process Managers (PM2)",
-      "Docker Containerization",
-      "Kubernetes Deployment",
-      "Serverless Deployment"
+
+  "15_testing_debugging_and_observability": {
+    "testing": [
+      "Unit Tests",
+      "Integration Tests",
+      "API Tests",
+      "Mocks and Stubs"
     ],
-    "production_configuration": [
-      "Environment Configuration",
-      "Logging Setup",
-      "Monitoring Setup",
-      "Security Hardening"
+    "debugging": [
+      "Node Debugger",
+      "Chrome DevTools",
+      "Breakpoints"
     ],
-    "performance_tuning": [
-      "Memory Optimization",
-      "CPU Optimization",
-      "Network Optimization",
+    "logging_monitoring": [
+      "Structured Logging",
+      "Log Levels",
+      "Health Checks",
+      "Metrics",
+      "Alerting"
+    ]
+  },
+
+  "16_performance_and_scaling": {
+    "profiling": [
+      "CPU Profiling",
+      "Memory Profiling",
+      "Event Loop Monitoring"
+    ],
+    "optimization": [
+      "Caching",
+      "Compression",
+      "Connection Pooling",
       "Database Optimization"
+    ],
+    "scaling": [
+      "Vertical Scaling",
+      "Horizontal Scaling",
+      "Microservices"
     ]
   },
-  "22_best_practices": {
-    "code_organization": [
+
+  "17_deployment_and_production": {
+    "deployment_models": [
+      "PM2",
+      "Docker",
+      "Kubernetes",
+      "Serverless"
+    ],
+    "production_hardening": [
+      "Environment Configuration",
+      "Security Hardening",
+      "Monitoring",
+      "Logging"
+    ]
+  },
+
+  "18_practical_projects_and_mastery": {
+    "projects": [
+      "REST API Server",
+      "Authentication Service",
+      "File Server",
+      "Chat System",
+      "Job Processor",
+      "Microservices System"
+    ]
+  },
+
+  "19_engineering_best_practices": {
+    "architecture": [
       "Project Structure",
-      "Module Organization",
-      "Configuration Management",
-      "Error Handling Strategy"
+      "Module Boundaries",
+      "Error Strategy",
+      "Configuration Strategy"
     ],
-    "performance_best_practices": [
-      "Avoiding Blocking Operations",
-      "Proper Stream Usage",
-      "Memory Management",
-      "Connection Management"
+    "performance": [
+      "Avoid Blocking",
+      "Stream Everything",
+      "Memory Discipline"
     ],
-    "security_best_practices": [
-      "Input Validation",
-      "Output Encoding",
-      "Authentication Implementation",
-      "Dependency Security"
+    "security": [
+      "Dependency Auditing",
+      "Secrets Management",
+      "Secure Defaults"
     ],
     "maintenance": [
-      "Code Documentation",
-      "API Documentation",
-      "Version Control Practices",
-      "Continuous Integration"
+      "Documentation",
+      "CI/CD",
+      "Version Control"
     ]
   }
+
 };
+
 
 
 const categorizeDifficulty = (name, parentName) => {
@@ -714,6 +610,6 @@ const seedHierarchy = async () => {
   }
 };
 
-// seedHierarchy();
+seedHierarchy();
 
 export { nodejsCurriculum };

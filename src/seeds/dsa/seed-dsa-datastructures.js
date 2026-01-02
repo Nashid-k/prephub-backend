@@ -1,27 +1,43 @@
 
 const dataStructuresCurriculum = {
-  "01_data_structure_foundations": {
-    "introduction": [
+
+  "00_data_structures_mental_model": {
+    "foundational_understanding": [
       "What is a Data Structure",
       "Why Data Structures are Important",
       "Data Structure vs Abstract Data Type",
       "Data Structure Design Principles"
     ],
-    "classification": [
+    "classification_overview": [
       "Primitive vs Non-Primitive Data Structures",
       "Built-in vs User-defined Data Structures",
       "Homogeneous vs Heterogeneous Data Structures",
       "Linear vs Non-linear Data Structures",
       "Static vs Dynamic Data Structures"
-    ],
+    ]
+  },
+
+  "01_memory_and_storage_foundations": {
     "memory_concepts": [
       "Contiguous vs Non-contiguous Memory Allocation",
       "Memory Layout and Organization",
       "Index-based Access Mechanisms",
       "Memory Addressing Concepts"
+    ],
+    "memory_types": [
+      "Stack Memory Characteristics",
+      "Heap Memory Characteristics",
+      "Static Memory Allocation",
+      "Dynamic Memory Allocation"
+    ],
+    "memory_units": [
+      "Memory Measurement Units (Byte, KB, MB, GB)",
+      "Binary vs Decimal Prefixes (Kibibyte vs Kilobyte)",
+      "Memory Alignment and Padding"
     ]
   },
-  "02_complexity_analysis": {
+
+  "02_complexity_and_tradeoffs": {
     "analysis_basics": [
       "Time Complexity of Data Structure Operations",
       "Space Complexity of Data Structure Storage",
@@ -34,7 +50,8 @@ const dataStructuresCurriculum = {
       "Static vs Dynamic Structure Trade-offs"
     ]
   },
-  "03_array_data_structures": {
+
+  "03_array_based_structures": {
     "array_fundamentals": [
       "Array Data Structure Definition",
       "Array Memory Allocation Pattern",
@@ -62,7 +79,8 @@ const dataStructuresCurriculum = {
       "Array Update Operation - O(1)"
     ]
   },
-  "04_string_data_structures": {
+
+  "04_string_structures_and_text_representation": {
     "string_fundamentals": [
       "String as a Data Structure",
       "String Representation in Memory",
@@ -82,7 +100,8 @@ const dataStructuresCurriculum = {
       "Special String Literals"
     ]
   },
-  "05_linked_list_data_structures": {
+
+  "05_pointer_based_structures": {
     "linked_list_fundamentals": [
       "Linked List Data Structure Concept",
       "Node Structure and Composition",
@@ -110,68 +129,73 @@ const dataStructuresCurriculum = {
       "Linked List Dynamic Size Advantage"
     ]
   },
-  "06_stack_data_structure": {
-    "stack_fundamentals": [
-      "Stack Data Structure Definition",
-      "LIFO (Last-In-First-Out) Principle",
-      "Stack Top Pointer Concept",
-      "Stack Abstract Data Type"
-    ],
-    "stack_operations": [
-      "Push Operation Mechanism",
-      "Pop Operation Mechanism",
-      "Peek/Top Operation",
-      "Stack Empty Condition",
-      "Stack Full Condition"
-    ],
-    "stack_implementations": [
-      "Stack using Array Implementation",
-      "Stack using Linked List Implementation",
-      "Fixed-size vs Dynamic Stack",
-      "Stack Overflow and Underflow Conditions"
-    ],
-    "stack_applications": [
-      "Function Call Stack (Call Stack)",
-      "Expression Evaluation Stacks",
-      "Undo-Redo Mechanisms",
-      "Backtracking Algorithms Support"
-    ]
+
+  "06_linear_control_structures": {
+    "stack_data_structure": {
+      "stack_fundamentals": [
+        "Stack Data Structure Definition",
+        "LIFO (Last-In-First-Out) Principle",
+        "Stack Top Pointer Concept",
+        "Stack Abstract Data Type"
+      ],
+      "stack_operations": [
+        "Push Operation Mechanism",
+        "Pop Operation Mechanism",
+        "Peek/Top Operation",
+        "Stack Empty Condition",
+        "Stack Full Condition"
+      ],
+      "stack_implementations": [
+        "Stack using Array Implementation",
+        "Stack using Linked List Implementation",
+        "Fixed-size vs Dynamic Stack",
+        "Stack Overflow and Underflow Conditions"
+      ],
+      "stack_applications": [
+        "Function Call Stack (Call Stack)",
+        "Expression Evaluation Stacks",
+        "Undo-Redo Mechanisms",
+        "Backtracking Algorithms Support"
+      ]
+    },
+
+    "queue_data_structure": {
+      "queue_fundamentals": [
+        "Queue Data Structure Definition",
+        "FIFO (First-In-First-Out) Principle",
+        "Queue Front and Rear Pointers",
+        "Queue Abstract Data Type"
+      ],
+      "queue_types": [
+        "Simple/Linear Queue Structure",
+        "Circular Queue Structure",
+        "Double-ended Queue (Deque) Structure",
+        "Priority Queue Structure",
+        "Bounded vs Unbounded Queues"
+      ],
+      "queue_operations": [
+        "Enqueue Operation Mechanism",
+        "Dequeue Operation Mechanism",
+        "Front/Peek Operation",
+        "Queue Empty Condition",
+        "Queue Full Condition"
+      ],
+      "queue_implementations": [
+        "Queue using Array Implementation",
+        "Queue using Linked List Implementation",
+        "Circular Buffer Implementation",
+        "Priority Queue Implementations"
+      ],
+      "queue_applications": [
+        "Task Scheduling Systems",
+        "Message Queues",
+        "Breadth-First Search Support",
+        "Producer-Consumer Patterns"
+      ]
+    }
   },
-  "07_queue_data_structure": {
-    "queue_fundamentals": [
-      "Queue Data Structure Definition",
-      "FIFO (First-In-First-Out) Principle",
-      "Queue Front and Rear Pointers",
-      "Queue Abstract Data Type"
-    ],
-    "queue_types": [
-      "Simple/Linear Queue Structure",
-      "Circular Queue Structure",
-      "Double-ended Queue (Deque) Structure",
-      "Priority Queue Structure",
-      "Bounded vs Unbounded Queues"
-    ],
-    "queue_operations": [
-      "Enqueue Operation Mechanism",
-      "Dequeue Operation Mechanism",
-      "Front/Peek Operation",
-      "Queue Empty Condition",
-      "Queue Full Condition"
-    ],
-    "queue_implementations": [
-      "Queue using Array Implementation",
-      "Queue using Linked List Implementation",
-      "Circular Buffer Implementation",
-      "Priority Queue Implementations"
-    ],
-    "queue_applications": [
-      "Task Scheduling Systems",
-      "Message Queues",
-      "Breadth-First Search Support",
-      "Producer-Consumer Patterns"
-    ]
-  },
-  "08_hash_table_data_structure": {
+
+  "07_hashing_and_direct_access": {
     "hash_table_fundamentals": [
       "Hash Table Data Structure Definition",
       "Key-Value Pair Storage",
@@ -204,7 +228,8 @@ const dataStructuresCurriculum = {
       "Perfect Hash Tables"
     ]
   },
-  "09_tree_data_structures": {
+
+  "08_tree_based_structures": {
     "tree_fundamentals": [
       "Tree Data Structure Definition",
       "Hierarchical Structure",
@@ -234,7 +259,8 @@ const dataStructuresCurriculum = {
       "Tree Representation Methods"
     ]
   },
-  "10_self_balancing_trees": {
+
+  "09_self_balancing_and_index_trees": {
     "balancing_concepts": [
       "Self-balancing Tree Concept",
       "Balance Factor Calculation",
@@ -260,7 +286,8 @@ const dataStructuresCurriculum = {
       "Treap Structure"
     ]
   },
-  "11_heap_data_structure": {
+
+  "10_heap_and_priority_structures": {
     "heap_fundamentals": [
       "Heap Data Structure Definition",
       "Heap Order Property",
@@ -289,7 +316,8 @@ const dataStructuresCurriculum = {
       "Priority Queue Applications"
     ]
   },
-  "12_trie_data_structure": {
+
+  "11_prefix_and_search_structures": {
     "trie_fundamentals": [
       "Trie Data Structure Definition",
       "Prefix Tree Structure",
@@ -315,7 +343,8 @@ const dataStructuresCurriculum = {
       "Trie Serialization Methods"
     ]
   },
-  "13_graph_data_structures": {
+
+  "12_graph_structures_and_relationships": {
     "graph_fundamentals": [
       "Graph Data Structure Definition",
       "Graph Components (Vertices, Edges)",
@@ -346,32 +375,8 @@ const dataStructuresCurriculum = {
       "Graph Density"
     ]
   },
-  "14_memory_management_concepts": {
-    "memory_types": [
-      "Stack Memory Characteristics",
-      "Heap Memory Characteristics",
-      "Static Memory Allocation",
-      "Dynamic Memory Allocation"
-    ],
-    "memory_allocation": [
-      "Memory Allocation Strategies",
-      "Memory Fragmentation (Internal, External)",
-      "Memory Pool Management",
-      "Garbage Collection Concepts"
-    ],
-    "memory_issues": [
-      "Memory Leak Detection",
-      "Memory Corruption Issues",
-      "Stack Overflow Conditions",
-      "Heap Overflow Conditions"
-    ],
-    "memory_units": [
-      "Memory Measurement Units (Byte, KB, MB, GB)",
-      "Binary vs Decimal Prefixes (Kibibyte vs Kilobyte)",
-      "Memory Alignment and Padding"
-    ]
-  },
-  "15_advanced_data_structures": {
+
+  "13_advanced_and_specialized_structures": {
     "specialized_structures": [
       "Disjoint Set Union (Union-Find) Structure",
       "Segment Tree Structure",
@@ -390,7 +395,8 @@ const dataStructuresCurriculum = {
       "Wait-free Data Structures"
     ]
   },
-  "16_comparative_analysis": {
+
+  "14_comparison_and_selection_strategy": {
     "access_patterns": [
       "Random Access Data Structures",
       "Sequential Access Data Structures",
@@ -409,7 +415,8 @@ const dataStructuresCurriculum = {
       "Trade-off Analysis for Common Scenarios"
     ]
   },
-  "17_data_structure_design": {
+
+  "15_design_and_implementation_mastery": {
     "design_principles": [
       "Data Structure Interface Design",
       "Encapsulation of Implementation Details",
@@ -429,7 +436,8 @@ const dataStructuresCurriculum = {
       "Clone/Copy Operations"
     ]
   },
-  "18_real_world_applications": {
+
+  "16_real_world_and_system_usage": {
     "system_applications": [
       "File System Data Structures",
       "Database Indexing Structures",
@@ -449,7 +457,8 @@ const dataStructuresCurriculum = {
       "Scientific Computing Structures"
     ]
   },
-  "19_practical_implementation": {
+
+  "17_testing_debugging_and_validation": {
     "implementation_patterns": [
       "Node-based Implementations",
       "Array-based Implementations",
@@ -469,7 +478,9 @@ const dataStructuresCurriculum = {
       "Consistency Validation"
     ]
   }
+
 };
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -566,7 +577,7 @@ const seedHierarchy = async () => {
       
       const category = await Category.create({
         name: catName,
-        slug: slugify(catName, { lower: true, strict: true }),
+        slug: slugify(`DSA ${catName}`, { lower: true, strict: true }),
         topicId: topic._id,
         group: getGroupForCategory(catName),
         order: categoryOrder++,
@@ -581,11 +592,18 @@ const seedHierarchy = async () => {
         ? { "Core Concepts": sectionsObj } 
         : sectionsObj;
 
-      for (const [secKey, keyPoints] of Object.entries(sectionsToProcess)) {
+      for (const [secKey, sectionValue] of Object.entries(sectionsToProcess)) {
+        let keyPoints = sectionValue;
+        
         // Format Section Title
         let secTitle = secKey.split('_')
           .map(word => word.charAt(0).toUpperCase() + word.slice(1))
           .join(' ');
+        
+        // Handle nested structure (flatten if object)
+        if (!Array.isArray(keyPoints) && typeof keyPoints === 'object') {
+            keyPoints = Object.values(keyPoints).flat();
+        }
         
         // Fix abbreviation casing
         secTitle = secTitle

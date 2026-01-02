@@ -1,406 +1,415 @@
 
 const nextjsCurriculum = {
-  "Next.js_Fundamentals": {
-    "01_introduction": {
-      "core_concepts": [
-        "What is Next.js - React Framework",
-        "Key Features and Advantages",
-        "Next.js vs Create React App",
-        "When to Use Next.js"
-      ],
-      "project_setup": [
-        "create-next-app CLI Tool",
-        "Project Structure Overview",
-        "TypeScript Setup",
-        "Development Server"
-      ]
-    },
 
-    "02_routing_system": {
-      "file_based_routing": [
-        "Pages Directory Structure",
-        "Basic Route Creation",
-        "Nested Routes and Folders",
-        "Index Routes (index.js)"
-      ],
-      "dynamic_routing": [
-        "Dynamic Routes [slug]",
-        "Catch-all Routes [...slug]",
-        "Optional Catch-all Routes [[...slug]]",
-        "Route Parameters Access"
-      ],
-      "navigation": [
-        "Link Component for Client Navigation",
-        "Programmatic Navigation (useRouter)",
-        "Prefetching Behavior",
-        "Active Link Styling"
-      ]
-    },
-
-    "03_rendering_strategies": {
-      "rendering_options": [
-        "Client-Side Rendering (CSR)",
-        "Server-Side Rendering (SSR)",
-        "Static Site Generation (SSG)",
-        "Incremental Static Regeneration (ISR)"
-      ],
-      "when_to_use": [
-        "CSR for Dynamic User Interfaces",
-        "SSR for SEO-Critical Pages",
-        "SSG for Blog/Content Sites",
-        "ISR for Frequently Updated Content"
-      ]
-    }
-  },
-
-  "Data_Fetching": {
-    "01_server_side": {
-      "getserversideprops": [
-        "Function Signature and Usage",
-        "Context Parameter Access",
-        "Fetching at Request Time",
-        "Authentication in SSR"
-      ],
-      "use_cases": [
-        "User-Specific Data",
-        "Real-time Data",
-        "Protected Routes",
-        "Dynamic Content"
-      ]
-    },
-
-    "02_static_generation": {
-      "getstaticprops": [
-        "Function Signature and Usage",
-        "Pre-rendering at Build Time",
-        "Data Fetching for Static Pages",
-        "Environment Variables"
-      ],
-      "getstaticpaths": [
-        "Dynamic Static Pages",
-        "fallback Options (false, true, blocking)",
-        "Predefined Paths",
-        "Incremental Builds"
-      ],
-      "incremental_regeneration": [
-        "revalidate Property",
-        "On-demand Revalidation",
-        "Stale-While-Revalidate",
-        "Content Updates"
-      ]
-    },
-
-    "03_client_side": [
-      "useEffect for Data Fetching",
-      "SWR Library for Caching",
-      "React Query (TanStack Query)",
-      "Loading and Error States"
+  "00_prerequisites_and_mental_models": {
+    "web_fundamentals": [
+      "How the Web Works (Request–Response Cycle)",
+      "HTTP Methods, Headers, Status Codes",
+      "Cookies vs Local Storage vs Sessions",
+      "Browser Rendering Basics",
+      "CSR vs SSR Mental Model"
     ],
-
-    "04_api_routes": [
-      "Creating API Endpoints",
-      "Request/Response Handling",
-      "Dynamic API Routes",
-      "Middleware in API Routes"
+    "react_fundamentals": [
+      "What React Solves",
+      "Components and JSX",
+      "Props vs State",
+      "Hooks Basics (useState, useEffect)",
+      "Client-side Routing Limitations"
+    ],
+    "why_nextjs_exists": [
+      "Problems with Pure React (SEO, Performance)",
+      "What Next.js Adds on Top of React",
+      "Framework vs Library Mindset"
     ]
   },
 
-  "Core_Features": {
-    "01_image_optimization": [
-      "next/image Component",
-      "Automatic Image Optimization",
-      "Layout Options (responsive, fill, intrinsic)",
-      "Priority Loading and Lazy Loading"
+  "01_nextjs_foundations": {
+    "introduction": [
+      "What is Next.js (React Meta-Framework)",
+      "Key Features and Advantages",
+      "Next.js vs Create React App",
+      "When NOT to Use Next.js",
+      "Real-World Use Cases"
+    ],
+    "project_setup": [
+      "create-next-app CLI",
+      "Project Structure Overview",
+      "TypeScript Setup",
+      "Development Server Workflow"
+    ]
+  },
+
+  "02_routing_fundamentals": {
+    "routing_models_overview": [
+      "Pages Router vs App Router",
+      "Why App Router Was Introduced",
+      "Server-First Routing Philosophy"
     ],
 
-    "02_font_optimization": [
-      "next/font Component",
-      "Google Fonts Integration",
-      "Font Display Strategies",
-      "Performance Benefits"
+    "pages_router_basics": [
+      "pages Directory Structure",
+      "Index Routes",
+      "Nested Routes",
+      "Dynamic Routes [slug]",
+      "Catch-all Routes [...slug]",
+      "Optional Catch-all Routes [[...slug]]"
     ],
 
-    "03_script_optimization": [
-      "next/script Component",
+    "app_router_basics": [
+      "app Directory Structure",
+      "page.tsx vs layout.tsx",
+      "Nested Layouts",
+      "Route Segments",
+      "Loading and Error Files"
+    ],
+
+    "navigation": [
+      "Link Component",
+      "useRouter and usePathname",
+      "Programmatic Navigation",
+      "Prefetching Behavior",
+      "Active Link Styling"
+    ]
+  },
+
+  "03_rendering_and_component_models": {
+    "rendering_strategies": [
+      "Client-Side Rendering (CSR)",
+      "Server-Side Rendering (SSR)",
+      "Static Site Generation (SSG)",
+      "Incremental Static Regeneration (ISR)"
+    ],
+
+    "component_types": [
+      "Server Components (Default)",
+      "Client Components ('use client')",
+      "When to Use Each",
+      "Mixing Server and Client Components"
+    ],
+
+    "decision_guidelines": [
+      "CSR for Interactive UI",
+      "SSR for Auth & Personalization",
+      "SSG for Content",
+      "ISR for Hybrid Use Cases"
+    ]
+  },
+
+  "04_data_fetching_and_mutation": {
+    "server_data_fetching": [
+      "fetch() in Server Components",
+      "Request Caching and Revalidation",
+      "Dynamic vs Static Fetching",
+      "Authentication in Server Fetching"
+    ],
+
+    "pages_router_data_fetching": [
+      "getServerSideProps",
+      "getStaticProps",
+      "getStaticPaths",
+      "fallback Modes"
+    ],
+
+    "incremental_regeneration": [
+      "revalidate Property",
+      "On-Demand Revalidation",
+      "Stale-While-Revalidate"
+    ],
+
+    "client_side_data": [
+      "useEffect Data Fetching",
+      "SWR",
+      "React Query (TanStack Query)",
+      "Loading & Error States"
+    ],
+
+    "server_actions": [
+      "What are Server Actions",
+      "Form Actions",
+      "Mutations Without API Routes",
+      "Security Boundaries"
+    ]
+  },
+
+  "05_api_and_backend_capabilities": {
+    "api_routes": [
+      "Route Handlers (app/api)",
+      "Request & Response Objects",
+      "Dynamic API Routes",
+      "Middleware Usage"
+    ],
+
+    "backend_patterns": [
+      "Controller-like Handlers",
+      "Service Layer Separation",
+      "Validation and Error Handling"
+    ]
+  },
+
+  "06_styling_and_ui_architecture": {
+    "styling_options": [
+      "CSS Modules",
+      "Global CSS",
+      "Sass / SCSS",
+      "Styled JSX"
+    ],
+
+    "css_in_js": [
+      "Styled Components",
+      "Emotion",
+      "SSR Considerations"
+    ],
+
+    "utility_css": [
+      "Tailwind CSS Setup",
+      "Configuration",
+      "Purge & Optimization"
+    ],
+
+    "layout_patterns": [
+      "Global Layouts",
+      "Nested Layouts",
+      "Responsive Design Strategies"
+    ]
+  },
+
+  "07_assets_and_frontend_optimization": {
+    "image_optimization": [
+      "next/image",
+      "Responsive Images",
+      "Priority Loading",
+      "Lazy Loading"
+    ],
+
+    "font_optimization": [
+      "next/font",
+      "Google Fonts",
+      "Font Display Strategies"
+    ],
+
+    "script_optimization": [
+      "next/script",
       "Loading Strategies",
-      "Third-Party Scripts",
-      "Performance Impact"
+      "Third-Party Scripts"
     ],
 
-    "04_code_splitting": [
+    "code_splitting": [
       "Automatic Code Splitting",
       "Dynamic Imports",
-      "Route-Based Splitting",
-      "Bundle Size Optimization"
+      "Route-Based Splitting"
     ]
   },
 
-  "Styling": {
-    "01_styling_options": {
-      "built_in": [
-        "CSS Modules (Component.module.css)",
-        "Global CSS (globals.css)",
-        "Styled JSX",
-        "Sass/SCSS Support"
-      ],
-      "css_in_js": [
-        "Styled Components",
-        "Emotion",
-        "Performance Considerations",
-        "Server-Side Rendering"
-      ],
-      "utility_frameworks": [
-        "Tailwind CSS Integration",
-        "Setup and Configuration",
-        "PurgeCSS Optimization"
-      ]
-    }
-  },
-
-  "Configuration": {
-    "01_configuration_files": {
-      "next_config": [
-        "next.config.js Basics",
-        "Environment Variables",
-        "Redirects and Rewrites",
-        "Headers Configuration"
-      ],
-      "custom_app": [
-        "_app.js Component",
-        "Global Layout Pattern",
-        "Persistent Layouts",
-        "Global State Providers"
-      ],
-      "custom_document": [
-        "_document.js Component",
-        "HTML Structure Customization",
-        "Server-Side Styles",
-        "Meta Tags Management"
-      ]
-    },
-
-    "02_environment": [
-      "Environment Variables (.env.local)",
-      "NEXT_PUBLIC_ Prefix",
-      "Build-time vs Runtime Variables",
-      "Multi-environment Setup"
+  "08_configuration_and_runtime": {
+    "configuration_files": [
+      "next.config.js",
+      "Redirects & Rewrites",
+      "Headers Configuration"
     ],
 
-    "03_middleware": [
-      "Middleware Configuration",
-      "Request/Response Modification",
-      "Authentication Middleware",
-      "Path Matching"
+    "custom_app_and_document": [
+      "_app.js Responsibilities",
+      "_document.js Responsibilities",
+      "HTML Structure Control"
+    ],
+
+    "environment_variables": [
+      ".env.local",
+      "NEXT_PUBLIC_ Variables",
+      "Build-time vs Runtime"
+    ],
+
+    "middleware": [
+      "Middleware Matching",
+      "Auth Middleware",
+      "Request Rewrites"
     ]
   },
 
-  "State_Management": {
-    "01_client_state": [
-      "React Context API",
-      "useState and useReducer",
-      "Custom Hooks",
-      "Local Storage Integration"
+  "09_state_management": {
+    "local_state": [
+      "useState",
+      "useReducer",
+      "Custom Hooks"
     ],
 
-    "02_server_state": [
-      "SWR for Data Fetching",
-      "React Query (TanStack Query)",
-      "Cache Management",
-      "Mutation Handling"
+    "server_state": [
+      "SWR",
+      "React Query",
+      "Cache Invalidation",
+      "Mutations"
     ],
 
-    "03_global_state": [
+    "global_state": [
       "Redux Toolkit",
-      "Zustand (Lightweight)",
-      "Jotai (Atomic State)",
+      "Zustand",
+      "Jotai",
       "State Persistence"
     ]
   },
 
-  "Authentication": {
-    "01_auth_methods": [
-      "NextAuth.js Setup",
+  "10_authentication_and_authorization": {
+    "auth_methods": [
+      "NextAuth.js",
       "JWT Authentication",
-      "OAuth Providers (Google, GitHub)",
-      "Session Management"
+      "OAuth Providers",
+      "Session Strategies"
     ],
 
-    "02_protected_routes": [
+    "protected_routes": [
       "Middleware Protection",
-      "getServerSideProps Auth Check",
-      "Client-Side Route Guards",
-      "Role-Based Access"
+      "Server-Side Auth Checks",
+      "Client Guards",
+      "RBAC"
     ],
 
-    "03_user_management": [
-      "User Registration",
-      "Login/Logout Flows",
+    "user_management": [
+      "Registration",
+      "Login / Logout",
       "Profile Management",
       "Password Reset"
     ]
   },
 
-  "Performance_Optimization": {
-    "01_core_web_vitals": [
-      "LCP (Largest Contentful Paint)",
-      "FID (First Input Delay)",
-      "CLS (Cumulative Layout Shift)",
-      "Performance Monitoring"
-    ],
-
-    "02_optimization_techniques": [
-      "Image Optimization",
-      "Font Optimization",
-      "Code Splitting",
-      "Bundle Size Reduction"
-    ],
-
-    "03_caching": [
-      "CDN Caching",
-      "Browser Caching",
-      "API Response Caching",
-      "ISR for Dynamic Content"
-    ]
-  },
-
-  "Deployment": {
-    "01_build_process": [
-      "next build Command",
-      "Production Optimization",
-      "Bundle Analyzer",
-      "Build Output Analysis"
-    ],
-
-    "02_deployment_platforms": {
-      "vercel": [
-        "Automatic Deployments",
-        "Preview Deployments",
-        "Environment Variables",
-        "Custom Domains"
-      ],
-      "other_platforms": [
-        "Static Export (next export)",
-        "Node.js Server Deployment",
-        "Docker Containerization",
-        "CI/CD Pipeline Setup"
-      ]
-    }
-  },
-
-  "Testing": {
-    "01_testing_types": [
-      "Unit Testing with Jest",
-      "Component Testing (React Testing Library)",
-      "E2E Testing (Cypress/Playwright)",
-      "API Route Testing"
-    ],
-
-    "02_testing_setup": [
-      "Jest Configuration",
-      "Testing Utilities",
-      "Mocking API Calls",
-      "Snapshot Testing"
-    ]
-  },
-
-  "SEO_Metadata": {
+  "11_seo_and_metadata": {
     "seo_basics": [
-      "next/head Component",
-      "Meta Tags Management",
-      "Open Graph Tags",
-      "Structured Data (JSON-LD)"
+      "Metadata API",
+      "Dynamic Meta Tags",
+      "Open Graph",
+      "JSON-LD Structured Data"
     ],
 
-    "dynamic_seo": [
-      "Dynamic Meta Tags",
+    "advanced_seo": [
       "Server-Side SEO",
       "Sitemap Generation",
-      "robots.txt Configuration"
+      "robots.txt"
     ]
   },
 
-  "Error_Handling": {
-    "error_pages": [
-      "Custom 404 Page",
-      "Custom 500 Page",
-      "Error Boundary Implementation",
-      "Graceful Error Handling"
+  "12_error_handling_and_observability": {
+    "error_handling": [
+      "error.js",
+      "not-found.js",
+      "Error Boundaries",
+      "Graceful Degradation"
     ],
 
-    "error_monitoring": [
-      "Error Tracking Setup",
+    "monitoring": [
       "Logging Strategies",
-      "Production Error Handling",
+      "Error Tracking",
       "User Feedback"
     ]
   },
 
-  "Best_Practices": {
-    "01_project_structure": [
-      "Feature-Based Organization",
-      "Component Library Setup",
-      "Utility Functions Organization",
-      "TypeScript Best Practices"
+  "13_performance_and_scaling": {
+    "core_web_vitals": [
+      "LCP",
+      "FID",
+      "CLS"
     ],
 
-    "02_code_organization": [
-      "Custom Hooks Creation",
-      "API Layer Abstraction",
-      "Middleware Organization",
-      "Environment Configuration"
+    "caching_strategies": [
+      "CDN Caching",
+      "Browser Caching",
+      "API Caching",
+      "ISR"
     ],
 
-    "03_performance": [
-      "Avoid Large Dependencies",
-      "Optimize Images",
-      "Implement Caching",
-      "Monitor Bundle Size"
+    "bundle_optimization": [
+      "Dependency Analysis",
+      "Tree Shaking",
+      "Bundle Analyzer"
     ]
   },
 
-  "Practical_Projects": {
-    "01_project_types": {
-      "content_sites": [
-        "Blog with Markdown/Contentful",
-        "Documentation Site",
-        "Portfolio Website",
-        "E-commerce Product Pages"
-      ],
-      "web_applications": [
-        "Dashboard with Authentication",
-        "Real-time Chat Application",
-        "Social Media Platform",
-        "Task Management App"
-      ]
-    },
+  "14_testing_and_quality": {
+    "testing_types": [
+      "Unit Testing (Jest)",
+      "Component Testing (RTL)",
+      "E2E Testing (Playwright / Cypress)",
+      "API Route Testing"
+    ],
 
-    "02_essential_features": [
-      "Authentication System",
-      "CRUD Operations",
+    "testing_setup": [
+      "Jest Config",
+      "Mocking",
+      "Snapshots"
+    ]
+  },
+
+  "15_deployment_and_devops": {
+    "build_process": [
+      "next build",
+      "Production Output Analysis"
+    ],
+
+    "deployment_targets": {
+      "vercel": [
+        "Automatic Deployments",
+        "Preview Deployments",
+        "Domains"
+      ],
+      "self_hosted": [
+        "Node.js Deployment",
+        "Docker",
+        "CI/CD Pipelines"
+      ]
+    }
+  },
+
+  "16_architecture_and_best_practices": {
+    "project_structure": [
+      "Feature-Based Organization",
+      "Shared Component Libraries",
+      "API Abstraction Layer"
+    ],
+
+    "code_quality": [
+      "Custom Hooks",
+      "Type Safety",
+      "Linting & Formatting"
+    ],
+
+    "performance_principles": [
+      "Avoid Over-Fetching",
+      "Minimize Client JS",
+      "Cache Aggressively"
+    ]
+  },
+
+  "17_practical_projects": {
+    "project_types": [
+      "SEO-Optimized Blog",
+      "Authenticated Dashboard",
+      "E-commerce Platform",
+      "Real-time Application"
+    ],
+    "required_features": [
+      "Auth",
+      "CRUD",
       "File Uploads",
-      "Real-time Updates",
-      "Search Functionality",
+      "Search",
       "Pagination"
     ]
   },
 
-  "Interview_Preparation": {
-    "common_topics": [
-      "Rendering Strategies Comparison",
-      "Data Fetching Methods",
-      "Performance Optimization",
-      "Authentication Implementation",
-      "Deployment Process"
+  "18_interview_and_real_world_mastery": {
+    "theory": [
+      "Rendering Strategy Trade-offs",
+      "Server vs Client Components",
+      "Caching Models",
+      "Deployment Decisions"
     ],
-
-    "practical_skills": [
-      "Build a Full-stack Application",
-      "Implement Authentication",
-      "Optimize for Performance",
-      "Handle SEO Requirements",
+    "hands_on": [
+      "Build Full-Stack App",
+      "Optimize Performance",
+      "Secure APIs",
       "Deploy to Production"
     ]
   }
+
 };
+
+
 
 export { nextjsCurriculum };

@@ -1,32 +1,40 @@
 const htmlCssCurriculum = {
-  "HTML5_Core_Foundations": {
-    "01_web_architecture": [
+
+  "01_web_and_browser_foundations": {
+    "web_architecture": [
       "Client-Server Architecture Deep Dive",
       "HTTP/1.1 vs HTTP/2 vs HTTP/3 Semantics",
       "Role of DNS (Domain Name System)",
-      "The Browser Rendering Pipeline (Parsing, Style, Layout, Paint, Composite)",
-      "Chrome DevTools Deep Dive (Elements, Console, Network, Performance)",
       "Anatomy of a URL/URI"
     ],
-    "02_html_document_structure": [
+    "browser_engine_internals": [
+      "The Browser Rendering Pipeline (Parsing, Style, Layout, Paint, Composite)",
+      "Chrome DevTools Deep Dive (Elements, Console, Network, Performance)"
+    ]
+  },
+
+  "02_html_document_and_semantics": {
+    "document_structure": [
       "The DOCTYPE Declaration and Quirks Mode",
       "The <html>, <head>, and <body> Tags",
-      "Meta Tags for SEO (Description, Keywords, Robots)",
-      "Open Graph Protocol (OGP) Tags (Facebook, Twitter Cards)",
-      "Favicons and Manifest Files",
       "Character Sets (UTF-8)",
-      "Viewports and Mobile scaling"
+      "Viewports and Mobile scaling",
+      "Favicons and Manifest Files"
     ],
-    "03_semantic_elements": [
+    "metadata_and_seo": [
+      "Meta Tags for SEO (Description, Keywords, Robots)",
+      "Open Graph Protocol (OGP) Tags (Facebook, Twitter Cards)"
+    ],
+    "semantic_layout_elements": [
       "Semantic vs Non-Semantic Elements",
       "Structuring Content with <header>, <nav>, <main>, <footer>",
       "Sectioning with <article> vs <section> vs <div>",
       "Aside and Supplemental Content (<aside>)",
-      "Time and Address Elements (<time>, <address>)",
       "Figure and Figcaption",
+      "Time and Address Elements (<time>, <address>)",
       "When to use <hgroup> and Heading Hierarchy"
     ],
-    "04_text_content_semantics": [
+    "text_level_semantics": [
       "Importance of Heading Levels (h1-h6)",
       "Paragraphs and Line Breaks (<p>, <br>, <hr>)",
       "Lists: Ordered (<ol>), Unordered (<ul>), Description Lists (<dl>)",
@@ -38,8 +46,8 @@ const htmlCssCurriculum = {
     ]
   },
 
-  "Forms_and_Interaction": {
-    "05_form_structure": [
+  "03_forms_and_user_input": {
+    "form_structure": [
       "The <form> Element (action, method, enctype)",
       "Labeling Controls (<label>, for attribute)",
       "Grouping Controls (<fieldset>, <legend>)",
@@ -47,7 +55,7 @@ const htmlCssCurriculum = {
       "GET vs POST Methods in Forms",
       "Autofocus and Tabindex"
     ],
-    "06_input_types_attributes": [
+    "input_controls": [
       "Text Inputs (text, password, email, search, tel, url)",
       "Numeric Inputs (number, range)",
       "Date and Time Inputs (date, time, datetime-local, month, week)",
@@ -57,7 +65,7 @@ const htmlCssCurriculum = {
       "Placeholder vs Value",
       "Readonly vs Disabled"
     ],
-    "07_validation_ux": [
+    "validation_and_accessibility": [
       "HTML5 Built-in Validation (required, pattern, min, max, minlength, maxlength)",
       "Regular Expressions in 'pattern' attribute",
       "Custom Validation Messages (setCustomValidity)",
@@ -67,36 +75,8 @@ const htmlCssCurriculum = {
     ]
   },
 
-  "Multimedia_and_APIs": {
-    "08_images_graphics": [
-      "Image Formats (JPG, PNG, GIF, SVG, WebP, AVIF)",
-      "The <img> Tag (src, alt, width, height)",
-      "Responsive Images with 'srcset' and 'sizes'",
-      "Art Direction with <picture> and <source>",
-      "SVG: Scalable Vector Graphics (Inline vs External)",
-      "Figures and Captions",
-      "Favicons and Touch Icons",
-      "Image Lazy Loading (loading='lazy')"
-    ],
-    "09_audio_video": [
-      "The <audio> Element and Codecs",
-      "The <video> Element (poster, controls, autoplay)",
-      "Multiple Sources for Fallback (<source>)",
-      "Track Element for Captions/Subtitles (<track>)",
-      "Embedding Content with <iframe>",
-      "Security Considerations for Iframes (sandbox)"
-    ],
-    "10_web_apis_integration": [
-      "Geolocation API Usage",
-      "Drag and Drop API Basics",
-      "Web Storage API (localStorage, sessionStorage)",
-      "Canvas API for 2D Graphics",
-      "Dialog Element and Native Modals"
-    ]
-  },
-
-  "CSS_Core_Fundamentals": {
-    "11_selectors_cascade": [
+  "04_css_language_foundations": {
+    "selectors_and_cascade": [
       "Universal (*), Type, Class (.), ID (#) Selectors",
       "Descendant vs Child (>) Selectors",
       "Sibling Selectors (+, ~)",
@@ -109,7 +89,7 @@ const htmlCssCurriculum = {
       "!important usage and pitfalls",
       "Inheritance (inherit, initial, unset, revert)"
     ],
-    "12_box_model_layout": [
+    "box_model_and_display": [
       "Content, Padding, Border, Margin",
       "Box Sizing: content-box vs border-box",
       "Margin Collapse Phenomena",
@@ -118,7 +98,7 @@ const htmlCssCurriculum = {
       "Box Shadows and Border Radius",
       "Outlines vs Borders"
     ],
-    "13_colors_backgrounds": [
+    "colors_and_backgrounds": [
       "Color formats: Hex, RGB, RGBA, HSL, HSLA, Keywords",
       "Modern Colors: OKLCH, Display-P3",
       "Opacity vs Alpha Channels",
@@ -129,8 +109,8 @@ const htmlCssCurriculum = {
     ]
   },
 
-  "Modern_Layout_Systems": {
-    "14_flexbox_mastery": [
+  "05_layout_systems": {
+    "flexbox_mastery": [
       "Flex Container vs Flex Items",
       "Flex Direction (row, column, reverse)",
       "Wrapping (wrap, nowrap)",
@@ -143,7 +123,7 @@ const htmlCssCurriculum = {
       "Gap in Flexbox",
       "Common Flexbox Patterns (Navbar, Centering)"
     ],
-    "15_css_grid_mastery": [
+    "grid_mastery": [
       "Grid Container vs Grid Items",
       "Grid Template Columns and Rows",
       "The 'fr' Unit",
@@ -156,7 +136,7 @@ const htmlCssCurriculum = {
       "Spanning Columns and Rows",
       "Subgrid (Modern Feature)"
     ],
-    "16_legacy_and_positioning": [
+    "positioning_and_legacy": [
       "Position Static (Default)",
       "Position Relative (Layout Context)",
       "Position Absolute (Removed from Flow)",
@@ -168,8 +148,8 @@ const htmlCssCurriculum = {
     ]
   },
 
-  "Responsive_Design": {
-    "17_media_queries": [
+  "06_responsive_and_adaptive_design": {
+    "media_queries": [
       "The Viewport Meta Tag",
       "Media Query Syntax (@media screen and ...)",
       "Breakpoints Best Practices (Mobile First vs Desktop First)",
@@ -179,126 +159,136 @@ const htmlCssCurriculum = {
       "Dark Mode Support (prefers-color-scheme)",
       "Print Stylesheets"
     ],
-    "18_modern_responsive_techniques": [
+    "modern_responsive_techniques": [
       "Relative Units: em vs rem",
       "Viewport Units: vw, vh, vmin, vmax",
       "Dynamic Viewport Units: dvh, lvh, svh",
       "Fluid Typography (clamp, min, max)",
       "Container Queries (@container)",
-      "Picture Element for Art Direction",
       "Aspect Ratio Property"
     ]
   },
 
-  "Advanced_Styling": {
-    "19_typography": [
+  "07_media_graphics_and_web_apis": {
+    "images_and_graphics": [
+      "Image Formats (JPG, PNG, GIF, SVG, WebP, AVIF)",
+      "The <img> Tag (src, alt, width, height)",
+      "Responsive Images with 'srcset' and 'sizes'",
+      "Art Direction with <picture> and <source>",
+      "SVG: Scalable Vector Graphics (Inline vs External)",
+      "Image Lazy Loading (loading='lazy')"
+    ],
+    "audio_video_and_iframes": [
+      "The <audio> Element and Codecs",
+      "The <video> Element (poster, controls, autoplay)",
+      "Multiple Sources for Fallback (<source>)",
+      "Track Element for Captions/Subtitles (<track>)",
+      "Embedding Content with <iframe>",
+      "Security Considerations for Iframes (sandbox)"
+    ],
+    "web_platform_apis": [
+      "Geolocation API Usage",
+      "Drag and Drop API Basics",
+      "Web Storage API (localStorage, sessionStorage)",
+      "Canvas API for 2D Graphics",
+      "Dialog Element and Native Modals"
+    ]
+  },
+
+  "08_advanced_css_and_visual_effects": {
+    "typography": [
       "Font Families and Stacks",
       "Web Fonts (@font-face, Google Fonts)",
       "Variable Fonts",
       "Font Weight, Style, Variant",
-      "Text Transform and Decoration",
-      "Letter Spacing and Word Spacing",
       "Line Height and Vertical Rhythm",
       "Text Shadow and Effects",
       "Truncating Text (text-overflow, line-clamp)",
       "Writing Modes (vertical-rl)"
     ],
-    "20_transforms_transitions": [
+    "transforms_and_animation": [
       "2D Transforms (translate, rotate, scale, skew)",
       "3D Transforms (perspective, rotate3d)",
-      "Transform Origin",
-      "CSS Transitions (property, duration, timing-function, delay)",
+      "CSS Transitions",
       "Bezier Curves and Easing Functions",
-      "Performance: Will-change and Hardware Acceleration"
-    ],
-    "21_keyframes_animations": [
-      "Defining Keyframes (@keyframes)",
-      "Animation Properties (name, duration, iteration, direction)",
-      "Chaining Animations",
+      "Keyframes (@keyframes)",
       "Animation Fill Mode",
-      "Pausing and Resuming Animations",
       "Step Animations (steps())"
     ],
-    "22_filters_blend_modes": [
-      "CSS Filters (blur, grayscale, brightness, contrast, hue-rotate)",
+    "filters_and_composition": [
+      "CSS Filters (blur, grayscale, brightness)",
       "Backdrop Filters (glassmorphism)",
-      "Mix Blend Modes (multiply, screen, overlay)",
-      "Background Blend Modes",
-      "Clipping and Masking (clip-path, mask)"
+      "Mix Blend Modes",
+      "Clip-path and Masking"
     ]
   },
 
-  "Architecture_and_Maintenance": {
-    "23_css_variables": [
+  "09_css_architecture_and_scalability": {
+    "css_variables_and_theming": [
       "Custom Properties (--variable-name)",
-      "Declaration Scope (Global :root vs Local)",
       "Using var() with Fallbacks",
-      "Theming with Variables (Dark/Light Switch)",
-      "Interacting with JS (getPropertyValue, setProperty)",
-      "Calculations with calc()"
+      "Theming (Dark/Light Mode)",
+      "calc() with CSS Variables",
+      "JS Interaction with CSS Variables"
     ],
-    "24_methodologies": [
-      "BEM (Block Element Modifier) Naming Convention",
-      "OOCSS (Object Oriented CSS)",
-      "SMACSS (Scalable and Modular Architecture)",
-      "Utility-First CSS (Tailwind Philosophy explained)",
+    "css_methodologies": [
+      "BEM (Block Element Modifier)",
+      "OOCSS",
+      "SMACSS",
+      "Utility-First CSS",
       "Atomic CSS"
     ],
-    "25_preprocessors": [
+    "preprocessors": [
       "Sass/SCSS Basics",
-      "Variables ($color)",
-      "Nesting Rules (&)",
-      "Partials and Imports (@use, @forward)",
-      "Mixins and Include (@mixin, @include)",
-      "Extends and Inheritance (@extend)",
-      "Sass Maps and Loops"
+      "Nesting",
+      "Mixins",
+      "Extends",
+      "Maps and Loops"
     ]
   },
 
-  "Accessibility_A11y": {
-    "26_a11y_fundamentals": [
-      "What is Web Accessibility (WCAG)",
-      "The DOM Order vs Visual Order",
-      "Focus Management and Outline",
-      "Skip Navigation Links",
-      "Landmark Roles (banner, main, contentinfo)",
-      "Accessible Colors and Contrast Ratios"
+  "10_accessibility_and_quality": {
+    "a11y_fundamentals": [
+      "WCAG Principles",
+      "Focus Management",
+      "Landmark Roles",
+      "Contrast Ratios",
+      "Skip Navigation Links"
     ],
-    "27_aria_roles_attributes": [
-      "ARIA Basics (Accessible Rich Internet Applications)",
-      "ARIA Labels (aria-label, aria-labelledby)",
-      "State Attributes (aria-expanded, aria-hidden, aria-checked)",
-      "Live Regions (aria-live)",
-      "When NOT to use ARIA (Native semantics first)"
+    "aria": [
+      "ARIA Roles",
+      "ARIA States",
+      "ARIA Live Regions",
+      "When NOT to use ARIA"
     ]
   },
 
-  "Practical_Projects": {
+  "11_real_world_projects": {
     "beginner_projects": [
-      "Personal Resume/CV Page (Semantic HTML)",
-      "Product Landing Page (Flexbox)",
-      "Tribute Page (Basic Layout)",
-      "Documentation Page (Navigation and Sections)"
+      "Personal Resume/CV Page",
+      "Product Landing Page",
+      "Documentation Page"
     ],
     "intermediate_projects": [
-      "Responsive Image Gallery (Grid)",
-      "Pricing Card Component (Flexbox + Hover Effects)",
-      "Parallax Scrolling Website",
-      "Hamburger Menu with CSS Only"
+      "Responsive Image Gallery",
+      "Pricing Cards",
+      "Parallax Website"
     ],
     "advanced_projects": [
-      "Complex Grid Dashboard (Grid Areas)",
-      "Interactive Multi-step Form (Advanced CSS Selectors)",
-      "3D Product Card (Transforms)",
-      "Dark/Light Mode Theme Switcher (Variables + JS)"
+      "Dashboard Layout",
+      "Multi-step Form",
+      "3D Product Card",
+      "Theme Switcher"
     ],
     "expert_projects": [
-      "CSS Art (Single Div)",
+      "CSS Art",
       "Animated SVG Loader",
-      "Clone of Netflix/YouTube Layout",
+      "Netflix/YouTube Clone",
       "Accessible Modal Dialog"
     ]
   }
+
 };
+
 
 export { htmlCssCurriculum };

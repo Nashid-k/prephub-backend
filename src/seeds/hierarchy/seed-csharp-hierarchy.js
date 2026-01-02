@@ -7,7 +7,8 @@ import Section from '../../models/Section.js';
 dotenv.config();
 
 const csharpHierarchy = {
-  "Foundations & Basics": {
+
+  "01_language_foundations": {
     "C# Overview": [
       "What is C#?",
       ".NET Framework vs .NET Core vs .NET 5+",
@@ -31,7 +32,8 @@ const csharpHierarchy = {
       "Comments"
     ]
   },
-  "Variables & Data Types": {
+
+  "02_variables_and_types": {
     "Value Types": [
       "Integral Types (byte, short, int, long)",
       "Floating-point (float, double, decimal)",
@@ -61,7 +63,8 @@ const csharpHierarchy = {
       "Boxing and Unboxing"
     ]
   },
-  "Operators & Control Flow": {
+
+  "03_operators_and_control_flow": {
     "Operators": [
       "Arithmetic Operators",
       "Relational Operators",
@@ -94,7 +97,8 @@ const csharpHierarchy = {
       "return Statement"
     ]
   },
-  "Arrays & Collections": {
+
+  "04_arrays_and_collections": {
     "Arrays": [
       "Single-dimensional Arrays",
       "Multi-dimensional Arrays",
@@ -126,7 +130,8 @@ const csharpHierarchy = {
       "Collection Initializers"
     ]
   },
-  "Object-Oriented Programming": {
+
+  "05_object_oriented_programming": {
     "Classes & Objects": [
       "Class Definition",
       "Object Creation (new keyword)",
@@ -166,7 +171,8 @@ const csharpHierarchy = {
       "Static Constructors"
     ]
   },
-  "Interfaces": {
+
+  "06_interfaces_and_abstractions": {
     "Interface Basics": [
       "Interface Definition",
       "Implementing Interfaces",
@@ -185,7 +191,8 @@ const csharpHierarchy = {
       "IEquatable"
     ]
   },
-  "Delegates & Events": {
+
+  "07_delegates_events_and_lambdas": {
     "Delegates": [
       "Delegate Declaration",
       "Delegate Instantiation",
@@ -204,7 +211,8 @@ const csharpHierarchy = {
       "Expression-bodied Members"
     ]
   },
-  "Exception Handling": {
+
+  "08_exception_handling_and_resources": {
     "Exception Basics": [
       "Exception Hierarchy",
       "try-catch Block",
@@ -223,7 +231,8 @@ const csharpHierarchy = {
       "Using Blocks for Resource Management"
     ]
   },
-  "Generics": {
+
+  "09_generics_and_linq": {
     "Generic Basics": [
       "Generic Classes",
       "Generic Methods",
@@ -234,9 +243,7 @@ const csharpHierarchy = {
       "Generic Delegates",
       "Generic Interfaces",
       "Default Keyword with Generics"
-    ]
-  },
-  "LINQ": {
+    ],
     "LINQ Basics": [
       "What is LINQ?",
       "Query Syntax vs Method Syntax",
@@ -277,7 +284,8 @@ const csharpHierarchy = {
       "Cast, AsEnumerable"
     ]
   },
-  "Asynchronous Programming": {
+
+  "10_async_and_concurrency": {
     "Async/Await": [
       "async and await Keywords",
       "Task and Task<T>",
@@ -298,7 +306,8 @@ const csharpHierarchy = {
       "Async Main Method"
     ]
   },
-  "Memory Management": {
+
+  "11_memory_management": {
     "Garbage Collection": [
       "GC Fundamentals",
       "Generations (Gen 0, 1, 2)",
@@ -312,7 +321,8 @@ const csharpHierarchy = {
       "Weak References"
     ]
   },
-  "Reflection & Attributes": {
+
+  "12_reflection_attributes_and_dynamic": {
     "Reflection": [
       "Type Class",
       "Assembly Class",
@@ -332,7 +342,8 @@ const csharpHierarchy = {
       "ExpandoObject"
     ]
   },
-  "File I/O": {
+
+  "13_io_and_serialization": {
     "File Operations": [
       "File Class",
       "Directory Class",
@@ -346,7 +357,8 @@ const csharpHierarchy = {
       "JSON Serialization (System.Text.Json, Newtonsoft.Json)"
     ]
   },
-  "Multithreading": {
+
+  "14_multithreading_and_sync": {
     "Thread Basics": [
       "Thread Class",
       "Thread Lifecycle",
@@ -367,7 +379,8 @@ const csharpHierarchy = {
       "Thread-local Storage"
     ]
   },
-  ".NET Framework APIs": {
+
+  "15_dotnet_framework_apis": {
     "Collections": [
       "System.Collections",
       "System.Collections.Generic",
@@ -389,7 +402,8 @@ const csharpHierarchy = {
       "Hashing"
     ]
   },
-  "Design Patterns": {
+
+  "16_design_patterns": {
     "Creational Patterns": [
       "Singleton",
       "Factory",
@@ -409,8 +423,9 @@ const csharpHierarchy = {
       "Template Method"
     ]
   },
-  "Entity Framework": {
-    "EF Core": [
+
+  "17_data_access_and_web": {
+    "Entity Framework": [
       "DbContext",
       "DbSet",
       "Migrations",
@@ -421,9 +436,7 @@ const csharpHierarchy = {
       "Repository Pattern",
       "Unit of Work",
       "Code First vs Database First"
-    ]
-  },
-  "ASP.NET Core": {
+    ],
     "Web API": [
       "Controller Classes",
       "Routing",
@@ -444,7 +457,8 @@ const csharpHierarchy = {
       "Swagger/OpenAPI"
     ]
   },
-  "Testing": {
+
+  "18_testing_and_di": {
     "Unit Testing": [
       "xUnit",
       "NUnit",
@@ -457,9 +471,7 @@ const csharpHierarchy = {
     ],
     "TDD": [
       "Test-Driven Development Principles"
-    ]
-  },
-  "Dependency Injection": {
+    ],
     "DI Basics": [
       "Service Lifetime (Singleton, Scoped, Transient)",
       "Service Registration",
@@ -470,7 +482,8 @@ const csharpHierarchy = {
       "Options Pattern"
     ]
   },
-  "C# Versions": {
+
+  "19_language_versions_and_tooling": {
     "C# 8": [
       "Nullable Reference Types",
       "Default Interface Methods",
@@ -498,9 +511,7 @@ const csharpHierarchy = {
       "Primary Constructors",
       "Collection Expressions",
       "Inline Arrays"
-    ]
-  },
-  "Development Tools": {
+    ],
     "IDEs": [
       "Visual Studio",
       "Visual Studio Code",
@@ -515,7 +526,8 @@ const csharpHierarchy = {
       "Creating NuGet Packages"
     ]
   },
-  "Best Practices": {
+
+  "20_best_practices_and_projects": {
     "Coding Standards": [
       "Naming Conventions",
       "Code Formatting",
@@ -530,9 +542,7 @@ const csharpHierarchy = {
       "Input Validation",
       "SQL Injection Prevention",
       "Cross-site Scripting Prevention"
-    ]
-  },
-  "Practical Projects": {
+    ],
     "Console Apps": [
       "Task Manager",
       "Budget Tracker",
@@ -549,7 +559,9 @@ const csharpHierarchy = {
       "Media Player"
     ]
   }
+
 };
+
 
 const seedCSharpHierarchy = async () => {
   try {

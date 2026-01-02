@@ -1,67 +1,71 @@
 
 const apiDesignCurriculum = {
   "API_Design_Contracts": {
+
     "fundamentals": {
       "api_principles": [
         "RESTful API design principles (Richardson Maturity Model)",
         "RPC vs REST vs GraphQL architectural styles",
         "API-first development methodology",
-        "API versioning strategies (URL, header, media type)",
         "Backward/forward compatibility principles",
+        "API versioning strategies (URL, header, media type)",
         "API evolution and deprecation strategies"
       ],
       "http_fundamentals": [
         "HTTP/1.1, HTTP/2, HTTP/3 differences",
-        "Idempotent vs non-idempotent operations",
         "Safe HTTP methods and their guarantees",
+        "Idempotent vs non-idempotent operations",
         "HTTP status code semantics (2xx, 3xx, 4xx, 5xx)",
-        "Header optimization and standards",
-        "Content negotiation and media types"
+        "Content negotiation and media types",
+        "Header optimization and standards"
       ]
     },
+
     "design_patterns": {
       "rest_patterns": [
         "Resource modeling and URI design",
         "CRUD operations mapping to HTTP methods",
-        "HATEOAS (Hypermedia as the Engine of Application State)",
-        "Pagination strategies (cursor-based, offset-based)",
         "Filtering, sorting, and field selection",
-        "Bulk operations and batch processing"
+        "Pagination strategies (cursor-based, offset-based)",
+        "Bulk operations and batch processing",
+        "HATEOAS (Hypermedia as the Engine of Application State)"
       ],
       "advanced_patterns": [
-        "API composition and aggregation patterns",
-        "Circuit breaker pattern for dependent services",
         "Retry patterns with exponential backoff",
+        "Circuit breaker pattern for dependent services",
         "Rate limiting and throttling patterns",
+        "API composition and aggregation patterns",
         "Compensating transactions for distributed systems",
         "Saga pattern for long-running transactions"
       ]
     },
+
     "contracts_specifications": {
       "specification_languages": [
         "OpenAPI/Swagger 3.0 specification",
-        "AsyncAPI for event-driven APIs",
-        "gRPC Protocol Buffers (protobuf)",
-        "GraphQL Schema Definition Language",
         "JSON Schema for validation",
+        "AsyncAPI for event-driven APIs",
+        "GraphQL Schema Definition Language",
+        "gRPC Protocol Buffers (protobuf)",
         "RAML (RESTful API Modeling Language)"
       ],
       "contract_testing": [
         "Consumer-driven contract testing",
         "Provider contract verification",
-        "Pact framework implementation",
-        "Contract testing in CI/CD pipelines",
         "Breaking change detection",
-        "Version compatibility testing"
+        "Version compatibility testing",
+        "Pact framework implementation",
+        "Contract testing in CI/CD pipelines"
       ]
     },
+
     "documentation_tooling": {
       "documentation_strategies": [
         "API reference documentation best practices",
         "Interactive documentation (Swagger UI, Redoc)",
         "Tutorial and getting started guides",
-        "SDK and client library generation",
         "Postman collections and examples",
+        "SDK and client library generation",
         "API playground and sandbox environments"
       ],
       "developer_experience": [
@@ -73,33 +77,36 @@ const apiDesignCurriculum = {
         "Onboarding and adoption metrics"
       ]
     },
+
     "performance_optimization": {
       "optimization_techniques": [
-        "Response compression (gzip, brotli)",
         "HTTP caching headers (ETag, Last-Modified, Cache-Control)",
         "Conditional requests (If-Modified-Since, If-None-Match)",
-        "Partial responses and range requests",
+        "Response compression (gzip, brotli)",
         "Connection keep-alive and pooling",
+        "Partial responses and range requests",
         "Response streaming and chunked encoding"
       ],
       "monitoring_observability": [
         "API metrics collection (latency, throughput, error rates)",
-        "Distributed tracing integration",
         "Request/response logging strategies",
+        "Distributed tracing integration",
         "Performance anomaly detection",
         "Capacity planning and autoscaling",
         "A/B testing and feature flagging"
       ]
     },
+
     "security_best_practices": [
       "Authentication mechanisms (OAuth 2.0, JWT, API keys)",
       "Authorization models (RBAC, ABAC, ReBAC)",
       "Input validation and sanitization",
       "Output encoding and injection prevention",
       "TLS/SSL configuration and certificate management",
-      "DDoS protection and rate limiting",
-      "Security headers (CSP, HSTS, X-Frame-Options)"
+      "Security headers (CSP, HSTS, X-Frame-Options)",
+      "DDoS protection and rate limiting"
     ],
+
     "faang_interview_focus": [
       "Design RESTful APIs for specific domains (e-commerce, social media)",
       "Handle API versioning and backward compatibility",
@@ -109,7 +116,8 @@ const apiDesignCurriculum = {
       "Monitor and debug production API issues"
     ]
   }
-}
+};
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

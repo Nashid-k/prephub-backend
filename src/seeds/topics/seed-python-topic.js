@@ -71,7 +71,7 @@ const seedPython = async () => {
             
             for (const [key, value] of Object.entries(mainValue)) {
                 const categoryName = formatName(key);
-                const categorySlug = await generateUniqueSlug(Category, categoryName, topic._id);
+                const categorySlug = await generateUniqueSlug(Category, `Python ${categoryName}`, topic._id);
 
                 const category = await Category.create({
                     name: categoryName,

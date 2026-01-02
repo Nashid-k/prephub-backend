@@ -5,7 +5,7 @@ import geminiService from '../services/gemini.service.js';
  */
 export const explainTopic = async (req, res) => {
   try {
-    const { topic, section, context, language = 'javascript' } = req.body;
+    const { topic, section, context, language = 'javascript', experienceLevel = 'advanced' } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -13,7 +13,7 @@ export const explainTopic = async (req, res) => {
       });
     }
 
-    const explanation = await geminiService.generateExplanation(topic, section, context, language);
+    const explanation = await geminiService.generateExplanation(topic, section, context, language, experienceLevel);
 
     res.json({
       success: true,
@@ -32,7 +32,7 @@ export const explainTopic = async (req, res) => {
  */
 export const askQuestion = async (req, res) => {
   try {
-    const { question, context, language = 'javascript' } = req.body;
+    const { question, context, language = 'javascript', experienceLevel = 'advanced' } = req.body;
 
     if (!question) {
       return res.status(400).json({ 
@@ -40,7 +40,7 @@ export const askQuestion = async (req, res) => {
       });
     }
 
-    const answer = await geminiService.answerQuestion(question, context, language);
+    const answer = await geminiService.answerQuestion(question, context, language, experienceLevel);
 
     res.json({
       success: true,
@@ -59,7 +59,7 @@ export const askQuestion = async (req, res) => {
  */
 export const generateQuiz = async (req, res) => {
   try {
-    const { topic, section, regenerate, language = 'javascript', content = '' } = req.body;
+    const { topic, section, regenerate, language = 'javascript', content = '', experienceLevel = 'advanced' } = req.body;
 
     if (!topic || !section) {
       return res.status(400).json({ 
@@ -67,7 +67,7 @@ export const generateQuiz = async (req, res) => {
       });
     }
 
-    const quiz = await geminiService.generateQuiz(topic, section, regenerate, language, content);
+    const quiz = await geminiService.generateQuiz(topic, section, regenerate, language, content, experienceLevel);
 
     res.json({
       success: true,
@@ -139,6 +139,41 @@ export const translateCode = async (req, res) => {
       error: error.message || 'Failed to translate code' 
     });
   }
+    );
+    
+    res.json({
+        success: true,
+        translated
+    });
+  } catch (error) {
+    console.error('Translate Code Error:', error);
+    res.status(500).json({ 
+      error: error.message || 'Failed to translate code' 
+    });
+  }
+};
+
+/**
+ * Analyze Code (Review, Debug, Optimize)
+ */
+export const analyzeCode = async (req, res) => {
+  try {
+    const { code, mode = 'review', language = 'javascript', experienceLevel = 'advanced' } = req.body;
+
+    if (!code) {
+      return res.status(400).json({ error: 'Code is required' });
+    }
+
+    const analysis = await geminiService.analyzeCode(code, mode, language, experienceLevel);
+    
+    res.json({
+      success: true,
+      analysis // Markdown string
+    });
+  } catch (error) {
+    console.error('Analyze Code Error:', error);
+    res.status(500).json({ error: error.message || 'Failed to analyze code' });
+  }
 };
 
 export default {
@@ -146,5 +181,6 @@ export default {
   askQuestion,
   generateQuiz,
   structurePath,
-  translateCode
+  translateCode,
+  analyzeCode
 };

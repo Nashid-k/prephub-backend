@@ -1,124 +1,325 @@
 
 const reliabilityCurriculum = {
-  "Reliability_Observability": {
-    "reliability_principles": {
-      "fundamental_concepts": [
-        "SLIs, SLOs, and SLAs definition and implementation",
-        "Error budgets and their management",
-        "Mean Time Between Failures (MTBF)",
-        "Mean Time To Recovery (MTTR)",
-        "Mean Time To Detection (MTTD)",
-        "Failure modes and effects analysis (FMEA)"
-      ],
-      "availability_patterns": [
-        "Redundancy patterns (active-active, active-passive)",
-        "Graceful degradation and fallback strategies",
-        "Circuit breaker pattern implementation",
-        "Bulkhead pattern for fault isolation",
-        "Retry patterns with exponential backoff",
-        "Deadline propagation in distributed systems"
-      ]
-    },
-    "observability_stack": {
-      "three_pillars": [
-        "Metrics collection and aggregation (Prometheus, StatsD)",
-        "Distributed tracing (OpenTelemetry, Jaeger, Zipkin)",
-        "Structured logging and log aggregation (ELK stack)",
-        "Event streaming and correlation",
-        "Continuous profiling (Pyroscope, continuous profiling)",
-        "Synthetic monitoring and checks"
-      ],
-      "telemetry_instrumentation": [
-        "Automatic vs manual instrumentation",
-        "Context propagation across services",
-        "Sampling strategies (head-based, tail-based)",
-        "Cardinality management in metrics",
-        "Log aggregation best practices",
-        "Trace visualization and analysis"
-      ]
-    },
-    "incident_management": {
-      "incident_response": [
-        "Incident classification and severity levels",
-        "On-call rotations and escalation policies",
-        "Incident commander role and responsibilities",
-        "Communication protocols during incidents",
-        "Post-mortem culture and blameless retrospectives",
-        "Incident timeline reconstruction"
-      ],
-      "alerting_strategies": [
-        "Alert fatigue prevention and management",
-        "Multi-level alerting (warning, critical, page)",
-        "Alert routing and notification channels",
-        "Alert suppression and deduplication",
-        "Runbook automation and playbooks",
-        "Alert correlation and root cause analysis"
-      ]
-    },
-    "chaos_engineering": {
-      "principles_practices": [
-        "Chaos engineering principles (steady state, hypothesis)",
-        "Game days and chaos experiments",
-        "Failure injection testing",
-        "Network latency and packet loss simulation",
-        "Dependency failure testing",
-        "Resource exhaustion experiments"
-      ],
-      "tools_frameworks": [
-        "Chaos Mesh and Litmus for Kubernetes",
-        "Gremlin for cloud-native chaos",
-        "Custom failure injection frameworks",
-        "Canary testing and progressive delivery",
-        "Feature flagging for controlled rollouts",
-        "Dark launches and shadow testing"
-      ]
-    },
-    "disaster_recovery": {
-      "backup_strategies": [
-        "Backup types (full, incremental, differential)",
-        "Backup retention policies and lifecycle",
-        "Geographic redundancy and replication",
-        "Point-in-time recovery capabilities",
-        "Backup verification and testing",
-        "Immutable backups and WORM storage"
-      ],
-      "recovery_planning": [
-        "Recovery Time Objective (RTO) and Recovery Point Objective (RPO)",
-        "Disaster recovery runbooks and procedures",
-        "Failover and failback automation",
-        "Data consistency across regions",
-        "DR drill execution and validation",
-        "Business continuity planning"
-      ]
-    },
-    "capacity_planning": {
-      "capacity_management": [
-        "Resource utilization forecasting",
-        "Auto-scaling strategies and policies",
-        "Load testing and performance modeling",
-        "Bottleneck identification and resolution",
-        "Resource optimization and right-sizing",
-        "Cost-performance tradeoff analysis"
-      ],
-      "performance_modeling": [
-        "Little's Law application",
-        "Queueing theory for system modeling",
-        "Load distribution and sharding strategies",
-        "Database scaling patterns (read replicas, sharding)",
-        "Caching impact on capacity planning",
-        "Network capacity planning"
-      ]
-    },
-    "faang_interview_focus": [
+
+  "00_reliability_engineering_mindset": {
+    "foundational_ideas": [
+      "Why systems fail in production",
+      "Reliability vs availability vs durability",
+      "Reactive vs proactive reliability engineering",
+      "Trade-offs between velocity and stability",
+      "Human factors in system failures"
+    ],
+    "core_metrics_overview": [
+      "Why reliability must be measurable",
+      "User-centric vs system-centric metrics",
+      "Symptoms vs causes in failures"
+    ]
+  },
+
+  "01_service_reliability_fundamentals": {
+    "sli_slo_sla": [
+      "Service Level Indicators (SLIs)",
+      "Service Level Objectives (SLOs)",
+      "Service Level Agreements (SLAs)",
+      "Choosing correct SLIs (latency, availability, errors)",
+      "Common SLI mistakes"
+    ],
+    "error_budgets": [
+      "What error budgets represent",
+      "Error budget calculation",
+      "Using error budgets for release decisions",
+      "Burn rate and fast vs slow burn",
+      "Error budgets as organizational alignment tool"
+    ],
+    "reliability_metrics": [
+      "Mean Time Between Failures (MTBF)",
+      "Mean Time To Detection (MTTD)",
+      "Mean Time To Recovery (MTTR)",
+      "Interpreting reliability metrics correctly"
+    ]
+  },
+
+  "02_failure_analysis_and_resilience_thinking": {
+    "failure_models": [
+      "Types of failures (hardware, software, human, network)",
+      "Cascading failures",
+      "Partial failures in distributed systems",
+      "Gray failures and silent degradation"
+    ],
+    "failure_analysis": [
+      "Failure Modes and Effects Analysis (FMEA)",
+      "Blast radius identification",
+      "Single points of failure (SPOF)",
+      "Dependency mapping and risk analysis"
+    ]
+  },
+
+  "03_availability_and_resilience_patterns": {
+    "redundancy_and_failover": [
+      "Redundancy fundamentals",
+      "Active-active vs active-passive architectures",
+      "Stateless vs stateful service design",
+      "Leader election considerations"
+    ],
+    "graceful_degradation": [
+      "Graceful degradation strategies",
+      "Feature degradation vs system shutdown",
+      "Fallback responses and defaults",
+      "Load shedding techniques"
+    ],
+    "fault_isolation_patterns": [
+      "Bulkhead pattern",
+      "Cell-based architecture",
+      "Failure domain isolation",
+      "Resource isolation (CPU, memory, threads)"
+    ],
+    "request_resilience": [
+      "Retry strategies",
+      "Exponential backoff",
+      "Jitter to prevent thundering herd",
+      "Timeouts and deadline propagation",
+      "Circuit breaker pattern implementation"
+    ]
+  },
+
+  "04_observability_foundations": {
+    "three_pillars_of_observability": [
+      "Metrics fundamentals",
+      "Logs fundamentals",
+      "Distributed traces fundamentals",
+      "Events and system signals",
+      "When to use which pillar"
+    ],
+    "observability_goals": [
+      "Detecting failures early",
+      "Understanding system behavior",
+      "Debugging unknown unknowns",
+      "Supporting incident response"
+    ]
+  },
+
+  "05_metrics_and_monitoring": {
+    "metrics_design": [
+      "Golden signals (latency, traffic, errors, saturation)",
+      "RED vs USE methodologies",
+      "Choosing high-signal metrics",
+      "Cardinality management"
+    ],
+    "metrics_tooling": [
+      "Prometheus architecture",
+      "StatsD concepts",
+      "Metric aggregation strategies",
+      "Recording rules and alert rules"
+    ]
+  },
+
+  "06_logging_and_log_management": {
+    "logging_principles": [
+      "Structured logging vs unstructured logs",
+      "Log levels and semantics",
+      "Correlation IDs",
+      "Avoiding log noise"
+    ],
+    "log_aggregation": [
+      "Centralized logging concepts",
+      "ELK stack fundamentals",
+      "Log retention and cost control",
+      "Security and PII considerations"
+    ]
+  },
+
+  "07_distributed_tracing": {
+    "tracing_concepts": [
+      "Why tracing is needed",
+      "Spans, traces, and contexts",
+      "Trace propagation across services",
+      "Sampling challenges"
+    ],
+    "tracing_tooling": [
+      "OpenTelemetry concepts",
+      "Jaeger and Zipkin comparison",
+      "Head-based vs tail-based sampling",
+      "Trace visualization and analysis"
+    ]
+  },
+
+  "08_telemetry_instrumentation": {
+    "instrumentation_strategies": [
+      "Automatic vs manual instrumentation",
+      "Instrumentation boundaries",
+      "Context propagation",
+      "Telemetry performance overhead"
+    ],
+    "advanced_telemetry": [
+      "High-cardinality pitfalls",
+      "Metric explosion prevention",
+      "Correlation across metrics, logs, and traces"
+    ]
+  },
+
+  "09_alerting_and_detection": {
+    "alerting_philosophy": [
+      "What alerts should and should not do",
+      "Symptoms-based alerting",
+      "Avoiding alert fatigue",
+      "Alert ownership"
+    ],
+    "alert_design": [
+      "Multi-level alerts (warning, critical, page)",
+      "Alert routing strategies",
+      "Alert deduplication and suppression",
+      "Alert correlation"
+    ],
+    "runbooks": [
+      "Runbook creation",
+      "Automation in runbooks",
+      "Playbooks vs runbooks",
+      "Operational readiness reviews"
+    ]
+  },
+
+  "10_incident_response_and_management": {
+    "incident_lifecycle": [
+      "Incident classification and severity levels",
+      "Detection and declaration",
+      "Mitigation vs resolution",
+      "Incident closure"
+    ],
+    "incident_roles": [
+      "Incident commander responsibilities",
+      "Communication lead role",
+      "On-call rotations and escalation policies"
+    ],
+    "incident_communication": [
+      "Internal communication protocols",
+      "Stakeholder updates",
+      "Customer communication during incidents"
+    ]
+  },
+
+  "11_post_incident_learning": {
+    "postmortems": [
+      "Blameless post-mortem culture",
+      "Timeline reconstruction",
+      "Root cause vs contributing factors",
+      "Action items and ownership"
+    ],
+    "organizational_learning": [
+      "Preventing recurrence",
+      "Tracking reliability improvements",
+      "Sharing learnings across teams"
+    ]
+  },
+
+  "12_capacity_planning_and_scalability": {
+    "capacity_management": [
+      "Capacity planning fundamentals",
+      "Resource utilization forecasting",
+      "Auto-scaling strategies",
+      "Right-sizing resources",
+      "Cost vs performance trade-offs"
+    ],
+    "load_and_stress_testing": [
+      "Load testing principles",
+      "Stress vs soak vs spike testing",
+      "Bottleneck identification",
+      "Performance modeling"
+    ]
+  },
+
+  "13_performance_and_queueing_models": {
+    "performance_modeling": [
+      "Little’s Law",
+      "Queueing theory fundamentals",
+      "Backpressure handling",
+      "Throughput vs latency trade-offs"
+    ],
+    "scaling_patterns": [
+      "Horizontal vs vertical scaling",
+      "Sharding strategies",
+      "Caching impact on performance",
+      "Database scaling patterns"
+    ]
+  },
+
+  "14_disaster_recovery_and_business_continuity": {
+    "backup_strategies": [
+      "Full, incremental, and differential backups",
+      "Backup retention policies",
+      "Immutable backups and WORM storage",
+      "Backup verification and restore testing"
+    ],
+    "recovery_planning": [
+      "Recovery Time Objective (RTO)",
+      "Recovery Point Objective (RPO)",
+      "Failover and failback automation",
+      "Geographic redundancy"
+    ],
+    "dr_practices": [
+      "Disaster recovery drills",
+      "Data consistency across regions",
+      "Business continuity planning"
+    ]
+  },
+
+  "15_chaos_engineering_and_proactive_resilience": {
+    "chaos_principles": [
+      "Steady state definition",
+      "Hypothesis-driven experiments",
+      "Game days"
+    ],
+    "failure_injection": [
+      "Network latency injection",
+      "Packet loss simulation",
+      "Dependency failure testing",
+      "Resource exhaustion experiments"
+    ],
+    "chaos_tooling": [
+      "Chaos Mesh",
+      "Litmus",
+      "Gremlin",
+      "Custom failure injection frameworks"
+    ],
+    "progressive_delivery": [
+      "Canary releases",
+      "Feature flags",
+      "Dark launches",
+      "Shadow testing"
+    ]
+  },
+
+  "16_continuous_profiling_and_optimization": {
+    "profiling_concepts": [
+      "Why profiling matters",
+      "CPU vs memory profiling",
+      "Always-on profiling trade-offs"
+    ],
+    "profiling_tools": [
+      "Continuous profiling (Pyroscope)",
+      "Production-safe profiling techniques"
+    ]
+  },
+
+  "17_system_design_and_faang_interview_focus": {
+    "design_scenarios": [
       "Design highly available distributed systems",
-      "Implement effective monitoring and alerting",
-      "Handle incident response and post-mortems",
-      "Design disaster recovery strategies",
-      "Implement chaos engineering practices",
-      "Capacity planning for growing systems"
+      "Design for graceful degradation",
+      "Design effective monitoring and alerting"
+    ],
+    "operational_excellence": [
+      "Handling large-scale incidents",
+      "Designing disaster recovery strategies",
+      "Capacity planning for rapid growth"
+    ],
+    "interview_expectations": [
+      "Thinking in failure modes",
+      "Trade-off driven decision making",
+      "Operational readiness mindset"
     ]
   }
-}
+
+};
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

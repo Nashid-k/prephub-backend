@@ -1,13 +1,17 @@
 
 const javaCurriculum = {
-  "Java_Foundations": {
+
+  "01_java_platform_and_language_basics": {
     "java_overview": [
       "History and Features",
+      "Java Editions (SE, EE, ME)",
       "JDK vs JRE vs JVM Overview",
       "Bytecode and Platform Independence",
-      "Main Method Anatomy",
-      "Java Editions (SE, EE, ME)"
-    ],
+      "Main Method Anatomy"
+    ]
+  },
+
+  "02_core_syntax_and_data_model": {
     "syntax_basics": [
       "Data Types (Primitive vs Reference)",
       "Variables and Scope",
@@ -15,17 +19,31 @@ const javaCurriculum = {
       "Control Flow (if-else, switch, loops)",
       "Arrays (Single vs Multi-dimensional)",
       "Strings (Immutable, Pooling)"
-    ],
+    ]
+  },
+
+  "03_object_oriented_programming": {
     "oop_concepts": [
       "Classes and Objects",
       "Constructors (No-arg, Parameterized)",
+      "Encapsulation (Access Modifiers)",
       "Inheritance (extends, super)",
       "Polymorphism (Overloading vs Overriding)",
-      "Encapsulation (Access Modifiers)",
       "Abstraction (Abstract Classes vs Interfaces)"
     ]
   },
-  "Java_Core_Libraries": {
+
+  "04_exception_handling_and_resource_management": {
+    "exception_handling": [
+      "Exception Hierarchy (Checked vs Unchecked)",
+      "Try-Catch-Finally Blocks",
+      "Throw vs Throws",
+      "Custom Exceptions",
+      "Try-with-Resources (AutoCloseable)"
+    ]
+  },
+
+  "05_collections_and_data_structures": {
     "collections_framework": [
       "Collection Interface Hierarchy",
       "List (ArrayList, LinkedList, Vector)",
@@ -34,23 +52,20 @@ const javaCurriculum = {
       "Queue and Deque (PriorityQueue)",
       "Comparable vs Comparator",
       "Iterators and fail-fast behavior"
-    ],
-    "exception_handling": [
-      "Exception Hierarchy (Checked vs Unchecked)",
-      "Try-Catch-Finally Blocks",
-      "Throw vs Throws",
-      "Custom Exceptions",
-      "Try-with-Resources (AutoCloseable)"
-    ],
+    ]
+  },
+
+  "06_input_output_and_nio": {
     "io_nio": [
       "File Handling (File Class)",
       "Byte Streams vs Character Streams",
-      "Serialization vs Deserialization",
       "BufferedReader vs Scanner",
+      "Serialization vs Deserialization",
       "NIO (Buffers, Channels, Selectors)"
     ]
   },
-  "Advanced_Java": {
+
+  "07_concurrency_and_parallelism": {
     "concurrency_multithreading": [
       "Thread Lifecycle & States",
       "Runnable vs Thread Class",
@@ -60,14 +75,20 @@ const javaCurriculum = {
       "Callable vs Runnable",
       "CompletableFuture",
       "Virtual Threads (Project Loom)"
-    ],
+    ]
+  },
+
+  "08_jvm_internals_and_performance": {
     "jvm_internals": [
       "Classloader Subsystem",
       "Runtime Data Areas (Heap, Stack, Method Area)",
       "Garbage Collection Algorithms (G1, ZGC)",
       "Memory Leaks via VisualVM",
       "JIT Compiler (C1, C2)"
-    ],
+    ]
+  },
+
+  "09_functional_and_stream_processing": {
     "java_streams_api": [
       "Stream Creation and Pipeline",
       "Intermediate Operations (map, filter, flatMap)",
@@ -76,7 +97,8 @@ const javaCurriculum = {
       "Functional Interfaces (Predicate, Consumer)"
     ]
   },
-  "Modern_Java_Features": {
+
+  "10_modern_java_language_features": {
     "java_8_to_11": [
       "Lambda Expressions",
       "Method References (::)",
@@ -94,7 +116,8 @@ const javaCurriculum = {
       "Sequenced Collections"
     ]
   },
-  "Professional_Development": {
+
+  "11_frameworks_build_and_testing": {
     "spring_ecosystem": [
       "Spring Boot Intro (Starters, Auto-config)",
       "Dependency Injection (IoC)",
@@ -108,7 +131,10 @@ const javaCurriculum = {
       "JUnit 5 (Annotations, Assertions)",
       "Mockito (Mocking dependencies)",
       "Test Driven Development (TDD)"
-    ],
+    ]
+  },
+
+  "12_practical_projects_and_professional_depth": {
     "learning_projects": [
       "Bank Account Management System",
       "Library Management CLI",
@@ -125,6 +151,8 @@ const javaCurriculum = {
       "Memory Leaks in Java"
     ]
   }
+
 };
+
 
 export { javaCurriculum };

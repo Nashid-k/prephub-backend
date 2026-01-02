@@ -71,7 +71,7 @@ const seedHtmlCss = async () => {
             
             for (const [categoryKey, sectionList] of Object.entries(groupValue)) {
                 const categoryName = formatName(categoryKey);
-                const categorySlug = await generateUniqueSlug(Category, categoryName, topic._id);
+                const categorySlug = await generateUniqueSlug(Category, `HTML CSS ${categoryName}`, topic._id);
 
                 const category = await Category.create({
                     name: categoryName,

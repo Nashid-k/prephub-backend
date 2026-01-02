@@ -1,13 +1,17 @@
 
 const gitCurriculum = {
-  "Version_Control_Basics": {
+
+  "01_version_control_foundations": {
     "git_fundamentals": [
       "What is Version Control",
       "Git Architecture (Local vs Remote)",
       "Git vs SVN/Mercurial",
       "Installing and Configuring Git",
       "The Three States (Modified, Staged, Committed)"
-    ],
+    ]
+  },
+
+  "02_core_workflow_and_file_management": {
     "core_commands": [
       "Initializing Repositories (init)",
       "Staging Changes (add)",
@@ -23,30 +27,8 @@ const gitCurriculum = {
       "Ignoring Tracked Files"
     ]
   },
-  "Branching_Merging": {
-    "branch_management": [
-      "Creating and Switching Branches",
-      "Detached HEAD State",
-      "Deleting Branches (Safe vs Force)",
-      "Renaming Branches",
-      "Upstream Tracking"
-    ],
-    "merging_strategies": [
-      "Fast-Forward Merge",
-      "Recursive Merge Strategy",
-      "Squash Merging",
-      "Rebasing (Interactive & Standard)",
-      "Merge vs Rebase Trade-offs"
-    ],
-    "conflict_resolution": [
-      "Identifying Merge Conflicts",
-      "Resolving Conflicts Manualy",
-      "Abort, Continue, Skip Rebase",
-      "Using Merge Tools (diff3)",
-      "Rerere (Reuse Recorded Resolution)"
-    ]
-  },
-  "Remote_Collaboration": {
+
+  "03_remote_repositories_and_collaboration": {
     "remote_repos": [
       "Cloning Repositories",
       "Managing Remotes (add, remove, rename)",
@@ -69,21 +51,52 @@ const gitCurriculum = {
       "Forking Workflow"
     ]
   },
-  "Advanced_Git_Tools": {
+
+  "04_branching_and_merging": {
+    "branch_management": [
+      "Creating and Switching Branches",
+      "Detached HEAD State",
+      "Deleting Branches (Safe vs Force)",
+      "Renaming Branches",
+      "Upstream Tracking"
+    ],
+    "merging_strategies": [
+      "Fast-Forward Merge",
+      "Recursive Merge Strategy",
+      "Squash Merging",
+      "Rebasing (Interactive & Standard)",
+      "Merge vs Rebase Trade-offs"
+    ]
+  },
+
+  "05_conflict_resolution_and_recovery": {
+    "conflict_resolution": [
+      "Identifying Merge Conflicts",
+      "Resolving Conflicts Manualy",
+      "Abort, Continue, Skip Rebase",
+      "Using Merge Tools (diff3)",
+      "Rerere (Reuse Recorded Resolution)"
+    ],
     "undoing_changes": [
       "Unstaging Files (restore)",
       "Reverting Commits (revert)",
       "Resetting (Soft, Mixed, Hard)",
       "Amending Commits",
       "Recovering Lost Commits (reflog)"
-    ],
+    ]
+  },
+
+  "06_productivity_and_advanced_workflows": {
     "productivity_tools": [
       "Stashing Changes (stash)",
       "Cherry-Picking Commits",
       "Git Aliases",
       "Worktrees",
       "Git Bisect for Bug Hunting"
-    ],
+    ]
+  },
+
+  "07_git_internals_and_mental_models": {
     "git_internals": [
       "The .git Directory",
       "Git Objects (Blob, Tree, Commit, Tag)",
@@ -92,7 +105,8 @@ const gitCurriculum = {
       "Plumbing vs Porcelain Commands"
     ]
   },
-  "DevOps_Automation": {
+
+  "08_devops_and_repository_management": {
     "git_hooks": [
       "Client-Side Hooks (pre-commit, pre-push)",
       "Server-Side Hooks (pre-receive)",
@@ -108,6 +122,8 @@ const gitCurriculum = {
       "Protected Branches"
     ]
   }
+
 };
+
 
 export { gitCurriculum };

@@ -8,7 +8,8 @@ import slugify from 'slugify';
 dotenv.config();
 
 const mongodbCurriculum = {
-  "01_database_fundamentals": {
+
+  "01_database_and_distributed_systems_foundations": {
     "database_concepts": [
       "What is a Database",
       "Features of a Database",
@@ -39,7 +40,8 @@ const mongodbCurriculum = {
       "Composite Key"
     ]
   },
-  "02_mongodb_introduction": {
+
+  "02_mongodb_core_concepts_and_architecture": {
     "overview": [
       "What is MongoDB",
       "MongoDB as a Document Database",
@@ -64,7 +66,8 @@ const mongodbCurriculum = {
       "ObjectId Structure (Timestamp, Machine ID, Process ID, Counter)"
     ]
   },
-  "03_installation_setup": {
+
+  "03_installation_and_environment_setup": {
     "installation": [
       "MongoDB Installation",
       "MongoDB Server Setup",
@@ -83,7 +86,8 @@ const mongodbCurriculum = {
       "Connection Strings"
     ]
   },
-  "04_databases_collections": {
+
+  "04_database_and_collection_management": {
     "database_operations": [
       "Create a Database (use db_name)",
       "Show Databases (show dbs)",
@@ -104,7 +108,8 @@ const mongodbCurriculum = {
       "Normal vs Capped Collection Differences"
     ]
   },
-  "05_crud_operations": {
+
+  "05_crud_and_querying_fundamentals": {
     "create_operations": [
       "Insert One Document (insertOne())",
       "Insert Many Documents (insertMany())",
@@ -135,7 +140,8 @@ const mongodbCurriculum = {
       "Remove All Documents"
     ]
   },
-  "06_query_operators": {
+
+  "06_query_and_update_operators": {
     "comparison_operators": [
       "$eq (Equals)",
       "$ne (Not Equals)",
@@ -162,15 +168,6 @@ const mongodbCurriculum = {
       "$text (Text search)",
       "$where (JavaScript expression)"
     ],
-    "practical_queries": [
-      "Case-Insensitive Pattern Matching",
-      "Names Starting With Specific Letter",
-      "Names Ending With Specific Letter",
-      "Range Queries",
-      "Combining Multiple Conditions"
-    ]
-  },
-  "07_update_operators": {
     "field_update_operators": [
       "$set (Set field value)",
       "$unset (Remove field)",
@@ -191,32 +188,17 @@ const mongodbCurriculum = {
     ],
     "bitwise_update_operators": [
       "$bit (Bitwise operations)"
-    ],
-    "practical_updates": [
-      "Increment Salary by Percentage",
-      "Reduce Marks Globally",
-      "Add Field If Not Present",
-      "Rename Existing Field",
-      "Update Array Elements",
-      "Conditional Updates"
     ]
   },
-  "08_array_operations": {
+
+  "07_arrays_and_aggregation_pipeline": {
     "array_query_operators": [
       "$elemMatch (Match array elements)",
       "$size (Array size)",
       "$all (Match all elements)",
       "$slice (Array projection)"
     ],
-    "practical_array_queries": [
-      "Find Documents With Array of Exact Size",
-      "Find Documents With Array Values in Range",
-      "Query Nested Array Elements",
-      "Match Multiple Array Conditions"
-    ]
-  },
-  "09_aggregation_framework": {
-    "concepts": [
+    "aggregation_concepts": [
       "What is Aggregation",
       "Aggregation Pipeline Concept",
       "Pipeline Stages",
@@ -224,46 +206,36 @@ const mongodbCurriculum = {
       "Aggregation Performance"
     ],
     "pipeline_stages": [
-      "$match (Filter documents)",
-      "$group (Group documents)",
-      "$project (Reshape documents)",
-      "$sort (Sort documents)",
-      "$limit (Limit documents)",
-      "$skip (Skip documents)",
-      "$unwind (Deconstruct array)",
-      "$lookup (Join collections)",
-      "$facet (Multiple pipelines)",
-      "$out (Write to collection)",
-      "$merge (Merge results)",
-      "$set (Add fields)",
-      "$unset (Remove fields)",
-      "$replaceRoot (Replace document)",
-      "$addFields (Add new fields)"
+      "$match",
+      "$group",
+      "$project",
+      "$sort",
+      "$limit",
+      "$skip",
+      "$unwind",
+      "$lookup",
+      "$facet",
+      "$out",
+      "$merge",
+      "$set",
+      "$unset",
+      "$replaceRoot",
+      "$addFields"
     ],
     "accumulator_operators": [
-      "$sum (Calculate sum)",
-      "$avg (Calculate average)",
-      "$min (Find minimum)",
-      "$max (Find maximum)",
-      "$first (First value in group)",
-      "$last (Last value in group)",
-      "$push (Create array)",
-      "$addToSet (Create unique array)"
-    ],
-    "practical_aggregations": [
-      "Average Salary per Department",
-      "Highest and Lowest Salary",
-      "Second Highest Value",
-      "Department-wise Employee Count",
-      "Join Collections Using $lookup",
-      "Pipeline Inside $lookup",
-      "Group by Multiple Fields",
-      "Calculate Percentages",
-      "Pagination with Aggregation"
+      "$sum",
+      "$avg",
+      "$min",
+      "$max",
+      "$first",
+      "$last",
+      "$push",
+      "$addToSet"
     ]
   },
-  "10_indexing": {
-    "concepts": [
+
+  "08_indexing_and_query_performance": {
+    "indexing_concepts": [
       "What is Indexing",
       "Why Indexing is Needed",
       "Index Data Structure (B-tree)",
@@ -273,24 +245,17 @@ const mongodbCurriculum = {
     "index_types": [
       "Single Field Index",
       "Compound Index",
-      "Multikey Index (Array fields)",
-      "TTL Index (Time-to-Live)",
+      "Multikey Index",
+      "TTL Index",
       "Hashed Index",
-      "Geospatial Index (2dsphere)",
-      "Text Index (Full-text search)",
+      "Geospatial Index",
+      "Text Index",
       "Clustered Index",
       "Partial Index",
       "Sparse Index",
       "Unique Index"
     ],
-    "index_operations": [
-      "Create Index",
-      "List Indexes",
-      "Drop Index",
-      "Index Properties (Unique, Sparse)",
-      "Index Rebuilding"
-    ],
-    "performance": [
+    "performance_analysis": [
       "Explain Plan (explain())",
       "Query Execution Statistics",
       "Index Selection",
@@ -298,8 +263,9 @@ const mongodbCurriculum = {
       "Index Limitations"
     ]
   },
-  "11_data_modeling": {
-    "concepts": [
+
+  "09_data_modeling_and_schema_design": {
+    "modeling_concepts": [
       "Data Modeling Concepts",
       "Embedded Documents Pattern",
       "Referenced Documents Pattern",
@@ -307,7 +273,7 @@ const mongodbCurriculum = {
       "Normalization vs Denormalization",
       "Dynamic Schema Advantages"
     ],
-    "patterns": [
+    "relationship_patterns": [
       "One-to-One Relationships",
       "One-to-Many Relationships",
       "Many-to-Many Relationships",
@@ -316,7 +282,7 @@ const mongodbCurriculum = {
       "Attribute Pattern",
       "Extended Reference Pattern"
     ],
-    "validation": [
+    "schema_validation": [
       "JSON Schema Validation",
       "Schema Validation Rules",
       "Validation Levels",
@@ -329,7 +295,8 @@ const mongodbCurriculum = {
       "Poor Shard Key Selection"
     ]
   },
-  "12_transactions_concurrency": {
+
+  "10_transactions_replication_and_sharding": {
     "transactions": [
       "What is a Transaction",
       "ACID Transactions in MongoDB",
@@ -337,218 +304,77 @@ const mongodbCurriculum = {
       "Transaction Syntax",
       "Transaction Limitations"
     ],
-    "concurrency_control": [
-      "Read Concern Levels",
-      "Write Concern Levels",
-      "Journaling",
-      "Isolation Levels",
-      "Concurrency Control Mechanisms",
-      "Locks in MongoDB"
-    ],
-    "change_streams": [
-      "What are Change Streams",
-      "Change Streams Use Cases",
-      "Change Streams Syntax",
-      "Real-time Data Processing"
-    ]
-  },
-  "13_replication": {
-    "concepts": [
-      "What is Replication",
+    "replication": [
       "Replica Set Architecture",
-      "High Availability",
-      "Data Redundancy"
-    ],
-    "replica_set_components": [
-      "Primary Node",
-      "Secondary Node",
-      "Arbiter Node",
-      "Voting Nodes"
-    ],
-    "operations": [
-      "Replica Set Setup",
+      "Primary, Secondary, Arbiter Nodes",
       "Election Process",
       "Failover Mechanism",
       "Oplog (Operations Log)",
-      "Minimum Nodes for Replication",
       "Read Preferences",
-      "Write Concerns in Replication"
+      "Write Concerns"
     ],
-    "maintenance": [
-      "Adding/Removing Nodes",
-      "Replica Set Reconfiguration",
-      "Data Sync Process",
-      "Rollback Prevention"
-    ]
-  },
-  "14_sharding": {
-    "concepts": [
-      "What is Sharding",
-      "Why Sharding is Used",
-      "Horizontal Scalability",
-      "Sharding Architecture"
-    ],
-    "components": [
-      "Shard (Data node)",
-      "Config Server",
-      "Mongos (Query Router)",
-      "Shard Key"
-    ],
-    "shard_key_strategies": [
-      "Hashed Shard Key",
-      "Ranged Shard Key",
-      "Compound Shard Key",
-      "Shard Key Selection Criteria"
-    ],
-    "operations": [
-      "Sharded Cluster Setup",
-      "Adding/Removing Shards",
+    "sharding": [
+      "Sharded Cluster Architecture",
+      "Shard Key Selection",
       "Chunk Management",
       "Balancing Process",
-      "What Happens if Shard Goes Down"
-    ],
-    "comparisons": [
-      "Sharding vs Replication",
-      "Sharding vs GridFS"
+      "Sharding vs Replication"
     ]
   },
-  "15_backup_recovery": {
-    "backup_tools": [
-      "Mongodump (Logical backup)",
-      "Mongorestore (Restore backup)",
-      "Mongoimport (Import data)",
-      "Mongoexport (Export data)",
-      "File System Snapshots"
-    ],
-    "strategies": [
-      "Backup Strategies",
-      "Point-in-Time Recovery",
-      "Disaster Recovery",
-      "Backup Scheduling"
-    ],
-    "monitoring_tools": [
-      "Mongotop (Database activity)",
-      "Mongostat (Database statistics)",
-      "Database Profiler",
-      "Performance Monitoring"
-    ]
-  },
-  "16_special_features": {
-    "storage": [
-      "GridFS (Large file storage)",
-      "GridFS Architecture",
-      "GridFS Use Cases"
-    ],
-    "search_capabilities": [
-      "Full-Text Search",
-      "Geospatial Queries",
-      "Geospatial Index Types",
-      "Location-based Queries"
-    ],
-    "advanced_features": [
-      "Views (Read-only collections)",
-      "Materialized Views",
-      "AllowDiskUse Option",
-      "Triggers (Atlas Triggers)",
-      "MongoDB Utilities Overview"
-    ]
-  },
-  "17_mongoose_odm": {
-    "concepts": [
-      "ODM vs ORM",
-      "What is Mongoose",
-      "Mongoose Features"
-    ],
-    "schema_model": [
-      "Schema Definition",
-      "Schema Types",
-      "Model Creation",
-      "Schema Validation",
-      "Schema Middleware"
-    ],
-    "operations": [
-      "CRUD with Mongoose",
-      "Population (Joins)",
-      "Virtual Properties",
-      "Query Building",
-      "Middleware (Hooks)",
-      "Instance Methods",
-      "Static Methods"
-    ],
-    "advanced": [
-      "Discriminators",
-      "Plugins",
-      "Connection Pooling",
-      "Error Handling"
-    ]
-  },
-  "18_performance_optimization": {
-    "query_optimization": [
-      "Query Performance Analysis",
-      "Explain Plan Interpretation",
-      "Index Optimization",
-      "Query Pattern Optimization"
-    ],
-    "connection_management": [
-      "Connection Pooling",
-      "Connection String Options",
-      "Timeout Settings",
-      "Retry Logic"
+
+  "11_backup_monitoring_and_special_features": {
+    "backup_recovery": [
+      "Mongodump",
+      "Mongorestore",
+      "Mongoimport",
+      "Mongoexport",
+      "Point-in-Time Recovery"
     ],
     "monitoring": [
+      "Mongotop",
+      "Mongostat",
       "Database Profiler",
-      "Slow Query Logging",
-      "Performance Monitoring",
-      "Health Checks"
+      "Slow Query Logging"
+    ],
+    "special_features": [
+      "GridFS",
+      "Views",
+      "Materialized Views",
+      "Full-Text Search",
+      "Geospatial Queries",
+      "Change Streams",
+      "Atlas Triggers"
     ]
   },
-  "19_practical_workouts": {
-    "basic_operations": [
-      "Create Database and Collections",
-      "Insert Sample Data",
-      "Basic CRUD Operations",
-      "Query with Conditions"
+
+  "12_application_integration_and_production_practices": {
+    "mongoose_odm": [
+      "Schema Definition",
+      "Model Creation",
+      "CRUD with Mongoose",
+      "Population",
+      "Middleware (Hooks)",
+      "Discriminators",
+      "Plugins",
+      "Connection Pooling"
     ],
-    "intermediate_queries": [
-      "Aggregation Pipeline Examples",
-      "Join Operations",
-      "Array Operations",
-      "Update Operations with Conditions"
+    "performance_optimization": [
+      "Query Pattern Optimization",
+      "Index Optimization",
+      "Connection Management",
+      "Retry Logic"
     ],
-    "advanced_scenarios": [
-      "Pagination Implementation",
-      "Data Migration Scripts",
-      "Bulk Operations",
-      "Transaction Implementation"
-    ],
-    "real_world_problems": [
-      "E-commerce Product Catalog",
-      "User Management System",
-      "Logging and Analytics",
-      "Social Media Features"
-    ]
-  },
-  "20_best_practices": {
-    "development": [
-      "Naming Conventions",
-      "Schema Design Best Practices",
-      "Indexing Strategy",
-      "Connection Management"
-    ],
-    "deployment": [
-      "Security Configuration",
-      "Backup Strategy",
-      "Monitoring Setup",
-      "Performance Tuning"
-    ],
-    "security": [
+    "security_and_best_practices": [
       "Authentication Setup",
       "Authorization (RBAC)",
-      "Network Security",
-      "Data Encryption"
+      "Data Encryption",
+      "Backup Strategy",
+      "Monitoring Setup"
     ]
   }
+
 };
+
 
 const categorizeDifficulty = (name, parentName) => {
   const lowerName = name.toLowerCase() + ' ' + parentName.toLowerCase();

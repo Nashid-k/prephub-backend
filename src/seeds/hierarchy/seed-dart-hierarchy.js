@@ -7,7 +7,8 @@ import Section from '../../models/Section.js';
 dotenv.config();
 
 const dartHierarchy = {
-  "Language Fundamentals": {
+
+  "01_language_foundations": {
     "Overview": [
       "What is Dart?",
       "Advantages of Dart",
@@ -22,7 +23,8 @@ const dartHierarchy = {
       "Core Libraries in Dart"
     ]
   },
-  "Variables & Data Types": {
+
+  "02_variables_and_type_system": {
     "Basic Types": [
       "int, double, num",
       "String",
@@ -44,7 +46,8 @@ const dartHierarchy = {
       "final + late Behavior"
     ]
   },
-  "Operators & Expressions": {
+
+  "03_operators_and_expressions": {
     "Arithmetic": [
       "Basic Operators (+, -, *, /)",
       "Modulo (%) and Integer Division (~/)"
@@ -74,7 +77,8 @@ const dartHierarchy = {
       "Bitwise Operators (&, |, ^, ~, <<, >>)"
     ]
   },
-  "Control Flow": {
+
+  "04_control_flow": {
     "Decision Making": [
       "if-else statements",
       "switch-case",
@@ -90,7 +94,8 @@ const dartHierarchy = {
       "break, continue, return"
     ]
   },
-  "Functions": {
+
+  "05_functions": {
     "Function Basics": [
       "Function Declaration",
       "Parameters and Arguments",
@@ -117,7 +122,8 @@ const dartHierarchy = {
       "Function Type Aliases (typedef)"
     ]
   },
-  "Collections": {
+
+  "06_collections_and_strings": {
     "Lists": [
       "List Basics",
       "Fixed-length vs Growable List",
@@ -144,9 +150,7 @@ const dartHierarchy = {
       "forEach(), map(), where()",
       "reduce() and fold()",
       "map() vs forEach()"
-    ]
-  },
-  "String Manipulation": {
+    ],
     "String Basics": [
       "String Literals",
       "Multi-line Strings",
@@ -163,7 +167,8 @@ const dartHierarchy = {
       "Common Escape Characters"
     ]
   },
-  "Object-Oriented Programming": {
+
+  "07_object_oriented_programming": {
     "OOP Concepts": [
       "Four Pillars of OOP",
       "Class and Object",
@@ -208,7 +213,8 @@ const dartHierarchy = {
       "Immutable Classes"
     ]
   },
-  "Exception Handling": {
+
+  "08_exception_handling_and_safety": {
     "Exception Types": [
       "Exception vs Error",
       "Built-in Exceptions",
@@ -226,7 +232,8 @@ const dartHierarchy = {
       "assert Keyword"
     ]
   },
-  "Asynchronous Programming": {
+
+  "09_async_programming": {
     "Futures": [
       "Future Basics",
       "async and await",
@@ -246,7 +253,8 @@ const dartHierarchy = {
       "return vs yield"
     ]
   },
-  "Concurrency": {
+
+  "10_concurrency_and_isolation": {
     "Isolates": [
       "Isolates vs Threads",
       "Creating Isolates",
@@ -260,7 +268,8 @@ const dartHierarchy = {
       "Error Handling in Zones"
     ]
   },
-  "Advanced Features": {
+
+  "11_advanced_language_features": {
     "Generics": [
       "Generic Types",
       "Generic Classes and Methods",
@@ -281,7 +290,8 @@ const dartHierarchy = {
       "Creating Immutable Classes"
     ]
   },
-  "File I/O": {
+
+  "12_io_and_filesystem": {
     "File Operations": [
       "Reading Files",
       "Writing Files",
@@ -293,7 +303,8 @@ const dartHierarchy = {
       "Deleting Directories"
     ]
   },
-  "Practical Applications": {
+
+  "13_practical_applications": {
     "Data Structures": [
       "Linked Lists",
       "Trees and Graphs",
@@ -310,7 +321,9 @@ const dartHierarchy = {
       "Mathematical Operations"
     ]
   }
+
 };
+
 
 const seedDartHierarchy = async () => {
   try {

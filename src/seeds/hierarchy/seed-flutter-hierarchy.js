@@ -1,65 +1,60 @@
 
 const flutterCurriculum = {
-  "Flutter_Fundamentals": {
-    "01_flutter_basics": {
-      "core_concepts": [
-        "What is Flutter - Cross-Platform Framework",
-        "Flutter Architecture Layers",
-        "Dart Language Overview",
-        "Hot Reload vs Hot Restart"
-      ],
-      "development_setup": [
-        "Flutter SDK Installation",
-        "IDE Setup (VS Code/Android Studio)",
-        "Flutter Doctor Commands",
-        "Creating First Flutter Project"
-      ]
-    },
 
-    "02_project_structure": {
-      "key_files": [
-        "pubspec.yaml - Dependencies & Configuration",
-        "main.dart - Application Entry Point",
-        "MaterialApp/CupertinoApp Setup",
-        "Project Folder Organization"
-      ],
-      "build_modes": [
-        "Debug Mode (Hot Reload)",
-        "Release Mode (Optimized Build)",
-        "Profile Mode (Performance Testing)"
-      ]
-    }
+  "01_flutter_and_dart_foundations": {
+    "core_concepts": [
+      "What is Flutter - Cross-Platform Framework",
+      "Flutter Architecture Layers",
+      "Dart Language Overview",
+      "Hot Reload vs Hot Restart"
+    ],
+    "development_setup": [
+      "Flutter SDK Installation",
+      "IDE Setup (VS Code/Android Studio)",
+      "Flutter Doctor Commands",
+      "Creating First Flutter Project"
+    ]
   },
 
-  "Dart_Essentials": {
+  "02_project_structure_and_build_modes": {
+    "key_files": [
+      "pubspec.yaml - Dependencies & Configuration",
+      "main.dart - Application Entry Point",
+      "MaterialApp/CupertinoApp Setup",
+      "Project Folder Organization"
+    ],
+    "build_modes": [
+      "Debug Mode (Hot Reload)",
+      "Release Mode (Optimized Build)",
+      "Profile Mode (Performance Testing)"
+    ]
+  },
+
+  "03_dart_language_essentials": {
     "01_basic_syntax": [
       "Variables (var, final, const)",
       "Data Types (String, int, double, bool)",
       "Null Safety & Null Aware Operators",
       "String Interpolation"
     ],
-
     "02_control_flow": [
       "if-else Conditions",
       "for, while, do-while Loops",
       "switch-case Statements",
       "Ternary Operator"
     ],
-
     "03_functions": [
       "Function Declaration & Calling",
       "Named & Optional Parameters",
       "Arrow Functions",
       "Higher-Order Functions"
     ],
-
     "04_collections": [
       "Lists (Fixed & Growable)",
       "Maps (Key-Value Pairs)",
       "Sets (Unique Values)",
       "Collection Methods (map, where, forEach)"
     ],
-
     "05_oop_dart": [
       "Classes & Objects",
       "Constructors (Default, Named)",
@@ -67,7 +62,6 @@ const flutterCurriculum = {
       "Mixins (with)",
       "Abstract Classes"
     ],
-
     "06_async_programming": [
       "Futures & async/await",
       "Error Handling (try-catch)",
@@ -76,50 +70,46 @@ const flutterCurriculum = {
     ]
   },
 
-  "Widgets_UI": {
+  "04_flutter_widget_system": {
     "01_widget_basics": [
       "Everything is a Widget",
       "Stateless vs Stateful Widgets",
       "Widget Tree & Composition",
       "BuildContext Understanding"
     ],
-
-    "02_layout_widgets": {
-      "single_child": [
-        "Container (Padding, Margin, Decoration)",
-        "SizedBox (Fixed Dimensions)",
-        "Padding Widget",
-        "Align & Center"
-      ],
-      "multi_child": [
-        "Column & Row (Main/Cross Axis Alignment)",
-        "Stack & Positioned",
-        "Expanded & Flexible",
-        "ListView & GridView"
-      ]
-    },
-
     "03_basic_widgets": [
       "Text & RichText",
       "Image (Asset, Network)",
       "Icon & IconButton",
       "Card & Divider"
     ],
-
     "04_input_widgets": [
       "TextField & TextFormField",
       "Buttons (ElevatedButton, TextButton)",
       "Checkbox, Radio, Switch",
       "DropdownButton"
-    ],
+    ]
+  },
 
+  "05_layout_scrolling_and_responsiveness": {
+    "single_child": [
+      "Container (Padding, Margin, Decoration)",
+      "SizedBox (Fixed Dimensions)",
+      "Padding Widget",
+      "Align & Center"
+    ],
+    "multi_child": [
+      "Column & Row (Main/Cross Axis Alignment)",
+      "Stack & Positioned",
+      "Expanded & Flexible",
+      "ListView & GridView"
+    ],
     "05_scrolling": [
       "SingleChildScrollView",
       "ListView.builder (Performance)",
       "CustomScrollView",
       "ScrollController Basics"
     ],
-
     "06_responsive_design": [
       "MediaQuery for Screen Info",
       "LayoutBuilder for Adaptive Layouts",
@@ -128,52 +118,49 @@ const flutterCurriculum = {
     ]
   },
 
-  "State_Management": {
+  "06_state_management_fundamentals": {
     "01_state_concepts": [
       "Ephemeral vs App State",
       "StatefulWidget Lifecycle",
       "setState() Method",
       "When to Lift State Up"
     ],
-
     "02_basic_state_management": [
       "Provider Package Setup",
       "ChangeNotifier & ChangeNotifierProvider",
       "Consumer Widget",
       "context.read() vs context.watch()"
-    ],
-
-    "03_advanced_state_management": {
-      "bloc_pattern": [
-        "BLoC Architecture (Events, States)",
-        "Cubit (Simpler BLoC)",
-        "BlocProvider & BlocBuilder",
-        "State Management Best Practices"
-      ],
-      "getx_pattern": [
-        "GetX Controller & .obs",
-        "Obx & GetBuilder",
-        "GetX Dependency Management",
-        "GetX Navigation"
-      ]
-    }
+    ]
   },
 
-  "Navigation_Routing": {
+  "07_advanced_state_management": {
+    "bloc_pattern": [
+      "BLoC Architecture (Events, States)",
+      "Cubit (Simpler BLoC)",
+      "BlocProvider & BlocBuilder",
+      "State Management Best Practices"
+    ],
+    "getx_pattern": [
+      "GetX Controller & .obs",
+      "Obx & GetBuilder",
+      "GetX Dependency Management",
+      "GetX Navigation"
+    ]
+  },
+
+  "08_navigation_and_user_feedback": {
     "01_basic_navigation": [
       "Navigator.push() & pop()",
       "Named Routes Setup",
       "Passing Data Between Screens",
       "Returning Data from Screens"
     ],
-
     "02_advanced_navigation": [
       "GoRouter Package",
       "Nested Navigation",
       "Route Guards & Middleware",
       "Deep Linking"
     ],
-
     "03_dialogs_snackbars": [
       "AlertDialog & SimpleDialog",
       "ModalBottomSheet",
@@ -182,21 +169,19 @@ const flutterCurriculum = {
     ]
   },
 
-  "Networking_API": {
+  "09_networking_and_remote_data": {
     "01_http_requests": [
       "http Package Setup",
       "GET, POST Requests",
       "Request Headers & Parameters",
       "Error Handling"
     ],
-
     "02_data_parsing": [
       "JSON Serialization/Deserialization",
       "Model Classes with fromJson/toJson",
       "json_serializable Package",
       "Handling API Responses"
     ],
-
     "03_state_management_integration": [
       "Loading & Error States UI",
       "Pull-to-Refresh Implementation",
@@ -205,20 +190,18 @@ const flutterCurriculum = {
     ]
   },
 
-  "Local_Storage": {
+  "10_local_storage_and_files": {
     "01_key_value_storage": [
       "Shared Preferences Package",
       "Reading/Writing Simple Data",
       "Secure Storage Options"
     ],
-
     "02_database_storage": [
       "SQLite with sqflite",
       "NoSQL with Hive",
       "Database Models & CRUD",
       "Migrations"
     ],
-
     "03_file_storage": [
       "File Picking (file_picker)",
       "Reading/Writing Files",
@@ -227,20 +210,18 @@ const flutterCurriculum = {
     ]
   },
 
-  "Platform_Integration": {
+  "11_platform_and_native_integration": {
     "01_native_features": [
       "Camera/Gallery Access (image_picker)",
       "Local Notifications",
       "Location Services",
       "Sensors Usage"
     ],
-
     "02_packages_plugins": [
       "Finding & Evaluating Packages",
       "Popular Package Categories",
       "Native Plugin Communication Basics"
     ],
-
     "03_platform_ui": [
       "Material vs Cupertino Widgets",
       "Adaptive Apps",
@@ -248,14 +229,13 @@ const flutterCurriculum = {
     ]
   },
 
-  "Forms_Validation": {
+  "12_forms_and_validation": {
     "form_handling": [
       "Form & FormField Widgets",
       "TextFormField Validation",
       "FormKey & GlobalKey",
       "Form Submission Handling"
     ],
-
     "validation_patterns": [
       "Built-in Validators",
       "Custom Validators",
@@ -264,14 +244,13 @@ const flutterCurriculum = {
     ]
   },
 
-  "Animations": {
+  "13_animations_and_motion": {
     "basic_animations": [
       "Implicit Animations (AnimatedContainer)",
       "Explicit Animations (AnimationController)",
       "Tween Animations",
       "Hero Animations"
     ],
-
     "advanced_animations": [
       "Custom Painter",
       "Physics-based Animations",
@@ -280,14 +259,13 @@ const flutterCurriculum = {
     ]
   },
 
-  "Testing": {
+  "14_testing_and_quality": {
     "testing_types": [
       "Unit Testing (Business Logic)",
       "Widget Testing (UI Components)",
       "Integration Testing (Full Flows)",
       "Golden Tests (Snapshot Testing)"
     ],
-
     "testing_tools": [
       "test & flutter_test Packages",
       "Mocking Dependencies",
@@ -296,14 +274,13 @@ const flutterCurriculum = {
     ]
   },
 
-  "Performance_Optimization": {
+  "15_performance_and_debugging": {
     "performance_tips": [
       "const Constructors Usage",
       "Keys in Flutter",
       "ListView.builder for Large Lists",
       "Image Optimization"
     ],
-
     "debugging_tools": [
       "Flutter Inspector",
       "Performance Overlay",
@@ -312,21 +289,19 @@ const flutterCurriculum = {
     ]
   },
 
-  "Deployment": {
+  "16_deployment_and_ci_cd": {
     "01_app_builds": [
       "Android APK/AAB Generation",
       "iOS IPA Generation",
       "Code Signing Setup",
       "App Icons & Splash Screens"
     ],
-
     "02_app_store_deployment": [
       "Google Play Store Submission",
       "Apple App Store Submission",
       "App Metadata & Screenshots",
       "Release Management"
     ],
-
     "03_continuous_integration": [
       "GitHub Actions Setup",
       "Automated Testing Pipeline",
@@ -335,14 +310,13 @@ const flutterCurriculum = {
     ]
   },
 
-  "Project_Architecture": {
+  "17_project_architecture_and_best_practices": {
     "common_patterns": [
       "Repository Pattern",
       "Service Layer",
       "Feature-based Organization",
       "Clean Architecture Basics"
     ],
-
     "best_practices": [
       "Separation of Concerns",
       "Dependency Injection",
@@ -351,24 +325,20 @@ const flutterCurriculum = {
     ]
   },
 
-  "Essential_Projects": {
+  "18_projects_and_interview_preparation": {
     "learning_projects": [
       "Todo List App (CRUD, Local Storage)",
       "Weather App (API Integration, State Management)",
       "E-commerce App (Complex UI, Cart Management)",
       "Chat App (Real-time Features, Authentication)"
     ],
-
     "must_know_features": [
       "Authentication Flow",
       "REST API Integration",
       "Local Database Usage",
       "File Upload/Download",
       "Push Notifications"
-    ]
-  },
-
-  "Interview_Preparation": {
+    ],
     "common_concepts": [
       "Widget Lifecycle",
       "State Management Choices",
@@ -376,7 +346,6 @@ const flutterCurriculum = {
       "Navigation Patterns",
       "Error Handling Strategies"
     ],
-
     "practical_skills": [
       "Build a Simple App from Scratch",
       "Debug Common Issues",
@@ -385,6 +354,8 @@ const flutterCurriculum = {
       "Integrate Third-party APIs"
     ]
   }
+
 };
+
 
 export { flutterCurriculum };

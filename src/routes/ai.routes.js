@@ -15,5 +15,6 @@ router.post('/ask', validateAIRequest, aiController.askQuestion);
 router.post('/quiz', validateAIRequest, aiController.generateQuiz);
 router.post('/structure-path', validateAIRequest, aiController.structurePath);
 router.post('/translate-code', validateAIRequest, aiController.translateCode);
+router.post('/analyze', validateAIRequest, aiController.analyzeCode);
 
 export default router;

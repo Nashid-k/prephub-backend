@@ -1,0 +1,217 @@
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+Connected to MongoDB
+
+Processing Topic: HTML & CSS Combined (47 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 46 categories.
+
+Processing Topic: Git & GitHub (14 categories)
+Groq failed, trying next...
+✅ Classified using Groq
+Applying classifications...
+Updated 14 categories.
+
+Processing Topic: JavaScript (26 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 25 categories.
+
+Processing Topic: TypeScript (34 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 30 categories.
+
+Processing Topic: Python (18 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 18 categories.
+
+Processing Topic: React (74 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 73 categories.
+
+Processing Topic: Node.js (78 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 78 categories.
+
+Processing Topic: Express (62 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 62 categories.
+
+Processing Topic: MongoDB (73 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 71 categories.
+
+Processing Topic: Next.js (52 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 52 categories.
+
+Processing Topic: Angular (51 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 50 categories.
+
+Processing Topic: C (50 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 49 categories.
+
+Processing Topic: C# (85 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 85 categories.
+
+Processing Topic: Java (15 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 15 categories.
+
+Processing Topic: Golang (54 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 54 categories.
+
+Processing Topic: Dart (52 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 52 categories.
+
+Processing Topic: Flutter (41 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 41 categories.
+
+Processing Topic: Django (44 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 44 categories.
+
+Processing Topic: PostgreSQL (17 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 17 categories.
+
+Processing Topic: Data Structures & Algorithms (53 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 53 categories.
+
+Processing Topic: Machine Learning (9 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 8 categories.
+
+Processing Topic: Data Analyst (5 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 5 categories.
+
+Processing Topic: .NET Development (5 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 5 categories.
+
+Processing Topic: AWS Cloud (17 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 16 categories.
+
+Processing Topic: Algorithms (23 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 23 categories.
+
+Processing Topic: Data Structures (19 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 19 categories.
+
+Processing Topic: Blind 75 (14 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 14 categories.
+
+Processing Topic: System Design (55 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 55 categories.
+
+Processing Topic: C Programming (76 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 76 categories.
+
+Processing Topic: Distributed Systems (5 categories)
+Groq failed, trying next...
+Groq failed, trying next...
+Groq failed, trying next...
+Groq failed, trying next...
+Gemini failed, trying next...
+Gemini failed, trying next...
+❌ Failed to classify categories for Distributed Systems
+
+Processing Topic: API Design (12 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 12 categories.
+
+Processing Topic: Caching & Performance (13 categories)
+Groq failed, trying next...
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Code Quality (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Concurrency & Async (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Networking (45 categories)
+Groq failed, trying next...
+✅ Classified using Groq
+Applying classifications...
+Updated 44 categories.
+
+Processing Topic: Operating Systems (50 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 49 categories.
+
+Processing Topic: Reliability & Observability (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Security Engineering (13 categories)
+Groq failed, trying next...
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: DevOps Basics (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Product Thinking (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+Processing Topic: Testing Strategy (13 categories)
+✅ Classified using Groq
+Applying classifications...
+Updated 13 categories.
+
+✨ Classification Complete!

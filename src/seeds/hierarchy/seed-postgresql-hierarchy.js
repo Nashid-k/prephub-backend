@@ -1,139 +1,282 @@
 
 const postgresqlCurriculum = {
-  "Database_Foundations": {
-    "intro_setup": [
+
+  "00_relational_thinking_and_database_primitives": {
+    "why_databases_exist": [
+      "What Problems Databases Solve",
+      "File Systems vs Databases",
+      "Why Consistency and Concurrency Matter"
+    ],
+    "database_models": [
       "Relational Model vs NoSQL",
       "DBMS vs RDBMS",
-      "SQL vs PostgreSQL vs MySQL",
-      "PostgreSQL Architecture (Process, Memory)",
-      "3-Schema Architecture (Internal, Conceptual, External)",
-      "Installation (postgresql.conf, pg_hba.conf)",
-      "pgAdmin and psql CLI"
+      "SQL as a Declarative Language",
+      "PostgreSQL vs MySQL vs Commercial Databases"
+    ]
+  },
+
+  "01_postgresql_system_architecture": {
+    "architecture_overview": [
+      "PostgreSQL Architecture (Processes, Memory)",
+      "Client–Server Model",
+      "Backend Processes vs Background Workers",
+      "Shared Buffers and Work Memory"
     ],
-    "sql_language_types": [
+    "logical_architecture": [
+      "3-Schema Architecture (Internal, Conceptual, External)",
+      "Schemas and Namespaces",
+      "Databases vs Clusters"
+    ],
+    "installation_and_tools": [
+      "PostgreSQL Installation",
+      "postgresql.conf",
+      "pg_hba.conf",
+      "psql CLI",
+      "pgAdmin"
+    ]
+  },
+
+  "02_sql_language_and_data_definition": {
+    "sql_categories": [
       "DDL (CREATE, ALTER, DROP, TRUNCATE)",
       "DML (INSERT, UPDATE, DELETE, MERGE)",
       "DQL (SELECT, WHERE, LIMIT)",
       "DCL (GRANT, REVOKE)",
       "TCL (COMMIT, ROLLBACK, SAVEPOINT)"
     ],
-    "data_types_constraints": [
-      "Character types (CHAR, VARCHAR, TEXT)",
-      "Numeric (INT, SERIAL, BIGSERIAL, DECIMAL)",
-      "JSON vs JSONB",
+    "data_types": [
+      "Character Types (CHAR, VARCHAR, TEXT)",
+      "Numeric Types (INT, BIGINT, DECIMAL, SERIAL, BIGSERIAL)",
+      "Boolean and Date/Time Types",
       "UUID and Arrays",
-      "Constraints (PK, FK, UNIQUE, CHECK, NOT NULL)",
+      "JSON vs JSONB (Storage & Performance)"
+    ],
+    "constraints_and_keys": [
+      "Primary Keys",
+      "Foreign Keys",
+      "Unique Constraints",
+      "CHECK Constraints",
+      "NOT NULL",
       "Surrogate vs Natural Keys"
     ]
   },
-  "Query_Mastery": {
-    "basic_queries": [
-      "SELECT with DISTINCT, LIMIT, OFFSET",
-      "Filtering (WHERE, BETWEEN, IN, LIKE, ILIKE)",
-      "NULL Handling (IS NULL, COALESCE)",
-      "Sorting (ORDER BY ASC/DESC NULLS FIRST/LAST)",
-      "String Functions (CONCAT, SUBSTRING, POSITION)"
+
+  "03_basic_querying_and_data_retrieval": {
+    "row_selection": [
+      "SELECT Basics",
+      "DISTINCT",
+      "LIMIT and OFFSET",
+      "Filtering with WHERE",
+      "BETWEEN, IN, LIKE, ILIKE"
     ],
-    "joins_and_unions": [
-      "INNER JOIN vs OUTER JOINS (LEFT, RIGHT, FULL)",
-      "CROSS JOIN and SELF JOIN",
-      "Set Operations (UNION, UNION ALL, INTERSECT, EXCEPT)",
-      "Joins vs Subqueries Performance"
+    "null_and_sorting": [
+      "NULL Semantics",
+      "IS NULL / IS NOT NULL",
+      "COALESCE",
+      "ORDER BY ASC/DESC",
+      "NULLS FIRST / NULLS LAST"
     ],
-    "aggregation_grouping": [
-      "Aggregate Functions (COUNT, SUM, AVG, MIN, MAX)",
-      "GROUP BY and HAVING Clause",
-      "Group vs Window Functions",
-      "GROUP_CONCAT equivalent (STRING_AGG)"
+    "string_operations": [
+      "CONCAT",
+      "SUBSTRING",
+      "POSITION",
+      "String Formatting"
     ]
   },
-  "Advanced_SQL": {
-    "advanced_features": [
-      "Subqueries (Correlated vs Nested)",
-      "CTEs (Common Table Expressions)",
-      "Recursive CTEs (Hierarchical Data)",
-      "Window Functions (RANK, DENSE_RANK, ROW_NUMBER, LEAD/LAG)",
-      "CASE WHEN Statements",
-      "Views vs Materialized Views"
+
+  "04_relational_joins_and_set_logic": {
+    "joins": [
+      "INNER JOIN",
+      "LEFT JOIN",
+      "RIGHT JOIN",
+      "FULL OUTER JOIN",
+      "CROSS JOIN",
+      "SELF JOIN"
     ],
-    "advanced_types": [
-      "Hstore (Key-Value)",
-      "Geometric Types (PostGIS Intro)",
-      "Range Types (TSTZRANGE, DATERANGE)",
-      "Enumerated Types (ENUM)",
-      "Network Address Types (CIDR, INET)"
+    "set_operations": [
+      "UNION",
+      "UNION ALL",
+      "INTERSECT",
+      "EXCEPT"
+    ],
+    "performance_considerations": [
+      "Joins vs Subqueries",
+      "Join Cardinality Effects"
     ]
   },
-  "Data_Design_Performance": {
-    "normalization_modeling": [
-      "ER Diagrams (Entities, Relationships)",
+
+  "05_aggregation_and_analytical_queries": {
+    "grouping": [
+      "COUNT, SUM, AVG, MIN, MAX",
+      "GROUP BY",
+      "HAVING",
+      "STRING_AGG"
+    ],
+    "window_functions": [
+      "ROW_NUMBER",
+      "RANK",
+      "DENSE_RANK",
+      "LEAD / LAG",
+      "Group Aggregates vs Window Functions"
+    ]
+  },
+
+  "06_advanced_sql_constructs": {
+    "subqueries_and_ctes": [
+      "Nested Subqueries",
+      "Correlated Subqueries",
+      "Common Table Expressions (CTEs)",
+      "Recursive CTEs (Hierarchies)"
+    ],
+    "conditional_logic": [
+      "CASE WHEN Expressions"
+    ],
+    "views": [
+      "Views",
+      "Materialized Views",
+      "Refresh Strategies"
+    ]
+  },
+
+  "07_data_modeling_and_integrity": {
+    "schema_design": [
+      "Entity–Relationship Modeling",
       "Normalization (1NF, 2NF, 3NF, BCNF)",
-      "Denormalization Strategies",
+      "Denormalization Trade-offs"
+    ],
+    "consistency": [
       "ACID Properties Deep Dive",
-      "Data Integrity & Foreign Keys"
-    ],
-    "performance_tuning": [
-      "Explain and Explain Analyze",
-      "Index Types (B-Tree, Hash, GIN, GiST, BRIN)",
-      "Partial and Expression Indexes",
-      "Query Planner Statistics",
-      "Vacuuming (AutoVacuum) & WAL"
-    ],
-    "concurrency_locking": [
-      "Transaction Isolation Levels",
-      "MVCC (Multi-Version Concurrency Control)",
-      "Locks (Row vs Table, Deadlocks)",
-      "Pessimistic vs Optimistic Locking"
+      "Referential Integrity",
+      "Cascading Actions"
     ]
   },
-  "Server_Side_Logic": {
-    "procedural_sql": [
-      "PL/pgSQL Functions",
-      "Stored Procedures (Transaction Control)",
-      "Triggers (BEFORE, AFTER, INSTEAD OF)",
-      "Cursor Management",
-      "User-Defined Functions (UDFs)"
+
+  "08_query_planning_and_performance_engine": {
+    "query_execution": [
+      "Query Parsing",
+      "Planner vs Executor",
+      "Cost-Based Optimization"
     ],
-    "security_admin": [
-      "Roles and Privileges (RBAC)",
-      "Row-Level Security (RLS)",
+    "explain_tools": [
+      "EXPLAIN",
+      "EXPLAIN ANALYZE",
+      "Interpreting Execution Plans"
+    ],
+    "indexes": [
+      "B-Tree Index",
+      "Hash Index",
+      "GIN Index",
+      "GiST Index",
+      "BRIN Index",
+      "Partial Indexes",
+      "Expression Indexes"
+    ]
+  },
+
+  "09_storage_engine_and_concurrency": {
+    "mvcc_and_transactions": [
+      "MVCC (Multi-Version Concurrency Control)",
+      "Transaction Isolation Levels",
+      "Snapshot Visibility"
+    ],
+    "locking": [
+      "Row-Level Locks",
+      "Table-Level Locks",
+      "Deadlocks",
+      "Optimistic vs Pessimistic Locking"
+    ],
+    "write_path": [
+      "Write-Ahead Logging (WAL)",
+      "Checkpoints",
+      "Crash Recovery"
+    ],
+    "maintenance": [
+      "VACUUM",
+      "AutoVacuum",
+      "Table Bloat"
+    ]
+  },
+
+  "10_server_side_programming": {
+    "procedural_language": [
+      "PL/pgSQL Functions",
+      "Stored Procedures",
+      "Transaction Control in Procedures",
+      "Cursors"
+    ],
+    "triggers_and_hooks": [
+      "BEFORE Triggers",
+      "AFTER Triggers",
+      "INSTEAD OF Triggers"
+    ]
+  },
+
+  "11_security_and_administration": {
+    "access_control": [
+      "Roles and Privileges",
+      "Role-Based Access Control (RBAC)",
+      "Row-Level Security (RLS)"
+    ],
+    "security_practices": [
       "SQL Injection Prevention",
-      "Backup & Restore (pg_dump, pg_restore)",
+      "Least Privilege Principle"
+    ],
+    "backup_and_recovery": [
+      "pg_dump",
+      "pg_restore",
       "Point-in-Time Recovery (PITR)"
     ]
   },
-  "Scaling_Architecture": {
-    "scaling_strategies": [
-      "Connection Pooling (PgBouncer)",
-      "Table Partitioning (Range, List, Hash)",
-      "Replication (Streaming vs Logical)",
-      "Sharding Concepts (Citus)",
-      "High Availability (Patroni)"
+
+  "12_scaling_high_availability_and_distribution": {
+    "connection_management": [
+      "Connection Pooling",
+      "PgBouncer"
+    ],
+    "partitioning": [
+      "Range Partitioning",
+      "List Partitioning",
+      "Hash Partitioning"
+    ],
+    "replication": [
+      "Streaming Replication",
+      "Logical Replication"
+    ],
+    "horizontal_scaling": [
+      "Sharding Concepts",
+      "Citus"
+    ],
+    "availability": [
+      "Failover",
+      "Patroni"
     ]
   },
-  "Practical_Workout_Queries": {
+
+  "13_practical_query_mastery": {
     "salary_analytics": [
-      "Find Nth highest salary",
-      "Department with highest average salary",
-      "Employees earning > manager",
-      "Department with no employees",
-      "Cumulative salary sum by department"
+      "Nth Highest Salary",
+      "Department with Highest Average Salary",
+      "Employees Earning More Than Manager",
+      "Departments With No Employees",
+      "Cumulative Salary by Department"
     ],
     "data_cleaning": [
-      "Find duplicate records",
-      "Remove duplicates keeping one",
-      "Find missing sequence numbers",
-      "Parse and format dates",
-      "Pivot table operations (crosstab)"
+      "Finding Duplicate Records",
+      "Removing Duplicates Safely",
+      "Finding Missing Sequence Numbers",
+      "Date Parsing and Formatting",
+      "Pivot Tables (crosstab)"
     ],
-    "shopping_cart_scenarios": [
-      "Customers who never ordered",
-      "Product bought by most users",
-      "Monthly revenue report",
-      "Abandoned carts analysis",
-      "Recursive category tree"
+    "business_scenarios": [
+      "Customers Who Never Ordered",
+      "Most Purchased Product",
+      "Monthly Revenue Reports",
+      "Abandoned Cart Analysis",
+      "Recursive Category Trees"
     ]
   }
+
 };
+
 
 export { postgresqlCurriculum };

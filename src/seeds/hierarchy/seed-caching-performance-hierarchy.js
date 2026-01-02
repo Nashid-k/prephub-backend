@@ -1,24 +1,26 @@
 
 const cachingCurriculum = {
   "Caching_Performance": {
+
     "caching_fundamentals": {
       "cache_concepts": [
         "Cache hit vs miss ratios and their impact",
-        "Cache invalidation strategies (write-through, write-around, write-back)",
-        "Cache coherence and consistency models",
         "Time-to-live (TTL) and expiration policies",
+        "Cache invalidation strategies (write-through, write-around, write-back)",
         "Cache warming and pre-fetching techniques",
-        "Cache stampede and thundering herd problems"
+        "Cache stampede and thundering herd problems",
+        "Cache coherence and consistency models"
       ],
       "cache_types": [
         "CPU caches (L1, L2, L3) and their impact on algorithms",
         "Application-level caching (in-memory caches)",
-        "Distributed caching systems",
-        "CDN and edge caching",
+        "Browser and HTTP caching",
         "Database query result caching",
-        "Browser and HTTP caching"
+        "CDN and edge caching",
+        "Distributed caching systems"
       ]
     },
+
     "distributed_caching": {
       "cache_architectures": [
         "Cache-aside (lazy loading) pattern",
@@ -37,42 +39,45 @@ const cachingCurriculum = {
         "Cost-aware caching"
       ]
     },
+
     "performance_optimization": {
       "latency_optimization": [
         "Critical rendering path optimization",
-        "DNS pre-fetching and pre-connecting",
         "Resource hint headers (preload, prefetch, preconnect)",
+        "DNS pre-fetching and pre-connecting",
         "Lazy loading and code splitting",
-        "Image and media optimization techniques",
-        "Minification and compression strategies"
+        "Minification and compression strategies",
+        "Image and media optimization techniques"
       ],
       "throughput_optimization": [
         "Connection pooling and reuse",
         "Batch processing and bulk operations",
         "Pipelining and parallelization",
         "Load balancing strategies",
-        "Database connection management",
-        "Queue-based processing systems"
+        "Queue-based processing systems",
+        "Database connection management"
       ]
     },
+
     "memory_management": {
       "memory_optimization": [
         "Garbage collection tuning and algorithms",
         "Memory pooling and object reuse",
         "Memory fragmentation prevention",
+        "Memory profiling and leak detection",
         "Off-heap memory management",
-        "Memory-mapped files",
-        "Memory profiling and leak detection"
+        "Memory-mapped files"
       ],
       "cpu_optimization": [
         "CPU cache-aware programming",
         "Branch prediction optimization",
         "Vectorization and SIMD instructions",
-        "Lock-free and wait-free algorithms",
         "Thread pooling and scheduling",
+        "Lock-free and wait-free algorithms",
         "NUMA-aware programming"
       ]
     },
+
     "database_performance": {
       "query_optimization": [
         "Query execution plan analysis",
@@ -91,6 +96,7 @@ const cachingCurriculum = {
         "Storage tiering strategies"
       ]
     },
+
     "monitoring_profiling": {
       "performance_metrics": [
         "Application Performance Monitoring (APM) tools",
@@ -109,16 +115,18 @@ const cachingCurriculum = {
         "Performance budget management"
       ]
     },
+
     "faang_interview_focus": [
       "Design caching strategies for large-scale systems",
-      "Optimize database queries and indexing",
       "Handle cache invalidation in distributed systems",
       "Implement CDN and edge caching",
+      "Optimize database queries and indexing",
       "Monitor and troubleshoot performance bottlenecks",
       "Design for predictable latency and throughput"
     ]
   }
-}
+};
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

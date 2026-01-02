@@ -7,13 +7,30 @@ import Section from '../../models/Section.js';
 dotenv.config();
 
 const djangoHierarchy = {
-  "Django Fundamentals": {
+
+  "01_web_and_framework_foundations": {
+    "HTTP Basics": [
+      "HTTP vs HTTPS",
+      "Request-response cycle",
+      "HTTP headers",
+      "HTTP methods (GET, POST, PUT, DELETE)"
+    ],
+    "Status Codes": [
+      "Common status codes",
+      "200, 400, 401, 403, 404, 500",
+      "Custom status codes"
+    ],
     "Framework Basics": [
       "What is a Framework",
       "What is Django",
       "Pros and cons of Django",
       "MVT architecture",
-      "MVC vs MVT",
+      "MVC vs MVT"
+    ]
+  },
+
+  "02_project_setup_and_configuration": {
+    "Framework Basics": [
       "Django project structure",
       "Creating and managing apps"
     ],
@@ -25,7 +42,8 @@ const djangoHierarchy = {
       "Virtual environment setup"
     ]
   },
-  "Project Structure": {
+
+  "03_project_and_app_structure": {
     "Core Files": [
       "settings.py",
       "urls.py (URL routing)",
@@ -39,7 +57,8 @@ const djangoHierarchy = {
       "App-level URL configuration"
     ]
   },
-  "Models & ORM": {
+
+  "04_models_and_database": {
     "ORM Concepts": [
       "What is ORM",
       "Advantages of ORM over raw SQL",
@@ -60,9 +79,7 @@ const djangoHierarchy = {
     "Meta Class": [
       "Meta class in models",
       "Meta options configuration"
-    ]
-  },
-  "Database": {
+    ],
     "Migrations": [
       "makemigrations command",
       "migrate command",
@@ -75,7 +92,14 @@ const djangoHierarchy = {
       "Group and Permission models"
     ]
   },
-  "Views": {
+
+  "05_url_routing_and_views": {
+    "URL Configuration": [
+      "URL patterns",
+      "path() and re_path()",
+      "URL parameters",
+      "Query parameters"
+    ],
     "View Types": [
       "Function-Based Views (FBVs)",
       "Class-Based Views (CBVs)",
@@ -90,7 +114,8 @@ const djangoHierarchy = {
       "@login_required decorator"
     ]
   },
-  "Templates": {
+
+  "06_templates_and_forms": {
     "Template Basics": [
       "Django Template Language (DTL)",
       "Template inheritance",
@@ -101,9 +126,7 @@ const djangoHierarchy = {
       "Passing context to templates",
       "Context processors",
       "Custom context processors"
-    ]
-  },
-  "Forms": {
+    ],
     "Form Types": [
       "Django Forms",
       "ModelForms",
@@ -115,7 +138,14 @@ const djangoHierarchy = {
       "Form security best practices"
     ]
   },
-  "Admin Interface": {
+
+  "07_static_media_and_admin": {
+    "File Management": [
+      "Static files handling",
+      "collectstatic command",
+      "Media files handling",
+      "File upload handling"
+    ],
     "Admin Panel": [
       "Admin panel configuration",
       "Registering models",
@@ -123,23 +153,8 @@ const djangoHierarchy = {
       "Superuser creation"
     ]
   },
-  "URL Routing": {
-    "URL Configuration": [
-      "URL patterns",
-      "path() and re_path()",
-      "URL parameters",
-      "Query parameters"
-    ]
-  },
-  "Static & Media Files": {
-    "File Management": [
-      "Static files handling",
-      "collectstatic command",
-      "Media files handling",
-      "File upload handling"
-    ]
-  },
-  "Authentication & Authorization": {
+
+  "08_authentication_sessions_and_security": {
     "Concepts": [
       "Authentication vs Authorization",
       "Django authentication system",
@@ -150,9 +165,7 @@ const djangoHierarchy = {
       "Login/logout implementation",
       "authenticate() function",
       "Custom authentication backends"
-    ]
-  },
-  "Sessions & Cookies": {
+    ],
     "Session Management": [
       "Django session framework",
       "Session configuration",
@@ -162,25 +175,7 @@ const djangoHierarchy = {
       "Cookie handling",
       "Setting cookie expiry",
       "Cookies vs sessions"
-    ]
-  },
-  "Middleware": {
-    "Middleware Concepts": [
-      "What is middleware",
-      "Middleware order",
-      "Custom middleware",
-      "Built-in middleware"
-    ]
-  },
-  "Signals": {
-    "Signal Concepts": [
-      "Django signals",
-      "pre_save vs post_save",
-      "Signal configuration",
-      "Custom signals"
-    ]
-  },
-  "Security": {
+    ],
     "CSRF Protection": [
       "CSRF attack prevention",
       "CSRF tokens"
@@ -194,33 +189,49 @@ const djangoHierarchy = {
       "SECRET_KEY security"
     ]
   },
-  "HTTP Protocol": {
-    "HTTP Basics": [
-      "HTTP vs HTTPS",
-      "Request-response cycle",
-      "HTTP headers",
-      "HTTP methods (GET, POST, PUT, DELETE)"
+
+  "09_middleware_signals_and_messages": {
+    "Middleware Concepts": [
+      "What is middleware",
+      "Middleware order",
+      "Custom middleware",
+      "Built-in middleware"
     ],
-    "Status Codes": [
-      "Common status codes",
-      "200, 400, 401, 403, 404, 500",
-      "Custom status codes"
+    "Signal Concepts": [
+      "Django signals",
+      "pre_save vs post_save",
+      "Signal configuration",
+      "Custom signals"
+    ],
+    "Messages Framework": [
+      "Django messages",
+      "Message types",
+      "Displaying messages"
     ]
   },
-  "Web Servers & Deployment": {
-    "Servers": [
-      "WSGI (Web Server Gateway Interface)",
-      "ASGI (Asynchronous Server Gateway Interface)",
-      "Gunicorn usage",
-      "Web vs Application servers"
+
+  "10_query_optimization_and_caching": {
+    "QuerySet Optimization": [
+      "select_related()",
+      "prefetch_related()",
+      "Raw SQL queries",
+      "Bulk operations",
+      "F and Q objects"
     ],
-    "Deployment": [
-      "Production settings",
-      "Static file serving",
-      "Deployment configurations"
+    "Cache Types": [
+      "Browser caching",
+      "Server-side caching",
+      "Cache in Django",
+      "Cache backends"
     ]
   },
-  "Django REST Framework": {
+
+  "11_async_rest_and_networking": {
+    "Async Concepts": [
+      "ASGI and async views",
+      "Django Channels",
+      "WebSocket support"
+    ],
     "Serializers": [
       "Serializers in DRF",
       "Serializer fields",
@@ -236,9 +247,16 @@ const djangoHierarchy = {
       "Mixins",
       "Pagination",
       "Rate limiting"
+    ],
+    "CORS Concepts": [
+      "Cross-Origin Resource Sharing",
+      "CORS headers",
+      "Preflight requests",
+      "CORS configuration"
     ]
   },
-  "Networking Concepts": {
+
+  "12_networking_and_deployment": {
     "Network Basics": [
       "Client-Server architecture",
       "Port numbers",
@@ -252,46 +270,21 @@ const djangoHierarchy = {
     "Protocols": [
       "TCP vs UDP",
       "SSH protocol"
-    ]
-  },
-  "CORS": {
-    "CORS Concepts": [
-      "Cross-Origin Resource Sharing",
-      "CORS headers",
-      "Preflight requests",
-      "CORS configuration"
-    ]
-  },
-  "Caching": {
-    "Cache Types": [
-      "Browser caching",
-      "Server-side caching",
-      "Cache in Django",
-      "Cache backends"
-    ]
-  },
-  "Asynchronous Programming": {
-    "Async Concepts": [
-      "ASGI and async views",
-      "Django Channels",
-      "WebSocket support"
-    ]
-  },
-  "Query Optimization": {
-    "QuerySet Optimization": [
-      "select_related()",
-      "prefetch_related()",
-      "Raw SQL queries",
-      "Bulk operations",
-      "F and Q objects"
-    ]
-  },
-  "Advanced Features": {
-    "Messages Framework": [
-      "Django messages",
-      "Message types",
-      "Displaying messages"
     ],
+    "Servers": [
+      "WSGI (Web Server Gateway Interface)",
+      "ASGI (Asynchronous Server Gateway Interface)",
+      "Gunicorn usage",
+      "Web vs Application servers"
+    ],
+    "Deployment": [
+      "Production settings",
+      "Static file serving",
+      "Deployment configurations"
+    ]
+  },
+
+  "13_advanced_features_and_tasks": {
     "Miscellaneous": [
       "Mixins usage",
       "Custom managers",
@@ -299,7 +292,9 @@ const djangoHierarchy = {
       "Task queues"
     ]
   }
+
 };
+
 
 const seedDjangoHierarchy = async () => {
   try {

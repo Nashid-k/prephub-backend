@@ -1,20 +1,13 @@
 
 const algorithmsCurriculum = {
-  "01_algorithm_foundations": {
+
+  "00_algorithm_mental_models": {
     "algorithm_concepts": [
       "What is an Algorithm",
       "Why Algorithms are Needed",
       "Characteristics of Good Algorithms",
       "Algorithm Design Guidelines",
       "Algorithm Analysis Methodology"
-    ],
-    "problem_solving_approaches": [
-      "Brute Force Approach",
-      "Divide and Conquer Strategy",
-      "Greedy Approach",
-      "Dynamic Programming Approach",
-      "Backtracking Approach",
-      "Branch and Bound Approach"
     ],
     "algorithm_properties": [
       "Algorithm Correctness",
@@ -23,7 +16,19 @@ const algorithmsCurriculum = {
       "Exact vs Approximation Algorithms"
     ]
   },
-  "02_complexity_analysis": {
+
+  "01_problem_solving_strategies": {
+    "problem_solving_approaches": [
+      "Brute Force Approach",
+      "Divide and Conquer Strategy",
+      "Greedy Approach",
+      "Dynamic Programming Approach",
+      "Backtracking Approach",
+      "Branch and Bound Approach"
+    ]
+  },
+
+  "02_complexity_and_analysis": {
     "time_complexity": [
       "Time Complexity Concepts",
       "Best Case Time Complexity",
@@ -62,7 +67,70 @@ const algorithmsCurriculum = {
       "Recurrence Relation Solving"
     ]
   },
-  "03_sorting_algorithms": {
+
+  "03_recursion_core": {
+    "recursion_concepts": [
+      "Recursion Fundamentals",
+      "Base Case and Recursive Case",
+      "Recursion Tree Visualization",
+      "Recursion vs Iteration"
+    ],
+    "recursion_types": [
+      "Direct Recursion",
+      "Indirect Recursion",
+      "Tail Recursion",
+      "Head Recursion",
+      "Tree Recursion",
+      "Nested Recursion"
+    ],
+    "recursion_analysis": [
+      "Time Complexity of Recursive Algorithms",
+      "Space Complexity of Recursive Algorithms",
+      "Recurrence Relation Formulation",
+      "Solving Recurrence Relations"
+    ],
+    "recursion_problems": [
+      "Factorial Calculation",
+      "Fibonacci Sequence Generation",
+      "Tower of Hanoi Problem",
+      "GCD Calculation (Euclidean Algorithm)",
+      "Power Calculation (Fast Exponentiation)"
+    ]
+  },
+
+  "04_searching_algorithms": {
+    "linear_search": [
+      "Linear Search Algorithm",
+      "Linear Search Time Complexity",
+      "Linear Search Applications"
+    ],
+    "binary_search": [
+      "Binary Search Algorithm (Iterative)",
+      "Binary Search Algorithm (Recursive)",
+      "Binary Search Time Complexity",
+      "Binary Search Space Complexity"
+    ],
+    "advanced_searching": [
+      "Ternary Search Algorithm",
+      "Exponential Search Algorithm",
+      "Interpolation Search Algorithm",
+      "Fibonacci Search Algorithm"
+    ],
+    "searching_concepts": [
+      "Search Space Reduction",
+      "Search in Rotated Sorted Array",
+      "Search in Infinite Array",
+      "Search in Matrix"
+    ],
+    "searching_applications": [
+      "Find Element Closest to Target",
+      "Find Minimum in Rotated Sorted Array",
+      "Find Peak Element",
+      "Find First/Last Occurrence"
+    ]
+  },
+
+  "05_sorting_algorithms": {
     "01_bubble_sort": [
       "Bubble Sort Mechanism",
       "Optimized Bubble Sort",
@@ -124,7 +192,7 @@ const algorithmsCurriculum = {
       "Complexity Analysis",
       "When to use Bucket Sort"
     ],
-     "10_sorting_concepts": [
+    "10_sorting_concepts": [
       "Stability in Sorting",
       "In-place vs Out-of-place",
       "Adaptive Algorithms",
@@ -132,67 +200,58 @@ const algorithmsCurriculum = {
       "External Sorting"
     ]
   },
-  "04_searching_algorithms": {
-    "linear_search": [
-      "Linear Search Algorithm",
-      "Linear Search Time Complexity",
-      "Linear Search Applications"
+
+  "06_array_string_foundations": {
+    "array_algorithms": [
+      "Array Rotation Algorithms",
+      "Find Missing Number in Array",
+      "Find Duplicate Number in Array",
+      "Find Majority Element in Array",
+      "Maximum Product Subarray",
+      "Maximum Sum Circular Subarray"
     ],
-    "binary_search": [
-      "Binary Search Algorithm (Iterative)",
-      "Binary Search Algorithm (Recursive)",
-      "Binary Search Time Complexity",
-      "Binary Search Space Complexity"
-    ],
-    "advanced_searching": [
-      "Ternary Search Algorithm",
-      "Exponential Search Algorithm",
-      "Interpolation Search Algorithm",
-      "Fibonacci Search Algorithm"
-    ],
-    "searching_concepts": [
-      "Search Space Reduction",
-      "Search in Rotated Sorted Array",
-      "Search in Infinite Array",
-      "Search in Matrix"
-    ],
-    "searching_applications": [
-      "Find Element Closest to Target",
-      "Find Minimum in Rotated Sorted Array",
-      "Find Peak Element",
-      "Find First/Last Occurrence"
+    "string_algorithms": [
+      "String Reversal Algorithms",
+      "Palindrome Checking Algorithms",
+      "Anagram Detection Algorithms",
+      "String Compression Algorithms"
     ]
   },
-  "05_recursion_algorithms": {
-    "recursion_concepts": [
-      "Recursion Fundamentals",
-      "Base Case and Recursive Case",
-      "Recursion Tree Visualization",
-      "Recursion vs Iteration"
+
+  "07_two_pointer_and_sliding_window": {
+    "two_pointer_concepts": [
+      "Two Pointer Technique",
+      "Fast and Slow Pointer Pattern",
+      "Left and Right Pointer Pattern"
     ],
-    "recursion_types": [
-      "Direct Recursion",
-      "Indirect Recursion",
-      "Tail Recursion",
-      "Head Recursion",
-      "Tree Recursion",
-      "Nested Recursion"
+    "two_pointer_problems": [
+      "Two Sum Problem",
+      "Three Sum Problem",
+      "Container With Most Water",
+      "Trapping Rain Water",
+      "Remove Duplicates from Sorted Array",
+      "Valid Palindrome Check",
+      "Linked List Cycle Detection",
+      "Merge Two Sorted Arrays"
     ],
-    "recursion_analysis": [
-      "Time Complexity of Recursive Algorithms",
-      "Space Complexity of Recursive Algorithms",
-      "Recurrence Relation Formulation",
-      "Solving Recurrence Relations"
+    "sliding_window_concepts": [
+      "Sliding Window Technique",
+      "Fixed Size Window",
+      "Variable Size Window",
+      "Prefix Sum Technique"
     ],
-    "recursion_problems": [
-      "Factorial Calculation",
-      "Fibonacci Sequence Generation",
-      "Tower of Hanoi Problem",
-      "GCD Calculation (Euclidean Algorithm)",
-      "Power Calculation (Fast Exponentiation)"
+    "sliding_window_problems": [
+      "Maximum Sum Subarray of Size K",
+      "Longest Substring Without Repeating Characters",
+      "Minimum Window Substring",
+      "Longest Subarray with Sum K",
+      "Fruit Into Baskets Problem",
+      "Maximum Average Subarray",
+      "Permutation in String"
     ]
   },
-  "06_backtracking_algorithms": {
+
+  "08_backtracking_and_dp": {
     "backtracking_concepts": [
       "Backtracking Algorithm Pattern",
       "State Space Tree",
@@ -209,24 +268,12 @@ const algorithmsCurriculum = {
       "Permutation Generation",
       "Combination Generation"
     ],
-    "backtracking_optimization": [
-      "Branch and Bound Technique",
-      "Memoization in Backtracking",
-      "Heuristic Search Methods"
-    ]
-  },
-  "07_dynamic_programming": {
     "dp_concepts": [
       "Dynamic Programming Principles",
       "Optimal Substructure Property",
       "Overlapping Subproblems",
       "Memoization Technique",
       "Tabulation Technique"
-    ],
-    "dp_approaches": [
-      "Top-down Approach (Memoization)",
-      "Bottom-up Approach (Tabulation)",
-      "Space Optimization in DP"
     ],
     "dp_problems": [
       "Fibonacci Sequence (DP Solution)",
@@ -237,16 +284,10 @@ const algorithmsCurriculum = {
       "Edit Distance Problem",
       "Matrix Chain Multiplication",
       "Longest Palindromic Subsequence"
-    ],
-    "dp_patterns": [
-      "1D DP Problems",
-      "2D DP Problems",
-      "DP on Trees",
-      "DP on Graphs",
-      "Bitmask DP"
     ]
   },
-  "08_greedy_algorithms": {
+
+  "09_greedy_algorithms": {
     "greedy_concepts": [
       "Greedy Choice Property",
       "Optimal Substructure in Greedy",
@@ -267,312 +308,57 @@ const algorithmsCurriculum = {
       "Greedy Approximation Algorithms"
     ]
   },
-  "09_divide_conquer": {
-    "divide_conquer_concepts": [
-      "Divide and Conquer Strategy",
-      "Divide Step",
-      "Conquer Step",
-      "Combine Step"
-    ],
-    "divide_conquer_problems": [
-      "Merge Sort Implementation",
-      "Quick Sort Implementation",
-      "Binary Search Implementation",
-      "Closest Pair of Points",
-      "Strassen's Matrix Multiplication",
-      "Maximum Subarray Sum (Divide & Conquer)",
-      "Karatsuba Algorithm for Multiplication"
-    ]
-  },
-  "10_two_pointer_algorithms": {
-    "two_pointer_concepts": [
-      "Two Pointer Technique",
-      "Fast and Slow Pointer Pattern",
-      "Left and Right Pointer Pattern"
-    ],
-    "two_pointer_problems": [
-      "Two Sum Problem",
-      "Three Sum Problem",
-      "Container With Most Water",
-      "Trapping Rain Water",
-      "Remove Duplicates from Sorted Array",
-      "Valid Palindrome Check",
-      "Linked List Cycle Detection",
-      "Merge Two Sorted Arrays"
-    ]
-  },
-  "11_sliding_window_algorithms": {
-    "sliding_window_concepts": [
-      "Sliding Window Technique",
-      "Fixed Size Window",
-      "Variable Size Window",
-      "Prefix Sum Technique"
-    ],
-    "sliding_window_problems": [
-      "Maximum Sum Subarray of Size K",
-      "Longest Substring Without Repeating Characters",
-      "Minimum Window Substring",
-      "Longest Subarray with Sum K",
-      "Fruit Into Baskets Problem",
-      "Maximum Average Subarray",
-      "Permutation in String"
-    ]
-  },
-  "12_string_algorithms": {
-    "string_basics": [
-      "String Reversal Algorithms",
-      "Palindrome Checking Algorithms",
-      "Anagram Detection Algorithms",
-      "String Compression Algorithms"
-    ],
-    "pattern_matching": [
-      "Naive String Matching",
-      "Knuth-Morris-Pratt (KMP) Algorithm",
-      "Rabin-Karp Algorithm",
-      "Boyer-Moore Algorithm"
-    ],
-    "string_manipulation": [
-      "Longest Common Prefix",
-      "Longest Palindromic Substring",
-      "Longest Repeating Subsequence",
-      "Edit Distance Between Strings",
-      "String Interleaving Problem"
-    ]
-  },
-  "13_array_algorithms": {
-    "array_manipulation": [
-      "Array Rotation Algorithms",
-      "Find Missing Number in Array",
-      "Find Duplicate Number in Array",
-      "Find Majority Element in Array",
-      "Maximum Product Subarray",
-      "Maximum Sum Circular Subarray"
-    ],
-    "subarray_problems": [
-      "Kadane's Algorithm (Maximum Subarray Sum)",
-      "Maximum Product Subarray",
-      "Subarray with Given Sum",
-      "Count Subarrays with Given XOR",
-      "Longest Increasing Subarray"
-    ],
-    "array_transformation": [
-      "Move Zeroes to End",
-      "Segregate 0s and 1s",
-      "Dutch National Flag Problem",
-      "Next Permutation",
-      "Rotate Array by K Positions"
-    ]
-  },
-  "14_mathematical_algorithms": {
-    "number_theory": [
-      "Sieve of Eratosthenes",
-      "Euclidean Algorithm (GCD)",
-      "Extended Euclidean Algorithm",
-      "Modular Exponentiation",
-      "Prime Factorization Algorithms"
-    ],
-    "combinatorics": [
-      "Binomial Coefficient Calculation",
-      "Catalan Numbers",
-      "Permutations Generation",
-      "Combinations Generation"
-    ],
-    "numerical_algorithms": [
-      "Fast Exponentiation",
-      "Matrix Exponentiation",
-      "Newton-Raphson Method",
-      "Monte Carlo Algorithms"
-    ]
-  },
-  "15_bit_manipulation_algorithms": {
-    "bit_operations": [
-      "Bitwise AND, OR, XOR Operations",
-      "Left Shift and Right Shift",
-      "Bit Masking Techniques",
-      "Bit Counting Algorithms"
-    ],
-    "bit_problems": [
-      "Single Number Problem",
-      "Counting Set Bits",
-      "Find Missing Number Using XOR",
-      "Power of Two Check",
-      "Swap Two Numbers Without Temp"
-    ]
-  },
-  "16_graph_algorithms": {
-    "graph_traversal": [
-      "Breadth First Search (BFS) Algorithm",
-      "Depth First Search (DFS) Algorithm",
-      "BFS vs DFS Comparison",
-      "Applications of BFS and DFS"
-    ],
-    "shortest_path": [
-      "Dijkstra's Algorithm",
-      "Bellman-Ford Algorithm",
-      "Floyd-Warshall Algorithm",
-      "A* Search Algorithm"
-    ],
-    "minimum_spanning_tree": [
-      "Prim's Algorithm",
-      "Kruskal's Algorithm",
-      "Boruvka's Algorithm"
-    ],
-    "graph_problems": [
-      "Topological Sorting",
-      "Cycle Detection in Graphs",
-      "Strongly Connected Components (Kosaraju's, Tarjan's)",
-      "Articulation Points and Bridges",
-      "Bipartite Graph Checking",
-      "Network Flow (Ford-Fulkerson)"
-    ]
-  },
-  "17_tree_algorithms": {
-    "tree_traversal": [
+
+  "10_tree_and_graph_algorithms": {
+    "tree_algorithms": [
       "Inorder Traversal Algorithm",
       "Preorder Traversal Algorithm",
       "Postorder Traversal Algorithm",
       "Level Order Traversal Algorithm",
-      "Morris Traversal Algorithms"
-    ],
-    "tree_properties": [
-      "Check if Binary Tree is Balanced",
-      "Check if Binary Tree is Symmetric",
-      "Check if Binary Tree is BST",
-      "Height/Diameter of Binary Tree",
+      "Morris Traversal Algorithms",
       "Lowest Common Ancestor (LCA) Algorithms"
     ],
-    "tree_operations": [
-      "Construct Tree from Traversals",
-      "Serialize and Deserialize Binary Tree",
-      "Invert/Mirror Binary Tree",
-      "Flatten Binary Tree to Linked List"
-    ],
-    "bst_algorithms": [
-      "Search in BST",
-      "Insert in BST",
-      "Delete in BST",
-      "Kth Smallest Element in BST",
-      "Floor and Ceil in BST"
+    "graph_algorithms": [
+      "Breadth First Search (BFS) Algorithm",
+      "Depth First Search (DFS) Algorithm",
+      "Topological Sorting",
+      "Cycle Detection in Graphs",
+      "Strongly Connected Components (Kosaraju's, Tarjan's)"
     ]
   },
-  "18_heap_algorithms": {
-    "heap_operations": [
-      "Heapify Algorithm",
-      "Build Heap Algorithm",
-      "Heap Sort Algorithm",
-      "Priority Queue Operations"
-    ],
-    "heap_problems": [
-      "Kth Largest Element",
-      "Kth Smallest Element",
-      "Top K Frequent Elements",
-      "Merge K Sorted Lists",
-      "Find Median from Data Stream"
-    ]
-  },
-  "19_advanced_algorithms": {
-    "computational_geometry": [
+
+  "11_advanced_and_real_world": {
+    "advanced_algorithms": [
+      "Network Flow (Ford-Fulkerson)",
       "Convex Hull Algorithms (Graham Scan, Jarvis March)",
-      "Line Intersection Detection",
-      "Point in Polygon Test",
-      "Closest Pair of Points"
-    ],
-    "randomized_algorithms": [
       "Randomized Quick Sort",
-      "Monte Carlo Algorithms",
-      "Las Vegas Algorithms"
+      "Approximation Algorithms"
     ],
-    "approximation_algorithms": [
-      "Vertex Cover Approximation",
-      "Traveling Salesman Problem Approximation",
-      "Set Cover Approximation"
-    ]
-  },
-  "20_algorithm_design_patterns": {
-    "common_patterns": [
-      "Prefix Sum Pattern",
-      "Sliding Window Pattern",
-      "Two Pointer Pattern",
-      "Fast and Slow Pointer Pattern",
-      "Merge Intervals Pattern",
-      "Cyclic Sort Pattern",
-      "In-place Reversal Pattern",
-      "Tree BFS Pattern",
-      "Tree DFS Pattern",
-      "Two Heaps Pattern",
-      "Subsets Pattern",
-      "Modified Binary Search Pattern",
-      "Top K Elements Pattern",
-      "K-way Merge Pattern",
-      "Topological Sort Pattern"
-    ]
-  },
-  "21_algorithm_practice_strategies": {
-    "problem_solving_approach": [
-      "Understand the Problem Statement",
-      "Identify Input Constraints",
-      "Design Brute Force Solution First",
-      "Analyze Time and Space Complexity",
-      "Optimize Step by Step",
-      "Edge Cases Consideration",
-      "Test with Sample Inputs"
-    ],
-    "implementation_techniques": [
-      "Algorithm Pseudocode Writing",
-      "Step-by-step Implementation",
-      "Modular Code Organization",
-      "Efficient Data Structure Selection",
-      "Optimization Techniques Application"
-      ],
-    "debugging_testing": [
-      "Algorithm Dry Run",
-      "Corner Case Testing",
-      "Performance Testing",
-      "Memory Usage Testing",
-      "Algorithm Visualization"
-    ]
-  },
-  "22_competitive_programming_algorithms": {
-    "essential_algorithms": [
-      "Binary Search Variations",
-      "Two Pointer Techniques",
-      "Sliding Window Optimizations",
-      "Prefix Sum Applications",
-      "Segment Tree Implementation",
-      "Fenwick Tree (Binary Indexed Tree)",
-      "Union-Find (Disjoint Set Union)",
-      "Trie Data Structure Algorithms"
-    ],
-    "problem_categories": [
-      "Ad Hoc Problems",
-      "Dynamic Programming Problems",
-      "Graph Theory Problems",
-      "Number Theory Problems",
-      "Geometry Problems",
-      "String Processing Problems"
-    ]
-  },
-  "23_real_world_algorithm_applications": {
-    "system_design": [
+    "real_world_applications": [
       "Load Balancing Algorithms",
       "Caching Algorithms (LRU, LFU)",
       "Consistent Hashing",
       "Rate Limiting Algorithms"
+    ]
+  },
+
+  "12_practice_and_competitive": {
+    "practice_strategies": [
+      "Design Brute Force Solution First",
+      "Optimize Step by Step",
+      "Dry Run and Edge Case Testing",
+      "Time and Space Trade-offs"
     ],
-    "data_processing": [
-      "Sorting Large Datasets",
-      "Data Compression Algorithms",
-      "Pattern Matching in Big Data",
-      "Stream Processing Algorithms"
-    ],
-    "machine_learning": [
-      "K-means Clustering Algorithm",
-      "K-nearest Neighbors Algorithm",
-      "Decision Tree Algorithms",
-      "Gradient Descent Optimization"
+    "competitive_programming": [
+      "Segment Tree Implementation",
+      "Fenwick Tree (Binary Indexed Tree)",
+      "Union-Find (Disjoint Set Union)",
+      "Trie Data Structure Algorithms"
     ]
   }
+
 };
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
@@ -671,7 +457,7 @@ const seedHierarchy = async () => {
 
       const category = await Category.create({
         name: catName,
-        slug: slugify(catName, { lower: true, strict: true }),
+        slug: slugify(`DSA ${catName}`, { lower: true, strict: true }),
         topicId: topic._id,
         order: categoryOrder++,
         group: getGroupForCategory(catName),

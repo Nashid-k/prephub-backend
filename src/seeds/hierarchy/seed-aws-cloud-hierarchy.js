@@ -1,45 +1,40 @@
 
 const awsCurriculum = {
-  "Cloud_Foundations": {
+
+  "01_cloud_foundations": {
     "core_concepts": [
+      "Global Infrastructure",
       "Regions & Availability Zones",
       "IAM (Identity & Access Management)",
+      "Shared Responsibility Model",
       "Billing & Cost Management",
-      "AWS CLI Configuration",
-      "Global Infrastructure"
+      "AWS CLI Configuration"
     ],
     "security_identity": [
-      "Shared Responsibility Model",
       "Root User vs IAM Users",
       "MFA & Access Keys",
       "Least Privilege Principle",
       "AWS Organizations"
     ]
   },
-  "Compute_Services": {
-    "ec2_instances": [
-      "EC2 Instance Types & Families",
-      "EBS Volumes & Snapshots",
-      "Security Groups & NACLs",
-      "User Data & Bootstrapping",
-      "Placement Groups"
+
+  "02_networking_fundamentals": {
+    "vpc_fundamentals": [
+      "VPC, Subnets, CIDR",
+      "Route Tables",
+      "Internet & NAT Gateways",
+      "VPC Peering",
+      "Transit Gateway"
     ],
-    "serverless_compute": [
-      "Lambda Function Anatomy",
-      "Triggers & Event Sources",
-      "Lambda Layers",
-      "Cold Starts & Optimization",
-      "Step Functions Orchestration"
-    ],
-    "container_services": [
-      "ECS vs EKS Overview",
-      "Fargate (Serverless Containers)",
-      "ECR (Container Registry)",
-      "App Runner",
-      "Lightsail Containers"
+    "load_balancing": [
+      "Application Load Balancer (ALB)",
+      "Network Load Balancer (NLB)",
+      "Target Groups",
+      "Sticky Sessions"
     ]
   },
-  "Storage_Databases": {
+
+  "03_storage_and_databases": {
     "object_storage": [
       "S3 Buckets & Objects",
       "Storage Classes (Standard/Glacier)",
@@ -51,15 +46,15 @@ const awsCurriculum = {
       "RDS (Relational Database Service)",
       "Aurora (Serverless DB)",
       "Read Replicas & Multi-AZ",
-      "Data Migration Service (DMS)",
-      "Proxy & Connection Pools"
+      "Proxy & Connection Pools",
+      "Data Migration Service (DMS)"
     ],
     "nosql_databases": [
       "DynamoDB Tables & Items",
       "Partition Keys & Sort Keys",
       "GSI vs LSI Indexes",
-      "DAX (DynamoDB Accelerator)",
-      "Streams & Triggers"
+      "Streams & Triggers",
+      "DAX (DynamoDB Accelerator)"
     ],
     "caching_storage": [
       "ElastiCache (Redis/Memcached)",
@@ -68,57 +63,62 @@ const awsCurriculum = {
       "Snow Family"
     ]
   },
-  "Networking_Content_Delivery": {
-    "vpc_fundamentals": [
-      "VPC, Subnets, CIDR",
-      "Internet & NAT Gateways",
-      "Route Tables",
-      "VPC Peering",
-      "Transit Gateway"
+
+  "04_compute_services": {
+    "ec2_instances": [
+      "EC2 Instance Types & Families",
+      "EBS Volumes & Snapshots",
+      "Security Groups & NACLs",
+      "User Data & Bootstrapping",
+      "Placement Groups"
     ],
+    "container_services": [
+      "ECS vs EKS Overview",
+      "ECR (Container Registry)",
+      "Fargate (Serverless Containers)",
+      "App Runner",
+      "Lightsail Containers"
+    ],
+    "serverless_compute": [
+      "Lambda Function Anatomy",
+      "Triggers & Event Sources",
+      "Lambda Layers",
+      "Cold Starts & Optimization",
+      "Step Functions Orchestration"
+    ]
+  },
+
+  "05_edge_and_content_delivery": {
     "edge_services": [
-      "CloudFront (CDN) Distribution",
       "Route 53 (DNS Management)",
+      "CloudFront (CDN) Distribution",
       "API Gateway (REST/HTTP/WebSocket)",
       "Global Accelerator",
       "WAF & Shield"
-    ],
-    "load_balancing": [
-      "Application Load Balancer (ALB)",
-      "Network Load Balancer (NLB)",
-      "Target Groups",
-      "Sticky Sessions"
     ]
   },
-  "Advanced_Architecture": {
-    "monitoring_observability": [
-      "CloudWatch Metrics & Alarms",
-      "CloudWatch Logs & Insights",
-      "CloudTrail Auditing",
-      "X-Ray Tracing",
-      "Config Rules"
-    ],
+
+  "06_messaging_and_integration": {
     "messaging_integration": [
       "SQS (Simple Queue Service)",
       "SNS (Simple Notification Service)",
       "EventBridge (Event Bus)",
       "Kinesis Data Streams",
       "MQ (Message Broker)"
-    ],
-    "infrastructure_as_code": [
-      "CloudFormation Templates",
-      "AWS CDK (Cloud Development Kit)",
-      "Terraform on AWS",
-      "Drift Detection",
-      "StackSets"
-    ],
-    "devops_cicd": [
-      "CodeCommit (Git)",
-      "CodeBuild (CI)",
-      "CodeDeploy (CD)",
-      "CodePipeline (Orchestration)",
-      "Elastic Beanstalk"
-    ],
+    ]
+  },
+
+  "07_monitoring_and_observability": {
+    "monitoring_observability": [
+      "CloudWatch Metrics & Alarms",
+      "CloudWatch Logs & Insights",
+      "CloudTrail Auditing",
+      "X-Ray Tracing",
+      "Config Rules"
+    ]
+  },
+
+  "08_security_and_identity_services": {
     "security_compliance": [
       "Cognito (User Pools)",
       "KMS (Key Management Service)",
@@ -126,7 +126,29 @@ const awsCurriculum = {
       "GuardDuty",
       "Inspector"
     ]
+  },
+
+  "09_infrastructure_as_code": {
+    "infrastructure_as_code": [
+      "CloudFormation Templates",
+      "AWS CDK (Cloud Development Kit)",
+      "Terraform on AWS",
+      "Drift Detection",
+      "StackSets"
+    ]
+  },
+
+  "10_devops_and_cicd": {
+    "devops_cicd": [
+      "CodeCommit (Git)",
+      "CodeBuild (CI)",
+      "CodeDeploy (CD)",
+      "CodePipeline (Orchestration)",
+      "Elastic Beanstalk"
+    ]
   }
+
 };
+
 
 export { awsCurriculum };

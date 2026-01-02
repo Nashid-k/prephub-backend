@@ -35,7 +35,9 @@ const fixPathMaps = async () => {
             'python',
             'django',
             'typescript',
-            'html-css-combined'
+            'html-css-combined',
+            'dart',
+            'flutter'
         ];
 
         const topics = await Topic.find({ slug: { $in: targetSlugs } });

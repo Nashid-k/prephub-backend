@@ -1,6 +1,7 @@
 
 const expressjsCurriculum = {
-  "01_express_foundations": {
+
+  "01_web_and_node_foundations": {
     "overview_introduction": [
       "What is Express.js",
       "Why Express.js is Needed",
@@ -8,7 +9,10 @@ const expressjsCurriculum = {
       "Express.js as a Web Framework",
       "Express.js Architecture",
       "Express.js Features and Benefits"
-    ],
+    ]
+  },
+
+  "02_project_setup_and_application_bootstrap": {
     "installation_setup": [
       "Express.js Installation (npm install express)",
       "Creating First Express Application",
@@ -23,7 +27,8 @@ const expressjsCurriculum = {
       "Environment-based Configuration"
     ]
   },
-  "02_basic_routing": {
+
+  "03_http_routing_fundamentals": {
     "http_methods": [
       "HTTP Methods in Express",
       "GET Method Handling (app.get)",
@@ -52,7 +57,8 @@ const expressjsCurriculum = {
       "res.set() Method for Headers"
     ]
   },
-  "03_request_handling": {
+
+  "04_request_data_and_body_processing": {
     "request_object": [
       "Request Object (req) Properties",
       "req.params (Route Parameters)",
@@ -82,7 +88,8 @@ const expressjsCurriculum = {
       "Request Size Limits"
     ]
   },
-  "04_advanced_routing": {
+
+  "05_modular_and_advanced_routing": {
     "router_module": [
       "Express.Router Class",
       "Modular Route Organization",
@@ -105,7 +112,8 @@ const expressjsCurriculum = {
       "Route Documentation"
     ]
   },
-  "05_middleware": {
+
+  "06_middleware_architecture": {
     "middleware_concepts": [
       "What is Middleware in Express",
       "Middleware Execution Flow",
@@ -144,7 +152,8 @@ const expressjsCurriculum = {
       "Security Headers Middleware"
     ]
   },
-  "06_static_files_views": {
+
+  "07_static_assets_and_view_rendering": {
     "static_files": [
       "Serving Static Files",
       "express.static() Middleware",
@@ -167,7 +176,8 @@ const expressjsCurriculum = {
       "Template Loops and Iteration"
     ]
   },
-  "07_session_management": {
+
+  "08_sessions_cookies_and_browser_storage": {
     "cookies": [
       "HTTP Cookies Concept",
       "Setting Cookies (res.cookie)",
@@ -188,9 +198,7 @@ const expressjsCurriculum = {
       "Session Storage Options",
       "Session Security Considerations",
       "Session Expiry Management"
-    ]
-  },
-  "08_browser_storage": {
+    ],
     "client_side_storage": [
       "localStorage API",
       "sessionStorage API",
@@ -210,7 +218,8 @@ const expressjsCurriculum = {
       "Cache Busting Techniques"
     ]
   },
-  "09_error_handling": {
+
+  "09_error_handling_and_validation": {
     "error_middleware": [
       "Error-handling Middleware",
       "Error Middleware Signature",
@@ -236,7 +245,8 @@ const expressjsCurriculum = {
       "Input Sanitization"
     ]
   },
-  "10_security": {
+
+  "10_authentication_authorization_and_security": {
     "authentication": [
       "Authentication Strategies",
       "Passport.js Integration",
@@ -263,7 +273,8 @@ const expressjsCurriculum = {
       "Request Throttling"
     ]
   },
-  "11_api_design": {
+
+  "11_api_design_and_standards": {
     "restful_principles": [
       "RESTful API Design",
       "Resource Naming Conventions",
@@ -277,19 +288,20 @@ const expressjsCurriculum = {
       "Header Versioning",
       "Deprecation Handling"
     ],
-    "api_documentation": [
-      "API Documentation Tools (Swagger/OpenAPI)",
-      "API Testing",
-      "API Documentation Best Practices"
-    ],
     "api_response_formats": [
       "JSON Response Standardization",
       "Pagination Implementation",
       "Filtering and Sorting",
       "Error Response Format"
+    ],
+    "api_documentation": [
+      "API Documentation Tools (Swagger/OpenAPI)",
+      "API Testing",
+      "API Documentation Best Practices"
     ]
   },
-  "12_database_integration": {
+
+  "12_database_and_file_handling": {
     "database_connections": [
       "Database Connection Setup",
       "Connection Pooling",
@@ -305,9 +317,7 @@ const expressjsCurriculum = {
       "Database Validation",
       "Business Logic Separation",
       "Data Transformation"
-    ]
-  },
-  "13_file_handling": {
+    ],
     "file_uploads": [
       "Multer Middleware",
       "Single File Upload",
@@ -327,21 +337,8 @@ const expressjsCurriculum = {
       "File Streaming"
     ]
   },
-  "14_application_configuration": {
-    "configuration_management": [
-      "Environment Configuration",
-      "Configuration Files",
-      "app.set() for Application Settings",
-      "app.locals for Local Variables"
-    ],
-    "application_structure": [
-      "Project Organization",
-      "Separation of Concerns",
-      "Module Organization",
-      "Configuration Management"
-    ]
-  },
-  "15_testing": {
+
+  "13_testing_performance_and_production": {
     "testing_frameworks": [
       "Jest with Express",
       "Mocha/Chai with Express",
@@ -357,9 +354,7 @@ const expressjsCurriculum = {
       "Test File Structure",
       "Test Database Setup",
       "Test Environment Configuration"
-    ]
-  },
-  "16_performance_optimization": {
+    ],
     "caching": [
       "Response Caching",
       "Redis Caching",
@@ -377,7 +372,8 @@ const expressjsCurriculum = {
       "Request/Response Optimization"
     ]
   },
-  "17_deployment_production": {
+
+  "14_deployment_scaling_and_best_practices": {
     "process_management": [
       "PM2 Process Manager",
       "Cluster Mode",
@@ -393,29 +389,7 @@ const expressjsCurriculum = {
       "Docker Containerization",
       "Cloud Deployment",
       "Load Balancer Configuration"
-    ]
-  },
-  "18_practical_projects": {
-    "beginner_projects": [
-      "RESTful CRUD API",
-      "User Authentication System",
-      "File Upload Service",
-      "Todo List API"
     ],
-    "intermediate_projects": [
-      "E-commerce API",
-      "Blogging Platform",
-      "Real-time Chat Application",
-      "Social Media API"
-    ],
-    "advanced_projects": [
-      "Microservices Gateway",
-      "API Gateway with Rate Limiting",
-      "Real-time Dashboard",
-      "Multi-tenant Application"
-    ]
-  },
-  "19_best_practices": {
     "code_organization": [
       "Controller-Service-Repository Pattern",
       "Middleware Organization",
@@ -440,8 +414,31 @@ const expressjsCurriculum = {
       "Version Control Practices",
       "Continuous Integration"
     ]
+  },
+
+  "15_practical_projects": {
+    "beginner_projects": [
+      "RESTful CRUD API",
+      "User Authentication System",
+      "File Upload Service",
+      "Todo List API"
+    ],
+    "intermediate_projects": [
+      "E-commerce API",
+      "Blogging Platform",
+      "Real-time Chat Application",
+      "Social Media API"
+    ],
+    "advanced_projects": [
+      "Microservices Gateway",
+      "API Gateway with Rate Limiting",
+      "Real-time Dashboard",
+      "Multi-tenant Application"
+    ]
   }
+
 };
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

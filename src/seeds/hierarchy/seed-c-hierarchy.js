@@ -7,7 +7,8 @@ import Section from '../../models/Section.js';
 dotenv.config();
 
 const cHierarchy = {
-  "Foundations & Basics": {
+
+  "01_language_foundations": {
     "C Overview": [
       "What is C Programming?",
       "History and Importance of C",
@@ -29,7 +30,8 @@ const cHierarchy = {
       "Comments"
     ]
   },
-  "Variables & Data Types": {
+
+  "02_variables_data_types_constants": {
     "Basic Data Types": [
       "int (Integer Types)",
       "float, double (Floating-point)",
@@ -57,7 +59,8 @@ const cHierarchy = {
       "Defining Constants (#define, const)"
     ]
   },
-  "Operators & Expressions": {
+
+  "03_operators_expressions_and_io": {
     "Arithmetic Operators": [
       "+, -, *, /, %",
       "Increment (++), Decrement (--)"
@@ -84,9 +87,7 @@ const cHierarchy = {
     ],
     "Operator Precedence": [
       "Precedence and Associativity Rules"
-    ]
-  },
-  "Input/Output": {
+    ],
     "Standard I/O": [
       "printf() Function",
       "scanf() Function",
@@ -97,16 +98,10 @@ const cHierarchy = {
       "getchar() and putchar()",
       "gets() and puts()",
       "fgets() and fputs()"
-    ],
-    "File I/O": [
-      "FILE Pointer",
-      "fopen() and fclose()",
-      "Reading from Files",
-      "Writing to Files",
-      "Binary File Operations"
     ]
   },
-  "Control Statements": {
+
+  "04_control_flow": {
     "Decision Making": [
       "if Statement",
       "if-else Statement",
@@ -123,7 +118,8 @@ const cHierarchy = {
       "goto Statement"
     ]
   },
-  "Arrays": {
+
+  "05_arrays_strings_and_functions": {
     "One-Dimensional Arrays": [
       "Array Declaration and Initialization",
       "Accessing Array Elements",
@@ -139,9 +135,34 @@ const cHierarchy = {
       "Strings as Character Arrays",
       "String Initialization",
       "Null Terminator (\\0)"
+    ],
+    "Function Basics": [
+      "Function Declaration (Prototype)",
+      "Function Definition",
+      "Function Call",
+      "Return Statement",
+      "Parameters vs Arguments"
+    ],
+    "Parameter Passing": [
+      "Pass by Value",
+      "Pass by Reference (Using Pointers)",
+      "Array as Function Parameter"
+    ],
+    "Function Types": [
+      "Library Functions",
+      "User-defined Functions",
+      "Recursive Functions",
+      "Inline Functions",
+      "Static Functions"
+    ],
+    "Scope & Storage": [
+      "Local vs Global Scope",
+      "Block Scope",
+      "Storage Classes (auto, register, static, extern)"
     ]
   },
-  "Pointers": {
+
+  "06_pointers_and_dynamic_memory": {
     "Pointer Basics": [
       "Understanding Memory Addresses",
       "Pointer Declaration",
@@ -171,33 +192,8 @@ const cHierarchy = {
       "Memory Leak Prevention"
     ]
   },
-  "Functions": {
-    "Function Basics": [
-      "Function Declaration (Prototype)",
-      "Function Definition",
-      "Function Call",
-      "Return Statement",
-      "Parameters vs Arguments"
-    ],
-    "Parameter Passing": [
-      "Pass by Value",
-      "Pass by Reference (Using Pointers)",
-      "Array as Function Parameter"
-    ],
-    "Function Types": [
-      "Library Functions",
-      "User-defined Functions",
-      "Recursive Functions",
-      "Inline Functions",
-      "Static Functions"
-    ],
-    "Scope & Storage": [
-      "Local vs Global Scope",
-      "Block Scope",
-      "Storage Classes (auto, register, static, extern)"
-    ]
-  },
-  "Strings": {
+
+  "07_strings_memory_and_structures": {
     "String Operations": [
       "String Length (strlen())",
       "String Copy (strcpy(), strncpy())",
@@ -214,9 +210,7 @@ const cHierarchy = {
       "memmove()",
       "memset()",
       "memcmp()"
-    ]
-  },
-  "Structures & Unions": {
+    ],
     "Structures": [
       "Structure Definition",
       "Structure Variable Declaration",
@@ -238,7 +232,8 @@ const cHierarchy = {
       "Enum vs #define"
     ]
   },
-  "Preprocessor Directives": {
+
+  "08_preprocessor_and_files": {
     "File Inclusion": [
       "#include Directive",
       "Angle Brackets vs Quotes"
@@ -254,29 +249,7 @@ const cHierarchy = {
       "#if, #elif, #else",
       "#undef Directive",
       "Predefined Macros"
-    ]
-  },
-  "Memory Management": {
-    "Memory Layout": [
-      "Text Segment (Code)",
-      "Data Segment",
-      "BSS Segment",
-      "Stack Memory",
-      "Heap Memory"
     ],
-    "Stack Operations": [
-      "Function Call Stack",
-      "Stack Frame",
-      "Stack Overflow"
-    ],
-    "Heap Management": [
-      "Dynamic Memory Allocation",
-      "Memory Fragmentation",
-      "Memory Leak Detection",
-      "Valgrind Tool"
-    ]
-  },
-  "File Handling": {
     "File Modes": [
       "Text vs Binary Files",
       "File Opening Modes (r, w, a, r+, w+, a+)",
@@ -301,7 +274,44 @@ const cHierarchy = {
       "errno Variable"
     ]
   },
-  "Advanced Concepts": {
+
+  "09_memory_model_and_debugging": {
+    "Memory Layout": [
+      "Text Segment (Code)",
+      "Data Segment",
+      "BSS Segment",
+      "Stack Memory",
+      "Heap Memory"
+    ],
+    "Stack Operations": [
+      "Function Call Stack",
+      "Stack Frame",
+      "Stack Overflow"
+    ],
+    "Heap Management": [
+      "Dynamic Memory Allocation",
+      "Memory Fragmentation",
+      "Memory Leak Detection",
+      "Valgrind Tool"
+    ],
+    "Debugging Techniques": [
+      "Print Statement Debugging",
+      "Debugger Tools (GDB)",
+      "Core Dump Analysis"
+    ],
+    "Testing": [
+      "Unit Testing Concepts",
+      "Test Case Design",
+      "Boundary Value Testing"
+    ],
+    "Error Handling Practices": [
+      "Return Value Checking",
+      "Error Codes",
+      "Robust Programming"
+    ]
+  },
+
+  "10_advanced_language_features": {
     "Command Line Args": [
       "argc and argv Parameters",
       "Processing Command Line Arguments"
@@ -320,7 +330,8 @@ const cHierarchy = {
       "Recursion vs Iteration"
     ]
   },
-  "Data Structures": {
+
+  "11_data_structures_and_algorithms": {
     "Linked Lists": [
       "Singly Linked List",
       "Doubly Linked List",
@@ -349,7 +360,8 @@ const cHierarchy = {
       "Graph Traversal (BFS, DFS)"
     ]
   },
-  "Sorting & Searching": {
+
+  "12_sorting_and_searching": {
     "Sorting Algorithms": [
       "Bubble Sort",
       "Selection Sort",
@@ -364,7 +376,8 @@ const cHierarchy = {
       "Complexity Analysis"
     ]
   },
-  "C Standard Library": {
+
+  "13_c_standard_library": {
     "stdio.h": [
       "Standard I/O Functions",
       "File Operations"
@@ -387,24 +400,8 @@ const cHierarchy = {
       "Character Handling Functions"
     ]
   },
-  "Debugging & Testing": {
-    "Debugging Techniques": [
-      "Print Statement Debugging",
-      "Debugger Tools (GDB)",
-      "Core Dump Analysis"
-    ],
-    "Testing": [
-      "Unit Testing Concepts",
-      "Test Case Design",
-      "Boundary Value Testing"
-    ],
-    "Error Handling": [
-      "Return Value Checking",
-      "Error Codes",
-      "Robust Programming"
-    ]
-  },
-  "System Programming": {
+
+  "14_systems_and_concurrency": {
     "Process Management": [
       "Process Creation (fork())",
       "Process Termination",
@@ -418,9 +415,7 @@ const cHierarchy = {
     "System Calls": [
       "Understanding System Calls",
       "Common System Calls"
-    ]
-  },
-  "Multithreading": {
+    ],
     "Thread Basics": [
       "Thread vs Process",
       "POSIX Threads (pthreads)",
@@ -433,7 +428,8 @@ const cHierarchy = {
       "Deadlock Prevention"
     ]
   },
-  "Best Practices": {
+
+  "15_best_practices_and_projects": {
     "Coding Standards": [
       "Naming Conventions",
       "Code Formatting",
@@ -448,9 +444,7 @@ const cHierarchy = {
       "Buffer Overflow Prevention",
       "Secure Coding Practices",
       "Input Validation"
-    ]
-  },
-  "Practical Projects": {
+    ],
     "Beginner Projects": [
       "Calculator Program",
       "Student Record System",
@@ -470,6 +464,7 @@ const cHierarchy = {
       "OS Components"
     ]
   }
+
 };
 
 const seedCHierarchy = async () => {

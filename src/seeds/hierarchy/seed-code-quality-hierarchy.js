@@ -1,6 +1,7 @@
 
 const codeQualityCurriculum = {
   "Code_Quality_Engineering_Practices": {
+
     "code_quality_fundamentals": {
       "quality_attributes": [
         "Readability vs writability trade-offs",
@@ -19,6 +20,7 @@ const codeQualityCurriculum = {
         "Static analysis metrics"
       ]
     },
+
     "design_principles": {
       "solid_principles": [
         "Single Responsibility Principle (SRP)",
@@ -37,13 +39,14 @@ const codeQualityCurriculum = {
         "Pattern selection criteria"
       ]
     },
+
     "refactoring_techniques": {
       "refactoring_catalog": [
         "Extract method and inline method",
         "Move method and move field",
-        "Replace conditional with polymorphism",
-        "Introduce parameter object",
         "Compose method and extract class",
+        "Introduce parameter object",
+        "Replace conditional with polymorphism",
         "Remove dead code and duplication"
       ],
       "refactoring_strategies": [
@@ -55,12 +58,13 @@ const codeQualityCurriculum = {
         "Refactoring legacy systems"
       ]
     },
+
     "code_review_practices": {
       "review_process": [
         "Effective code review workflows",
+        "Pull request size and scope management",
         "Review comment best practices",
         "Automated review tools integration",
-        "Pull request size and scope management",
         "Review velocity and throughput optimization",
         "Remote code review techniques"
       ],
@@ -73,14 +77,15 @@ const codeQualityCurriculum = {
         "Operational considerations"
       ]
     },
+
     "documentation_practices": {
       "documentation_types": [
+        "Code comments and inline documentation",
         "API documentation (OpenAPI, JSDoc)",
         "Architecture decision records (ADRs)",
-        "Runbooks and operational procedures",
-        "Onboarding and contributor guides",
         "Design documents and RFCs",
-        "Code comments and inline documentation"
+        "Runbooks and operational procedures",
+        "Onboarding and contributor guides"
       ],
       "documentation_tooling": [
         "Documentation as code workflows",
@@ -91,6 +96,7 @@ const codeQualityCurriculum = {
         "Documentation localization"
       ]
     },
+
     "engineering_excellence": {
       "best_practices": [
         "Code style guides and consistency",
@@ -109,6 +115,7 @@ const codeQualityCurriculum = {
         "Security scanning tools"
       ]
     },
+
     "faang_interview_focus": [
       "Design scalable and maintainable systems",
       "Write clean, efficient, and secure code",
@@ -118,7 +125,8 @@ const codeQualityCurriculum = {
       "Implement engineering best practices"
     ]
   }
-}
+};
+
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';

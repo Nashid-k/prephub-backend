@@ -74,7 +74,7 @@ const seedTypeScript = async () => {
             // Case 1: Value is Array (Flat Group -> Single Category)
             if (Array.isArray(groupValue)) {
                 const categoryName = groupName; // Use Group Name as Category Name
-                const categorySlug = await generateUniqueSlug(Category, categoryName, topic._id);
+                const categorySlug = await generateUniqueSlug(Category, `TypeScript ${categoryName}`, topic._id);
 
                 const category = await Category.create({
                     name: categoryName,
@@ -109,7 +109,7 @@ const seedTypeScript = async () => {
                 // Case 2: Value is Object (Group -> Multiple Categories)
                 for (const [catKey, catValue] of Object.entries(groupValue)) {
                     const categoryName = formatName(catKey);
-                    const categorySlug = await generateUniqueSlug(Category, categoryName, topic._id);
+                    const categorySlug = await generateUniqueSlug(Category, `TypeScript ${categoryName}`, topic._id);
 
                     const category = await Category.create({
                         name: categoryName,

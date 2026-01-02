@@ -1,0 +1,94 @@
+
+> prephub-backend@1.0.0 seed-javascript
+> node src/seeds/hierarchy/seed-javascript-hierarchy.js
+
+✅ AI clients initialized: 4 Groq (PRIMARY) + 2 Gemini (fallback) + 1 HF
+🌱 Connecting to MongoDB...
+✅ Connected to MongoDB
+📌 Using Topic: JavaScript
+🧹 Clearing existing categories and sections...
+🧹 Clearing existing categories and sections...
+🏗️ Building new hierarchy with AI categorization...
+📋 Step 1: Collecting category metadata...
+🤖 Step 2: AI categorizing 26 categories...
+🤖 Batch Categorization via Groq (Key 1)...
+❌ Groq failed (Key 1): 400 {"error":{"message":"The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.","type":"invalid_request_error","code":"model_decommissioned"}}
+🤖 Batch Categorization via Groq (Key 2)...
+❌ Groq failed (Key 2): 400 {"error":{"message":"The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.","type":"invalid_request_error","code":"model_decommissioned"}}
+🤖 Batch Categorization via Groq (Key 3)...
+❌ Groq failed (Key 3): 400 {"error":{"message":"The model `llama-3.1-70b-versatile` has been decommissioned and is no longer supported. Please refer to https://console.groq.com/docs/deprecations for a recommendation on which model to use instead.","type":"invalid_request_error","code":"model_decommissioned"}}
+🤖 Batch Categorization via Groq (Key 4)...
+❌ Groq failed (Key 4): 401 {"error":{"message":"Invalid API Key","type":"invalid_request_error","code":"expired_api_key"}}
+🤖 Batch Categorization via Gemini (gemini-0)...
+❌ Gemini failed (gemini-0): [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-exp
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-exp
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-exp
+Please retry in 19.328354184s. [{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count","quotaId":"GenerateContentInputTokensPerModelPerMinute-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"19s"}]
+🤖 Batch Categorization via Gemini (gemini-1)...
+❌ Gemini failed (gemini-1): [GoogleGenerativeAI Error]: Error fetching from https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-exp:generateContent: [429 Too Many Requests] You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/usage?tab=rate-limit. 
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-exp
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash-exp
+* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash-exp
+Please retry in 19.184954122s. [{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Learn more about Gemini API quotas","url":"https://ai.google.dev/gemini-api/docs/rate-limits"}]},{"@type":"type.googleapis.com/google.rpc.QuotaFailure","violations":[{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerDayPerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_requests","quotaId":"GenerateRequestsPerMinutePerProjectPerModel-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}},{"quotaMetric":"generativelanguage.googleapis.com/generate_content_free_tier_input_token_count","quotaId":"GenerateContentInputTokensPerModelPerMinute-FreeTier","quotaDimensions":{"location":"global","model":"gemini-2.0-flash-exp"}}]},{"@type":"type.googleapis.com/google.rpc.RetryInfo","retryDelay":"19s"}]
+🤖 Batch Categorization via Hugging Face...
+❌ Hugging Face failed: Request failed with status code 404
+❌ All AI providers failed for batch categorization
+✅ Received 0 group assignments
+💾 Step 3: Creating categories and sections...
+⚠️  No AI group for "JavaScript Foundations", using fallback: 01. General
+  📂 Created Category: JavaScript Foundations [01. General]
+⚠️  No AI group for "Variables Scope", using fallback: 01. General
+  📂 Created Category: Variables Scope [01. General]
+⚠️  No AI group for "Operators Expressions", using fallback: 01. General
+  📂 Created Category: Operators Expressions [01. General]
+⚠️  No AI group for "Control Flow", using fallback: 01. General
+  📂 Created Category: Control Flow [01. General]
+⚠️  No AI group for "Functions", using fallback: 01. General
+  📂 Created Category: Functions [01. General]
+⚠️  No AI group for "Closures", using fallback: 02. General
+  📂 Created Category: Closures [02. General]
+⚠️  No AI group for "Arrays", using fallback: 02. General
+  📂 Created Category: Arrays [02. General]
+⚠️  No AI group for "Objects", using fallback: 02. General
+  📂 Created Category: Objects [02. General]
+⚠️  No AI group for "Object Oriented JavaScript", using fallback: 02. General
+  📂 Created Category: Object Oriented JavaScript [02. General]
+⚠️  No AI group for "Prototypes Inheritance", using fallback: 02. General
+  📂 Created Category: Prototypes Inheritance [02. General]
+⚠️  No AI group for "This Context", using fallback: 02. General
+  📂 Created Category: This Context [02. General]
+⚠️  No AI group for "Asynchronous JavaScript", using fallback: 02. General
+  📂 Created Category: Asynchronous JavaScript [02. General]
+⚠️  No AI group for "Promises", using fallback: 02. General
+  📂 Created Category: Promises [02. General]
+⚠️  No AI group for "Callbacks", using fallback: 02. General
+  📂 Created Category: Callbacks [02. General]
+⚠️  No AI group for "Error Handling", using fallback: 02. General
+  📂 Created Category: Error Handling [02. General]
+⚠️  No AI group for "Browser Apis", using fallback: 03. General
+  📂 Created Category: Browser Apis [03. General]
+⚠️  No AI group for "Dom Manipulation", using fallback: 03. General
+  📂 Created Category: Dom Manipulation [03. General]
+⚠️  No AI group for "Events", using fallback: 03. General
+  📂 Created Category: Events [03. General]
+⚠️  No AI group for "Advanced Concepts", using fallback: 03. General
+  📂 Created Category: Advanced Concepts [03. General]
+⚠️  No AI group for "Web Workers", using fallback: 03. General
+  📂 Created Category: Web Workers [03. General]
+⚠️  No AI group for "Memory Management", using fallback: 03. General
+  📂 Created Category: Memory Management [03. General]
+⚠️  No AI group for "Design Patterns", using fallback: 03. General
+  📂 Created Category: Design Patterns [03. General]
+⚠️  No AI group for "Performance Optimization", using fallback: 03. General
+  📂 Created Category: Performance Optimization [03. General]
+⚠️  No AI group for "Tooling Ecosystem", using fallback: 03. General
+  📂 Created Category: Tooling Ecosystem [03. General]
+⚠️  No AI group for "Practical Workouts", using fallback: 03. General
+  📂 Created Category: Practical Workouts [03. General]
+⚠️  No AI group for "Best Practices", using fallback: 03. General
+  📂 Created Category: Best Practices [03. General]
+
+✅ Seeding Complete!
+   - Categories: 26
+   - Sections: 97
