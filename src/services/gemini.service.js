@@ -255,6 +255,86 @@ FOCUS: ${focus}
 };
 
 /**
+ * Structure curriculum path
+ */
+export const structureLearningPath = async (topics, pathName, level = 'advanced') => {
+  const cacheKey = `path_structure_${level}_${pathName}_${topics ? topics.length : 0}`;
+  
+  const cached = await getCacheValue(cacheKey);
+  if (cached) return cached;
+
+  const prompt = `
+    You are an expert curriculum designer.
+    Goal: Create a structured learning path called "${pathName}".
+    Target Audience: ${level}
+    Topics to Include: ${JSON.stringify(topics)}
+
+    Requirements:
+    - Group topics into logical modules.
+    - Provide a sensible order (dependencies first).
+    - Estimate time for each module.
+
+    Output (JSON):
+    {
+      "modules": [
+        {
+          "title": "Module 1: Name",
+          "description": "Brief summary",
+          "topics": ["topic_slug_1", "topic_slug_2"],
+          "estimatedHours": 5
+        }
+      ],
+      "totalEstimatedHours": 20
+    }
+  `;
+
+  try {
+    const result = await aiService.generateJSON(prompt);
+    await setCacheValue(cacheKey, result);
+    return result;
+  } catch (error) {
+    console.error('❌ Path Structuring Failed:', error.message);
+    return { modules: [], error: 'Failed' };
+  }
+};
+
+/**
+ * Translate code blocks
+ */
+export const translateCodeBlock = async (code, sourceLanguage, targetLanguage) => {
+  const codeHash = Buffer.from(code).toString('base64').substring(0, 50);
+  const cacheKey = `translate_${sourceLanguage}_${targetLanguage}_${codeHash}`;
+  
+  const cached = await getCacheValue(cacheKey);
+  if (cached) return cached;
+
+  const prompt = `
+    Translate the following ${sourceLanguage} code to ${targetLanguage}.
+    
+    RULES:
+    1. Maintain logic, variable names, and comments exactly where possible.
+    2. Adapt syntax to ${targetLanguage} idioms.
+    3. If a library/feature doesn't exist, use the closest equivalent or add a comment.
+    4. RETURN ONLY CODE. NO MARKDOWN. NO EXPLANATIONS.
+
+    CODE:
+    ${code}
+  `;
+
+  try {
+    let translated = await aiService.generateText(prompt);
+    // Cleanup markdown if present
+    translated = translated.replace(/```[a-z]*\n?/ig, '').replace(/```$/g, '');
+    
+    await setCacheValue(cacheKey, translated);
+    return translated;
+  } catch (error) {
+    console.error('❌ Translation Failed:', error.message);
+    return code; // Fallback
+  }
+};
+
+/**
  * Analyze Code (Review, Debug, Optimize) - Elite Agent
  */
 export const analyzeCode = async (code, mode = 'review', language = 'javascript', level = 'advanced') => {
