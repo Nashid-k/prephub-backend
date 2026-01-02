@@ -1,5 +1,5 @@
 
-import geminiService from './src/services/gemini.service.js';
+import geminiService from '../../src/services/gemini.service.js';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 

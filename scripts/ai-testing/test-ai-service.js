@@ -26,7 +26,7 @@ console.log(`HUGGING_FACE_API_KEY: ${hfKey ? '✅ SET (***' + hfKey.slice(-4) + 
 console.log('\n📋 STEP 2: AI Client Initialization');
 console.log('=====================================');
 try {
-  const { geminiModels, groqClients, hfApiKey } = await import('./src/config/ai-clients.js');
+  const { geminiModels, groqClients, hfApiKey } = await import('../../src/config/ai-clients.js');
   console.log(`✅ AI clients imported successfully`);
   console.log(`   - Gemini models: ${geminiModels.length} configured`);
   console.log(`   - Groq clients: ${groqClients.length} configured`);
@@ -44,7 +44,7 @@ try {
 console.log('\n📋 STEP 3: Gemini Service Import');
 console.log('==================================');
 try {
-  const geminiService = await import('./src/services/gemini.service.js');
+  const geminiService = await import('../../src/services/gemini.service.js');
   console.log(`✅ Gemini service imported successfully`);
   console.log(`   - generateExplanation: ${typeof geminiService.generateExplanation}`);
   console.log(`   - answerQuestion: ${typeof geminiService.answerQuestion}`);
@@ -60,7 +60,7 @@ try {
 console.log('\n📋 STEP 4: Test AI Generation (Quick Test)');
 console.log('============================================');
 try {
-  const { generateExplanation } = await import('./src/services/gemini.service.js');
+  const { generateExplanation } = await import('../../src/services/gemini.service.js');
   
   console.log('Testing generateExplanation with simple topic...');
   const result = await generateExplanation('JavaScript', 'Variables', 'Basic programming concept', 'javascript');

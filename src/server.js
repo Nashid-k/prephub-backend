@@ -15,6 +15,7 @@ import authRoutes from './routes/auth.routes.js';
 import bookmarkRoutes from './routes/bookmark.routes.js';
 import recommendationsRoutes from './routes/recommendations.routes.js';
 import activityRoutes from './routes/activity.routes.js';
+import healthRoutes from './routes/health.routes.js';
 
 
 import { helmetConfig, corsOptions, apiLimiter } from './middleware/security.js';
@@ -62,14 +63,8 @@ app.use('/api/bookmarks', bookmarkRoutes);
 app.use('/api/recommendations', recommendationsRoutes);
 app.use('/api/activity', activityRoutes);
 
-// Health check
-app.get('/api/health', (req, res) => {
-  res.json({ 
-    status: 'ok', 
-    message: 'PrepHub API is running',
-    timestamp: new Date().toISOString()
-  });
-});
+// Health check (enhanced for Render & UptimeRobot)
+app.use('/api/health', healthRoutes);
 
 // 404 handler
 app.use((req, res) => {

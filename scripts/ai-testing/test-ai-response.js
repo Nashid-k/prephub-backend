@@ -1,4 +1,4 @@
-import assignGroupBatch from './src/services/assignGroupBatch.service.js';
+import assignGroupBatch from '../../src/services/assignGroupBatch.service.js';
 import dotenv from 'dotenv';
 
 dotenv.config();

@@ -1,8 +1,8 @@
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import PathMap from './src/models/PathMap.js';
-import Topic from './src/models/Topic.js';
+import PathMap from '../../src/models/PathMap.js';
+import Topic from '../../src/models/Topic.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 

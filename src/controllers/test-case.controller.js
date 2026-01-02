@@ -1,4 +1,4 @@
-import geminiService from '../services/gemini.service.js';
+import * as geminiService from '../services/gemini.service.js';
 
 /**
  * Generate test cases for a LeetCode problem

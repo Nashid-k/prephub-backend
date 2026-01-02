@@ -1,4 +1,4 @@
-import geminiService from '../services/gemini.service.js';
+import * as geminiService from '../services/gemini.service.js';
 
 /**
  * Generate AI explanation
@@ -139,18 +139,7 @@ export const translateCode = async (req, res) => {
       error: error.message || 'Failed to translate code' 
     });
   }
-    );
-    
-    res.json({
-        success: true,
-        translated
-    });
-  } catch (error) {
-    console.error('Translate Code Error:', error);
-    res.status(500).json({ 
-      error: error.message || 'Failed to translate code' 
-    });
-  }
+
 };
 
 /**

@@ -1,8 +1,8 @@
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Topic from './src/models/Topic.js';
-import PathMap from './src/models/PathMap.js';
+import Topic from '../../src/models/Topic.js';
+import PathMap from '../../src/models/PathMap.js';
 
 dotenv.config();
 

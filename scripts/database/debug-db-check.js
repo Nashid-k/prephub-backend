@@ -1,9 +1,9 @@
 
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import Topic from './src/models/Topic.js';
-import Category from './src/models/Category.js';
-import Section from './src/models/Section.js';
+import Topic from '../../src/models/Topic.js';
+import Category from '../../src/models/Category.js';
+import Section from '../../src/models/Section.js';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
