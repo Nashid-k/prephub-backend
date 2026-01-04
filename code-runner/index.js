@@ -27,6 +27,8 @@ app.post('/run', (req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`code-runner stub listening on ${PORT}`));
+if (require.main === module) {
+  app.listen(PORT, () => console.log(`code-runner stub listening on ${PORT}`));
+}
 
 module.exports = app;
