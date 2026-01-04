@@ -21,3 +21,21 @@ test('accepts websocket connections on /yjs/:room', (done) => {
     done(err);
   });
 });
+
+test('responds to HTTP health or root', async () => {
+  const fetch = require('node-fetch');
+  // try /health then /
+  let ok = false;
+  try {
+    const r = await fetch('http://127.0.0.1:6002/health');
+    if (r.status === 200) {
+      const body = await r.text();
+      if (body.includes('ok') || body.includes('{')) ok = true;
+    }
+  } catch (e) {}
+  if (!ok) {
+    const r = await fetch('http://127.0.0.1:6002/');
+    const body = await r.text();
+    expect(body).toContain('okay');
+  }
+});
