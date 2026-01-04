@@ -1,0 +1,40 @@
+name: Feature Stubs CI
+
+on:
+  push:
+    branches:
+      - 'feat/*'
+      - 'feature/*'
+
+jobs:
+  ws-server:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/ws-server
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm ci
+      - name: Run tests
+        run: npm test || true
+
+  code-runner:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend/code-runner
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install
+        run: npm ci
+      - name: Run tests
+        run: npm test
