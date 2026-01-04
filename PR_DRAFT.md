@@ -20,8 +20,9 @@ Testing Steps (local):
 
 Notes & Next Steps:
 - Add socket auth middleware and Redis setup for scale.
-- Add Yjs collaborative editor demo in frontend and integrate presence.
-- Replace the in-memory worker with a sandboxed runner (Firecracker/Docker) behind a job queue.
+- Add Yjs collaborative editor demo in frontend and integrate presence (added `backend/yjs-server` and `frontend/src/pages/YjsCollaborative.jsx`).
+- Replace the in-memory worker with a sandboxed runner (Firecracker/Docker) behind a job queue (added DockerRunner POC and `docker-compose.yml`).
+- CI: added Redis-backed job for `code-runner` and a `yjs-server` job to run integration tests on `feat/*` branches.
 
 Related issues: TBD
 
