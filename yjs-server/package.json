@@ -1,0 +1,19 @@
+{
+  "name": "prephub-yjs-server",
+  "version": "0.1.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "jest"
+  },
+  "dependencies": {
+    "ws": "^8.13.0",
+    "y-websocket": "^1.5.4",
+    "yjs": "^13.5.6"
+  },
+  "devDependencies": {
+    "jest": "^29.6.1",
+    "ws": "^8.13.0"
+  }
+}
