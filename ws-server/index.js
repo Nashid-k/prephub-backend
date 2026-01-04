@@ -12,6 +12,21 @@ const io = new Server(server, {
   }
 });
 
+// If REDIS_URL is provided, use the redis adapter so multiple ws-server
+// instances can coordinate presence and messages.
+if (process.env.REDIS_URL) {
+  try {
+    const { createAdapter } = require('@socket.io/redis-adapter');
+    const { default: IORedis } = require('ioredis');
+    const pubClient = new IORedis(process.env.REDIS_URL);
+    const subClient = pubClient.duplicate();
+    io.adapter(createAdapter(pubClient, subClient));
+    console.log('Socket.IO Redis adapter configured');
+  } catch (err) {
+    console.warn('Failed to initialize Redis adapter for Socket.IO, falling back to single-process mode', err.message);
+  }
+}
+
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Namespace pattern: /topic/:slug
