@@ -18,13 +18,16 @@ try {
     const queue = new Queue('code-runner', { connection });
 
     // simple worker that simulates execution (should be replaced with sandboxed runner)
+    const { DockerRunner } = require('./docker-runner');
+    const dockerRunner = new DockerRunner({ disableDocker: !!process.env.DISABLE_DOCKER });
+
     const realWorker = new Worker('code-runner', async (job) => {
-      // simulate execution delay
-      await new Promise(r => setTimeout(r, 500));
-      return { stdout: `Simulated output for ${job.id}`, exitCode: 0 };
+      // invoke the Docker runner POC (or simulated fallback)
+      const result = await dockerRunner.run({ language: job.data.language, code: job.data.code, stdin: job.data.stdin });
+      return result;
     }, { connection });
 
-    worker = { type: 'bullmq', queue, realWorker };
+    worker = { type: 'bullmq', queue, realWorker, dockerRunner };
   } else {
     const { InMemoryWorker } = require('./worker');
     worker = new InMemoryWorker();

@@ -1,7 +1,9 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import { createServer } from 'http'; // Import http
 import connectDB from './config/database.js';
+import { initSocket } from './services/socket.service.js'; // Import socket service
 
 // Import routes
 import aiRoutes from './routes/ai.routes.js';
@@ -24,6 +26,7 @@ import { compressionMiddleware } from './middleware/performance.js';
 dotenv.config();
 
 const app = express();
+const httpServer = createServer(app); // Wrap express
 const PORT = process.env.PORT || 5000;
 
 // Trust proxy for rate limiting on cloud platforms (Render, Heroku, etc.)
@@ -68,7 +71,7 @@ app.use('/api/health', healthRoutes);
 
 // 404 handler
 app.use((req, res) => {
-  res.status(404).json({ 
+  res.status(404).json({
     error: 'Route not found',
     path: req.path
   });
@@ -77,31 +80,31 @@ app.use((req, res) => {
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error('Server Error:', err);
-  
+
   // Mongoose validation error
   if (err.name === 'ValidationError') {
-    return res.status(400).json({ 
+    return res.status(400).json({
       error: 'Validation Error',
       details: Object.values(err.errors).map(e => e.message)
     });
   }
-  
+
   // Mongoose cast error (invalid ObjectId)
   if (err.name === 'CastError') {
-    return res.status(400).json({ 
-      error: 'Invalid ID format' 
+    return res.status(400).json({
+      error: 'Invalid ID format'
     });
   }
-  
+
   // Rate limit error
   if (err.status === 429) {
-    return res.status(429).json({ 
-      error: 'Too many requests, please try again later' 
+    return res.status(429).json({
+      error: 'Too many requests, please try again later'
     });
   }
-  
+
   // Default error
-  res.status(err.status || 500).json({ 
+  res.status(err.status || 500).json({
     error: err.message || 'Internal server error',
     ...(process.env.NODE_ENV === 'development' && { stack: err.stack })
   });
@@ -112,7 +115,11 @@ const startServer = async () => {
   try {
     await connectDB();
 
-    app.listen(PORT, () => {
+    // Initialize Socket.io
+    initSocket(httpServer);
+    console.log('🔌 Socket.io initialized');
+
+    httpServer.listen(PORT, () => {
       console.log(`🚀 Server is running on port ${PORT}`);
       console.log(`📊 Environment: ${process.env.NODE_ENV || 'development'}`);
       console.log(`🏥 Health Check: http://localhost:${PORT}/api/health\n`);

@@ -30,13 +30,35 @@ if (process.env.REDIS_URL) {
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
 // Namespace pattern: /topic/:slug
+// Add authentication middleware (JWT) for namespaces
+io.of(/^\/topic\/.+/).use((socket, next) => {
+  const token = socket.handshake.auth?.token;
+  if (token) {
+    try {
+      const jwt = require('jsonwebtoken');
+      const decoded = jwt.verify(token, process.env.JWT_SECRET || 'test-secret');
+      socket.data.user = decoded;
+    } catch (err) {
+      // invalid token => proceed as guest
+      socket.data.user = null;
+    }
+  }
+  next();
+});
+
 io.of(/^\/topic\/.+/).on('connection', (socket) => {
   const nsp = socket.nsp; // namespace
   console.log(`Socket connected to ${nsp.name} (id=${socket.id})`);
 
-  // On hello, store user info and broadcast presence
+  // On connection, if we have user data, emit presence to others
+  if (socket.data?.user) {
+    socket.emit('presence:here', { you: socket.data.user });
+    socket.broadcast.emit('presence:join', socket.data.user);
+  }
+
+  // On hello, accept client-provided presence info
   socket.on('hello', (payload) => {
-    socket.data.user = payload?.user || { id: socket.id };
+    socket.data.user = socket.data.user || payload?.user || { id: socket.id };
     socket.emit('presence:here', { you: socket.data.user });
     socket.broadcast.emit('presence:join', socket.data.user);
   });
@@ -55,9 +77,28 @@ io.of(/^\/topic\/.+/).on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.SOCKET_PORT || 4000;
-server.listen(PORT, () => {
-  console.log(`Socket.IO server listening on port ${PORT}`);
+// REST endpoint for presence in a topic namespace
+app.get('/topic/:slug/presence', async (req, res) => {
+  try {
+    const slug = req.params.slug;
+    const nspName = `/topic/${slug}`;
+    const nsp = io.of(nspName);
+    // fetchSockets() works across cluster with Redis adapter
+    const sockets = await nsp.fetchSockets();
+    const users = sockets.map(s => ({ socketId: s.id, user: s.data?.user || null }));
+    return res.json({ count: sockets.length, users });
+  } catch (err) {
+    return res.status(500).json({ error: 'failed to fetch presence', detail: err.message });
+  }
 });
+
+const PORT = process.env.SOCKET_PORT || 4000;
+// In tests we want to control the server listen port so avoid auto-listen when
+// NODE_ENV=test. Tests can call server.listen(PORT) explicitly.
+if (process.env.NODE_ENV !== 'test') {
+  server.listen(PORT, () => {
+    console.log(`Socket.IO server listening on port ${PORT}`);
+  });
+}
 
 module.exports = server;

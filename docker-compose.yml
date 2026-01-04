@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  redis:
+    image: redis:7-alpine
+    ports:
+      - '6379:6379'
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  code-runner:
+    build:
+      context: ./backend/code-runner
+    environment:
+      - REDIS_URL=redis://redis:6379
+      - DOCKER_RUNNER=1
+    depends_on:
+      - redis
+    ports:
+      - '5000:5000'
+
+  ws-server:
+    build:
+      context: ./backend/ws-server
+    environment:
+      - REDIS_URL=redis://redis:6379
+    depends_on:
+      - redis
+    ports:
+      - '4000:4000'
